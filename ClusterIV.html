@@ -10,22 +10,25 @@ var width = 960,
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 12;
 
-var n = 200, // total number of nodes
-    m = 11; // number of distinct clusters
+var n = 403, // total number of nodes
+    m = 10; // number of distinct clusters (industries)
 
 // need to modify colours for 11 nodes
 var color = d3.scale.category10()
     .domain(d3.range(m));
 
-console.log(JSON.stringify(color));
 
+// var path = "C:/Users/Daniel2/Dropbox/SPC Data - Backup/Pave Data/NOC_403.csv"
+var path = "NOC_403.csv";
 
-var path = "C:/Users/Daniel2/Dropbox/SPC Data - Backup/Pave Data/NOC_403.csv"
+var dataset; // hold the dataset after it loads
 
 d3.csv(path, row, function(error,data) {dataViz(data);});
 
 function dataViz(incomingData) {
 	
+	dataset = incomingData;
+
 	var nestedIndustries = d3.nest()
 		.key(function (el) {return el.industry;})
 		.entries(incomingData);
@@ -39,7 +42,36 @@ function dataViz(incomingData) {
 			max: d3.max(v, function(d) { return d.workers; })
 			}; })
 		.entries(incomingData);
-	console.log(JSON.stringify(industryMetrics));
+
+	console.log(JSON.stringify(industryMetrics.total));
+
+	//Create SVG element
+	var svg = d3.select("body").append("svg")
+				.attr("width", width)
+				.attr("height", height);
+
+    var nodes = d3.range(incomingData).map( function(el) {
+	  var i = el.industry, // colors = industries
+	      r = el.workers, // radius = workers
+	      d = {cluster: i, radius: r};
+	  if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d; // initialize the clusters
+	  return d;
+	});
+
+	var node = svg.selectAll("circle")
+	    .data(incomingData)
+	  .enter().append("circle")
+	    .style("fill", function(d) { return color(d.cluster); })
+	    .call(force.drag);
+
+	// original: random numbers for colors, radii
+    // var nodes = d3.range(n).map(function() {
+	//   var i = Math.floor(Math.random() * m), // cluster = industry
+	//       r = Math.sqrt((i + 1) / m * -Math.log(Math.random())) * maxRadius, // radius = workers
+	//       d = {cluster: i, radius: r};
+	//   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
+	//   return d;
+	// });
 
 }
 
