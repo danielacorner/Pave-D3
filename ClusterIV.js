@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<body>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script>
 
 var width = 960,
     height = 500,
@@ -10,34 +5,30 @@ var width = 960,
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 12;
 
-var n = 200, // total number of nodes
-    m = 11; // number of distinct clusters
+var n = 403, // total number of nodes
+    m = 10; // number of distinct clusters
 
 // need to modify colours for 11 nodes
 var color = d3.scale.category10()
     .domain(d3.range(m));
 
-console.log(JSON.stringify(color));
-
-// function row(d) {
-//   return {
-//     noc: d.noc,
-//     job: d.job,
-//     workers: +d.workers, // convert columns [workers, yearsStudy, automationRisk, wage, ... ] to number
-//     yearsStudy: +d.yearsStudy, 
-//     automationRisk: +d.automationRisk,
-//     wage: +d.wage
-//   };
-// };
-
-d3.csv("NOC_403.csv").get(function(error,data) {
+d3.csv("NOC_403.csv")
+  .row(function(d) { return {
+    noc: d.noc,
+    job: d.job,
+    workers: +d.workers, // convert columns [workers, yearsStudy, automationRisk, wage, ... ] to number
+    yearsStudy: +d.yearsStudy, 
+    automationRisk: +d.automationRisk,
+    wage: Math.round(+d.wage*100)/100 // round to 2 decimals. or Number(d.wage.trim().slice(1)) if there's a $ to remove (trim blanks, slice the first char)
+    }; })
+  .get(function(error,data) {
   console.log(data);
   dataViz(data);
 });
 
 function dataViz(incomingData) {
-	
-  // append new attributes
+  
+  // append new attributes:
   // incomingData.forEach(function (el) {
   //   //el.impact = el.favourites.length + el.retweets.length
   // });
@@ -47,20 +38,20 @@ function dataViz(incomingData) {
   var radiusScale = d3.scale.linear()
                       .domain([0, maxIndustryWorkers]).range([1,20]); // set min & max radii
 
-	var nestedIndustries = d3.nest()
-		.key(function (el) {return el.industry;})
-		.entries(incomingData);
+  var nestedIndustries = d3.nest()
+    .key(function (el) {return el.industry;})
+    .entries(incomingData);
 
-	// group-by & summarize == nest & rollup
-	// total workers & max workers in one NOC (biggest NOC) per industry
-	var industryMetrics = d3.nest()
-		.key(function(d) { return d.industry; })
-		.rollup(function(v) { return {
-			total: d3.sum(v, function(d) { return d.workers; }),
-			max: d3.max(v, function(d) { return d.workers; })
-			}; })
-		.entries(incomingData);
-	console.log(industryMetrics);
+  // group-by & summarize == nest & rollup
+  // total workers & max workers in one NOC (biggest NOC) per industry
+  var industryMetrics = d3.nest()
+    .key(function(d) { return d.industry; })
+    .rollup(function(v) { return {
+      total: d3.sum(v, function(d) { return d.workers; }),
+      max: d3.max(v, function(d) { return d.workers; })
+      }; })
+    .entries(incomingData);
+  console.log(industryMetrics);
 
 
   // The largest node for each cluster.
@@ -178,5 +169,3 @@ function dataViz(incomingData) {
   // };
 
 }
-
-</script>
