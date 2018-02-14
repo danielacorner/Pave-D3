@@ -1,5 +1,36 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<body>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="ClusterIV.js"></script>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Pave: the Canadian Job Explorer</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */
+		</style>
+	</head>
+	<body>
+
+		<h1>header</h1>
+
+		<button id=clickme>Click me!</button>
+
+		<script src="ClusterIV.js"></script>
+
+		<script type="text/javascript">
+			d3.select("button")
+					.on("click", function() {
+							var popIndustry = Math.random() * (10 - 1) + 1; // random between 1 and 10
+							console.log("popping industry #", popIndustry);
+
+							// nodes = nodes - nodes.cluster
+
+							//Exit…
+							node.exit()				//References the exit selection (a subset of the update selection)
+								.transition()		//Initiates a transition on the one element we're deleting
+								.duration(500)
+								.attr("x", w)		//Move past the right edge of the SVG
+								.remove();   		//Deletes this element from the DOM once transition is complete
+
+						});
+		</script>
+	</body>

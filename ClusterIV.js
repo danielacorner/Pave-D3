@@ -3,10 +3,10 @@ var n, m; // hold the nodes (NOCs) & clusters (industries)
 var nestedIndustries;
 
 var width = 960,
-    height = 500,
+    height = 750,
     padding = 1.5, // separation between same-color nodes
     clusterPadding = 6; // separation between different-color nodes
-    maxRadius = 12;
+    maxRadius = 30;
 
 d3.csv("NOC_403.csv")
   .row(function(d) { return {
@@ -29,8 +29,6 @@ function dataViz(incomingData) {
   .key(function (el) { return el.industry })
   .entries(incomingData);
 
-console.log("nested industries: ", nestedIndustries);
-
   var n = incomingData.length, // total number of nodes / NOCs
       m = nestedIndustries.length; // number of distinct clusters / industries
 
@@ -48,15 +46,13 @@ console.log("nested industries: ", nestedIndustries);
                      .range([1,maxRadius]); // set min & max radii
 
   // industry-specific metrics (group-by & summarize == nest & rollup)
-  var industryMetrics = d3.nest()
-    .key(function(d) { return d.industry; })
-    .rollup(function(v) { return {
-      total: d3.sum(v, function(d) { return d.workers; }), // total industry workers
-      max: d3.max(v, function(d) { return d.workers; }) // largest NOC by workers per industry
-      }; })
-    .entries(incomingData);
-
-  console.log("industry metrics: ", industryMetrics);
+  // var industryMetrics = d3.nest()
+  //   .key(function(d) { return d.industry; })
+  //   .rollup(function(v) { return {
+  //     total: d3.sum(v, function(d) { return d.workers; }), // total industry workers
+  //     max: d3.max(v, function(d) { return d.workers; }) // largest NOC by workers per industry
+  //     }; })
+  //   .entries(incomingData);
 
   // The largest node for each cluster.
   var clusters = new Array(m);
@@ -74,9 +70,8 @@ console.log("nested industries: ", nestedIndustries);
     return d;
    })
 
-  console.log("nodes: ", typeof nodes, nodes);
-
   clusters.splice(0,1); // remove "undefined" industry (start at 0, delete 1)
+
   // Use the pack layout to initialize node positions.
   d3.layout.pack()
       .sort(null)
@@ -113,8 +108,6 @@ console.log("nested industries: ", nestedIndustries);
         return function(t) { return d.radius = i(t); };
       });
 
-  console.log("node keys:", Object.keys(node));
-
   function tick(e) {
     node
         .each(cluster(10 * e.alpha * e.alpha))
@@ -129,8 +122,8 @@ console.log("nested industries: ", nestedIndustries);
   function cluster(alpha) {
     return function(d) {
       var cluster = clusters[d.cluster - 1]; // patch: subtracted 1 to go from 1-10 to 0-9
-      iterator = iterator + 1;
-      console.log(iterator, "d: ", d, "\nclusters[d.cluster]: ", clusters[d.cluster], "\nclusters[10]: ", clusters[10]); // throws an error on the last iteration
+      // iterator = iterator + 1;
+      // console.log(iterator, "d: ", d, "\nclusters[d.cluster]: ", clusters[d.cluster], "\nclusters[10]: ", clusters[10]); // throws an error on the last iteration
       if (cluster === d) return;
       var x = d.x - cluster.x,
           y = d.y - cluster.y,
