@@ -81,23 +81,22 @@ var circles = svg.selectAll("circle")
     .on("mouseover", function(d) {
       d.mouseovered = 1;
       // highlight the current circle
-      d3.select(this).attr("stroke", "black");
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       div.transition()
          .duration(200)
-         .style("opacity", .9);
+         .style("opacity", .9)
+         .style("height", "60px");
       // Display NOC and Industry
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
         // Move div above mouse + radius
-         .style("left", (d3.event.pageX) - 100 + "px")
-         .style("top", (d3.event.pageY - 115) - d.radius + "px");
+        .style("left", (d3.event.pageX) - 100 + "px")
+        .style("top", (d3.event.pageY - 80) - d.radius + "px");
     })
     .on("mouseout", function(d) {
       // if clicked-on, don't transition out
       // if (d.clicked=1) return;
       d.mouseovered = 0;
-      circles.attr("stroke", function(d) {
-        if (d.mouseovered = 1) return "none"
-      })
+      d3.select(this).attr("stroke", "none");
       div.transition()
          .duration(500)
          .style("opacity", 0);
@@ -106,12 +105,17 @@ var circles = svg.selectAll("circle")
       //clicked on or clicked off?
       d.clicked = 1-d.clicked;
       if (d.clicked=1) {
+        // clicked on
         div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-          + "<br/>Workers: " + d.workers)
-           .style("left", (d3.event.pageX) + "px")
-           .style("top", (d3.event.pageY - 28) + "px");
+          // Insert extra info to display on click
+          + "<br/><br/><br/><br/><br/>Workers: " + d.workers)
+          // Unfurl downward
+          .transition()
+          .duration(200)
+          .style("height", "200px");
       }
       if (d.clicked=0) {
+        // clicked off
         div.transition()
          .duration(500)
          .style("opacity", 0);
