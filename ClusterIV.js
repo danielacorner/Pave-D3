@@ -65,7 +65,7 @@ function dataViz(incomingData) {
     if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d; //if cluster uninitialized or if biggest radius so far, set as largest node
     return d;
    })
-
+  console.log(typeof nodes, nodes);
   clusters.splice(0,1); // remove "undefined" industry (start at 0, delete 1)
 
   // Use the pack layout to initialize node positions.
@@ -166,4 +166,33 @@ function dataViz(incomingData) {
     };
   };
 
-  }
+  d3.select("button")
+      .on("click", function() {
+          var popIndustry = Math.floor(Math.random() * (10 - 1) + 1); // random int between 1 and 10
+          console.log("popping industry #", popIndustry);
+
+          // nodes = nodes - nodes.cluster
+
+            var node = svg.selectAll("circle")
+                          .data(nodes)
+                        .enter().append("circle")
+                          .style("fill", function(d) { return color(d.cluster); })
+                          .call(force.drag);
+
+          var popping = svg.selectAll("circle")
+                        .data(nodes)
+                          .enter().append("circle")
+                          .filter(function(d) { return d.industry != popIndustry })
+                          .exit()              
+
+          // //Exit…
+          // node.exit()        //References the exit selection (a subset of the update selection)
+          //  .transition()   //Initiates a transition on the one element we're deleting
+          //  .duration(500)
+          //  .attr("x", w)   //Move past the right edge of the SVG
+          //  .remove();      //Deletes this element from the DOM once transition is complete
+
+        });
+
+};
+
