@@ -1,20 +1,10 @@
-var n, m; // hold the nodes (NOCs) & clusters (industries)
-
-var nestedIndustries;
-
-var width = 960,
-    height = 750,
-    padding = 1.5, // separation between same-color nodes
-    clusterPadding = 6; // separation between different-color nodes
-    maxRadius = 30;
-
 d3.csv("NOC_403.csv")
   .row(function(d) { return {
     noc: d.noc,
     job: d.job,
     cluster: +d.cluster,
     industry: d.industry,
-    workers: +d.workers, // convert columns [workers, yearsStudy, automationRisk, wage, ... ] to number
+    workers: +d.workers, // convert columns to number
     yearsStudy: +d.yearsStudy, 
     automationRisk: +d.automationRisk,
     wage: Math.round(+d.wage * 100) / 100 // round to 2 decimals. or Number(d.wage.trim().slice(1)) if there's a $ to remove (trim blanks, slice the first char)
@@ -24,6 +14,12 @@ d3.csv("NOC_403.csv")
 });
 
 function dataViz(incomingData) {
+
+  var width = 960,
+      height = 750,
+      padding = 1.5, // separation between same-color nodes
+      clusterPadding = 6; // separation between different-color nodes
+      maxRadius = 30;
 
   var nestedIndustries = d3.nest()
   .key(function (el) { return el.industry })
@@ -37,11 +33,11 @@ function dataViz(incomingData) {
   //   //el.impact = el.favourites.length + el.retweets.length
   // });
 
-  var color = d3.scale.category10()
-      .domain(d3.range(m));
+  var color = d3.scaleOrdinal(d3.schemeCategory10)
+    .domain(d3.range(m));
   
   var minMaxWorkers = d3.extent(incomingData, function(el) {return el.workers}); // smallest & largest NOCs by workers
-  var radiusScale = d3.scale.linear()
+  var radiusScale = d3.scaleLinear()
                      .domain([ 0, Math.sqrt(minMaxWorkers[1]/Math.PI) ]) // Node area = workers = pi*r^2 --> r = sqrt(workers/pi)
                      .range([1,maxRadius]); // set min & max radii
 
@@ -63,8 +59,8 @@ function dataViz(incomingData) {
         r = radiusScale(Math.sqrt(el.workers/Math.PI)),
         d = {
           cluster: i, radius: r, industry: el.industry, noc: el.noc,
-          x: Math.cos(i / m * 2 * Math.PI) * 200 + width / 2 + Math.random(),
-          y: Math.sin(i / m * 2 * Math.PI) * 200 + height / 2 + Math.random()
+          // x: Math.cos(i / m * 2 * Math.PI) * 200 + width / 2 + Math.random(),
+          // y: Math.sin(i / m * 2 * Math.PI) * 200 + height / 2 + Math.random()
         };
     if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d; //if cluster uninitialized or if biggest radius so far, set as largest node
     return d;
@@ -73,7 +69,10 @@ function dataViz(incomingData) {
   clusters.splice(0,1); // remove "undefined" industry (start at 0, delete 1)
 
   // Use the pack layout to initialize node positions.
-  d3.layout.pack()
+  
+  var root = d3.hierarchy({"children": nodes})
+
+  d3.pack()
       .sort(null)
       .size([width, height])
       .children(function(d) { return d.values; })
