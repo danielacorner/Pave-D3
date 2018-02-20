@@ -26,7 +26,8 @@ var nodes = datapoints.map(function(el) {
       r = radiusScale(el.workers),
       d = {cluster: i, radius: r, 
         industry: el.industry, noc: el.noc, workers: el.workers,
-        clicked: 0, mouseovered: 0};
+        //clicked: 0, mouseovered: 0
+      };
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
 });
@@ -71,6 +72,8 @@ var svg = d3.select("body").append("svg")
   .append('g')
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
+// var clicked = 0;
+
 // Add the circles with tooltips
 var circles = svg.selectAll("circle")
     .data(nodes)
@@ -79,8 +82,8 @@ var circles = svg.selectAll("circle")
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
-      d.mouseovered = 1;
       // highlight the current circle
+      // clicked = 0;
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       div.transition()
          .duration(200)
@@ -88,38 +91,27 @@ var circles = svg.selectAll("circle")
          .style("height", "60px");
       // Display NOC and Industry
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
-        // Move div above mouse + radius
-        .style("left", (d3.event.pageX) - 100 + "px")
+        // Move div above mouse by "top" + radius and right by "left"
+        .style("left", (d3.event.pageX) + 20 + "px")
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
     })
     .on("mouseout", function(d) {
-      // if clicked-on, don't transition out
-      // if (d.clicked=1) return;
-      d.mouseovered = 0;
+      // clicked = 0;
       d3.select(this).attr("stroke", "none");
       div.transition()
          .duration(500)
          .style("opacity", 0);
     })
     .on("click", function(d) {
-      //clicked on or clicked off?
-      d.clicked = 1-d.clicked;
-      if (d.clicked=1) {
-        // clicked on
-        div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-          // Insert extra info to display on click
-          + "<br/><br/><br/><br/><br/>Workers: " + d.workers)
-          // Unfurl downward
-          .transition()
-          .duration(200)
-          .style("height", "200px");
-      }
-      if (d.clicked=0) {
-        // clicked off
-        div.transition()
-         .duration(500)
-         .style("opacity", 0);
-      }
+      // clicked = 1-clicked;
+      // if(clicked=1) {}
+      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
+        // Insert extra info to display on click
+        + "<br/><br/><br/><br/><br/>Workers: " + d.workers)
+        // Unfurl downward
+        .transition()
+        .duration(200)
+        .style("height", "200px");
     })
       
 
