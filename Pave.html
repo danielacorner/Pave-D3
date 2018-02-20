@@ -64,20 +64,23 @@
 	</head>
 	<body>
 		<div id="buttons">
-			<button id="industry">Industry split</button>
+			<button id="industry">Industry Split</button>
 			<button id="combine">Combine</button>
-			<button id="graph">Graph</button>
+			<button id="random">Shuffle</button>
+			<button id="graph">Graph Mode</button>
 		</div>
-		<svg id="chart" width="960" height="500"></svg>
+		<svg id="chart" width="960" height="500" class="chart"></svg>
 		
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 		
+    <h3> A Filter <div id="slider" type="range" min="1" max="100" value="100" class="slider"> </h3> 
+
 	  <!-- Now we include our visualization -->
 		<script src="PaveBubbles.js"></script>
 
-		    <h3> Workers 0 <input type="range" id="thersholdSlider" name="points" value = 0 min="0" max="10000"> 10,000 </h3>
-<!-- 		  <input id="myRange" type="range" min="1" max="100" value="50" class="slider"> -->
+
+		  
 		</div>
 
 	</body>

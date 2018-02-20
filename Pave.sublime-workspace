@@ -1,0 +1,773 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fil",
+				"filteredNodes"
+			],
+			[
+				"thr",
+				"thresh"
+			],
+			[
+				"minma",
+				"minMaxWorkers"
+			],
+			[
+				"minm",
+				"minMaxWage"
+			],
+			[
+				"al",
+				"alphaTarget"
+			],
+			[
+				"attr",
+				"attrTween"
+			],
+			[
+				"sca",
+				"scaleX"
+			],
+			[
+				"max",
+				"maxWorkers"
+			],
+			[
+				"min",
+				"minWorkers"
+			],
+			[
+				"forceY",
+				"forceYCombine"
+			],
+			[
+				"forceX",
+				"forceXCombine"
+			],
+			[
+				"c",
+				"cluster2"
+			],
+			[
+				"clus",
+				"clusters"
+			],
+			[
+				"w",
+				"workers"
+			],
+			[
+				"tick",
+				"ticked"
+			],
+			[
+				"rad",
+				"radius"
+			],
+			[
+				"NOC",
+				"NOC_403"
+			],
+			[
+				"arti",
+				"artist-pattern"
+			],
+			[
+				"radi",
+				"radiusScale"
+			],
+			[
+				"data",
+				"datapoints"
+			],
+			[
+				"nest",
+				"nestedIndustries"
+			],
+			[
+				"ins",
+				"industry"
+			],
+			[
+				"indus",
+				"industryMetrics"
+			],
+			[
+				"nes",
+				"nestedIndustries"
+			],
+			[
+				"loade",
+				"loadedRows"
+			],
+			[
+				"selec",
+				"selectAll"
+			],
+			[
+				"trans",
+				"transitionSVG"
+			],
+			[
+				"create",
+				"createSVG"
+			],
+			[
+				"creat",
+				"createForce"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"xax",
+				"xaxis"
+			],
+			[
+				"EDUC",
+				"EDUC_1"
+			],
+			[
+				"ed",
+				"educ_1"
+			],
+			[
+				"font",
+				"fontSize"
+			],
+			[
+				"filter",
+				"filtered_df"
+			],
+			[
+				"skillsLo",
+				"skillsLogi_range_slider"
+			],
+			[
+				"skillsLogi",
+				"skillsLogi-range-slider"
+			],
+			[
+				"log",
+				"logWageMedian"
+			],
+			[
+				"zax",
+				"zaxis_dropdown"
+			],
+			[
+				"yaxi",
+				"yaxis_dropdown"
+			],
+			[
+				"za",
+				"zaxis_type"
+			],
+			[
+				"scatter",
+				"scatter3d"
+			],
+			[
+				"yax",
+				"yaxis_dropdown"
+			],
+			[
+				"noc",
+				"nocWorkers"
+			],
+			[
+				"automa",
+				"automationRisk"
+			],
+			[
+				"xaxis",
+				"xaxis_dropdown"
+			],
+			[
+				"ya",
+				"yaxis_dropdown"
+			],
+			[
+				"yaxis",
+				"yaxis-dropdown"
+			],
+			[
+				"ind",
+				"industry"
+			],
+			[
+				"autom",
+				"automationRisk"
+			],
+			[
+				"wage",
+				"wageMedian"
+			],
+			[
+				"plot",
+				"plot_type"
+			],
+			[
+				"job_",
+				"job_dropdown_values"
+			],
+			[
+				"job",
+				"job_dropdown_value"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"diffe",
+				"differences-slider"
+			],
+			[
+				"xaxi",
+				"xaxis-dropdown"
+			],
+			[
+				"zoom",
+				"zoom_slider"
+			],
+			[
+				"nocWorker",
+				"nocWorkers_size"
+			],
+			[
+				"size",
+				"size_dropdown"
+			],
+			[
+				"column",
+				"column_cell"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 229.0,
+		"last_filter": "syntax javas",
+		"selected_items":
+		[
+			[
+				"syntax javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"syntax java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"syntax j",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"syntax",
+				"Set Syntax: Textile"
+			],
+			[
+				"syntax ht",
+				"Set Syntax: Python3"
+			],
+			[
+				"syntax js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"jav",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Anaconda: Vagrant Status"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: List Unmanaged Packages"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"javascript",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"html ",
+				"HTMLBeautify"
+			],
+			[
+				"htm",
+				"Set Syntax: HTML"
+			],
+			[
+				"anaconda",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"pyth",
+				"Set Syntax: Python"
+			],
+			[
+				"pytho",
+				"Set Syntax: Python3"
+			],
+			[
+				"hermes",
+				"Hermes: Connect Server"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"materia",
+				"Material Theme: Advanced configuration"
+			],
+			[
+				"package instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"material",
+				"Material Theme: Advanced configuration"
+			],
+			[
+				"syntax ",
+				"Set Syntax: YAML"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			]
+		],
+		"width": 704.0
+	},
+	"console":
+	{
+		"height": 130.0,
+		"history":
+		[
+			"install dash",
+			"pip_install dash",
+			"pip install plotly.dash",
+			"pip install",
+			"pip install plotly",
+			"pip install",
+			"import plotly",
+			"easy_install dash",
+			"import dash",
+			"?",
+			"help.dash",
+			"help",
+			"exit()",
+			"install plotly",
+			"install dash",
+			"pip install dash"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Daniel2/Documents/Pave-D3",
+		"/C/Users/Daniel2/Documents/Pave-D3/testing"
+	],
+	"file_history":
+	[
+		"/C/Users/Daniel2/Documents/Pave-D3/Pave.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/PaveBubbles.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/slider.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/testing/bubbles.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/forceCluster.js",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/todo - Civic Tech.txt",
+		"/C/Users/Daniel2/Documents/Pave-D3/ClusterIV.js",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/index_1.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/21_on.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/26_removing_values.html",
+		"/C/Users/Daniel2/Dropbox/computer lessons/right-click properties, file location.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/typing - look wide, notice the arrangement of the keys.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/Intro to Computers Speed Lessons/Chrome shortcuts & extensions/Chrome Extensions.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/Intro to Computers Intermediate/Chrome shortcuts & extensions/Research shortcuts.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/Intro to Computers Intermediate/Chrome shortcuts & extensions/Youtube shortcuts.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/Intro to Computers Intermediate/Chrome shortcuts & extensions/Chrome shortcuts.txt",
+		"/C/Users/Public/Desktop/R@1n.txt",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/index2.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/ClusterIV.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3figures1.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/server.bat",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/index_force-collapsible.html",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/python scraping/pythonexcelloop.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/python scraping/pythonexcelloop.py",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/index_old.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_05/03_csv_loading_example.html",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/Javascript Beautify/Default (Windows).sublime-keymap",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/27_data_join_with_key.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/22_on_combo_transition.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/25_adding_values.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/chapter_09/19_axes_static.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/server.bat",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/d3-book-master/chapter_07/04_scaled_plot_padding.html",
+		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/d3-book-master/chapter_07/02_scaled_plot.html",
+		"/C/Users/Daniel2/Downloads/Endless.Space.2.Digital.Deluxe.Edition.v1.0.37.S5-ALI213/Endless Space 2/Public/Localization/spanish/ES2_Localization_Locales.xml",
+		"/C/Users/Daniel2/Downloads/Endless.Space.2.Digital.Deluxe.Edition.v1.0.37.S5-ALI213/Endless Space 2/ALI213.ini",
+		"/C/Users/Daniel2/Downloads/d3-book-master/d3-book-master/chapter_05/04_creating_paragraphs.html",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/todo.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/drug discovery plotly",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/014-JobDutiesBulletList.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/012-JupyterFriendly.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/plotly dash pave pseudocode.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/test.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/002-4sliders.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/slider graph.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/state.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/005-zoomSlider.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/Plotly.sublime-project",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/python3-1.sublime-build",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/multiple inputs.py",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/001-Pseudocode.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/slider-graph.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/chain outputs and inputs.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/interactive visualizations.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/update graphs on hover.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/generic crossfilter recipe.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/dash app layout.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/multiple outputs.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/dash app layout.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/slider graph.py",
+		"/C/Users/Daniel2/Documents/PythonScripts/imageScraper.py",
+		"/C/Users/Daniel2/Documents/PythonScripts/pythonexcelloop.py",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Variables List.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/User Tests 24 Nov 2017.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/TODOviz.txt",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/pitch notes.txt",
+		"/C/Users/Daniel2/Downloads/PersonalGoalsProgressWorksheet.pdf",
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/6 - Employment/University-Program-NOC-Dict.txt",
+		"/C/Users/Daniel2/Documents/PythonScripts/scrapeNOCs.py",
+		"/C/Users/Daniel2/Anaconda3/Lib/site-packages/openpyxl/worksheet/worksheet.py",
+		"/C/Users/Daniel2/Documents/Python Scripts/scrape google images.py"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"forceYSeparate",
+			"forceXSeparateRandom",
+			"industryra",
+			"Separate",
+			"forceXSeparate",
+			"indust",
+			"dura",
+			"force",
+			"data",
+			"datapoints",
+			"Wage",
+			"width",
+			"minMaxWage",
+			"wage",
+			"nodes",
+			"circles",
+			"i",
+			"datapoi",
+			"minMaxWorkers",
+			"transition",
+			"scalelin",
+			"width",
+			"tick",
+			"forceYSeparate",
+			"forceXSeparate",
+			"r",
+			"l",
+			"d",
+			"8",
+			"circle",
+			"force",
+			"drag",
+			"cluster2",
+			"forceCluster",
+			"pack",
+			"forceCollide",
+			"ticked",
+			"color",
+			"collide",
+			"tick",
+			"incomingData",
+			"forces",
+			"force",
+			"node",
+			"ticked",
+			"\"",
+			"maxRadius",
+			"el",
+			"forceX",
+			"\"",
+			"//",
+			" ",
+			"=",
+			"length",
+			"each",
+			"d",
+			"circle",
+			"length",
+			"max",
+			"\\",
+			"data",
+			"loadedRows",
+			" ",
+			"trans",
+			"langu",
+			"axis_template_3d",
+			"job_desc_1",
+			"job_desc",
+			"nocWorkers",
+			"size_dropdown",
+			"size",
+			"COLORSCALE",
+			"colo",
+			"block",
+			"dfRowFromHover",
+			"= row",
+			"children",
+			"educ_3",
+			"educ_1",
+			"Li",
+			"display_molecule",
+			"duty_3",
+			"duty_2",
+			"duty_1",
+			"job_desc_1",
+			"JOB_DESCRIPTION_1",
+			"job_desc",
+			"job_name",
+			"html.P",
+			"P",
+			"job_desc_1",
+			"job_desc",
+			"job_desc_1",
+			"JOB_DESCRIPTION_1",
+			"job_desc",
+			"JOB_DESCRIPTION",
+			"jobTitlesList",
+			"JOB_DESCRIPTION",
+			"layout",
+			"\n",
+			"nocURL",
+			"job_name",
+			"hover",
+			"dropdown-di",
+			"slider",
+			"add_markers",
+			"skillsLogi_range_slider",
+			"add_markers",
+			"skillsLogi_range_slider",
+			"df",
+			" =",
+			"( ",
+			" =",
+			"filtered_df",
+			"add_markers",
+			"job_data[",
+			"add_markers",
+			"markers",
+			"job_dropdown",
+			"job_dropdown_values",
+			"markers",
+			"add_markers",
+			"add_mark",
+			"point_num",
+			"markers",
+			"add_markers",
+			"Logi",
+			"skillslogi_range"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 64.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.580024813896,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 207.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/python3-1.sublime-build",
+	"project": "Pave.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 194.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\""
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "C:\\Users\\Daniel2\\Dropbox\\SPC Data - Backup\\Python"
+		},
+		{
+			"path": "C:\\Users\\Daniel2\\Documents\\Test"
+		},
+		{
+			"path": "."
+		}
+	]
+}
