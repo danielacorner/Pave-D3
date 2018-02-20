@@ -4,7 +4,6 @@
 		<meta charset="utf-8">
 		<title>Pave: the Canadian Job Explorer</title>
 		<style type="text/css">
-
 		* {
 			font-family: "Helvetica Neue";
 		}
@@ -26,41 +25,60 @@
 		  border-radius: 12px;
 		  pointer-events: none;
 		}
+/*		.slider {
+		  position: relative;
+		  top: 0px;
+		  left: 0px;
+		  height: 0px;
+		  width: 0px;
+		}
 
+		.slider-tray {
+		  position: absolute;
+		  width: 100%;
+		  height: 6px;
+		  border: solid 1px #ccc;
+		  border-top-color: #aaa;
+		  border-radius: 4px;
+		  background-color: #f0f0f0;
+		  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+		}
+
+		.slider-handle {
+		  position: absolute;
+		  top: 3px;
+		}
+
+		.slider-handle-icon {
+		  width: 14px;
+		  height: 14px;
+		  border: solid 1px #aaa;
+		  position: absolute;
+		  border-radius: 10px;
+		  background-color: #fff;
+		  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+		  top: -7px;
+		  left: -7px;
+		}*/
 		</style>
 	</head>
 	<body>
-		<button id="industry">Industry split</button>
-		<button id="combine">Combine</button>
-
-		<div id="chart"></div>
-		<!-- import { forceCluster } from 'd3-force-cluster' -->
+		<div id="buttons">
+			<button id="industry">Industry split</button>
+			<button id="combine">Combine</button>
+			<button id="graph">Graph</button>
+		</div>
+		<svg id="chart" width="960" height="500"></svg>
+		
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-
-		<!-- A cluster force library -->
-    <!-- <script src="https://unpkg.com/d3-force-cluster@latest"></script> -->
-		<!-- <script  type="text/javascript" src="forceCluster.js"></script> -->
-
-		<!-- Now we include our visualization -->
+		
+	  <!-- Now we include our visualization -->
 		<script src="PaveBubbles.js"></script>
 
-	<!-- 	<script type="text/javascript">
-			d3.select("button")
-					.on("click", function() {
-							var popIndustry = Math.random() * (10 - 1) + 1; // random between 1 and 10
-							console.log("popping industry #", popIndustry);
+		    <h3> Workers 0 <input type="range" id="thersholdSlider" name="points" value = 0 min="0" max="10000"> 10,000 </h3>
+<!-- 		  <input id="myRange" type="range" min="1" max="100" value="50" class="slider"> -->
+		</div>
 
-							// nodes = nodes - nodes.cluster
-
-							//Exit…
-							node.exit()				//References the exit selection (a subset of the update selection)
-								.transition()		//Initiates a transition on the one element we're deleting
-								.duration(500)
-								.attr("x", w)		//Move past the right edge of the SVG
-								.remove();   		//Deletes this element from the DOM once transition is complete
-
-						});
-		</script> -->
 	</body>
 </html>

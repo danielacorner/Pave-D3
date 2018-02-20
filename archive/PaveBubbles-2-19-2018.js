@@ -25,10 +25,6 @@ var canvas = d3.select("#chart"),
 var m = 10; // number of distinct clusters
 
 var minMaxWorkers = d3.extent(datapoints, function(d) {return d.workers});
-var minMaxWage = d3.extent(datapoints, function(d) {return d.wage});
-console.log(minMaxWorkers);
-console.log(minMaxWage);
-
 
 var color = d3.scaleOrdinal(d3.schemeCategory10)
     .domain(d3.range(m));
@@ -38,25 +34,68 @@ var radiusScale = d3.scaleSqrt()
       .domain([10, minMaxWorkers[1]])
       .range([1,maxRadius]);
 
-// var x = d3.scaleLinear()
-//     .domain([0, 180])
-//     .range([0, 100000])
-//     .clamp(true);
 
+var slider = d3.select("#chart")
+      .append("svg")
+      .attr("height", 30)
+      .attr("width", 300);
+
+var x = d3.scaleLinear()
+    .domain([0, 180])
+    .range([0, 100000])
+    .clamp(true);
+
+// var slider = sliderG.append("svg")
+//     .attr("class", "slider")
+//     .attr("transform", "translate(" + margin.left + "," + sliderHeight / 2 + ")");
+
+slider.append("line")
+    .attr("class", "track")
+    .attr("x1", x.range()[0])
+    .attr("x2", x.range()[1])
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-inset")
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-overlay")
+    .call(d3.drag()
+        .on("start.interrupt", function() { slider.interrupt(); })
+        .on("start drag", function() { hue(x.invert(d3.event.x)); }));
+
+slider.insert("g", ".track-overlay")
+    .attr("class", "ticks")
+    .attr("transform", "translate(0," + 18 + ")")
+  .selectAll("text")
+  .data(x.ticks(10))
+  .enter().append("text")
+    .attr("x", x)
+    .attr("text-anchor", "middle")
+    .text(function(d) { return d + "°"; });
+
+var handle = slider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 9);
+
+// slider.transition() // Gratuitous intro!
+//     .duration(750)
+//     .tween("hue", function() {
+//       var i = d3.interpolate(0, 70);
+//       return function(t) { hue(i(t)); };
+//     });
+
+function hue(h) {
+  handle.attr("cx", x(h));
+  sliderSvg.style("background-color", d3.hsl(h, 0.8, 0.8));
+}
 
 // The largest node for each cluster.
 var clusters = new Array(m);
 
-// nodes: the data you want to display.
 var nodes = datapoints.map(function(el) {
   var i = el.cluster,
       r = radiusScale(el.workers),
-      d = {
-        cluster: i, radius: r, 
-        industry: el.industry, 
-        noc: el.noc, 
-        workers: el.workers,
-        wage: el.wage,
+      d = {cluster: i, radius: r, 
+        industry: el.industry, noc: el.noc, workers: el.workers,
+        //clicked: 0, mouseovered: 0
       };
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
@@ -68,7 +107,9 @@ var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
-    .strength(function(d) { return -7 * d.radius })
+    .strength(function(d) {
+    return -7 * d.radius
+  })
 var forceXSeparate = d3.forceX(function(d) {
     return ((width / m) * d.cluster - width/2) * 1
   }).strength(0.3)
@@ -80,8 +121,13 @@ var forceYSeparate = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
 
+
+// var forceCollide = d3.forceCollide()
+//     .radius(function(d) { return d.radius + 1; })
+//     .iterations(1);
 var simulation = d3.forceSimulation()
     .nodes(nodes)
+    // .gravity(.02)
     // .force("center", d3.forceCenter())
     .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
     .force("cluster", forceCluster)
@@ -95,10 +141,16 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
- // Append a group element to the svg & move to center
+// Append svg object to the body of the page
+// var svg = d3.select("body").append("svg")
+//     .attr("width", width)
+//     .attr("height", height)
 var svg = d3.select("#chart")
-      .append('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+  // Append a group element to the svg & move to center
+  .append('g')
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+// var clicked = 0;
 
 // Add the circles with tooltips
 var circles = svg.selectAll("circle")
@@ -176,6 +228,9 @@ drag_handler(circles);
 
 
 
+
+
+
 function tick() {
   circles
       .attr("cx", function(d) { return d.x; })
@@ -193,7 +248,6 @@ function forceCluster(alpha) {
   }
 }
 
-var graphMode = 0;
 
 // Buttons
 d3.select("#industry").on('click', function(d) {
@@ -205,110 +259,22 @@ d3.select("#industry").on('click', function(d) {
 })
 
 d3.select("#combine").on('click', function(d) {
-  if (graphMode==0) {
-    simulation
-      .force("x", forceXCombine).alpha(0.4)
-      .force("y", forceYCombine).alpha(0.4)
-      .alphaTarget(0.001)
-      .restart()
-  } else {
-    // simulation.alpha(0.01).restart();
-    graphMode = 0;
-    circles.transition()
-      .duration(250)
-      .attrTween("cx", function(d) {
-        var i = d3.interpolate(d.x, d.x/2);
-        return function(t) { return d.cx = i(t); };
-      })
-      .attrTween("cy", function(d) {
-        var i = d3.interpolate(d.y, d.y/2); 
-        return function(t) { return d.cy = i(t); };
-      });
-    simulation
-      .force("x", forceXCombine).alpha(0.4)
-      .force("y", forceYCombine).alpha(0.4)
-      .alphaTarget(0.001)
-      .restart()
-  }
+  simulation
+    .force("x", forceXCombine).alpha(0.4)
+    .force("y", forceYCombine).alpha(0.4)
+    .alphaTarget(0.001)
+    .restart()
 })
 
-//  data stores
-  var graph = {
-    nodes: nodes
-  }
-  var store = {
-    nodes: nodes
-  }
-
-//adjust threshold
-d3.select("#thresholdSlider")
-  .on('change', function(d) {
-    console.log("changing!")
-    // d3.selectAll("circle")
-    //   .filter(function (d) { return d.workers > 200 })
-
-    // // for (var i = 0; i < nodes.length; i++) {
-    // //   if (nodes[i].value < thresh) {nodes.splice(nodes[i]);}
-    // // }
-    // update();
-})
-
-//Restart the visualisation after any node and link changes
-
-function update() {
-
-  //  UPDATE
-  nodes = nodes.data(graph.nodes, function(d) { return d.noc })
-  //  EXIT
-  nodes.exit().remove();
-  //  ENTER
-  var newNode = nodes.enter().append("circle")
-    // .attr("class", "node")
-    .attr("r", function(d) { return d.radius })
-    .attr("fill", function(d) { return color(d.group) })
-    .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended)
-        )
-
-      //  ENTER + UPDATE
-  node = node.merge(newNode);
-  // var filteredCircles = nodes
-  //   .data(filteredNodes)
-  //   .exit().remove();
-  // simulation.start();
-}
-
-var minWorkers = d3.min(datapoints, function(d) {return d.workers}),
-    maxWorkers = d3.max(datapoints, function(d) {return d.workers}),
-    minWage = d3.min(datapoints, function(d) {return d.wage}),
-    maxWage = d3.max(datapoints, function(d) {return d.wage});
-// console.log("minWorkers"+minWorkers);
-// console.log(maxWorkers);
-// console.log(minWage);
-// console.log(maxWage);
-// var scaleX = d3.scaleLinear().domain(0, maxWorkers).range(0,width/2);
 d3.select("#graph").on('click', function(d) {
-  graphMode = 1-graphMode;
-  simulation.alpha(0); // cool to 0 degrees
-  circles.transition()
-    .duration(750)
-      //set x values
-     .attrTween("cx", function(d) { // not tuned correctly
-      // console.log(d.workers/maxWorkers); // the normalizer goes above 1?
-      var i = d3.interpolate(d.x, d.workers/maxWorkers*70 - width/2 + 40); // guessing
-      return function(t) { return d.cx = i(t); };
-    })
-     //set y values
-     .attrTween("cy", function(d) { // not tuned correctly
-    var i = d3.interpolate(d.y, d.wage/maxWage*250 - height/2 + 30);
-      return function(t) { return d.cy = i(t); };
-     });
-     // simulation.alphaTarget(0).restart();
+  circles
+    .attr("cx", 0);
 })
 
 // Sliders
+
+var minWorkers = minMaxWorkers[0],
+    maxWorkers = minMaxWorkers[1];
 
 
 // var svgSlider = d3.select("#slider")
