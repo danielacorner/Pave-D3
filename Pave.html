@@ -3,85 +3,40 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Pave: the Canadian Job Explorer</title>
-		<style type="text/css">
-		* {
-			font-family: "Helvetica Neue";
-		}
-		p, text {
-			font-size: 0.85em;
-		}
-		svg {
-			background: #f1f1f1;
-		}
-		div.tooltip {
-		  position: absolute;
-		  text-align: center;
-		  width: 200px;
-		  height: 60px;
-		  padding: 2px;
-		  font: 12px sans-serif;
-		  background: white;
-		  border: 3px solid black;
-		  border-radius: 12px;
-		  pointer-events: none;
-		}
-/*		.slider {
-		  position: relative;
-		  top: 0px;
-		  left: 0px;
-		  height: 0px;
-		  width: 0px;
-		}
+		<link rel="stylesheet" href="css/main.css">
 
-		.slider-tray {
-		  position: absolute;
-		  width: 100%;
-		  height: 6px;
-		  border: solid 1px #ccc;
-		  border-top-color: #aaa;
-		  border-radius: 4px;
-		  background-color: #f0f0f0;
-		  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
-		}
-
-		.slider-handle {
-		  position: absolute;
-		  top: 3px;
-		}
-
-		.slider-handle-icon {
-		  width: 14px;
-		  height: 14px;
-		  border: solid 1px #aaa;
-		  position: absolute;
-		  border-radius: 10px;
-		  background-color: #fff;
-		  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-		  top: -7px;
-		  left: -7px;
-		}*/
-		</style>
 	</head>
 	<body>
+		
+		<!-- include Jquery -->
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="js/slider.js"></script>
+
+		<!-- buttons -->
 		<div id="buttons">
 			<button id="industry">Industry Split</button>
 			<button id="combine">Combine</button>
 			<button id="random">Shuffle</button>
 			<button id="graph">Graph Mode</button>
 		</div>
+
+		<!-- the graphing canvas -->
 		<svg id="chart" width="960" height="500" class="chart"></svg>
 		
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-		
-    <h3> A Filter <div id="slider" type="range" min="1" max="100" value="100" class="slider"> </h3> 
-
+ 	
 	  <!-- Now we include our visualization -->
 		<script src="PaveBubbles.js"></script>
-
-
 		  
-		</div>
+  	<!-- filter slider   -->
+  	<div class="slider">
+  		<div class="emptyprogress"></div>
+    	<div class="progress"></div>
+    	<div class="indicator"></div>
+    </div>	
+
+		<input type="text" id="valueSlider" />
 
 	</body>
 </html>

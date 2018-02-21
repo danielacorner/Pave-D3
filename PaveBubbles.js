@@ -1,3 +1,5 @@
+var globaldata;
+
 d3.csv("NOC_403.csv", function(error, datapoints) {
 if (error) throw error;
 
@@ -23,11 +25,11 @@ var canvas = d3.select("#chart"),
 
 var m = 10; // number of distinct clusters
 
+// Toggle for graph mode = off
+var graphMode = 0;
+
 var minMaxWorkers = d3.extent(datapoints, function(d) {return d.workers});
 var minMaxWage = d3.extent(datapoints, function(d) {return d.wage});
-
-console.log(minMaxWorkers); // ping here
-console.log(minMaxWage);
 
 
 var color = d3.scaleOrdinal(d3.schemeCategory10)
@@ -40,6 +42,9 @@ var radiusScale = d3.scaleSqrt()
       .range([1,maxRadius]);
 
 
+
+
+
 // The largest node for each cluster.
 var clusters = new Array(m);
 
@@ -48,15 +53,22 @@ var nodes = datapoints.map(function(el) {
   var i = el.cluster,
       r = radiusScale(el.workers),
       d = {
-        cluster: i, radius: r, 
+        id: el.id,
+        cluster: i, 
+        radius: r, 
         industry: el.industry, 
         noc: el.noc, 
         workers: el.workers,
         wage: el.wage,
+        automationRisk: el.automationRisk,
       };
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
 });
+
+globaldata = nodes;
+
+
 
 
 // Forces for the simulation
@@ -73,8 +85,6 @@ var forceYSeparate = d3.forceY(function(d) {
     return ((height / 2) * d.cluster/50)
   }).strength(0.3)
 
-console.log('ping');
-console.log(Math.random());
 
 var forceXSeparateRandom = d3.forceX(function(d) {
     Math.random();
@@ -111,7 +121,7 @@ var svg = d3.select("#chart")
 // Add the circles with tooltips
 var circles = svg.selectAll("circle")
     .data(nodes)
-  .enter().append("circle")
+    .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -158,8 +168,9 @@ circles.transition()
     });
 
 
+// Enable dragging
 function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();    
+    if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.3).restart();    
     d.fx = d.x;
     d.fy = d.y;
 }
@@ -170,7 +181,7 @@ function dragged(d) {
 }
 
 function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
+    if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0);
     d.fx = null;
     d.fy = null;
 } 
@@ -183,7 +194,7 @@ var drag_handler = d3.drag()
 drag_handler(circles);
 
 
-
+// Update the positions each tick
 function tick() {
   circles
       .attr("cx", function(d) { return d.x; })
@@ -191,7 +202,7 @@ function tick() {
 }
 
 
-
+// force the circles toward their cluster nodes
 function forceCluster(alpha) {
   for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
     node = nodes[i];
@@ -201,7 +212,6 @@ function forceCluster(alpha) {
   }
 }
 
-var graphMode = 0;
 
 // Buttons
 d3.select("#industry").on('click', function(d) {
@@ -257,9 +267,9 @@ d3.select("#combine").on('click', function(d) {
   }
 
 //adjust threshold
-d3.select("#thresholdSlider")
-  .on('change', function(d) {
-    console.log("changing!")
+// d3.select("#thresholdSlider")
+//   .on('change', function(d) {
+//     console.log("changing!")
     // d3.selectAll("circle")
     //   .filter(function (d) { return d.workers > 200 })
 
@@ -267,9 +277,11 @@ d3.select("#thresholdSlider")
     // //   if (nodes[i].value < thresh) {nodes.splice(nodes[i]);}
     // // }
     // update();
-})
+// })
 
 //Restart the visualisation after any node and link changes
+
+//TODO: hook to filter slider
 
 function update() {
 
@@ -300,145 +312,158 @@ var minWorkers = d3.min(datapoints, function(d) {return d.workers}),
     maxWorkers = d3.max(datapoints, function(d) {return d.workers}),
     minWage = d3.min(datapoints, function(d) {return d.wage}),
     maxWage = d3.max(datapoints, function(d) {return d.wage});
-// console.log("minWorkers"+minWorkers);
-// console.log(maxWorkers);
-// console.log(minWage);
-// console.log(maxWage);
-// var scaleX = d3.scaleLinear().domain(0, maxWorkers).range(0,width/2);
+
+
+///////////////// Graph Mode ////////////////////
+
+// catch stored positions
+var positionsX = {};
+var positionsY = {};
+
 d3.select("#graph").on('click', function(d) {
+  // Toggle mode on or off
   graphMode = 1-graphMode;
+  console.log("graphMode = ", graphMode);
   
+////////////// GRAPH MODE ON!!! ////////////////
+  if (graphMode == 1) {
 
-  // Add the x Axis
-  svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+    // cool to 0 degrees
+    simulation.alpha(0); 
 
-  // text label for the x axis
-  svg.append("text")             
-      .attr("transform",
-            "translate(" + (width/2) + " ," + 
-                           (height +  20) + ")")
-      .style("text-anchor", "middle")
-      .text("Date");
+    // store previous positions
+    nodes.forEach(function(d) {
+      positionsX[d.id] = d.x;
+    });
+    nodes.forEach(function(d) {
+      positionsY[d.id] = d.y;
+    });
 
-  simulation.alpha(0); // cool to 0 degrees
-  circles.transition()
+    // transition circles to graph positions
+    circles.transition()
+      .duration(750)
+        // set x values
+      .attrTween("cx", function(d) { // transition x position to...
+        // console.log(d.workers/maxWorkers); // TODO: maxWorkers is not accurate
+        var i = d3.interpolate(d.x, d.workers/maxWorkers*70 - width/2 + 40);
+        return function(t) { return d.cx = i(t); };
+      })
+        // set y values
+      .attrTween("cy", function(d) { // TODO: maxWage is not accurate
+        var i = d3.interpolate(d.y, d.wage/maxWage*250 - height/2 + 30);
+        return function(t) { return d.cy = i(t); };
+       });
+       // set styles
+       //.styleTween(...automation risk colour scale)
+
+  }
+
+//////////////// Graph mode off. ///////////////////
+
+  // If turning off:
+  if (graphMode == 0) {
+    // Transition back to original positions
+    circles.transition()
     .duration(750)
-      // set x values
+      // set x, y values
     .attrTween("cx", function(d) { // transition x position to...
-      // console.log(d.workers/maxWorkers); // TODO: maxWorkers is not accurate
-      var i = d3.interpolate(d.x, d.workers/maxWorkers*70 - width/2 + 40);
+      // previous positions
+      var i = d3.interpolate(d.cx, positionsX[d.id])
       return function(t) { return d.cx = i(t); };
     })
-     // set y values
-    .attrTween("cy", function(d) { // TODO: maxWage is not accurate
-      var i = d3.interpolate(d.y, d.wage/maxWage*250 - height/2 + 30);
+    .attrTween("cy", function(d) { // transition y position to...
+      // previous positions
+      var i = d3.interpolate(d.cy, positionsY[d.id]);
       return function(t) { return d.cy = i(t); };
      });
-     // simulation.alphaTarget(0).restart();
-  var xaxis = svg.append("svg")
+     
+    // start the simulation after the transition delay
+    setTimeout(function() {
+      simulation.alphaTarget(0.3).restart();
+    }, 750);
+    
+    return;
+  }; // transition back to clusters
+  
+
+
+  // TODO: modularize graph mode in js folder
+  // $.getScript("./js/graph-module.js");
+
+
+
+  //////////////////////// Axes ////////////////////////////
+
+  // Set the ranges
+  var x = d3.scaleLinear().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
+
+  // Append an axis-holder group
+  var axisHolder = d3.select("body").append("g")
+            .attr("transform", "translate(" + (-width/2) + "," + (-height/2) + ")");
+
+
+  // Scale the range of the data
+  x.domain(d3.extent(globaldata, function(d) { return d.workers; })); //minmax workers
+  y.domain([0, 1]); //minmax risk d3.max(globaldata, function(d) { return d.automationRisk; })
+
+  console.log("hello ");
+
+  // Add the x Axis
+  axisHolder.append("g")
+      .attr("transform", "translate(" + 20 + "," + (height-30) + ")")
+      .call(d3.axisBottom(x).ticks(5));
+
+   // text label for the x axis
+  var textholder = axisHolder.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," + // margin.left
+                           height + 200 + ")") // top
+      .style("text-anchor", "middle")
+      .text("X Axis Title");
+
+  // Add the y Axis
+  axisHolder.append("g")
+      .attr("transform", "translate(" + 20 + "," + 0 + ")")
+      .call(d3.axisLeft(y).ticks(10));
+
+   // text label for the y axis
+  axisHolder.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Y Axis Title");   
+
+ 
+
+
 })
+
+// Filters
+
+var workersGreaterThan50 = nodes.filter(function(entry){
+  return entry.id > 500;
+})
+// console.log("workersGreaterThan50: ", workersGreaterThan50);
+
+circles.data(workersGreaterThan50).enter().append().exit().remove();
+
+// var reformattedNodes = datapoints.map(function(entry){
+//   return {
+//         cluster: el.cluster, 
+//         radius: radiusScale(el.workers), 
+//         industry: el.industry, 
+//         noc: el.noc, 
+//         workers: el.workers,
+//         wage: el.wage,
+//       };
+// });
 
 // Sliders
 
-////////// slider //////////
 
-var svgSlider = d3.select("#slider")
-    .append("svg")
-    .attr("width", width/4)// + margin.left + margin.right)
-    .attr("height", 20)
-
-var slider = svgSlider.append("g")
-    .attr("class", "slider")
-    .attr("transform", "translate(" + 0 + "," + height / 2 + ")");
-
-// Slider scale
-var x = d3.scaleLinear()
-    .domain([0, 180])
-    .range([0, 100000])
-    .clamp(true);
-
-
-slider.append("line")
-    .attr("class", "track")
-    .attr("x1", x.range()[0])
-    .attr("x2", x.range()[1])
-  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    .attr("class", "track-inset")
-  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    .attr("class", "track-overlay")
-    .call(d3.drag()
-        .on("start.interrupt", function() { slider.interrupt(); })
-        .on("start drag", function() { update(x.invert(d3.event.x)); }));
-
-slider.insert("g", ".track-overlay")
-    .attr("class", "ticks")
-    .attr("transform", "translate(0," + 18 + ")")
-  .selectAll("text")
-    .data(x.ticks(10))
-    .enter()
-    .append("text")
-    .attr("x", x)
-    .attr("y", 10)
-    .attr("text-anchor", "middle")
-    .text(function(d) { return d; }); //
-
-var handle = slider.insert("circle", ".track-overlay")
-    .attr("class", "handle")
-    .attr("r", 9);
-
-var label = slider.append("text")  
-    .attr("class", "label")
-    .attr("text-anchor", "middle")
-    .text(function(d) { return d; })
-    .attr("transform", "translate(0," + (-25) + ")")
-
-
-function update(h) {
-  // update position and text of label according to slider scale
-  handle.attr("cx", x(h));
-  label
-    .attr("x", x(h))
-    .text(h);
-
-  // filter data set and redraw plot
-  var newData = datapoints.filter(function(d) {
-    return d.automationRisk < h;
-  })
-  reassignForces(newData);
-}
-
-function reassignForces(freshData) {
-  
-  var locations = d3.selectAll("circle")
-    .data(datapoints);
-
-  // if filtered dataset has more circles than already existing, transition new ones in
-  locations.enter()
-    .append("circle")
-    .attr("class", "location")
-    .attr("cx", function(d) { return x(d.automationRisk); })
-    .attr("cy", height/2)
-    .style("fill", function(d) { return d3.hsl(d.automationRisk, 0.8, 0.8)})
-    .style("stroke", function(d) { return d3.hsl(d.automationRisk, 0.7, 0.7)})
-    .style("opacity", 0.5)
-    .attr("r", 8)
-      .transition()
-      .duration(400)
-      .attr("r", 25)
-        .transition()
-        .attr("r", 8);
-
-  // if filtered dataset has less circles than already existing, remove excess
-  locations.exit()
-    .remove();
-}
-
-// var x = d3.scaleLinear()
-//     .domain([minWorkers, maxWorkers])
-//     .range([0, width])
-//     .clamp(true);
 
 
 })
