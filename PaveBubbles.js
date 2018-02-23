@@ -1,35 +1,36 @@
-var globaldata;
+var graph, store; // graph is displayed, store holds all nodes
 
 d3.csv("NOC_403.csv", function(error, datapoints) {
 if (error) throw error;
 
+var nodeByID = {};
+
+datapoints.forEach(function(n) {
+  nodeByID[n.id] = n;
+});
+
+// g.links1.forEach(function(l) {
+//  l.sourceGroup = nodeByID[l.source].group.toString();
+//  l.targetGroup = nodeByID[l.target].group.toString();
+// });
+
+// graph = datapoints;
+// store = $.extend(true, {}, datapoints);
+
+
 var canvas = d3.select("#chart"),
+    margin = {left: 40, top: 40},
     width = canvas.attr("width"), // set chart dimensions
     height = canvas.attr("height"),
     // ctx = canvas.node().getContext("2d"),
-    maxRadius = 10; // Max circle radius
-
-// function update() {
-//   ctx.clearRect(0,0, width, height);
-
-//   ctx.beginPath();
-//   graph.nodes.forEach(drawNode);
-//   ctx.fill();
-// }
-
-// function drawNode(d) {
-//   ctx.moveTo(d.x, d.y);
-//   ctx.arc(d.x, d.y, r, 0, 2* Math.PI);
-// }
-// update();
+    maxRadius = 30; // Max circle radius
 
 var m = 10; // number of distinct clusters
 
+var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.workers })
+
 // Toggle for graph mode = off
 var graphMode = 0;
-
-var minMaxWorkers = d3.extent(datapoints, function(d) {return d.workers});
-var minMaxWage = d3.extent(datapoints, function(d) {return d.wage});
 
 
 var color = d3.scaleOrdinal(d3.schemeCategory10)
@@ -38,11 +39,8 @@ var color = d3.scaleOrdinal(d3.schemeCategory10)
 // Scale Circle Area = Number of Workers
 // Sqrt scale because radius of a cicrle
 var radiusScale = d3.scaleSqrt()
-      .domain([10, minMaxWorkers[1]])
+      .domain([10, maxWorkers])
       .range([1,maxRadius]);
-
-
-
 
 
 // The largest node for each cluster.
@@ -56,6 +54,7 @@ var nodes = datapoints.map(function(el) {
         id: el.id,
         cluster: i, 
         radius: r, 
+        job: el.job,
         industry: el.industry, 
         noc: el.noc, 
         workers: el.workers,
@@ -66,9 +65,10 @@ var nodes = datapoints.map(function(el) {
   return d;
 });
 
-globaldata = nodes;
 
-
+// store nodes for drawing axes in graph mode
+graph = nodes;
+store = nodes;
 
 
 // Forces for the simulation
@@ -77,18 +77,15 @@ var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
     .strength(function(d) { return -7 * d.radius })
-
 var forceXSeparate = d3.forceX(function(d) {
     return ((width / m) * d.cluster - width/2) * 1
   }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
     return ((height / 2) * d.cluster/50)
   }).strength(0.3)
-
-
 var forceXSeparateRandom = d3.forceX(function(d) {
     Math.random();
-    return ( (width / m) * 10 * Math.random() - width/2 ) //(width/m * d.cluster - width/2) *  
+    return ( (width / m) * 10 * Math.random() - width/2 )
   }).strength(0.4)
 var forceYSeparateRandom = d3.forceY(function(d) {
     return ( Math.random() * (height/2) * d.cluster/25 - 25 )
@@ -98,8 +95,10 @@ var forceYSeparateRandom = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
 
+
+// The force simulation
 var simulation = d3.forceSimulation()
-    .nodes(nodes)
+    .nodes(store)
     // .force("center", d3.forceCenter())
     .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
     .force("cluster", forceCluster)
@@ -116,7 +115,24 @@ var div = d3.select("body").append("div")
  // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
       .append('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+      .attr('transform', 'translate('+width/2+','+height/2+')');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add the circles with tooltips
 var circles = svg.selectAll("circle")
@@ -133,7 +149,7 @@ var circles = svg.selectAll("circle")
          .duration(200)
          .style("opacity", .9)
          .style("height", "60px");
-      // Display NOC and Industry
+      // Display NOC, Industry
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
@@ -151,12 +167,18 @@ var circles = svg.selectAll("circle")
       // if(clicked=1) {}
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
         // Insert extra info to display on click
-        + "<br/><br/><br/><br/><br/>Workers: " + d.workers)
+        + "<br/><br/>"+ d.job +"<br/><br/>"
+        + "Automation Risk: " + d.automationRisk 
+        + "<br/><br/>Workers: " + d.workers)
         // Unfurl downward
         .transition()
         .duration(200)
         .style("height", "200px");
     })
+
+console.log(typeof(circles));
+console.log(circles);
+console.log(circles.nodes);
       
 // transition in radii from 0
 circles.transition()
@@ -258,61 +280,17 @@ d3.select("#combine").on('click', function(d) {
   }
 })
 
-//  data stores
-  var graph = {
-    nodes: nodes
-  }
-  var store = {
-    nodes: nodes
-  }
 
-//adjust threshold
-// d3.select("#thresholdSlider")
-//   .on('change', function(d) {
-//     console.log("changing!")
-    // d3.selectAll("circle")
-    //   .filter(function (d) { return d.workers > 200 })
-
-    // // for (var i = 0; i < nodes.length; i++) {
-    // //   if (nodes[i].value < thresh) {nodes.splice(nodes[i]);}
-    // // }
-    // update();
-// })
-
-//Restart the visualisation after any node and link changes
-
-//TODO: hook to filter slider
-
-function update() {
-
-  //  UPDATE
-  nodes = nodes.data(graph.nodes, function(d) { return d.noc })
-  //  EXIT
-  nodes.exit().remove();
-  //  ENTER
-  var newNode = nodes.enter().append("circle")
-    // .attr("class", "node")
-    .attr("r", function(d) { return d.radius })
-    .attr("fill", function(d) { return color(d.group) })
-    .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended)
-        )
-
-      //  ENTER + UPDATE
-  node = node.merge(newNode);
-  // var filteredCircles = nodes
-  //   .data(filteredNodes)
-  //   .exit().remove();
-  // simulation.start();
-}
-
+// TODO: maxWorkers, maxWage not working
 var minWorkers = d3.min(datapoints, function(d) {return d.workers}),
-    maxWorkers = d3.max(datapoints, function(d) {return d.workers}),
     minWage = d3.min(datapoints, function(d) {return d.wage}),
-    maxWage = d3.max(datapoints, function(d) {return d.wage});
+    maxWage = 116.18;//d3.max(datapoints, function(d) {return d.wage});
 
+
+// ////////////////// FREEZE ////////////////////////
+d3.select("#freeze").on('click', function(d) {
+  simulation.stop();
+});
 
 ///////////////// Graph Mode ////////////////////
 
@@ -322,14 +300,16 @@ var positionsY = {};
 
 d3.select("#graph").on('click', function(d) {
   // Toggle mode on or off
+      simulation.alpha(0); 
+
   graphMode = 1-graphMode;
   console.log("graphMode = ", graphMode);
   
-////////////// GRAPH MODE ON!!! ////////////////
+  ////////////// GRAPH MODE ON!!! ////////////////
   if (graphMode == 1) {
 
     // cool to 0 degrees
-    simulation.alpha(0); 
+    simulation.stop();
 
     // store previous positions
     nodes.forEach(function(d) {
@@ -344,13 +324,12 @@ d3.select("#graph").on('click', function(d) {
       .duration(750)
         // set x values
       .attrTween("cx", function(d) { // transition x position to...
-        // console.log(d.workers/maxWorkers); // TODO: maxWorkers is not accurate
-        var i = d3.interpolate(d.x, d.workers/maxWorkers*70 - width/2 + 40);
+        var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.95 - width/2 + 10);
         return function(t) { return d.cx = i(t); };
       })
         // set y values
-      .attrTween("cy", function(d) { // TODO: maxWage is not accurate
-        var i = d3.interpolate(d.y, d.wage/maxWage*250 - height/2 + 30);
+      .attrTween("cy", function(d) {
+        var i = d3.interpolate(d.y, d.wage/maxWage*height*0.95 - height/2 + 10);
         return function(t) { return d.cy = i(t); };
        });
        // set styles
@@ -358,7 +337,7 @@ d3.select("#graph").on('click', function(d) {
 
   }
 
-//////////////// Graph mode off. ///////////////////
+  //////////////// Graph mode off. ///////////////////
 
   // If turning off:
   if (graphMode == 0) {
@@ -398,34 +377,34 @@ d3.select("#graph").on('click', function(d) {
   var x = d3.scaleLinear().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
 
-  // Append an axis-holder group
+
+  // Add an axis-holder group to the body
   var axisHolder = d3.select("body").append("g")
             .attr("transform", "translate(" + (-width/2) + "," + (-height/2) + ")");
 
+  // Scale the range of the data (using globally-stored nodes)
+  // TODO: modularize for axis selection
+  x.domain([0, maxWorkers]); //minmax workers
+  y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
 
-  // Scale the range of the data
-  x.domain(d3.extent(globaldata, function(d) { return d.workers; })); //minmax workers
-  y.domain([0, 1]); //minmax risk d3.max(globaldata, function(d) { return d.automationRisk; })
-
-  console.log("hello ");
-
-  // Add the x Axis
+  // Add the X Axis
   axisHolder.append("g")
-      .attr("transform", "translate(" + 20 + "," + (height-30) + ")")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x).ticks(5));
 
+  // Add the Y Axis
+  axisHolder.append("g")
+      .attr("class", "y axis")
+      .call(d3.axisLeft(y).ticks(5));
+
    // text label for the x axis
-  var textholder = axisHolder.append("text")
+  axisHolder.append("text")
       .attr("transform",
             "translate(" + (width/2) + " ," + // margin.left
-                           height + 200 + ")") // top
+                           height + ")") // top
       .style("text-anchor", "middle")
       .text("X Axis Title");
-
-  // Add the y Axis
-  axisHolder.append("g")
-      .attr("transform", "translate(" + 20 + "," + 0 + ")")
-      .call(d3.axisLeft(y).ticks(10));
 
    // text label for the y axis
   axisHolder.append("text")
@@ -436,34 +415,302 @@ d3.select("#graph").on('click', function(d) {
       .style("text-anchor", "middle")
       .text("Y Axis Title");   
 
- 
-
-
 })
 
-// Filters
-
-var workersGreaterThan50 = nodes.filter(function(entry){
-  return entry.id > 500;
-})
-// console.log("workersGreaterThan50: ", workersGreaterThan50);
-
-circles.data(workersGreaterThan50).enter().append().exit().remove();
-
-// var reformattedNodes = datapoints.map(function(entry){
-//   return {
-//         cluster: el.cluster, 
-//         radius: radiusScale(el.workers), 
-//         industry: el.industry, 
-//         noc: el.noc, 
-//         workers: el.workers,
-//         wage: el.wage,
-//       };
-// });
-
-// Sliders
 
 
 
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////// Filters ////////////////////////////////////
+
+
+//////////////// Filter Slider //////////////////////
+
+var sliderSVG = d3.select("#slider").append("svg")
+  .attr("width", 250)
+  .attr("height", 50)
+
+// filtered IDs
+filterList = [];
+
+function filterNodes(workersAmt) { // return nodes with workers > "workersAmt"
+  
+  nodes.forEach(function(d) {
+    // put you on the list if condition satisfied
+    if (d.workers < workersAmt && !filterList.includes(d.id)) { 
+      filterList.push(d.id); }
+    // take you off the list if condition satisfied
+    if (d.workers >= workersAmt && filterList.includes(d.id)) { 
+      filterList.splice(filterList.indexOf(d.id), 1); }
+    // // if you're not on the list & you're filtered, do nothing
+    // if (!filterList.includes(d.id) && d.filtered) { return; }
+    // // if you're on the list & you're not filtered, filta yoself
+    // else if (filterList.includes(d.id) && !d.filtered) {
+  });
+
+  //  add and remove nodes from data based on filters
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!filterList.includes(n.id) && !graph.includes(n)) {
+      // n.filtered = false; // put you on the graph (start graph empty? or check)
+      graph.push($.extend(true, {}, n));
+    } else if (filterList.includes(n.id) && graph.includes(n)) {
+      // n.filtered = true;
+      graph.forEach(function(d, i) {
+        if (n.id === d.id) {
+          graph.splice(i, 1);
+          }
+        });
+      }
+    });
+
+  return graph;
+
+}
+
+// Initial values on page load = ">= min workers"
+filterNodes(0);//d3.min(datapoints, function(d) { return d.workers }));
+
+
+// var node = circles.selectAll(".node");
+// console.log("node: ", node, typeof(node));
+
+var sliderScale = d3.scaleLinear()
+  .domain([0, maxWorkers]) // Red component goes from 0 to 255
+  .range([0, 200]) // Width of slider is 200 px
+  .clamp(true);
+
+
+
+var slider = sliderSVG.append("g")
+  .attr("class", "slider")
+  .attr("transform", "translate(" + 25 + "," + 25 + ")");
+
+slider.append("line")
+  .attr("class", "track")
+  .attr("x1", sliderScale.range()[0])
+  .attr("x2", sliderScale.range()[1])
+  .select(function() {
+    return this.parentNode;
+  })
+  .append("line")
+  .attr("x1", sliderScale.range()[0])
+  .attr("x2", sliderScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  })
+  .append("line")
+  .attr("x1", sliderScale.range()[0])
+  .attr("x2", sliderScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      slider.interrupt();
+    })
+    .on("start drag", function() {
+      // console.log("filtering for workers > ", sliderScale.invert(d3.event.x));
+      updateNodes(sliderScale.invert(d3.event.x));
+    }));
+
+var handle = slider.insert("circle", ".track-overlay")
+  .attr("class", "handle")
+  .attr("r", 9);
+
+
+
+
+function updateNodes(h) {
+  //  UPDATE
+
+
+  console.log("circles pre-update:", circles);
+
+
+//  UPDATE
+  circles = circles.data(graph, function(d) { return d.id;});
+  
+  console.log("circles post-update:", circles);
+
+  //  EXIT
+  circles.exit().remove();
+
+  console.log("circles post-exit:", circles);
+
+
+  console.log("circles enter:", circles.enter());
+  //  ENTER
+  var newCircles = circles.enter().append("circle")
+    // .attr("class", "node")
+    .attr("r", function(d) {return d.radius})
+    .attr("fill", function(d) {return color(d.cluster);})
+
+  drag_handler(newCircles);
+
+  console.log("circles pre-merge:", circles);
+
+
+  //  ENTER + UPDATE
+  circles = circles.merge(newCircles);
+
+
+  console.log("circles post-merge:", circles);
+
+
+
+  // var newCircles = circles.selectAll("circle").data(filterNodes(h));
+  //  EXIT
+  // newCircles.exit().attr("r",0);
+  // newCircles.exit().remove();
+  console.log("newCircles exit:", newCircles.exit());
+
+
+
+
+
+  // use the slider handle
+  handle.attr("cx", sliderScale(h));
+
+  //  UPDATE
+  // circles = circles.data(filterNodes(h));
+
+  simulation.nodes(filterNodes(h))
+    .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+
+  // drag_handler(enteringCircles);
+
+  simulation.alphaTarget(0.3).restart();
+  // console.log("filterNodes:", filterNodes(h));
+  // console.log("circles pre-remove:", circles);
+
+  // circles.exit().remove();
+
+  // console.log("circles post-remove:", circles);
+
+  // EXIT transition
+  // var exitTransition = d3.transition().each(function() {
+  //   circles.exit()
+  //   .transition().duration(200)
+  //     .attr("r", function(d) { return d.radius + 2 })
+  //     .remove();
+  // })
+
+
+
+  // TODO: as the slider handle moves, the circles 
+  //       change positions & the tooltips don't update
+
+  // var enterTransition = exitTransition.transition().each(function() {
+  //   circles.enter().append("circle")
+  //   .transition().duration(200)
+  //     .attr("r", function(d) { return d.radius + 2 })
+  //     ;
+  // })
+
+
+
+
+
+  // var enteringCircles;
+  // ENTER transition -- uses selection.transition.transition to chain transitions (redundant?)
+  // var enterTransition = exitTransition.transition().each(function() {
+    // newCircles.enter().append("circle")
+
+    // Add the circles with tooltips
+    // enteringCircles = svg.selectAll("circle")
+
+    // circles = circles.data(filterNodes(h));
+    // var exitTransition = svg.selectAll("circle").data(filterNodes(h)).exit().remove();
+
+    // var enterTransition = exitTransition.transition().each(function(){
+    
+
+
+      // var test1 = sliderSVG.append("circle")
+      //   .attr("r",500).style("fill", "red")
+      //   .attr("cx", 20);
+
+      // test1.remove();
+
+
+
+
+
+
+    // TODO: transition entering circles in
+    // TRY: don't exit & remove, just transition radius to 0??!
+
+
+
+
+
+
+
+
+
+
+
+    // circles = circles.merge(newCircles);
+
+
+      // .style("fill", function(d) { return color(d.cluster); })
+      // .attr("r", 100)
+      // .attr("cx", 100)
+      // .transition()
+      //   .duration(500)
+      //   .delay(function(d, i) { return i * 2})
+      //   .attrTween("r", function(d) {
+      //     var i = d3.interpolate(0, d.radius);
+      //     return function(t) { return d.radius = i(t); };
+      //   });
+  // })
+
+  // transition in radii from 0
+
+
+  // circles.transition()
+  //   .duration(1000)
+  //   .delay(function(d, i) { return i * 2})
+  //   .attr("r", function(d) {return d.radius});
+
+
+    // .attrTween("r", function(d) {
+    //   var i = d3.interpolate(0, d.radius); //d.radius not accurate -- fetch from store?
+    //   return function(t) { return d.radius = i(t); };
+    // });
+
+
+  // newCircles.enter().append("circle").transition()
+  //   .duration(750)
+  //   .delay(function(d, i) { return i * 2})
+  //   .attrTween("r", function(d) {
+  //     var i = d3.interpolate(0, d.radius);
+  //     return function(t) { return d.radius = i(t); };
+  //   });
+
+    // .attr("class", "node")
+    // .attr("r", function(d) { return d.radius })
+    // .attr("fill", function(d) { return color(d.group) })
+
+
+  //  ENTER + UPDATE
+  // circles = circles.merge(newCircles);
+
+
+}
 
 })

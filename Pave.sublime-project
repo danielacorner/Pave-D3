@@ -11,13 +11,13 @@
 	"folders":
 	[
 		{
+			"path": "."
+		},
+		{
 			"path": "C:\\Users\\Daniel2\\Dropbox\\SPC Data - Backup\\Python"
 		},
 		{
 			"path": "C:\\Users\\Daniel2\\Documents\\Test"
-		},
-		{
-			"path": "."
 		}
 	]
 }
