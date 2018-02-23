@@ -417,21 +417,7 @@ d3.select("#graph").on('click', function(d) {
 
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////////////////////////////// Filters ////////////////////////////////////
-
 
 //////////////// Filter Slider //////////////////////
 
@@ -521,10 +507,8 @@ function filterNodes(workersMin) { // return nodes with workers > "workersMin"
   return graph;
 }
 
-// Initial values on page load = ">= min workers"
-// filterNodes(0);//d3.min(datapoints, function(d) { return d.workers }));
-
-
+// Initial values on page load
+// filterNodes(0);
 
 //  general update pattern for updating the graph
 function updateNodes(h) {
@@ -533,7 +517,14 @@ function updateNodes(h) {
   //  UPDATE
   circles = circles.data(filterNodes(h), function(d) { return d.id});
   // EXIT
-  circles.exit().remove();
+  circles.exit().transition().duration(300)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+    .attr("r", function(d) { return d.radius * 1.5 + 5 })
+    .attrTween("opacity", function(d) {
+        var i = d3.interpolate(1, 0);
+        return function(t) { return d.opacity = i(t); };
+    })
+    .remove();
   // ENTER
   var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
