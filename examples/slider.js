@@ -57,3 +57,87 @@ function changeRed(h) {
   handle.attr("cx", sliderScale(h));
   fillCircle(h);
 }
+
+
+
+
+
+
+
+
+
+
+filterNodes(0);//d3.min(datapoints, function(d) { return d.workers }));
+
+  // circles.data(graph);
+
+
+function updateNodes(h) {
+console.log("circles: ",circles);
+
+  // use the slider handle
+  handle.attr("cx", sliderScale(h));
+
+  //  UPDATE
+  circles = circles.data(filterNodes(h));
+
+  circles.exit().remove();
+  
+  var newCircles = circles.enter().append("circle")
+    .attr("r", 0) // start at 0 radius and transition in
+    .style("fill", function(d) { return color(d.cluster); })
+    // Tooltips
+    .on("mouseover", function(d) {
+      // highlight the current circle
+      // clicked = 0;
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      div.transition()
+         .duration(200)
+         .style("opacity", .9)
+         .style("height", "60px");
+      // Display NOC, Industry
+      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
+        // Move div above mouse by "top" + radius and right by "left"
+        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("top", (d3.event.pageY - 80) - d.radius + "px");
+    })
+    .on("mouseout", function(d) {
+      // clicked = 0;
+      d3.select(this).attr("stroke", "none");
+      div.transition()
+         .duration(500)
+         .style("opacity", 0);
+    })
+    .on("click", function(d) {
+      // clicked = 1-clicked;
+      // if(clicked=1) {}
+      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
+        // Insert extra info to display on click
+        + "<br/><br/>"+ d.job +"<br/><br/>"
+        + "Automation Risk: " + d.automationRisk 
+        + "<br/><br/>Workers: " + d.workers)
+        // Unfurl downward
+        .transition()
+        .duration(200)
+        .style("height", "200px");
+    });
+
+  circles = circles.merge(newCircles);
+
+  simulation.nodes(circles)
+    .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+
+  // circles.data(newCircles);//.enter().append().exit().remove();
+
+  // drag_handler(enteringCircles);
+
+  simulation.alphaTarget(0.3).restart();
+
+}
+
+})
