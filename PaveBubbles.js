@@ -78,22 +78,40 @@ var forceYCombine = d3.forceY().strength(.3)
 var forceGravity = d3.forceManyBody()
     .strength(function(d) { return -7 * d.radius })
 var forceXSeparate = d3.forceX(function(d) {
-    return ((width / m) * d.cluster - width/2) * 1
+    return ((width / m) * d.cluster - width/2 - 25) * 1.1
   }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
-    return ((height / 2) * d.cluster/50)
+    return ((height / 2) * d.cluster/40 - 20)
   }).strength(0.3)
 var forceXSeparateRandom = d3.forceX(function(d) {
     Math.random();
     return ( (width / m) * 10 * Math.random() - width/2 )
   }).strength(0.4)
 var forceYSeparateRandom = d3.forceY(function(d) {
-    return ( Math.random() * (height/2) * d.cluster/25 - 25 )
+    return ( Math.random() * (height/2) - 125 )
   }).strength(0.3)
 // var forceX5By2 = d3.forceX(function(d) {
 //     if (d.cluster/5<1) return d.cluster/5;
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
+
+// force the circles toward their cluster nodes
+function forceCluster(alpha) {
+  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+    node = nodes[i];
+    cluster = clusters[node.cluster];
+    node.vx -= (3*node.x - cluster.x) * k;
+    node.vy -= (3*node.y - cluster.y) * k;
+  }
+}
+// Update the positions each tick
+function tick() {
+  circles
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+}
+
+
 
 
 // The force simulation
@@ -116,13 +134,6 @@ var div = d3.select("body").append("div")
 var svg = d3.select("#chart")
       .append('g')
       .attr('transform', 'translate('+width/2+','+height/2+')');
-
-
-
-
-
-
-
 
 
 
@@ -176,11 +187,9 @@ var circles = svg.selectAll("circle")
         .style("height", "200px");
     })
 
-console.log(typeof(circles));
-console.log(circles);
-console.log(circles.nodes);
+
       
-// transition in radii from 0
+// on start, transition in radii from 0
 circles.transition()
     .duration(1000)
     .delay(function(d, i) { return i * 2})
@@ -216,23 +225,7 @@ var drag_handler = d3.drag()
 drag_handler(circles);
 
 
-// Update the positions each tick
-function tick() {
-  circles
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-}
 
-
-// force the circles toward their cluster nodes
-function forceCluster(alpha) {
-  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
-    node = nodes[i];
-    cluster = clusters[node.cluster];
-    node.vx -= (3*node.x - cluster.x) * k;
-    node.vy -= (3*node.y - cluster.y) * k;
-  }
-}
 
 
 // Buttons
@@ -260,23 +253,27 @@ d3.select("#combine").on('click', function(d) {
       .alphaTarget(0.001)
       .restart()
   } else {
-    // simulation.alpha(0.01).restart();
-    graphMode = 0;
+    graphMode = 0; // turn off graph mode
+    // transition circles back to middle for 400 ms
+    // but restart the simulation at 250 ms (looks ok,
+    // could make similar to graphMode on/off transition) 
     circles.transition()
-      .duration(250)
+      .duration(400)
       .attrTween("cx", function(d) {
-        var i = d3.interpolate(d.x, d.x/2);
+        var i = d3.interpolate(d.cx, 0);
         return function(t) { return d.cx = i(t); };
       })
       .attrTween("cy", function(d) {
-        var i = d3.interpolate(d.y, d.y/2); 
+        var i = d3.interpolate(d.cy, 0); 
         return function(t) { return d.cy = i(t); };
       });
-    simulation
-      .force("x", forceXCombine).alpha(0.4)
-      .force("y", forceYCombine).alpha(0.4)
-      .alphaTarget(0.001)
-      .restart()
+    setTimeout(function() {  
+	    simulation
+	      .force("x", forceXCombine).alpha(0.4)
+	      .force("y", forceYCombine).alpha(0.4)
+	      .alphaTarget(0.001)
+	      .restart()
+	  }, 250);
   }
 })
 
