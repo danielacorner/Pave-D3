@@ -703,6 +703,7 @@ d3.select("#dropdown1").on('click', function(){
         +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
           +" to "+ d3.max(nodes, function(d){ return d[dropdown1.value] }) +")";
   
+    sliderDropdown.remove();
     var sliderDropdown = sliderDropdownSVG.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + 25 + "," + 25 + ")");
@@ -734,6 +735,7 @@ d3.select("#dropdown1").on('click', function(){
         updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
       }));
 
+    handleDropdown.remove();
     var handleDropdown = sliderDropdown.insert("circle", ".track-overlay")
       .attr("class", "handle")
       .attr("r", 9);
