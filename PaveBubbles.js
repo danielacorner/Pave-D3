@@ -16,10 +16,9 @@ if (error) throw error;
 
 // graph = datapoints;
 // store = $.extend(true, {}, datapoints);
-
+var margin = {top: 20, right: 20, bottom: 50, left: 50};
 
 var canvas = d3.select("#chart"),
-    margin = {left: 40, top: 40},
     width = canvas.attr("width"), // set chart dimensions
     height = canvas.attr("height"),
     // ctx = canvas.node().getContext("2d"),
@@ -200,7 +199,7 @@ circles.transition()
 
 
 // Enable dragging
-function dragstarted(d) {
+function dragstarted(d) { // no dragging in graph mode
     if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.3).restart();    
     d.fx = d.x;
     d.fy = d.y;
@@ -233,7 +232,7 @@ d3.select("#industry").on('click', function(d) {
   simulation
     .force("x", forceXSeparate).alpha(0.8)
     .force("y", forceYSeparate).alpha(0.8)
-    .alphaTarget(0.001)
+    .alphaTarget(0.001) // after click, cool down to minimal temperature
     .restart()
 })
 
@@ -297,12 +296,12 @@ var positionsY = {};
 
 d3.select("#graph").on('click', function(d) {
   // Toggle mode on or off
-      simulation.alpha(0); 
+      simulation.alpha(0); //cool to 0 degrees
 
   graphMode = 1-graphMode;
   console.log("graphMode = ", graphMode);
   
-  ////////////// GRAPH MODE ON!!! ////////////////
+  ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
 
     // cool to 0 degrees
@@ -321,16 +320,61 @@ d3.select("#graph").on('click', function(d) {
       .duration(750)
         // set x values
       .attrTween("cx", function(d) { // transition x position to...
-        var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.95 - width/2 + 10);
+        var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left);
         return function(t) { return d.cx = i(t); };
       })
         // set y values
       .attrTween("cy", function(d) {
-        var i = d3.interpolate(d.y, d.wage/maxWage*height*0.95 - height/2 + 10);
+        var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2);
         return function(t) { return d.cy = i(t); };
        });
        // set styles
        //.styleTween(...automation risk colour scale)
+
+	//////////////////////// Axes ////////////////////////////
+
+	// Set the ranges
+	var x = d3.scaleLinear().range([0, width]);
+	var y = d3.scaleLinear().range([height, 0]);
+
+
+	// Scale the range of the data (using globally-stored nodes)
+	// TODO: modularize for axis selection
+	x.domain([0, maxWorkers]); //minmax workers
+	y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
+
+	// Add an axis-holder group
+	axisG = svg.append("g")
+
+	// Add the X Axis
+	axisX = axisG.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate("+ (-width/2+margin.left) +","
+	       + (height/2-margin.bottom) + ")")
+	      .call(d3.axisBottom(x).ticks(5));
+
+	 // text label for the x axis
+	axisG.append("text")
+	      .attr("transform","translate(" + (margin.left) + ","
+	                    + (height/2-10) + ")") // top
+	      .style("text-anchor", "middle")
+	      .text("Number of Jobs");
+
+	// Add the Y Axis
+	axisY = axisG.append("g")
+	      .attr("class", "y axis")
+	      .attr("transform", "translate("+ (-width/2+margin.left) +"," 
+	      	+ (-height/2-margin.bottom) + ")")
+	      .call(d3.axisLeft(y).ticks(5));
+
+	 // text label for the y axis
+	axisG.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", -width/2)
+	      .attr("x", 0)
+	      .attr("dy", "1em")
+	      .style("text-anchor", "middle")
+	      .text("Risk of Machine Automation");   
 
   }
 
@@ -338,6 +382,10 @@ d3.select("#graph").on('click', function(d) {
 
   // If turning off:
   if (graphMode == 0) {
+
+  	// remove axes
+  	axisG.remove();
+
     // Transition back to original positions
     circles.transition()
     .duration(750)
@@ -366,53 +414,11 @@ d3.select("#graph").on('click', function(d) {
   // TODO: modularize graph mode in js folder
   // $.getScript("./js/graph-module.js");
 
-
-
-  //////////////////////// Axes ////////////////////////////
-
-  // Set the ranges
-  var x = d3.scaleLinear().range([0, width]);
-  var y = d3.scaleLinear().range([height, 0]);
-
-
-  // Add an axis-holder group to the body
-  var axisHolder = d3.select("body").append("g")
-            .attr("transform", "translate(" + (-width/2) + "," + (-height/2) + ")");
-
-  // Scale the range of the data (using globally-stored nodes)
-  // TODO: modularize for axis selection
-  x.domain([0, maxWorkers]); //minmax workers
-  y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
-
-  // Add the X Axis
-  axisHolder.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(5));
-
-  // Add the Y Axis
-  axisHolder.append("g")
-      .attr("class", "y axis")
-      .call(d3.axisLeft(y).ticks(5));
-
-   // text label for the x axis
-  axisHolder.append("text")
-      .attr("transform",
-            "translate(" + (width/2) + " ," + // margin.left
-                           height + ")") // top
-      .style("text-anchor", "middle")
-      .text("X Axis Title");
-
-   // text label for the y axis
-  axisHolder.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0)
-      .attr("x",0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Y Axis Title");   
-
 })
+
+
+
+
 
 ///////////////////////////////// Filters ////////////////////////////////////
 
@@ -504,8 +510,6 @@ function filterNodes(workersMin) { // return nodes with workers > "workersMin"
   return graph;
 }
 
-// Initial values on page load
-// filterNodes(0);
 
 //  general update pattern for updating the graph
 function updateNodes(h) {
