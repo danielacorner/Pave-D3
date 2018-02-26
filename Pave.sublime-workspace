@@ -4,8 +4,152 @@
 		"selected_items":
 		[
 			[
+				"text",
+				"text-align"
+			],
+			[
+				"worker",
+				"workersMax"
+			],
+			[
+				"workers",
+				"workersMax"
+			],
+			[
+				"indust",
+				"industries"
+			],
+			[
+				"indu",
+				"industries"
+			],
+			[
+				"head",
+				"headersSplit"
+			],
+			[
+				"header",
+				"headersSplit"
+			],
+			[
+				"headers",
+				"headersString"
+			],
+			[
+				"pop",
+				"popTrans"
+			],
+			[
+				"dra",
+				"drag_handler"
+			],
+			[
+				"wor",
+				"workers"
+			],
+			[
+				"list",
+				"listToDelete"
+			],
+			[
+				"lis",
+				"listToDelete"
+			],
+			[
+				"worke",
+				"workersMin"
+			],
+			[
+				"cir",
+				"circles"
+			],
+			[
 				"fil",
+				"filtered"
+			],
+			[
+				"ind",
+				"includes"
+			],
+			[
+				"filt",
+				"filterList"
+			],
+			[
+				"work",
+				"workersAmt"
+			],
+			[
+				"slid",
+				"sliderSVG"
+			],
+			[
+				"new",
+				"newCircles"
+			],
+			[
+				"node",
+				"nodesStore"
+			],
+			[
+				"ex",
+				"exitTransition"
+			],
+			[
+				"enter",
+				"enterTransition"
+			],
+			[
+				"nodes",
+				"nodesStore"
+			],
+			[
+				"ent",
+				"enteringCircles"
+			],
+			[
+				"upda",
+				"updateTransition"
+			],
+			[
+				"New",
+				"newCircles"
+			],
+			[
+				"tran",
+				"transition"
+			],
+			[
+				"filter",
+				"filterNodes"
+			],
+			[
+				"filte",
 				"filteredNodes"
+			],
+			[
+				"po",
+				"positionsX"
+			],
+			[
+				"old",
+				"oldPositions"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"sca",
+				"radiusScale"
+			],
+			[
+				"radiu",
+				"radiusScale"
+			],
+			[
+				"clu",
+				"cluster"
 			],
 			[
 				"thr",
@@ -26,10 +170,6 @@
 			[
 				"attr",
 				"attrTween"
-			],
-			[
-				"sca",
-				"scaleX"
 			],
 			[
 				"max",
@@ -54,10 +194,6 @@
 			[
 				"clus",
 				"clusters"
-			],
-			[
-				"w",
-				"workers"
 			],
 			[
 				"tick",
@@ -140,10 +276,6 @@
 				"fontSize"
 			],
 			[
-				"filter",
-				"filtered_df"
-			],
-			[
 				"skillsLo",
 				"skillsLogi_range_slider"
 			],
@@ -194,10 +326,6 @@
 			[
 				"yaxis",
 				"yaxis-dropdown"
-			],
-			[
-				"ind",
-				"industry"
 			],
 			[
 				"autom",
@@ -251,6 +379,60 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Pave.html",
+			"settings":
+			{
+				"buffer_size": 2197,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/main.css",
+			"settings":
+			{
+				"buffer_size": 1617,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "PaveBubbles.js",
+			"settings":
+			{
+				"buffer_size": 22778,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<select id=\"inds\">\n\t\t<option value=\"apples\" selected=\"selected\">apples</option>\n\t\t<option value=\"pears\">pears</option>\n\t\t<option value=\"tomatoes\">tomatoes</option>\n</select>\n<div id=\"legendContainer\" class=\"legendContainer\">\n\t<svg id=\"legend\"></svg>\n</div>\n<div id=\"showAll\">\n\t<input name=\"showAllButton\"\n\t type=\"button\"\n\t value=\"Show All\"\n\t onclick=\"showAll()\" />\n</div>\n<div id=\"clearAll\">\n\t<input name=\"clearAllButton\"\n\t type=\"button\"\n\t value=\"Clear All\"\n\t onclick=\"clearAll()\" />\n</div>\n<script>\n\nfunction filterJSON(json, key, value) {\n  var result = [];\n  json.forEach(function(val,idx,arr){\n    if(val[key] == value){\n    \n      result.push(val)\n    }\n  })\n  return result;\n}\n\n// Set the dimensions of the canvas / graph\nvar margin = {top: 50, right: 20, bottom: 30, left: 160},\n    width = 1000 - margin.left - margin.right,\n    height = 550 - margin.top - margin.bottom;\n\n// Parse the date / time\n\n\n// Set the ranges\nvar x = d3.time.scale().range([0, width]);\nvar y = d3.scale.linear().range([height, 0]);\n\n// Define the axes\nvar xAxis = d3.svg.axis().scale(x)\n    .orient(\"bottom\").ticks(5)\n    .tickFormat(d3.time.format(\"%Y\"))\n\nvar yAxis = d3.svg.axis().scale(y)\n    .orient(\"left\").ticks(5);\n\n// Define the line\nvar stateline = d3.svg.line()\n\t\t.interpolate(\"cardinal\")\n    .x(function(d) { return x(d.year); })\n    .y(function(d) { return y(d.value); });\n\n// Adds the svg canvas\nvar svg = d3.select(\"body\")\n    .append(\"svg\")\n        .attr(\"width\", width + margin.left + margin.right)\n        .attr(\"height\", height + margin.top + margin.bottom)\n    .append(\"g\")\n        .attr(\"transform\",\n              \"translate(\" + margin.left + \",\" + margin.top + \")\");\nvar data;\n// Get the data\nd3.json(\"data.json\", function(error, json) {\n  console.log(json)\n \n  json.forEach(function(d) {\n\t\td.value = +d.value;\n  });\n\n\td3.select('#inds')\n\t\t\t.on(\"change\", function () {\n\t\t\t\tvar sect = document.getElementById(\"inds\");\n\t\t\t\tvar section = sect.options[sect.selectedIndex].value;\n\n\t\t\t\tdata = filterJSON(json, 'produce', section);\n\n\t      \n\t      //debugger\n\t      \n\t\t    data.forEach(function(d) {\n    \t\t\td.value = +d.value;\n    \t\t\t//d.year = parseDate(String(d.year));\n    \t\t\td.active = true;\n    \t\t});\n    \t\t\n\t\t    \n\t\t    //debugger\n\t\t\t\tupdateGraph(data);\n\n\n\t\t\t\tjQuery('h1.page-header').html(section);\n\t\t\t});\n\n\t// generate initial graph\n\tdata = filterJSON(json, 'produce', 'apples');\n\tupdateGraph(data);\n\n});\n\nvar color = d3.scale.ordinal().range([\"#48A36D\",  \"#0096ff\", \"#ff007e\"]);\nfunction updateGraph(data) {\n     \n\n    // Scale the range of the data\n    x.domain(d3.extent(data, function(d) { return d.year; }));\n    y.domain([d3.min(data, function(d) { return d.value; }), d3.max(data, function(d) { return d.value; })]);\n\n\n    // Nest the entries by state\n    dataNest = d3.nest()\n        .key(function(d) {return d.state;})\n        .entries(data);\n\n\n \t\tvar result = dataNest.filter(function(val,idx, arr){\n\t\t\t\t  return $(\".\" + val.key).attr(\"fill\") != \"#ccc\" \n\t\t\t\t  // matching the data with selector status\n\t\t\t\t})\n\t\t\t\t\n\t\t\t\t\n \t\tvar state = svg.selectAll(\".line\")\n      .data(result, function(d){return d.key});\n\n\t\tstate.enter().append(\"path\")\n\t\t\t.attr(\"class\", \"line\");\n\n\t\tstate.transition()\n\t\t\t.style(\"stroke\", function(d,i) { return d.color = color(d.key); })\n\t\t\t.attr(\"id\", function(d){ return 'tag'+d.key.replace(/\\s+/g, '');}) // assign ID\n\t\t\t.attr(\"d\", function(d){\n\t\t\n\t\t\t\treturn stateline(d.values)\n\t\t\t});\n\n\t\tstate.exit().remove();\n\n\t\tvar legend = d3.select(\"#legend\")\n\t\t\t.selectAll(\"text\")\n\t\t\t.data(dataNest, function(d){return d.key});\n\n\t\t//checkboxes\n\t\tlegend.enter().append(\"rect\")\n\t\t  .attr(\"width\", 10)\n\t\t  .attr(\"height\", 10)\n\t\t  .attr(\"x\", 0)\n\t\t  .attr(\"y\", function (d, i) { return 0 +i*15; })  // spacing\n\t\t  .attr(\"fill\",function(d) { \n\t\t    return color(d.key);\n\t\t    \n\t\t  })\n\t\t  .attr(\"class\", function(d,i){return \"legendcheckbox \" + d.key})\n\t\t\t.on(\"click\", function(d){\n\t\t\t  d.active = !d.active;\n\t\t\t  \n\t\t\t  d3.select(this).attr(\"fill\", function(d){\n\t\t\t    if(d3.select(this).attr(\"fill\")  == \"#ccc\"){\n\t\t\t      return color(d.key);\n\t\t\t    }else {\n\t\t\t      return \"#ccc\";\n\t\t\t    }\n\t\t\t  })\n\t\t\t  \n\t\t\t  \n\t\t\t var result = dataNest.filter(function(val,idx, arr){\n         return $(\".\" + val.key).attr(\"fill\") != \"#ccc\" \n       // matching the data with selector status\n      })\n      \n       // Hide or show the lines based on the ID\n       svg.selectAll(\".line\").data(result, function(d){return d.key})\n         .enter()\n         .append(\"path\")\n         .attr(\"class\", \"line\")\n         .style(\"stroke\", function(d,i) { return d.color = color(d.key); })\n        .attr(\"d\", function(d){\n                return stateline(d.values);\n         });\n \n      svg.selectAll(\".line\").data(result, function(d){return d.key}).exit().remove()  \n\t\t\t\t\t\n\t\t\t})\n\t\t        \n    // Add the Legend text\n    legend.enter().append(\"text\")\n      .attr(\"x\", 15)\n      .attr(\"y\", function(d,i){return 10 +i*15;})\n      .attr(\"class\", \"legend\");\n\n\t\tlegend.transition()\n      .style(\"fill\", \"#777\" )\n      .text(function(d){return d.key;});\n\n\t\tlegend.exit().remove();\n\n\t\tsvg.selectAll(\".axis\").remove();\n\n    // Add the X Axis\n    svg.append(\"g\")\n        .attr(\"class\", \"x axis\")\n        .attr(\"transform\", \"translate(0,\" + height + \")\")\n        .call(xAxis);\n\n    // Add the Y Axis\n    svg.append(\"g\")\n        .attr(\"class\", \"y axis\")\n        .call(yAxis);\n};\n\nfunction clearAll(){\n  d3.selectAll(\".line\")\n\t.transition().duration(100)\n\t\t\t.attr(\"d\", function(d){\n        return null;\n      });\n  d3.select(\"#legend\").selectAll(\"rect\")\n  .transition().duration(100)\n      .attr(\"fill\", \"#ccc\");\n};\n\nfunction showAll(){\n  d3.selectAll(\".line\")\n\t.transition().duration(100)\n\t\t\t.attr(\"d\", function(d){\n        return stateline(d.values);\n      });\n  d3.select(\"#legend\").selectAll(\"rect\")\n  .attr(\"fill\",function(d) {\n    if (d.active == true){\n       return color(d.key);\n     }\n   })",
+			"settings":
+			{
+				"buffer_size": 5879,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<!DOCTYPE html>\n<meta charset=\"utf-8\">\n<style> /* set the CSS */\n\nbody { font: 12px Arial;}\n\npath { \n    stroke: steelblue;\n    stroke-width: 2;\n    fill: none;\n}\n\n.axis path,\n.axis line {\n    fill: none;\n    stroke: grey;\n    stroke-width: 1;\n    shape-rendering: crispEdges;\n}\n\n</style>\n<body>\n\n<div id=\"option\">\n    <input name=\"updateButton\" \n           type=\"button\" \n           value=\"Update\" \n           onclick=\"updateData()\" />\n</div>\n\n<!-- load the d3.js library -->    \n<script src=\"http://d3js.org/d3.v3.min.js\"></script>\n\n<script>\n\n// Set the dimensions of the canvas / graph\nvar margin = {top: 30, right: 20, bottom: 30, left: 50},\n    width = 600 - margin.left - margin.right,\n    height = 270 - margin.top - margin.bottom;\n\n// Parse the date / time\nvar parseDate = d3.time.format(\"%d-%b-%y\").parse;\n\n// Set the ranges\nvar x = d3.time.scale().range([0, width]);\nvar y = d3.scale.linear().range([height, 0]);\n\n// Define the axes\nvar xAxis = d3.svg.axis().scale(x)\n    .orient(\"bottom\").ticks(5);\n\nvar yAxis = d3.svg.axis().scale(y)\n    .orient(\"left\").ticks(5);\n\n// Define the line\nvar valueline = d3.svg.line()\n    .x(function(d) { return x(d.date); })\n    .y(function(d) { return y(d.close); });\n    \n// Adds the svg canvas\nvar svg = d3.select(\"body\")\n    .append(\"svg\")\n        .attr(\"width\", width + margin.left + margin.right)\n        .attr(\"height\", height + margin.top + margin.bottom)\n    .append(\"g\")\n        .attr(\"transform\", \n              \"translate(\" + margin.left + \",\" + margin.top + \")\");\n\n// Get the data\nd3.csv(\"data.csv\", function(error, data) {\n    data.forEach(function(d) {\n        d.date = parseDate(d.date);\n        d.close = +d.close;\n    });\n\n    // Scale the range of the data\n    x.domain(d3.extent(data, function(d) { return d.date; }));\n    y.domain([0, d3.max(data, function(d) { return d.close; })]);\n\n    // Add the valueline path.\n    svg.append(\"path\")\n        .attr(\"class\", \"line\")\n        .attr(\"d\", valueline(data));\n\n    // Add the X Axis\n    svg.append(\"g\")\n        .attr(\"class\", \"x axis\")\n        .attr(\"transform\", \"translate(0,\" + height + \")\")\n        .call(xAxis);\n\n    // Add the Y Axis\n    svg.append(\"g\")\n        .attr(\"class\", \"y axis\")\n        .call(yAxis);\n\n});\n\n// ** Update data section (Called from the onclick)\nfunction updateData() {\n\n    // Get the data again\n    d3.csv(\"data-alt.csv\", function(error, data) {\n       \tdata.forEach(function(d) {\n\t    \td.date = parseDate(d.date);\n\t    \td.close = +d.close;\n\t    });\n\n    \t// Scale the range of the data again \n    \tx.domain(d3.extent(data, function(d) { return d.date; }));\n\t    y.domain([0, d3.max(data, function(d) { return d.close; })]);\n\n    // Select the section we want to apply our changes to\n    var svg = d3.select(\"body\").transition();\n\n    // Make the changes\n        svg.select(\".line\")   // change the line\n            .duration(750)\n            .attr(\"d\", valueline(data));\n        svg.select(\".x.axis\") // change the x axis\n            .duration(750)\n            .call(xAxis);\n        svg.select(\".y.axis\") // change the y axis\n            .duration(750)\n            .call(yAxis);\n\n    });\n}\n\n</script>\n</body>",
+			"settings":
+			{
+				"buffer_size": 3148,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<!DOCTYPE html>\n<meta charset=\"utf-8\">\n<style>\n\ndiv {\n  background: white;\n  border: solid 1px #ccc;\n  padding: 20px;\n  margin: 20px;\n}\n\n</style>\n<div>update</div>\n<div>exit</div>\n<script src=\"//d3js.org/d3.v3.min.js\"></script>\n<script>\n\nvar duration = 750;\n\nvar div = d3.select(\"body\").selectAll(\"div\")\n    .data([\"enter\", \"update\"], function(d) { return d || this.textContent; });\n\n// 1. exit\nvar exitTransition = d3.transition().duration(750).each(function() {\n  div.exit()\n      .style(\"background\", \"red\")\n    .transition()\n      .style(\"opacity\", 0)\n      .remove();\n});\n\n// 2. update\nvar updateTransition = exitTransition.transition().each(function() {\n  div.transition()\n      .style(\"background\", \"orange\");\n});\n\n// 3. enter\nvar enterTransition = updateTransition.transition().each(function() {\n  div.enter().append(\"div\")\n      .text(function(d) { return d; })\n      .style(\"opacity\", 0)\n    .transition()\n      .style(\"background\", \"green\")\n      .style(\"opacity\", 1);\n});\n\n\n\n\nfunction filterNodes(workersAmt) { // return nodes with workers > \"workersAmt\"\n  return nodes.filter(function(entry) {\n    return entry.workers > workersAmt;\n  });\n}\n\n\n\n\n\n\nfunction filterNodes(workersAmt) { // return nodes with workers > \"workersAmt\"\n  return nodes.forEach(function(d) {\n   if (d.workers > workersAmt) return d; \n  })\n};",
+			"file": "examples/enter exit update.html",
+			"file_size": 1028,
+			"file_write_time": 131638176422897909,
+			"settings":
+			{
+				"buffer_size": 1325,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "Packages/Python/Python.sublime-build",
 	"build_system_choices":
@@ -275,10 +457,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 229.0,
-		"last_filter": "syntax javas",
+		"height": 354.0,
+		"last_filter": "java",
 		"selected_items":
 		[
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"jav",
+				"Set Syntax: JavaScript"
+			],
 			[
 				"syntax javas",
 				"Set Syntax: JavaScript"
@@ -301,10 +491,6 @@
 			],
 			[
 				"syntax js",
-				"Set Syntax: JavaScript"
-			],
-			[
-				"jav",
 				"Set Syntax: JavaScript"
 			],
 			[
@@ -425,13 +611,21 @@
 	"expanded_folders":
 	[
 		"/C/Users/Daniel2/Documents/Pave-D3",
-		"/C/Users/Daniel2/Documents/Pave-D3/testing"
+		"/C/Users/Daniel2/Documents/Pave-D3/css"
 	],
 	"file_history":
 	[
+		"/C/Users/Daniel2/Documents/Pave-D3/css/main.css",
+		"/C/Users/Daniel2/Documents/Pave-D3/serverLaptop.bat",
+		"/C/Users/Daniel2/Documents/Pave-D3/examples/slider.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/examples/Filtering Nodes.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/js/slider.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/svg-sliders.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/js/graph-module.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/js/graph-mode.js",
+		"/C/Users/Daniel2/Documents/Pave-D3/slider.js",
 		"/C/Users/Daniel2/Documents/Pave-D3/Pave.html",
 		"/C/Users/Daniel2/Documents/Pave-D3/PaveBubbles.js",
-		"/C/Users/Daniel2/Documents/Pave-D3/slider.js",
 		"/C/Users/Daniel2/Documents/Pave-D3/testing/bubbles.js",
 		"/C/Users/Daniel2/Documents/Pave-D3/forceCluster.js",
 		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/todo - Civic Tech.txt",
@@ -504,7 +698,7 @@
 	],
 	"find":
 	{
-		"height": 30.0
+		"height": 70.0
 	},
 	"find_in_files":
 	{
@@ -518,6 +712,67 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dropdown1",
+			"span",
+			"div",
+			"headersArray",
+			"forceXSeparate",
+			"indust",
+			"circles",
+			"circles.da",
+			"Amt",
+			"newNode",
+			"node",
+			"changeNodes",
+			"newNode",
+			"node",
+			"nodesStore",
+			"node",
+			"maxWage",
+			"max",
+			"minWage",
+			"minWorkers",
+			"select",
+			"d3.select",
+			"d3.select(this",
+			"globaldata",
+			"minMaxWage",
+			"minMaxWorkers",
+			"circles",
+			"delay",
+			"industry",
+			"circles",
+			"Circles",
+			"circles",
+			"circ",
+			"Circ",
+			"circ",
+			"radiusScale",
+			"200",
+			"changeRed",
+			"fillCircle",
+			"workers",
+			"red",
+			"d3.max",
+			"d3.max(datapoints, function(d) {return d.workers}",
+			"d3.max",
+			"slider",
+			"margin",
+			"width",
+			" ",
+			"svg",
+			"data",
+			"filteredNodes",
+			"nodes",
+			"globaldata",
+			"minWage",
+			"minWorkers",
+			"console.log",
+			"globaldata",
+			"svg2",
+			"datapoints",
+			"'",
+			"svg",
 			"forceYSeparate",
 			"forceXSeparateRandom",
 			"industryra",
@@ -584,68 +839,7 @@
 			"trans",
 			"langu",
 			"axis_template_3d",
-			"job_desc_1",
-			"job_desc",
-			"nocWorkers",
-			"size_dropdown",
-			"size",
-			"COLORSCALE",
-			"colo",
-			"block",
-			"dfRowFromHover",
-			"= row",
-			"children",
-			"educ_3",
-			"educ_1",
-			"Li",
-			"display_molecule",
-			"duty_3",
-			"duty_2",
-			"duty_1",
-			"job_desc_1",
-			"JOB_DESCRIPTION_1",
-			"job_desc",
-			"job_name",
-			"html.P",
-			"P",
-			"job_desc_1",
-			"job_desc",
-			"job_desc_1",
-			"JOB_DESCRIPTION_1",
-			"job_desc",
-			"JOB_DESCRIPTION",
-			"jobTitlesList",
-			"JOB_DESCRIPTION",
-			"layout",
-			"\n",
-			"nocURL",
-			"job_name",
-			"hover",
-			"dropdown-di",
-			"slider",
-			"add_markers",
-			"skillsLogi_range_slider",
-			"add_markers",
-			"skillsLogi_range_slider",
-			"df",
-			" =",
-			"( ",
-			" =",
-			"filtered_df",
-			"add_markers",
-			"job_data[",
-			"add_markers",
-			"markers",
-			"job_dropdown",
-			"job_dropdown_values",
-			"markers",
-			"add_markers",
-			"add_mark",
-			"point_num",
-			"markers",
-			"add_markers",
-			"Logi",
-			"skillslogi_range"
+			"job_desc_1"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -663,13 +857,1185 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Pave.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2197,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2034,
+								2034
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2032,
+										2033
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2017,
+										2018
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2036,
+										2039
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/tag.png",
+										"region.orangish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2010,
+										2013
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"intellitip_row": 62,
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 693.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "css/main.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1617,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								115,
+								115
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										152,
+										153
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										128,
+										129
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										114,
+										115
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										90,
+										91
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"intellitip_row": 11,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "PaveBubbles.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22778,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								17873,
+								17873
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+									"1":
+									[
+										112,
+										113
+									]
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										18045,
+										18046
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										17871,
+										17872
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"intellitip_row": 612,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 12158.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5879,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2519,
+								2519
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+									"1":
+									[
+										2512,
+										2513
+									]
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"default_dir": "C:\\Users\\Daniel2\\Documents\\Pave-D3",
+							"intellitip_row": 108,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2533.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3148,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1212,
+								1126
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"default_dir": "C:\\Users\\Daniel2\\Dropbox\\SPC Data - Backup\\Python",
+							"intellitip_row": 56,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 975.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "examples/enter exit update.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1325,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1066,
+								1066
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1152,
+										1153
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1021,
+										1022
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"intellitip_row": 50,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -679,7 +2045,7 @@
 	},
 	"input":
 	{
-		"height": 64.0
+		"height": 69.0
 	},
 	"layout":
 	{
@@ -701,7 +2067,7 @@
 		"cols":
 		[
 			0.0,
-			0.580024813896,
+			0.584987593052,
 			1.0
 		],
 		"rows":
