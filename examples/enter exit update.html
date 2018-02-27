@@ -44,3 +44,23 @@ var enterTransition = updateTransition.transition().each(function() {
       .style("background", "green")
       .style("opacity", 1);
 });
+
+
+
+
+function filterNodes(workersAmt) { // return nodes with workers > "workersAmt"
+  return nodes.filter(function(entry) {
+    return entry.workers > workersAmt;
+  });
+}
+
+
+
+
+
+
+function filterNodes(workersAmt) { // return nodes with workers > "workersAmt"
+  return nodes.forEach(function(d) {
+   if (d.workers > workersAmt) return d; 
+  })
+};

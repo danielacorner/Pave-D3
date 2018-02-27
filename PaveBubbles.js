@@ -237,7 +237,7 @@ circles.transition()
 
 // Enable dragging
 function dragstarted(d) { // no dragging in graph mode
-  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.3).restart();    
+  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.2).restart();    
   d.fx = d.x;
   d.fy = d.y;
 }
@@ -264,20 +264,34 @@ drag_handler(circles);
 
 
 
-// Buttons
+
+
+
+
+///////////////////////////////// Buttons ////////////////////////////////////
+
+
+
+
+
+
+
+
 d3.select("#industry").on('click', function() {
+  if (graphMode == 1) return;
   simulation
   .force("x", forceXSeparate).alpha(0.8)
   .force("y", forceYSeparate).alpha(0.8)
-    .alphaTarget(0.001) // after click, cool down to minimal temperature
+    .alphaTarget(0.2) // after click, cool down to minimal temperature
     .restart()
   })
 
 d3.select("#random").on('click', function() {
+  if (graphMode == 1) return;
   simulation
   .force("x", forceXSeparateRandom).alpha(0.8)
   .force("y", forceYSeparateRandom).alpha(0.8)
-  .alphaTarget(0.001)
+  .alphaTarget(0.2)
   .restart()
 })
 
@@ -286,7 +300,7 @@ d3.select("#combine").on('click', function(d) {
     simulation
     .force("x", forceXCombine).alpha(0.4)
     .force("y", forceYCombine).alpha(0.4)
-    .alphaTarget(0.001)
+    .alphaTarget(0.2)
     .restart()
   } else {
     graphMode = 0; // turn off graph mode
@@ -307,7 +321,7 @@ d3.select("#combine").on('click', function(d) {
      simulation
      .force("x", forceXCombine).alpha(0.4)
      .force("y", forceYCombine).alpha(0.4)
-     .alphaTarget(0.001)
+     .alphaTarget(0.2)
      .restart()
    }, 250);
   }
@@ -371,10 +385,10 @@ d3.select("#graph").on('click', function(d) {
 
 	//////////////////////// Axes ////////////////////////////
 
-  // Nest the entries by state
-  dataNest = d3.nest()
-  .key(function(d) {return d.state;})
-  .entries(data);
+  // // Nest the entries by state
+  // dataNest = d3.nest()
+  // .key(function(d) {return d.state;})
+  // .entries(datapoints);
 
 	// Set the ranges
 	var x = d3.scaleLinear().range([0, width]);
@@ -387,28 +401,32 @@ d3.select("#graph").on('click', function(d) {
 	y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
 
 	// Add an axis-holder group
-	axisG = svg.append("g")
+	axisG = svg.append("g");
 
 	// Add the X Axis
 	axisX = axisG.append("g")
  .attr("class", "x axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
   + (height/2-margin.bottom) + ")")
- .call(d3.axisBottom(x).ticks(5));
+ .call(d3.axisBottom(x).ticks(5))
+ .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
 	 // text label for the x axis
   axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
 	                    + (height/2-10) + ")") // top
   .style("text-anchor", "middle")
-  .text("Number of Jobs");
+  .text("Number of Jobs")
+  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+
 
 	// Add the Y Axis
 	axisY = axisG.append("g")
  .attr("class", "y axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +"," 
   + (-height/2-margin.bottom) + ")")
- .call(d3.axisLeft(y).ticks(5));
+ .call(d3.axisLeft(y).ticks(5))
+ .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
 	 // text label for the y axis
   axisG.append("text")
@@ -417,7 +435,8 @@ d3.select("#graph").on('click', function(d) {
   .attr("x", 0)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .text("Risk of Machine Automation");   
+  .text("Risk of Machine Automation")
+  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
 }
 
@@ -427,7 +446,8 @@ d3.select("#graph").on('click', function(d) {
   if (graphMode == 0) {
 
   	// remove axes
-  	axisG.remove();
+  	axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
+    .remove();
 
     // Transition back to original positions
     circles.transition()
@@ -446,7 +466,7 @@ d3.select("#graph").on('click', function(d) {
 
     // start the simulation after the transition delay
     setTimeout(function() {
-      simulation.alphaTarget(0.3).restart();
+      simulation.alphaTarget(0.2).restart();
     }, 750);
     
     return;
@@ -460,115 +480,17 @@ d3.select("#graph").on('click', function(d) {
 })
 
 
+///////////// Reset Filters /////////////
 
-
-
-
-
-
-///////////////////////////////// Filters ////////////////////////////////////
-
-//////////////// Filter Slider 1: # Workers //////////////////////
-
-var sliderSVG = d3.select("#slider1").append("svg")
-.attr("width", 250)
-.attr("height", 50)
-
-var sliderScale = d3.scaleLinear()
-  .domain([0, maxWorkers]) // Red component goes from 0 to 255
-  .range([0, 200]) // Width of slider is 200 px
-  .clamp(true);
-
-  var slider = sliderSVG.append("g")
-  .attr("class", "slider")
-  .attr("transform", "translate(" + 25 + "," + 25 + ")");
-
-  slider.append("line")
-  .attr("class", "track")
-  .attr("x1", sliderScale.range()[0])
-  .attr("x2", sliderScale.range()[1])
-  .select(function() {
-    return this.parentNode;
-  })
-  .append("line")
-  .attr("x1", sliderScale.range()[0])
-  .attr("x2", sliderScale.range()[1])
-  .attr("class", "track-inset")
-  .select(function() {
-    return this.parentNode;
-  })
-  .append("line")
-  .attr("x1", sliderScale.range()[0])
-  .attr("x2", sliderScale.range()[1])
-  .attr("class", "track-overlay")
-  .call(d3.drag()
-    .on("start.interrupt", function() {
-      slider.interrupt();
-    })
-    .on("start drag", function() {
-      // console.log("filtering for workers > ", sliderScale.invert(d3.event.x));
-      updateNodes(sliderScale.invert(d3.event.x));
-    }));
-
-  var handle = slider.insert("circle", ".track-overlay")
-  .attr("class", "handle")
-  .attr("r", 9);
-
-//////////////// Filter Functions 1: # Workers //////////////////////
-
-// filtered IDs
-listToDelete = [];
-
-function filterNodes(workersMin) { // return nodes with workers > "workersMin"
-store.forEach(function(d) {
-    // first, take any nodes off the list
-    if (listToDelete.includes(d.id)) listToDelete.splice(listToDelete.indexOf(d.id),1);
-    // then if you're under the min (bad) && if you're not on the list
-    if (d.workers < workersMin && !listToDelete.includes(d.id)) {
-      // put you on the list
-      listToDelete.push(d.id);
-    }
-  });
-
-  // reset the graph
-  graph = [];
-  //  add and remove nodes from data based on filters
-  store.forEach(function(n) {
-    // if you're not on the filter list
-    if (n.workers >= workersMin && !listToDelete.includes(n.id)) {
-      // put you on the graph         (start graph empty? or check)
-      graph.push(n);
-    //   circles.select("[id='"+n.id+"']")
-    //   .attr("r", function(d) {return d.radius});
-    // } else if (n.workers <= workersMin) {
-    //   circles.select("[id='"+n.id+"']")
-    //   .attr("r", 0);
-  } else if (n.workers < workersMin && listToDelete.includes(n.id)) {
-    graph.forEach(function(d, i) {
-      if (n.id === d.id) {
-        graph.splice(i, 1);
-      }
-    })
+d3.select("#resetFilters").on('click', function(d) {
+  for(var i=0; i<sliderArray.length; i++) {
+    handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider ball
+    // Update the slider positions array
+    sliderPositionsArray[i] = 0;
   };
-});
-  return graph;
-}
-//  general update pattern for updating the graph
-function updateNodes(h) {
-  // using the slider handle
-  handle.attr("cx", sliderScale(h));
-  //  UPDATE
-  circles = circles.data(filterNodes(h), function(d) { return d.id});
-  // EXIT
-  circles.exit().transition().duration(300)
-  // exit transition: "pop" radius * 1.5 + 5 & fade out
-  .attr("r", function(d) { return d.radius * 1.5 + 5 })
-  .attrTween("opacity", function(d) {
-    var i = d3.interpolate(1, 0);
-    return function(t) { return d.opacity = i(t); };
-  })
-  .remove();
-  // ENTER
+  // reset all circles
+  circles = circles.data(store, function(d) { return d.id });
+  // ENTER (create the circles with all attributes)
   var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .style("fill", function(d) { return color(d.cluster); })
@@ -588,15 +510,12 @@ function updateNodes(h) {
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
       })
     .on("mouseout", function(d) {
-      // clicked = 0;
       d3.select(this).attr("stroke", "none");
       div.transition()
       .duration(500)
       .style("opacity", 0);
     })
     .on("click", function(d) {
-      // clicked = 1-clicked;
-      // if(clicked=1) {}
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
         // Insert extra info to display on click
         + "<br/><br/>"+ d.job +"<br/><br/>"
@@ -607,19 +526,19 @@ function updateNodes(h) {
         .duration(200)
         .style("height", "200px");
       });
-    drag_handler(newCircles);
+  drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
   // simulation forces on filter
-  simulation.nodes(filterNodes(h))
+  simulation.nodes(store)
   .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
   .force("cluster", forceCluster)
   .force("gravity", forceGravity)
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
-  simulation.alphaTarget(0.3).restart();
-}
+  simulation.alphaTarget(0.2).restart();
+});
 
 
 
@@ -628,12 +547,15 @@ function updateNodes(h) {
 
 
 
+///////////////////////////////// Filters ////////////////////////////////////
 
 
 
 
 
-//////////////// Filter Slider 2: Filter by Dropdown //////////////////////
+
+
+//////////////// Filter Slider 1: Filter by Dropdown //////////////////////
 
 var sliderDropdownSVG = d3.select("#slider2").append("svg")
 .attr("width", 250)
@@ -742,7 +664,7 @@ d3.select("#dropdown1").on('click', function(){
 
   })
 
-//////////////// Filter Functions 2: Dropdown //////////////////////
+//////////////// Filter Functions 1: Dropdown //////////////////////
 
 // filtered IDs
 listToDeleteDropdown = [];
@@ -777,7 +699,7 @@ store.forEach(function(d) {
 }
 //  general update pattern for updating the graph
 function updateNodesDropdown(h) {
-  // using the slider handle
+  // update the slider handle position
   handleDropdown.attr("cx", sliderDropdownScale(h));
   //  UPDATE
   circles = circles.data(filterNodesDropdown(h), function(d) { return d.id });
@@ -840,7 +762,7 @@ function updateNodesDropdown(h) {
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
-  simulation.alphaTarget(0.3).restart();
+  simulation.alphaTarget(0.2).restart();
 }
 
 
@@ -857,184 +779,206 @@ function updateNodesDropdown(h) {
 
 
 
-//////////////// Filter Slider 3: Loop for creating sliders //////////////////////
+//////////////// Filter Sliders 2: Multiple Sliders from an Array //////////////////////
+
+
 // sliders to create
-var sliderArray = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+var sliderArray = ["wage", "workers", 
+    // skills
+    "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+    // subskills
+    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
+    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
+    "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
+    "s13DocumentUse","s14Writing","s15CriticalThinking"
+];
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = []; // array of sliders
+var handleArray = []; // array of slider handles
+var listToDeleteMulti = []; // filtered IDs
 
-var sliderArraySVG = [];
-
-var sliderArrayScale = [];
-
-var multiFunction = [];
-
-var sliderArrayUpdateFunctions = [];
-
+// For Each Slider create the slider
 for(var i=0; i<sliderArray.length; i++) {
-
-  sliderArraySVG[i] = d3.select("#sliderArray").append("text").html("<br>"+sliderArray[i]+"<br>")
+  // Title & SVG
+  sliderSVGArray[i] = d3.select("#sliderArray").append("text").html("<br>"+sliderArray[i]+"<br>")
   .append("svg")
     // .style("display", "inline").style("position", "relative")
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
-
-  // sliverArraySVG[i].text("test");
-
-  sliderArrayScale[i] = d3.scaleLinear()
-    .domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})]) // Red component goes from 0 to 255
+  // Scale
+  sliderScaleArray[i] = d3.scaleLinear()
+    .domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})])
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
-
-  tempScale = d3.scaleLinear()
-	.domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})]) // Red component goes from 0 to 255
-	.range([0, 200]) // Width of slider is 200 px
-	.clamp(true);
-
-  var sliderLoop = sliderArraySVG[i].append("g")
+  // Slider
+  sliderMulti[i] = sliderSVGArray[i].append("g")
   .attr("class", "slider")
   .attr("transform", "translate(" + 25 + "," + 25 + ")");
-
-  sliderLoop.append("line")
+  // track
+  sliderMulti[i].append("line")
   .attr("class", "track")
-  .attr("x1", sliderArrayScale[i].range()[0])
-  .attr("x2", sliderArrayScale[i].range()[1])
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
   .select(function() {
+    // console.log("i4: ", i);
     return this.parentNode;
-  })
+  }) // inset
   .append("line")
-  .attr("x1", sliderArrayScale[i].range()[0])
-  .attr("x2", sliderArrayScale[i].range()[1])
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-inset")
   .select(function() {
     return this.parentNode;
-  })
+  }) // overlay
   .append("line")
-  .attr("x1", sliderArrayScale[i].range()[0])
-  .attr("x2", sliderArrayScale[i].range()[1])
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
+  .attr("id", i)
   .call(d3.drag()
     .on("start.interrupt", function() {
-      sliderLoop.interrupt();
-    })
+      sliderMulti[event.target.id].interrupt();
+    }) // drag update function
     .on("start drag", function() {
-      // console.log("filtering for workers > ", sliderArrayScale.invert(d3.event.x));
-      tempUpdateFunction(tempScale.invert(d3.event.x));
-	// updateNodes(sliderScale.invert(d3.event.x));
-
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x)); // pass the current line id to update function
     }));
 
-  var handleMulti = sliderLoop.insert("circle", ".track-overlay")
+  handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 9);
 
-  //////////////// Filter Functions 3: Function-generated //////////////////////
 
-  // filtered IDs
-  listToDeleteMulti = [];
 
-  tempFilterFunction = function(multiMin) { // return nodes with workers > "multiMin"
-    store.forEach(function(d) {
-        // first, take any nodes off the list
-        if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
-        // then if you're under the min (bad) && if you're not on the list
-        if (d[sliderArray[i]] < multiMin && !listToDeleteMulti.includes(d.id)) {
-          // put you on the list
+// Update function which detects current slider
+//  general update pattern for updating the graph
+function updateMulti(h) {
+  var sliderID = event.target.id;
+  // using the slider handle
+  handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider ball
+  // Update the slider positions array
+  sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
+  //  UPDATE
+  circles = circles.data(filterAll(), function(d) { return d.id });
+  // EXIT
+  circles.exit().transition().duration(300)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attrTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return d.opacity = i(t); };
+  })
+  .remove();
+  // ENTER (create the circles with all attributes)
+  var newCircles = circles.enter().append("circle")
+    .attr("r", function(d) { return d.radius }) // start at full radius
+    .style("fill", function(d) { return color(d.cluster); })
+    // Tooltips
+    .on("mouseover", function(d) {
+      // highlight the current circle
+      // clicked = 0;
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      div.transition()
+      .duration(200)
+      .style("opacity", .9)
+      .style("height", "60px");
+      // Display NOC, Industry
+      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
+        // Move div above mouse by "top" + radius and right by "left"
+        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("top", (d3.event.pageY - 80) - d.radius + "px");
+      })
+    .on("mouseout", function(d) {
+      d3.select(this).attr("stroke", "none");
+      div.transition()
+      .duration(500)
+      .style("opacity", 0);
+    })
+    .on("click", function(d) {
+      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
+        // Insert extra info to display on click
+        + "<br/><br/>"+ d.job +"<br/><br/>"
+        + "Automation Risk: " + d.automationRisk 
+        + "<br/><br/>Workers: " + d.workers)
+        // Unfurl downward
+        .transition()
+        .duration(200)
+        .style("height", "200px");
+      });
+  drag_handler(newCircles);
+  //  ENTER + UPDATE
+  circles = circles.merge(newCircles);
+  // simulation forces on filter
+  simulation.nodes(filterAll())
+  .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+  .force("cluster", forceCluster)
+  .force("gravity", forceGravity)
+  .force("x", forceXCombine)
+  .force("y", forceYCombine)
+  .on("tick", tick);
+  simulation.alphaTarget(0.2).restart();
+};
+
+};
+
+
+
+
+
+// Log Clicked Node & ID using jQuery
+$( "body" ).click(function( event ) {
+    console.log( "clicked: " + event.target.nodeName, event.target.id);
+});
+
+
+
+
+
+
+
+//////////////// Filter Functions 3: All at once //////////////////////
+
+filterAll = function() {
+  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
+  // START by filtering out nodes under the minimums
+  store.forEach(function(d) {
+    // INEFFICIENT -- TODO: fewer loops
+      // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
+      if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
+      // then loop through the sliders array and put you on the list
+      for(var s=0; s<sliderPositionsArray.length; s++){
+        // if the slider position is above your value, put you on the list
+        var checkMin = sliderPositionsArray[s]; // like sliderScale(h)
+        if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
           listToDeleteMulti.push(d.id);
         }
-      });
-      // reset the graph
-      graph = [];
-      //  add and remove nodes from data based on filters
-      store.forEach(function(n) {
-        // if you're not on the filter list
-        if (n[sliderArray[i]] >= multiMin && !listToDeleteMulti.includes(n.id)) {
-          // put you on the graph         (start graph empty? or check)
-          graph.push(n);
-        } else if (n[sliderArray[i]] < multiMin && listToDeleteMulti.includes(n.id)) {
-          graph.forEach(function(d, i) {
-            if (n.id === d.id) {
-              graph.splice(i, 1);
-            }
-          })
-        };
-      });
-      return graph;
-  }
 
-  multiFunction[i] = tempFilterFunction;
-
-  //  general update pattern for updating the graph
-  tempUpdateFunction = function(h) {
-      // using the slider handle
-      handleMulti.attr("cx", tempScale(h));
-      //  UPDATE
-      circles = circles.data(tempFilterFunction(h), function(d) { return d.id });
-      // EXIT
-      circles.exit().transition().duration(300)
-      // exit transition: "pop" radius * 1.5 + 5 & fade out
-      .attr("r", function(d) { return d.radius * 1.5 + 5 })
-      .attrTween("opacity", function(d) {
-        var i = d3.interpolate(1, 0);
-        return function(t) { return d.opacity = i(t); };
+      }
+      
+    });
+    // reset the graph
+  graph = [];
+  // THEN update the graph based on the filter list
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!listToDeleteMulti.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    // if you're on the list
+    } else if (listToDeleteMulti.includes(n.id)) {
+      graph.forEach(function(d, p) {
+        if (n.id === d.id) {
+          graph.splice(p, 1); // get you off of there!
+        }
       })
-      .remove();
-      // ENTER
-      var newCircles = circles.enter().append("circle")
-        .attr("r", function(d) { return d.radius }) // start at full radius
-        .style("fill", function(d) { return color(d.cluster); })
-        // Tooltips
-        .on("mouseover", function(d) {
-          // highlight the current circle
-          // clicked = 0;
-          d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
-          div.transition()
-          .duration(200)
-          .style("opacity", .9)
-          .style("height", "60px");
-          // Display NOC, Industry
-          div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
-            // Move div above mouse by "top" + radius and right by "left"
-            .style("left", (d3.event.pageX) + 20 + "px")
-            .style("top", (d3.event.pageY - 80) - d.radius + "px");
-          })
-        .on("mouseout", function(d) {
-          // clicked = 0;
-          d3.select(this).attr("stroke", "none");
-          div.transition()
-          .duration(500)
-          .style("opacity", 0);
-        })
-        .on("click", function(d) {
-          // clicked = 1-clicked;
-          // if(clicked=1) {}
-          div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-            // Insert extra info to display on click
-            + "<br/><br/>"+ d.job +"<br/><br/>"
-            + "Automation Risk: " + d.automationRisk 
-            + "<br/><br/>Workers: " + d.workers)
-            // Unfurl downward
-            .transition()
-            .duration(200)
-            .style("height", "200px");
-          });
-        drag_handler(newCircles);
-      //  ENTER + UPDATE
-      circles = circles.merge(newCircles);
-      // simulation forces on filter
-      simulation.nodes(tempFilterFunction(h))
-      .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
-      .force("cluster", forceCluster)
-      .force("gravity", forceGravity)
-      .force("x", forceXCombine)
-      .force("y", forceYCombine)
-      .on("tick", tick);
-      simulation.alphaTarget(0.3).restart();
     };
+  });
+  return graph;
+}
 
-    sliderArrayUpdateFunctions[i] = tempUpdateFunction;
-
-  // sliderArrayUpdateFunctions[i] = tempUpdateFunction;
-};
+  // sliderArrayUpdateFunctions[i] = updateMulti;
 
 
 

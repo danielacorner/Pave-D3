@@ -19,11 +19,12 @@
 		<button id="random">Shuffle</button>
 		<button id="graph">Graph Mode</button>
 		<button id="freeze">Freeze!</button>
+		<button id="resetFilters">Reset Filters</button>
 	</div>
 
 	<!-- legend container -->
-	<div id="legendContainer" class="legendContainer">
-		<svg id="legend"></svg>
+	<div id="legendContainer" class="legendContainer">Legend Placeholder
+		<svg id="legend" width="50px" height="50px" style="display: inline"></svg>
 	</div>
 
 	<script>
@@ -57,8 +58,6 @@
 		<script src="PaveBubbles.js"></script>
 		<!-- slider -->
 		<g id="slidersG">
-			<div>Minimum Number of Workers</div>
-			<div type="text" class="slider" id="slider1"></div>
 			<!-- dropdown -->
 			<div id="dropdown1Title"></div>
 			<select class="dropdown" id="dropdown1"></select>  
@@ -67,6 +66,8 @@
 			<!-- slider 2 -->
 			<div type="text" class="slider" id="sliderArray"></div>
 		</g>
+
+	
 
 	</body>
 	</html>
