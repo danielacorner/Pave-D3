@@ -865,7 +865,7 @@ var sliderArraySVG = [];
 
 var sliderArrayScale = [];
 
-var sliderArrayFunctions = [];
+var multiFunction = [];
 
 var sliderArrayUpdateFunctions = [];
 
@@ -884,6 +884,11 @@ for(var i=0; i<sliderArray.length; i++) {
     .domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})]) // Red component goes from 0 to 255
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
+
+  tempScale = d3.scaleLinear()
+	.domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})]) // Red component goes from 0 to 255
+	.range([0, 200]) // Width of slider is 200 px
+	.clamp(true);
 
   var sliderLoop = sliderArraySVG[i].append("g")
   .attr("class", "slider")
@@ -913,26 +918,28 @@ for(var i=0; i<sliderArray.length; i++) {
     })
     .on("start drag", function() {
       // console.log("filtering for workers > ", sliderArrayScale.invert(d3.event.x));
-      sliderArrayFunctions[i](sliderArrayScale[i].invert(d3.event.x));
+      tempUpdateFunction(tempScale.invert(d3.event.x));
+	// updateNodes(sliderScale.invert(d3.event.x));
+
     }));
 
-  var handleLoop = sliderLoop.insert("circle", ".track-overlay")
+  var handleMulti = sliderLoop.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 9);
 
   //////////////// Filter Functions 3: Function-generated //////////////////////
 
   // filtered IDs
-  listToDeleteLoop = [];
+  listToDeleteMulti = [];
 
-  var tempFunction = new function (dropdownMin) { // return nodes with workers > "dropdownMin"
+  tempFilterFunction = function(multiMin) { // return nodes with workers > "multiMin"
     store.forEach(function(d) {
         // first, take any nodes off the list
-        if (listToDeleteLoop.includes(d.id)) listToDeleteLoop.splice(listToDeleteLoop.indexOf(d.id),1);
+        if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
         // then if you're under the min (bad) && if you're not on the list
-        if (d[sliderArray[i]] < dropdownMin && !listToDeleteLoop.includes(d.id)) {
+        if (d[sliderArray[i]] < multiMin && !listToDeleteMulti.includes(d.id)) {
           // put you on the list
-          listToDeleteLoop.push(d.id);
+          listToDeleteMulti.push(d.id);
         }
       });
       // reset the graph
@@ -940,10 +947,10 @@ for(var i=0; i<sliderArray.length; i++) {
       //  add and remove nodes from data based on filters
       store.forEach(function(n) {
         // if you're not on the filter list
-        if (n[sliderArray[i]] >= dropdownMin && !listToDeleteLoop.includes(n.id)) {
+        if (n[sliderArray[i]] >= multiMin && !listToDeleteMulti.includes(n.id)) {
           // put you on the graph         (start graph empty? or check)
           graph.push(n);
-        } else if (n[sliderArray[i]] < dropdownMin && listToDeleteLoop.includes(n.id)) {
+        } else if (n[sliderArray[i]] < multiMin && listToDeleteMulti.includes(n.id)) {
           graph.forEach(function(d, i) {
             if (n.id === d.id) {
               graph.splice(i, 1);
@@ -954,14 +961,14 @@ for(var i=0; i<sliderArray.length; i++) {
       return graph;
   }
 
-  sliderArrayFunctions[i] = tempFunction;
+  multiFunction[i] = tempFilterFunction;
 
   //  general update pattern for updating the graph
-    function tempUpdateFunction(h) {
+  tempUpdateFunction = function(h) {
       // using the slider handle
-      handleLoop.attr("cx", sliderArrayScale[i](h));
+      handleMulti.attr("cx", tempScale(h));
       //  UPDATE
-      circles = circles.data(sliderArrayFunctions[i](h), function(d) { return d.id });
+      circles = circles.data(tempFilterFunction(h), function(d) { return d.id });
       // EXIT
       circles.exit().transition().duration(300)
       // exit transition: "pop" radius * 1.5 + 5 & fade out
@@ -1014,7 +1021,7 @@ for(var i=0; i<sliderArray.length; i++) {
       //  ENTER + UPDATE
       circles = circles.merge(newCircles);
       // simulation forces on filter
-      simulation.nodes(sliderArrayFunctions[i](h))
+      simulation.nodes(tempFilterFunction(h))
       .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
       .force("cluster", forceCluster)
       .force("gravity", forceGravity)
@@ -1024,7 +1031,9 @@ for(var i=0; i<sliderArray.length; i++) {
       simulation.alphaTarget(0.3).restart();
     };
 
-  sliderArrayUpdateFunctions[i] = tempUpdateFunction;
+    sliderArrayUpdateFunctions[i] = tempUpdateFunction;
+
+  // sliderArrayUpdateFunctions[i] = tempUpdateFunction;
 };
 
 
