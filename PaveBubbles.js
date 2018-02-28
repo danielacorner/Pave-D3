@@ -1,3 +1,8 @@
+// Log Clicked Node & ID using jQuery
+$( "body" ).click(function( event ) {
+    console.log( "clicked: " + event.target.nodeName, event.target.id);
+});
+
 var graph, store; // displayed, stored data
 
 // load the data
@@ -16,7 +21,7 @@ var headersSplit = headersString.split(",");
 var options;
 for(var h=0; h<=headersSplit.length; h++){
 options += "<option>"+ headersSplit[h] +"</option>"; // switch to headersString[h]
-  // when you get to the last skill faculty, end
+  // when you get to the last subskill, end
 if(headersSplit[h] == "s15CriticalThinking") h = headersSplit.length;
 }
     // set the options 
@@ -117,11 +122,15 @@ store = nodes;
 
 // Simulation, forces, & tick function
     // Forces for the simulation
+var forceCollide = d3.forceCollide(function(d) { return d.radius + 1 })
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
 .strength(function(d) { return -7 * d.radius })
+var forceFutureMode = d3.forceManyBody()
+.strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
+var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 25) * 1.1
 }).strength(0.3)
@@ -158,7 +167,7 @@ function tick() {
 var simulation = d3.forceSimulation()
 .nodes(store)
     // .force("center", d3.forceCenter())
-    .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+    .force("collide", forceCollide)
     .force("cluster", forceCluster)
     .force("gravity", forceGravity)
     .force("x", forceXCombine)
@@ -274,20 +283,26 @@ drag_handler(circles);
 
 
 
-
-
+//////////// Industry Split ////////////////
 
 d3.select("#industry").on('click', function() {
-  if (graphMode == 1) return;
+  if (graphMode == 1 || futureMode == 1) return;
   simulation
-  .force("x", forceXSeparate).alpha(0.8)
-  .force("y", forceYSeparate).alpha(0.8)
+  .force("x", forceXSeparate).alpha(0.5)
+  .force("y", forceYSeparate).alpha(0.5)
     .alphaTarget(0.2) // after click, cool down to minimal temperature
     .restart()
   })
 
 d3.select("#random").on('click', function() {
-  if (graphMode == 1) return;
+  if (graphMode == 1) {
+    graphMode = 0;
+    graphModeOff();
+  };
+  if (futureMode == 1) {
+    futureMode = 0;
+    futureModeOff();
+  }
   simulation
   .force("x", forceXSeparateRandom).alpha(0.8)
   .force("y", forceYSeparateRandom).alpha(0.8)
@@ -296,14 +311,17 @@ d3.select("#random").on('click', function() {
 })
 
 d3.select("#combine").on('click', function(d) {
-  if (graphMode==0) {
+  if (graphMode == 0 && futureMode == 0) {
     simulation
     .force("x", forceXCombine).alpha(0.4)
     .force("y", forceYCombine).alpha(0.4)
     .alphaTarget(0.2)
     .restart()
   } else {
+    futureMode = 0;
     graphMode = 0; // turn off graph mode
+    graphModeOff();
+    futureModeOff();
     // transition circles back to middle for 400 ms
     // but restart the simulation at 250 ms (looks ok,
     // could make similar to graphMode on/off transition) 
@@ -328,23 +346,42 @@ d3.select("#combine").on('click', function(d) {
 })
 
 
-// TODO: maxWorkers, maxWage not working
+// TODO: maxWorkers, maxWage, skillsMath not working
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
 minWage = d3.min(nodes, function(d) {return d.wage}),
 maxWage = d3.max(nodes, function(d) {return d.wage});//d3.max(datapoints, function(d) {return d.wage});
 
 maxwage = 116.18; //busted
 
-// ////////////////// FREEZE ////////////////////////
+
+
+
+
+
+
+
+// ////////////////// Freeze! ////////////////////////
 d3.select("#freeze").on('click', function(d) {
   simulation.stop();
 });
+
+
+
+
+
+
+
 
 ///////////////// Graph Mode ////////////////////
 
 // catch stored positions
 var positionsX = {};
 var positionsY = {};
+var originalRadius = {};
+// store previous radii
+  nodes.forEach(function(d) {
+    originalRadius[d.id] = d.radius;
+  });
 
 d3.select("#graph").on('click', function(d) {
   // Toggle mode on or off
@@ -355,6 +392,21 @@ d3.select("#graph").on('click', function(d) {
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
+    graphModeOn();
+  }
+  //////////////// Graph mode OFF. ///////////////////
+  if (graphMode == 0) {
+    // if future mode is on, return to future mode
+    // if (futureMode == 1) { futureModeOn(); }
+    // console.log("futureMode: ", futureMode);
+    graphModeOff();
+  }; // transition back to clusters
+  
+  // TODO: modularize graph mode in js folder
+  // $.getScript("./js/graph-module.js");
+})
+
+function graphModeOn() {
 
     // cool to 0 degrees
     simulation.stop();
@@ -380,55 +432,44 @@ d3.select("#graph").on('click', function(d) {
           var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2);
           return function(t) { return d.cy = i(t); };
         });
-       // set styles
-       //.styleTween(...automation risk colour scale)
 
-	//////////////////////// Axes ////////////////////////////
+  //////////////////////// Axes ////////////////////////////
 
-  // // Nest the entries by state
-  // dataNest = d3.nest()
-  // .key(function(d) {return d.state;})
-  // .entries(datapoints);
+  // Set the ranges
+  var x = d3.scaleLinear().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
 
-	// Set the ranges
-	var x = d3.scaleLinear().range([0, width]);
-	var y = d3.scaleLinear().range([height, 0]);
+  // Scale the range of the data (using globally-stored nodes)
+  // TODO: modularize for axis selection
+  x.domain([0, maxWorkers]); //minmax workers
+  y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
 
+  // Add an axis-holder group
+  axisG = svg.append("g");
 
-	// Scale the range of the data (using globally-stored nodes)
-	// TODO: modularize for axis selection
-	x.domain([0, maxWorkers]); //minmax workers
-	y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
-
-	// Add an axis-holder group
-	axisG = svg.append("g");
-
-	// Add the X Axis
-	axisX = axisG.append("g")
+  // Add the X Axis
+  axisX = axisG.append("g")
  .attr("class", "x axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
   + (height/2-margin.bottom) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
-
-	 // text label for the x axis
+   // text label for the x axis
   axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
-	                    + (height/2-10) + ")") // top
+                      + (height/2-10) + ")") // top
   .style("text-anchor", "middle")
   .text("Number of Jobs")
   .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
-
-	// Add the Y Axis
-	axisY = axisG.append("g")
+  // Add the Y Axis
+  axisY = axisG.append("g")
  .attr("class", "y axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +"," 
   + (-height/2-margin.bottom) + ")")
  .call(d3.axisLeft(y).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
-
-	 // text label for the y axis
+   // text label for the y axis
   axisG.append("text")
   .attr("transform", "rotate(-90)")
   .attr("y", -width/2)
@@ -440,18 +481,17 @@ d3.select("#graph").on('click', function(d) {
 
 }
 
-  //////////////// Graph mode off. ///////////////////
+function graphModeOff() {
 
-  // If turning off:
-  if (graphMode == 0) {
-
-  	// remove axes
-  	axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
+    // remove axes
+    axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
     .remove();
 
     // Transition back to original positions
     circles.transition()
     .duration(750)
+    .attr("r", function(d) { return originalRadius[d.id] })
+    .style("fill", function(d) { return color(d.cluster) })
       // set x, y values
     .attrTween("cx", function(d) { // transition x position to...
       // previous positions
@@ -464,29 +504,173 @@ d3.select("#graph").on('click', function(d) {
       return function(t) { return d.cy = i(t); };
     });
 
+    setTimeout(function() {
+      circles
+      .style("stroke", "none");
+    }, 500);
+
     // start the simulation after the transition delay
     setTimeout(function() {
       simulation.alphaTarget(0.2).restart();
     }, 750);
     
     return;
-  }; // transition back to clusters
+
+}
+
+
+
+
+
+
+
+
+///////////////// Future View Mode ////////////////////
+
+
+var futureMode = 0;
+var automationRadiusScale = d3.scaleSqrt()
+  .domain([0,1]).range([maxRadius,0]);
+var automationColor = d3.scaleLinear()
+  .domain([0,1]).range(['green','red']);
+
+
+// Transition node areas and colours to automationRisk
+  var pastPosX = {};
+  var pastPosY = {};
+
+d3.select("#futureView").on('click', function(d) {
+  // Toggle mode on or off
+  futureMode = 1-futureMode;
+  console.log("futureMode = ", futureMode);
+  ////////////// FUTURE VIEW ON! ////////////////
+  if (futureMode == 1) {
+    futureModeOn();
+  }  //////////////// Future mode off. ///////////////////
+
+  // If turning off:
+  if (futureMode == 0) {
+    futureModeOff();
+  }; 
   
-
-
   // TODO: modularize graph mode in js folder
   // $.getScript("./js/graph-module.js");
-
 })
+
+function futureModeOn() {
+
+    // cool to 0 degrees
+    simulation.stop();
+    // store previous positions
+    nodes.forEach(function(d) {
+      pastPosX[d.id] = d.x;
+    });
+    nodes.forEach(function(d) {
+      pastPosY[d.id] = d.y;
+    });
+ 
+    // if graph mode off
+    if (graphMode == 0) {
+    // transition circles' areas, colours, positions
+    circles.transition()
+    .duration(750)
+      .attr("cx", function(d) { return d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4 })
+      .attr("cy", function(d) { return d.automationRisk*height*0.9 - height/2 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100 })
+      .attrTween("r", function(d) { // transition x position to...
+        var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+        return function(t) { return d.radius = i(t); };
+      })
+      .styleTween("fill", function(d) {
+        var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
+        return function(t) { return d.color = i(t); };
+      });
+    }
+    // if graph mode on
+    if (graphMode == 1) {
+    // transition circles' areas & colours
+    circles.transition()
+    .duration(750)
+      .attrTween("r", function(d) { 
+        var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+        return function(t) { return d.radius = i(t); };
+      })
+      .styleTween("fill", function(d) {
+        var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
+        return function(t) { return d.color = i(t); };
+      });
+    }
+
+    setTimeout(function() {
+      circles.style("stroke", "black");
+    }, 500);
+
+}
+
+function futureModeOff() {
+    // if graph mode off
+    if (graphMode == 0) {
+    // Transition back to original attributes, styles, positions
+    circles.transition()
+    .duration(750)
+      // set x, y values
+    .attr("cx", function(d) { return pastPosX[d.id] })
+    .attr("cy", function(d) { return pastPosY[d.id] })
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+      return function(t) { return d.radius = i(t); };
+    })
+    .styleTween("fill", function(d) {
+      var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
+      return function(t) { return d.color = i(t); };
+    });
+
+    setTimeout(function() {
+      simulation.alphaTarget(0.2).restart();
+    }, 750);
+  }
+  // if graph mode on
+  if (graphMode == 1) {
+  // Transition back to original attributes & styles
+    circles.transition()
+    .duration(750)
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+      return function(t) { return d.radius = i(t); };
+    })
+    .styleTween("fill", function(d) {
+      var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
+      return function(t) { return d.color = i(t); };
+    });
+
+  }
+
+    setTimeout(function() {
+      circles.style("stroke", "none");
+    }, 500);
+    return;
+
+}
+
+
+
 
 
 ///////////// Reset Filters /////////////
 
 d3.select("#resetFilters").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
+
+  //   graphModeOff();
+  // }
+  resetFilters();
+});
+
+function resetFilters() {
+  // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
-    handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider ball
-    // Update the slider positions array
-    sliderPositionsArray[i] = 0;
+    handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
+    sliderPositionsArray[i] = 0; // Update the slider positions array
   };
   // reset all circles
   circles = circles.data(store, function(d) { return d.id });
@@ -529,21 +713,34 @@ d3.select("#resetFilters").on('click', function(d) {
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
-  // simulation forces on filter
+
+  // restart simulation only if graph mode off
+  if (graphMode == 0) {
+    if (futureMode == 1) {
+      futureMode = 0;
+      futureModeOff();
+      setTimeout(function(){ resetSimulation() }, 750);
+    } else if (futureMode == 0) {
+      resetSimulation();
+    } 
+  } else if (graphMode == 1) { // TODO: not working
+    circles
+    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+  };
+};
+
+
+function resetSimulation() {
   simulation.nodes(store)
-  .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+  .force("collide", forceCollide)
   .force("cluster", forceCluster)
   .force("gravity", forceGravity)
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
   simulation.alphaTarget(0.2).restart();
-});
-
-
-
-
-
+}
 
 
 
@@ -756,7 +953,7 @@ function updateNodesDropdown(h) {
   circles = circles.merge(newCircles);
   // simulation forces on filter
   simulation.nodes(filterNodesDropdown(h))
-  .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
+  .force("collide", forceCollide)
   .force("cluster", forceCluster)
   .force("gravity", forceGravity)
   .force("x", forceXCombine)
@@ -910,15 +1107,22 @@ function updateMulti(h) {
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
-  // simulation forces on filter
-  simulation.nodes(filterAll())
-  .force("collide", d3.forceCollide(function(d) { return d.radius + 1; }))
-  .force("cluster", forceCluster)
-  .force("gravity", forceGravity)
-  .force("x", forceXCombine)
-  .force("y", forceYCombine)
-  .on("tick", tick);
-  simulation.alphaTarget(0.2).restart();
+  
+  // reset simulation if graph mode = off
+  if (graphMode == 0) {
+    simulation.nodes(filterAll())
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+    simulation.alphaTarget(0.2).restart();
+  } else if (graphMode == 1) { // else reposition nodes on graph
+    circles
+    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+  }
 };
 
 };
@@ -927,10 +1131,7 @@ function updateMulti(h) {
 
 
 
-// Log Clicked Node & ID using jQuery
-$( "body" ).click(function( event ) {
-    console.log( "clicked: " + event.target.nodeName, event.target.id);
-});
+
 
 
 
