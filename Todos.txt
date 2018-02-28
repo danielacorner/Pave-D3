@@ -1,0 +1,14 @@
+Todos
+
+Graph Mode 3 suggested views
+- Wage by Years of Study
+- Wage by Number of Jobs
+- Number of Jobs by Automation Risk
+
+Arrange sliders, hide subskill sliders
+
+Legend
+
+modularize graph mode x and y coords by dropdown or radio button
+
+future-view-to-graph-mode transition
