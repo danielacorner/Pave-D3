@@ -681,7 +681,37 @@ function resetFilters() {
   // reset all circles
   circles = circles.data(store, function(d) { return d.id });
   // ENTER (create the circles with all attributes)
-  var newCircles = circles.enter().append("circle")
+  enterUpdateCircles();
+  // restart simulation only if graph mode off
+  if (graphMode == 0) {
+    if (futureMode == 1) {
+      futureMode = 0;
+      futureModeOff();
+      setTimeout(function(){ resetSimulation() }, 750);
+    } else if (futureMode == 0) {
+      resetSimulation();
+    } 
+  } else if (graphMode == 1) { // TODO: not working
+    circles
+    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+  };
+};
+
+
+function resetSimulation() {
+  simulation.nodes(store)
+  .force("collide", forceCollide)
+  .force("cluster", forceCluster)
+  .force("gravity", forceGravity)
+  .force("x", forceXCombine)
+  .force("y", forceYCombine)
+  .on("tick", tick);
+  simulation.alphaTarget(0.2).restart();
+}
+
+function enterUpdateCircles() {
+    var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -720,35 +750,7 @@ function resetFilters() {
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
 
-  // restart simulation only if graph mode off
-  if (graphMode == 0) {
-    if (futureMode == 1) {
-      futureMode = 0;
-      futureModeOff();
-      setTimeout(function(){ resetSimulation() }, 750);
-    } else if (futureMode == 0) {
-      resetSimulation();
-    } 
-  } else if (graphMode == 1) { // TODO: not working
-    circles
-    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
-  };
-};
-
-
-function resetSimulation() {
-  simulation.nodes(store)
-  .force("collide", forceCollide)
-  .force("cluster", forceCluster)
-  .force("gravity", forceGravity)
-  .force("x", forceXCombine)
-  .force("y", forceYCombine)
-  .on("tick", tick);
-  simulation.alphaTarget(0.2).restart();
 }
-
-
 
 ///////////////////////////////// Filters ////////////////////////////////////
 
@@ -916,47 +918,7 @@ function updateNodesDropdown(h) {
   })
   .remove();
   // ENTER
-  var newCircles = circles.enter().append("circle")
-    .attr("r", function(d) { return d.radius }) // start at full radius
-    .style("fill", function(d) { return color(d.cluster); })
-    // Tooltips
-    .on("mouseover", function(d) {
-      // highlight the current circle
-      // clicked = 0;
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
-      div.transition()
-      .duration(200)
-      .style("opacity", .9)
-      .style("height", "60px");
-      // Display NOC, Industry
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
-        // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 20 + "px")
-        .style("top", (d3.event.pageY - 80) - d.radius + "px");
-      })
-    .on("mouseout", function(d) {
-      // clicked = 0;
-      d3.select(this).attr("stroke", "none");
-      div.transition()
-      .duration(500)
-      .style("opacity", 0);
-    })
-    .on("click", function(d) {
-      // clicked = 1-clicked;
-      // if(clicked=1) {}
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-        // Insert extra info to display on click
-        + "<br/><br/>"+ d.job +"<br/><br/>"
-        + "Automation Risk: " + d.automationRisk 
-        + "<br/><br/>Workers: " + d.workers)
-        // Unfurl downward
-        .transition()
-        .duration(200)
-        .style("height", "200px");
-      });
-    drag_handler(newCircles);
-  //  ENTER + UPDATE
-  circles = circles.merge(newCircles);
+  enterUpdateCircles();
   // simulation forces on filter
   simulation.nodes(filterNodesDropdown(h))
   .force("collide", forceCollide)
@@ -1075,45 +1037,7 @@ function updateMulti(h) {
   })
   .remove();
   // ENTER (create the circles with all attributes)
-  var newCircles = circles.enter().append("circle")
-    .attr("r", function(d) { return d.radius }) // start at full radius
-    .style("fill", function(d) { return color(d.cluster); })
-    // Tooltips
-    .on("mouseover", function(d) {
-      // highlight the current circle
-      // clicked = 0;
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
-      div.transition()
-      .duration(200)
-      .style("opacity", .9)
-      .style("height", "60px");
-      // Display NOC, Industry
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
-        // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 20 + "px")
-        .style("top", (d3.event.pageY - 80) - d.radius + "px");
-      })
-    .on("mouseout", function(d) {
-      d3.select(this).attr("stroke", "none");
-      div.transition()
-      .duration(500)
-      .style("opacity", 0);
-    })
-    .on("click", function(d) {
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-        // Insert extra info to display on click
-        + "<br/><br/>"+ d.job +"<br/><br/>"
-        + "Automation Risk: " + d.automationRisk 
-        + "<br/><br/>Workers: " + d.workers)
-        // Unfurl downward
-        .transition()
-        .duration(200)
-        .style("height", "200px");
-      });
-  drag_handler(newCircles);
-  //  ENTER + UPDATE
-  circles = circles.merge(newCircles);
-  
+  enterUpdateCircles();
   // reset simulation if graph mode = off
   if (graphMode == 0) {
     simulation.nodes(filterAll())
