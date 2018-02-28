@@ -318,10 +318,14 @@ d3.select("#combine").on('click', function(d) {
     .alphaTarget(0.2)
     .restart()
   } else {
-    futureMode = 0;
-    graphMode = 0; // turn off graph mode
-    graphModeOff();
-    futureModeOff();
+    if (futureMode==1) {
+      futureMode = 0;
+      futureModeOff();
+    }
+    if (graphMode==1) {
+      graphMode = 0; // turn off graph mode
+      graphModeOff();
+    }
     // transition circles back to middle for 400 ms
     // but restart the simulation at 250 ms (looks ok,
     // could make similar to graphMode on/off transition) 
@@ -397,7 +401,9 @@ d3.select("#graph").on('click', function(d) {
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
     // if future mode is on, return to future mode
-    // if (futureMode == 1) { futureModeOn(); }
+    if (futureMode == 1) { 
+      futureMode = 0;
+      futureModeOff(); }
     // console.log("futureMode: ", futureMode);
     graphModeOff();
   }; // transition back to clusters
