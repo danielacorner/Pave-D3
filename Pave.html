@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
 
-<!-- bootstrap -->
+<!-- Import Popper -->
+<script src="index.js"></script>
+
+<!-- Import Bootstrap -->
 <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -17,7 +20,8 @@
 <link rel="stylesheet" href="css/main.css">
 
 <!-- Google font -->
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Pacifico">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis">
 
 <!-- Jquery -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -28,39 +32,45 @@
 
 <div class="container">
 
+<div class="title">
+	<span style="display: inline-block; width: 900"></span>
+	<h1 style="font-family: Poppins; text-align: left;">
+		<!-- responsive image logo -->
+	<img src="img/logo.png" id="logo" style="width: 7%; height: 7%;" class="img-responsive img-thumbnail pull-left" alt="Responsive image">
+
+	Pave <h3 style="font-family: Dosis; text-align: right;">the Canadian Job Explorer</h3>
+	</h1>
+</div>
 	<!-- buttons -->
 	<div id="buttons">
 
-		<div class="well well-sm"></div>
+			<!-- Button group 1 -->
+			<div class="btn-group" role="group" aria-label="...">
 
-		<!-- Button group 1 -->
-		<div class="btn-group" role="group" aria-label="...">
+				<button id="industry" type="button" class="btn btn-default">
+				Industry Split <i class="fa fa-expand-arrows-alt"></i></button>
 
-			<button id="industry" type="button" class="btn btn-default">
-			Industry Split <i class="fa fa-expand-arrows-alt"></i></button>
+				<button id="combine" type="button" class="btn btn-default">
+				Combine <i class="fa fa-compress"></i></button>
 
-			<button id="combine" type="button" class="btn btn-default">
-			Combine <i class="fa fa-compress"></i></button>
+				<button id="random" type="button" class="btn btn-default">
+				Shuffle <i class="fa fa-random"></i></button>
 
-			<button id="random" type="button" class="btn btn-default">
-			Shuffle <i class="fa fa-random"></i></button>
+			</div>
 
-		</div>
+			<button id="graph" type="button" class="btn btn-default">
+			Graph Mode <i class="fa fa-expand-arrows-alt"></i></button>
 
-		<button id="graph" type="button" class="btn btn-default">
-		Graph Mode <i class="fa fa-expand-arrows-alt"></i></button>
+			<button id="freeze" type="button" class="btn btn-default">
+			Pause Simulation <i class="fa fa-pause"></i></button>
 
-		<button id="freeze" type="button" class="btn btn-default">
-		Pause Simulation <i class="fa fa-pause"></i></button>
+			<button id="resetFilters" type="button" class="btn btn-default">
+			Reset Filters <i class="fa fa-undo-alt"></i></button>
 
-		<button id="resetFilters" type="button" class="btn btn-default">
-		Reset Filters <i class="fa fa-undo-alt"></i></button>
-
-		<button id="futureView" type="button" class="btn btn-default">
-		Future View <i class="fa fa-fast-forward"></i></button>
+			<button id="futureView" type="button" class="btn btn-default">
+			Future View <i class="fa fa-fast-forward"></i></button>
 
 	</div>
-
 
 
 	<!-- the graphing canvas -->
@@ -83,23 +93,64 @@
 	<!-- legend container -->
 	<g class="legend" id="legend"></g>		
 
+
+
+
+
+
+
+
+
 	<!-- Here is the data visualization -->
 	<script src="Pave.js"></script>
 
 
-	<!-- sliders -->
-	<g id="sliders">
 
-		<!-- dropdown -->
-		<div id="dropdown1Title"></div>
-		<select class="dropdown" id="dropdown1"></select> 
-		 
-		<!-- slider for the dropdown -->
-		<div type="text" class="slider" id="slider2"></div>
 
-		<!-- slider array -->
-		<div type="text" class="slider" id="sliderArray"></div>
-	</g>
+
+
+
+
+
+	<div class="jumbotron">
+		<!-- sliders -->
+		<g id="sliders">
+
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle btn-lg"
+				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
+				 	<span class="caret"></span>
+				 </button>
+				 <ul class="dropdown-menu">
+				 	<li class="dropdown-header">Suggested views</li>
+				 	<li><a href="#">Wage vs Years of Study</a></li>
+				 	<li><a href="#">Machine Automation Risk vs Number of Jobs</a></li>
+				 	<li><a href="#">Wage vs Number of Jobs</a></li>
+
+				 	<li role="separator" class="divider"></li>
+				 	<li class="disabled"><a href="#">Can't touch this</a></li>
+				 	<li>Can touch this</li>
+				 	<li>Can also touch this</li>
+
+				 </ul>
+			</div>
+
+			<!-- dropdown -->
+			<div id="dropdown1Title"></div>
+			<select class="dropdown" id="dropdown1"></select> 
+
+			<!-- slider for the dropdown -->
+			<div type="text" class="slider" id="slider2"></div>
+
+			<!-- slider array -->
+			<div type="text" class="slider" id="sliderArray"></div>
+
+			<!-- slider array 2 -->
+			<div type="text" class="slider" id="sliderArray"></div>
+
+
+		</g>
+	</div>
 </div>
 	
 	<!-- bootstrapcdn -->
