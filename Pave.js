@@ -1069,7 +1069,7 @@ function updateMulti(h) {
 
 
 
-//////////////// Filter Functions 3: All at once //////////////////////
+//////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
 filterAll = function() {
   // h = sliderScaleArray[event.target.id].invert(d3.event.x)
@@ -1081,7 +1081,7 @@ filterAll = function() {
       // then loop through the sliders array and put you on the list
       for(var s=0; s<sliderPositionsArray.length; s++){
         // if the slider position is above your value, put you on the list
-        var checkMin = sliderPositionsArray[s]; // like sliderScale(h)
+        var checkMin = sliderPositionsArray[s];
         if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
           listToDeleteMulti.push(d.id);
         }
@@ -1113,4 +1113,48 @@ filterAll = function() {
 
 
 
+
+  /////////// Legend /////////////////
+// legendG = d3.select("#legend").append("");
+// legendG = d3.select("#legend").append("");
+
+var legendHeight = 15;
+
+var legend = svg.selectAll("#legend")
+    .data(d3.range(10))
+    .enter().append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 22 + ")"; })
+    .style("fill", function(d, i) { return d3.schemeCategory10[i] });
+
+legend.append("rect")
+    .attr("x", width/2 - margin.right - 20)
+    .attr("width", 18)
+    .attr("height", 18)
+    .attr("transform", "translate(0," + legendHeight + ")")
+    .style("fill", );
+
+industriesArray = [
+'Natural resources, agriculture and related production occupations',
+'Management occupations',
+'Occupations in art, culture, recreation and sport',
+'Trades, transport and equipment operators and related occupations',
+'Business, finance and administration occupations',
+'Occupations in education, law and social, community and government services',
+'Natural and applied sciences and related occupations',
+'Occupations in manufacturing and utilities',
+'Health occupations',
+'Sales and service occupations',
+]
+
+legend.append("text")
+    .attr("x", width/2 - margin.right - 27 )
+    .attr("y", 9)
+    .attr("dy", ".35em")
+    .attr("transform", "translate(0," + legendHeight + ")")
+    .style("text-anchor", "end")
+    .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; });
+
+
 })
+

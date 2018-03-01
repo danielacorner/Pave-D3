@@ -1,74 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Pave: the Canadian Job Explorer</title>
-	<link rel="stylesheet" href="css/main.css">
+<meta charset="utf-8">
+<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
+
+<!-- bootstrap -->
+<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- Font Awesome icons -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Page title (name on tab) -->
+<title>Pave: the Canadian Job Explorer</title>
+
+<link rel="stylesheet" href="css/main.css">
+
+<!-- Google font -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Pacifico">
+
+<!-- Jquery -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </head>
 <body>
 
-	<!-- include Jquery REDUNDANT? -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- <script type="text/javascript" src="js/slider.js"></script> -->
+<div class="container">
 
 	<!-- buttons -->
 	<div id="buttons">
-		<button id="industry">Industry Split</button>
-		<button id="combine">Combine</button>
-		<button id="random">Shuffle</button>
-		<button id="graph">Graph Mode</button>
-		<button id="freeze">Freeze!</button>
-		<button id="resetFilters">Reset Filters</button>
-		<button id="futureView">Future View</button>
+
+		<div class="well well-sm"></div>
+
+		<!-- Button group 1 -->
+		<div class="btn-group" role="group" aria-label="...">
+
+			<button id="industry" type="button" class="btn btn-default">
+			Industry Split <i class="fa fa-expand-arrows-alt"></i></button>
+
+			<button id="combine" type="button" class="btn btn-default">
+			Combine <i class="fa fa-compress"></i></button>
+
+			<button id="random" type="button" class="btn btn-default">
+			Shuffle <i class="fa fa-random"></i></button>
+
+		</div>
+
+		<button id="graph" type="button" class="btn btn-default">
+		Graph Mode <i class="fa fa-expand-arrows-alt"></i></button>
+
+		<button id="freeze" type="button" class="btn btn-default">
+		Pause Simulation <i class="fa fa-pause"></i></button>
+
+		<button id="resetFilters" type="button" class="btn btn-default">
+		Reset Filters <i class="fa fa-undo-alt"></i></button>
+
+		<button id="futureView" type="button" class="btn btn-default">
+		Future View <i class="fa fa-fast-forward"></i></button>
+
 	</div>
 
-	<!-- legend container -->
-	<div id="legendContainer" class="legendContainer">Legend Placeholder
-		<svg id="legend" width="50px" height="50px" style="display: inline"></svg>
-	</div>
 
-	<script>
-		function filterJSON(json, key, value) {
-			var result = [];
-			json.forEach(function(val,idx,arr){
-				if(val[key] == value){
-					result.push(val)
-				}
-			})
-			return result;}
-		</script>
 
-		<!-- the graphing canvas -->
-		<svg id="chart" width="960" height="500" class="chart"></svg>
-		
-		<!-- This is D3, our graphing library -->
-		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<!-- the graphing canvas -->
+	<svg id="chart" width="960" height="500" class="chart"></svg>
+	
+	<!-- This is D3, our graphing library -->
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
-		<!-- These are extra libraries for paired multi-attribute transitions -->
-		<script src="https://d3js.org/d3-color.v1.min.js"></script>
-		<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-		<script src="https://d3js.org/d3-ease.v1.min.js"></script>
-		<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
-		<script src="https://d3js.org/d3-selection.v1.min.js"></script>
-		<script src="https://d3js.org/d3-timer.v1.min.js"></script>
-		<script src="https://d3js.org/d3-transition.v1.min.js"></script>
-		<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
-
-		<!-- Now we include our visualization -->
-		<script src="PaveBubbles.js"></script>
-		<!-- slider -->
-		<g id="slidersG">
-			<!-- dropdown -->
-			<div id="dropdown1Title"></div>
-			<select class="dropdown" id="dropdown1"></select>  
-			<!-- slider 2 -->
-			<div type="text" class="slider" id="slider2"></div>
-			<!-- slider 2 -->
-			<div type="text" class="slider" id="sliderArray"></div>
-		</g>
+	<!-- These are extra libraries for paired multi-attribute transitions -->
+	<script src="https://d3js.org/d3-color.v1.min.js"></script>
+	<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+	<script src="https://d3js.org/d3-ease.v1.min.js"></script>
+	<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+	<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+	<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+	<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+	<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
 
 	
+	<!-- legend container -->
+	<g class="legend" id="legend"></g>		
+
+	<!-- Here is the data visualization -->
+	<script src="Pave.js"></script>
+
+
+	<!-- sliders -->
+	<g id="sliders">
+
+		<!-- dropdown -->
+		<div id="dropdown1Title"></div>
+		<select class="dropdown" id="dropdown1"></select> 
+		 
+		<!-- slider for the dropdown -->
+		<div type="text" class="slider" id="slider2"></div>
+
+		<!-- slider array -->
+		<div type="text" class="slider" id="sliderArray"></div>
+	</g>
+</div>
+	
+	<!-- bootstrapcdn -->
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+	
+	<script src="js/bootstrap.min.js"></script>
 
 	</body>
 	</html>
