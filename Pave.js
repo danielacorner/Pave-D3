@@ -27,9 +27,9 @@ if(headersSplit[h] == "s15CriticalThinking") h = headersSplit.length;
     // set the options 
 document.getElementById("dropdown1").innerHTML = options;
     // set title & reset the title when new option selected
-document.getElementById("dropdown1Title").innerHTML = "Minimum " + dropdown1.value;
+document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
 d3.select("#dropdown1").on('click', function(d){
-    document.getElementById("dropdown1Title").innerHTML = "Minimum " + dropdown1.value;
+    document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
 })
 
 
@@ -957,6 +957,27 @@ var sliderArray = ["wage", "workers",
     "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
     "s13DocumentUse","s14Writing","s15CriticalThinking"
 ];
+
+// var sliderArrayStats = ["wage", "workers"];
+
+// var sliderArrayLang = ["skillsLang",
+//     // subskills
+//    "s8OralCommunication","s10Reading","s14Writing"];
+
+// var sliderArrayLogi = ["skillsLogi",
+//     // subskills
+//     "s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
+//     "s9ProblemSolving","s15CriticalThinking"];
+
+// var sliderArrayMath = ["skillsMath",
+//     // subskills
+//     "s1DataAnalysis","s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation",
+//     "s11SchedulingorBudgetingandAccounting"];
+
+// var sliderArrayComp = ["skillsComp",
+//     // subskills
+//     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
+
 var sliderPositionsArray = []; // array to track all sliders
 var sliderSVGArray = []; // array of slider SVGs
 var sliderScaleArray = []; // array of slider scale functions
@@ -966,13 +987,43 @@ var listToDeleteMulti = []; // filtered IDs
 
 // For Each Slider create the slider
 for(var i=0; i<sliderArray.length; i++) {
+	var column, hidden = "block", mainskill = false;
+	if (i<2) { column = 1
+	} else if (i<4) { column = 2, mainskill = true;
+	} else if (i<6) { column = 3, mainskill = true;
+		// language subskills
+	} else if ([13,15,19].includes(i)) { column = 2, hidden = "none"
+		// logic subskills
+	} else if ([7,9,14,20].includes(i)) { column = 2, hidden = "none"
+		// Math subskills
+	} else if ([10,11,12,16].includes(i)) { column = 3, hidden = "none"
+		// Computer subskills
+	} else if ([6,8,17,18].includes(i)) { column = 3, hidden = "none"}
   // Title & SVG
-  sliderSVGArray[i] = d3.select("#sliderArray").append("text").html("<br>"+sliderArray[i]+"<br>")
+  sliderSVGArray[i] = d3.select("#sliderArray"+column)
+  .append("text")
+  	.style("display", hidden)
+  	.html("<br>"+sliderArray[i]+"<br>")
   .append("svg")
-    // .style("display", "inline").style("position", "relative")
+  	.style("display", hidden)
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
+
+
+
+
+
+  if (mainskill = true){
+  	sliderSVGArray[i]
+  		.append("text")
+  			.html("Subskills")
+  }
+
+
+
+
+  
   // Scale
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})])
