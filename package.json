@@ -1,0 +1,23 @@
+{
+  "name": "Pave-D3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcorn068/Pave-D3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcorn068/Pave-D3/issues"
+  },
+  "homepage": "https://github.com/dcorn068/Pave-D3#readme"
+}
