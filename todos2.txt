@@ -1,0 +1,8 @@
+todos
+
+-switch "pause simulation" to a toggle & disable other buttons
+-retain filter mode colours, sizes on graph filtering
+
+-tooltip div styling
+
+-dropdowns not working
