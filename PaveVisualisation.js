@@ -276,7 +276,8 @@ var circles = svg.selectAll("circle")
         + "<br/>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%"
         + "<br/><br/>This group currently has " + d.workers + " Jobs</span>"
         +"<br/><br/><span style='padding-left: 170px'></span><button class='btn btn-md btn-default'"+
-         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white;'>View more</button>")
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
+         +";'> View more</button>")
         // Unfurl downward
         .transition()
         .duration(200)
