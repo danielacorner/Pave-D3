@@ -205,6 +205,12 @@ var circles = svg.selectAll("circle")
       .duration(200)
       .style("opacity", .9)
       .style("height", "60px");
+
+      d3.select("#tooltip")
+      .append("image")
+        .attr("src", "img/logo.png")
+        .attr("class", "img-rounded");
+
       // Display NOC, Industry
       div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
         // Move div above mouse by "top" + radius and right by "left"
@@ -368,6 +374,7 @@ maxwage = 116.18; //busted
 d3.select("#freeze").on('click', function(d) {
   simulation.stop();
 });
+
 
 
 
@@ -730,7 +737,7 @@ function enterUpdateCircles() {
     .on("mouseover", function(d) {
       // highlight the current circle
       // clicked = 0;
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3).attr("class", "panel");
       div.transition()
       .duration(200)
       .style("opacity", .9)
@@ -996,28 +1003,38 @@ var sliderScaleArray = []; // array of slider scale functions
 var sliderMulti = []; // array of sliders
 var handleArray = []; // array of slider handles
 var listToDeleteMulti = []; // filtered IDs
-
+var sliderTitlesArray = [
+"Wage ($/hr)", "Number of Jobs", "Language Skills", "Logic Skills", "Math Skills", "Computer Skills",
+  // subskills
+    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
+    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
+    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
+    "Document Use","Writing","Critical Thinking"
+    ]
 // For Each Slider create the slider
 for(var i=0; i<sliderArray.length; i++) {
-	var column, hidden = "block", mainskill = false;
-	if (i<2) { column = 1
+	var column, hidden = "visible", mainskill = false;
+	// Wage, Number of Jobs
+  if (i<2) { column = 1
+  // Language, Logic skills
 	} else if (i<4) { column = 2, mainskill = true;
+  // Math, Computer skills
 	} else if (i<6) { column = 3, mainskill = true;
 		// language subskills
-	} else if ([13,15,19].includes(i)) { column = 2, hidden = "none"
+	} else if ([13,15,19].includes(i)) { column = 2, hidden = "visible"
 		// logic subskills
-	} else if ([7,9,14,20].includes(i)) { column = 2, hidden = "none"
+	} else if ([7,9,14,20].includes(i)) { column = 2, hidden = "visible"
 		// Math subskills
-	} else if ([10,11,12,16].includes(i)) { column = 3, hidden = "none"
+	} else if ([10,11,12,16].includes(i)) { column = 3, hidden = "hidden"
 		// Computer subskills
-	} else if ([6,8,17,18].includes(i)) { column = 3, hidden = "none"}
+	} else if ([6,8,17,18].includes(i)) { column = 3, hidden = "hidden"}
   // Title & SVG
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
   .append("text")
-  	.style("display", hidden)
-  	.html("<br>"+sliderArray[i]+"<br>")
+  	.style("visibility", hidden)
+  	.html("<br>"+sliderTitlesArray[i]+"<br>"+"Less<span style='padding-left: 195px'></span>"+"More")
   .append("svg")
-  	.style("display", hidden)
+  	.style("visibility", hidden)
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
@@ -1026,11 +1043,12 @@ for(var i=0; i<sliderArray.length; i++) {
 
 
 
-  if (mainskill = true){
-  	sliderSVGArray[i]
-  		.append("text")
-  			.html("Subskills")
-  }
+  // if (mainskill = true){
+  // 	sliderSVGArray[i]
+  // 		.append("button")
+  // 			.html("Subskills")
+  //       .attr("href", "#")
+  // }
 
 
 
@@ -1231,5 +1249,68 @@ legend.append("text")
     .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; });
 
 
-})
 
+
+// Expand buttons
+d3.select("#expandSkills1").on('click', function() {
+// For Each Slider create the slider
+for(var i=0; i<sliderArray.length; i++) {
+   
+    // Language subskills
+  if ([13,15,19].includes(i)) { column = 2, hidden = "visible"
+    // Title & SVG
+  d3.select("#slider_"+i)
+    .style("visibility", hidden)
+      .text("test1")
+
+
+
+
+  // d3.select("#slider_"+i).append("text").text("test")
+    // .append("text")
+    // .html("test")
+    // .html("<br>"+sliderTitlesArray[i]+"<br>")
+  // .append("svg")
+  //   .style("visibility", hidden)
+  //   .attr("id", "slider_"+i)
+  //   .attr("width", 250)
+  //   .attr("height", 50);
+
+    // logic subskills
+  } else if ([7,9,14,20].includes(i)) { column = 2, hidden = "visible";
+  // Title & SVG
+  sliderSVGArray[i].style("visibility", "visible")
+    .append("text")
+      .attr("class", "sliderTitle_"+i)
+
+  }
+
+}
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})
