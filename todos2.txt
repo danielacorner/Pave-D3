@@ -6,3 +6,7 @@ todos
 -tooltip div styling
 
 -dropdowns not working
+
+-legend show/hide
+
+-graph mode views dropdown

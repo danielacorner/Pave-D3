@@ -37,49 +37,33 @@
 </head>
 <body>
 
-<!-- Title and logo -->
-<div class="container">
-
-	<div class="title">
-		<span style="display: inline-block; width: 900"></span>
-		<h1 style="font-family: Poppins; text-align: left;">
-				<!-- responsive image logo -->
-			<img src="img/logo.png" id="logo" style="width: 7%; height: 7%;" class="img-responsive img-thumbnail pull-left" alt="Responsive image">
-
-			Pave <h3 style="font-family: Dosis; text-align: right;">the Canadian Job Explorer</h3>
-		</h1>
-
-</div>
-
 
 <!-- Collapsible Navigation Bar -->
 <div class="container">
  
 <!-- .navbar-fixed-top, or .navbar-fixed-bottom can be added to keep the nav bar fixed on the screen -->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-fixed-top">
   <div class="container-fluid">
  
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
  
       <!-- Button that toggles the navbar on and off on small screens -->
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar_collapse" aria-expanded="false">
  
       <!-- Hides information from screen readers -->
         <span class="sr-only"></span>
  
         <!-- Draws 3 bars in navbar button when in small mode -->
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <span class="fas fa-bars"></span>
       </button>
  
       <!-- You'll have to add padding in your image on the top and right of a few pixels (CSS Styling will break the navbar) -->
-      <a class="pull-left" href="#"><img src="Pave.png"></a>
+      <a class="pull-right" href="#"><img src="img/logo.png" style="width: 6%; height: 6%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image"></a>
     </div>
  
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="navbar_collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
         <li><a href="#">About</a></li>
@@ -105,6 +89,23 @@
 </nav>
 </div>
 <br>
+
+<!-- Title and logo -->
+<div class="container">
+
+	<div class="title">
+		<span style="display: inline-block; width: 900"></span>
+		<h1 style="font-family: Poppins; text-align: left;">
+				<!-- responsive image logo -->
+	
+<span style="padding-left: 50px;"></span>
+			Pave <span style="padding-left: 50px;"></span> <img src="img/logo.png" id="logo" style="width: 7%; height: 7%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image">
+			<h3 style="font-family: Dosis; text-align: right;">the Canadian Job Explorer</h3>
+		</h1>
+
+</div>
+
+
  
 <!-- Navigation elements -->
 <div class="container">
@@ -207,6 +208,7 @@
 	<script src="https://d3js.org/d3-timer.v1.min.js"></script>
 	<script src="https://d3js.org/d3-transition.v1.min.js"></script>
 	<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+	<!-- <script src="https://d3js.org/d3.button.js"></script> -->
 
 	
 	<!-- legend container -->
@@ -269,12 +271,20 @@
 		<!-- slider array 2 -->
 	<div class="col-md-4">
 		<g id="sliders2">
+			<button class="btn-md btn btn-default" type="button" id="expandSkills1" aria-haspopup="true" aria-expanded="true">
+				Expand 
+			<span class="caret"></span>
+			</button>
 			<div type="text" class="slider" id="sliderArray2"></div>
 		</g>
 	</div>
 		<!-- slider array 3 -->
 	<div class="col-md-4">
 		<g id="sliders3">
+			<button class="btn-md btn btn-default" type="button" id="expandSkills2" aria-haspopup="true" aria-expanded="true">
+				Expand 
+			<span class="caret"></span>
+			</button>
 			<div type="text" class="slider" id="sliderArray3"></div>
 		</g>
 	</div>

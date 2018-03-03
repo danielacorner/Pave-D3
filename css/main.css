@@ -23,6 +23,9 @@ div.tooltip {
   border-radius: 12px;
   pointer-events: none;
 }
+div.tooltip:hover {
+  visibility: visible
+}
 /*
 .slider {
 	background: url('../img/grid.png') -25px -25px;
