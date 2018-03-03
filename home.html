@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
+
+<!-- Imports -->
+
+	<!-- Bootstrap sources -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+	<!-- Bootstrap -->
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- Font Awesome icons -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+
+
+	<!-- Page title (name on the tab) -->
+	<title>Pave: the Canadian Job Explorer</title>
+
+	<!-- stylesheet -->
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- Google fonts -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis">
+
+	<!-- Jquery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+<body>
+
+<!-- Title and logo -->
+<div class="container">
+
+	<div class="title">
+		<span style="display: inline-block; width: 900"></span>
+		<h1 style="font-family: Poppins; text-align: left;">
+				<!-- responsive image logo -->
+			<img src="img/logo.png" id="logo" style="width: 7%; height: 7%;" class="img-responsive img-thumbnail pull-left" alt="Responsive image">
+
+			Pave <h3 style="font-family: Dosis; text-align: right;">the Canadian Job Explorer</h3>
+		</h1>
+
+</div>
+
+<!-- Navigation elements -->
+<div class="container">
+ 
+
+	<!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
+	<ul class="nav nav-pills">
+	  <li class="active">
+	  	<a data-toggle="tab" href="#filtering" style="padding-left:5em">
+	  		Filtering</a>
+		</li>
+	  <li><a data-toggle="tab" href="#graph-mode" style="padding-left:5em">
+	  		Graph Mode</a></li>
+	 	  <!-- Dropdown menu item -->
+	  <li class="dropdown">
+	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:5em">
+	    	About the Data<span class="caret"></span></a>
+	    <ul class="dropdown-menu">
+	 
+	      <!-- Disable a tab -->
+	      <li><a data-toggle="tab" href="#the-industries">The NOC Industries</a></li>
+	      <li><a data-toggle="tab" href="#other-industries">Other classification systems</a></li>
+	    </ul>
+	  </li>
+	</ul>
+	 
+	<div class="tab-content">
+	  <div id="filtering" class="tab-pane fade in active">
+	    <p>Here is a description of transferable skills and some filtering tips.</p>
+	  </div>
+	  <div id="graph-mode" class="tab-pane fade">
+	    <p>Here is some amazing advice on how to interpret the graph.</p>
+	  </div>
+	  <div id="the-industries" class="tab-pane fade">
+	    <p>Here's a short summary of the 10 NOC industries.</p>
+	  </div>
+	  <div id="other-industries" class="tab-pane fade">
+	    <p>Other job classification sources.</p>
+	  </div>
+	</div>
+ 
+</div>
+
+</div>
+
+<!-- Buttons and Search -->
+<div class="container">
+	<!-- buttons -->
+	<div id="buttons">
+
+			<!-- Button group 1 -->
+			<div class="btn-group" role="group" aria-label="...">
+
+				<button id="industry" type="button" class="btn btn-default">
+				Industry Split <i class="fa fa-expand-arrows-alt"></i></button>
+
+				<button id="combine" type="button" class="btn btn-default">
+				Combine <i class="fa fa-compress"></i></button>
+
+				<button id="random" type="button" class="btn btn-default">
+				Shuffle <i class="fa fa-random"></i></button>
+
+			</div>
+
+			<button id="graph" type="button" class="btn btn-default">
+			Graph Mode <i class="fa fa-expand-arrows-alt"></i></button>
+
+			<button id="freeze" type="button" class="btn btn-default">
+			Pause Simulation <i class="fa fa-pause"></i></button>
+
+			<button id="resetFilters" type="button" class="btn btn-default">
+			Reset Filters <i class="fa fa-undo-alt"></i></button>
+
+			<button id="futureView" type="button" class="btn btn-default">
+			Future View <i class="fa fa-fast-forward"></i></button>
+
+	</div> <!-- buttons -->
+
+	<!-- Search Jobs -->
+	<!-- could make this into a dropdown-search for "search job groups, job titles, ..." -->
+	<div class="input-group input-group-sm">
+	  <input type="text" class="form-control" placeholder="Search Jobs by Title or Keyword">
+	  <span class="input-group-btn">
+	    <button class="btn btn-default" type="button">Search</button>
+	  </span>
+	</div><br>
+
+	<!-- the graphing canvas -->
+	<svg id="chart" width="960" height="500" class="chart"></svg>
+	
+	<!-- This is D3, our graphing library -->
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+	<!-- These are extra libraries for paired multi-attribute transitions -->
+	<script src="https://d3js.org/d3-color.v1.min.js"></script>
+	<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+	<script src="https://d3js.org/d3-ease.v1.min.js"></script>
+	<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+	<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+	<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+	<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+	<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+
+	
+	<!-- legend container -->
+	<g class="legend" id="legend"></g>		
+
+
+
+
+
+
+
+</div> <!-- Buttons and Search -->
+
+
+
+	<!-- Here is the data visualization -->
+	<script src="PaveVisualisation.js"></script>
+
+
+
+
+<!-- Dropdowns and Sliders -->
+<div class="container">
+	<div class="jumbotron">
+			<!-- dropdown menu for graph views -->
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle btn-lg"
+				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
+				 	<span class="caret"></span>
+				 </button>
+				 <ul class="dropdown-menu">
+				 	<li class="dropdown-header">Suggested views</li>
+				 	<li><a href="#">Wage vs Years of Study</a></li>
+				 	<li><a href="#">Machine Automation Risk vs Number of Jobs</a></li>
+				 	<li><a href="#">Wage vs Number of Jobs</a></li>
+
+				 	<li role="separator" class="divider"></li>
+				 	<li class="disabled"><a href="#">Can't touch this</a></li>
+				 	<li><a href="#">Can touch this</a></li>
+
+				 </ul>
+			</div>
+
+<div class="row">
+	<!-- sliders -->
+	<div class="col-md-4">
+		<g id="sliders">
+			<!-- Title -->
+			<div id="dropdown1Title"></div>
+			<!-- Dropdown for the Slider -->
+			<select class="dropdown col-md-12" id="dropdown1"></select> 
+			<!-- Slider attached to Dropdown -->
+			<div type="text" class="slider" id="slider2"></div>
+			<!-- slider array 1: Filter by Stats-->
+			<g id="sliders1">
+				<div type="text" class="slider" id="sliderArray1"></div>
+			</g>
+		</g>
+	</div>
+		<!-- slider array 2 -->
+	<div class="col-md-4">
+		<g id="sliders2">
+			<div type="text" class="slider" id="sliderArray2"></div>
+		</g>
+	</div>
+		<!-- slider array 3 -->
+	<div class="col-md-4">
+		<g id="sliders3">
+			<div type="text" class="slider" id="sliderArray3"></div>
+		</g>
+	</div>
+</div> <!-- row -->
+		
+		
+
+	</div> <!-- jumbotron -->
+</div>	<!-- container -->
+</div>
+	
+	<!-- bootstrapcdn -->
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+	
+	<script src="js/bootstrap.min.js"></script>
+
+	</body>
+	</html>
