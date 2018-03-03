@@ -225,6 +225,7 @@ var circles = svg.selectAll("circle")
       .duration(200)
       .style("opacity", .96)
       .style("height", "140px")
+      .style("width", "250px")
       .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
@@ -263,21 +264,24 @@ var circles = svg.selectAll("circle")
     .on("click", function(d) {
       // click-on, click-off
       clicked = 1-clicked;
-      div.html("<span style='font-size: 16px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+      div.html("<span style='font-size: 18px; font-family: Poppins; color: " + colorTooltip(d.cluster)
         +"; font: bold'>" + d.job + "</span>"
-                +"<span style='color: " + colorTooltip(d.cluster) +";'><br/>"
-                +"<br/>Industry<span style='padding-left: 90px'>NOC "+ d.noc
-                +"</span><br/>"+ d.industry + "</span>"
+                +"<span style='font-size: 15px; color: " + colorTooltip(d.cluster) +";'><br/>"
+                +"<br/>Some job titles from this group are ...</br><span style='padding-left: 90px'>"+
+                +"<br/>"+ " Top Jobs Placeholder" 
+                +"<br/><br/>Top skills are (placeholders)" + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang
         // Insert extra info to display on click
-        + "<br/><span style='font-size: 14px; font-family: Poppins; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>"
-        + "<br/>Automation Risk: " + d.automationRisk 
-        + "<br/><br/>Workers: " + d.workers + "</span>"
-        +"<br/><br/><span style='padding-left: 80px'></span><button class='btn btn-md btn-default' style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white;'>View more</button>")
+                +"<br/><br/>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group."
+                +"<br/><br/>Median wage is $" + Math.round(100*d.wage)/100 + " per hr."
+        + "<br/>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%"
+        + "<br/><br/>This group currently has " + d.workers + " Jobs</span>"
+        +"<br/><br/><span style='padding-left: 170px'></span><button class='btn btn-md btn-default'"+
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white;'>View more</button>")
         // Unfurl downward
         .transition()
         .duration(200)
-        .style("height", "300px");
+        .style("height", "350px")
+        .style("width", "300px");
       })
     // .on("dblclick", dblclick())
 
