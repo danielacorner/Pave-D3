@@ -273,13 +273,17 @@ var circles = svg.selectAll("circle")
         +"; font: bold'>"
         + "<br/>Automation Risk: " + d.automationRisk 
         + "<br/><br/>Workers: " + d.workers + "</span>"
-        +"<br/><br/><a href='http://www.google.ca' style='font-size: 16px'>More info</a>")
+        +"<br/><br/><span style='padding-left: 80px'></span><button class='btn btn-md btn-default' style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white;'>View more</button>")
         // Unfurl downward
         .transition()
         .duration(200)
-        .style("height", "250px");
+        .style("height", "300px");
       })
+    // .on("dblclick", dblclick())
 
+function dblclick(d){
+  d3.select(this).classed("fixed", d.fixed = false)
+}
 
 
 // on start, transition in radii from 0
@@ -295,11 +299,15 @@ circles.transition()
 // Enable dragging
 function dragstarted(d) { // no dragging in graph mode
   if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.2).restart();    
+
   d.fx = d.x;
   d.fy = d.y;
+
 }
 
 function dragged(d) {
+  d3.select(this).classed("fixed", d.fixed = true);
+
   d.fx = d3.event.x;
   d.fy = d3.event.y;
 }

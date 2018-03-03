@@ -20,3 +20,10 @@ todos
 --search filter
 
 --favourites section
+
+
+
+--skills expansion buttons
+
+
+--math skills bug
