@@ -10,3 +10,9 @@ todos
 -legend show/hide
 
 -graph mode views dropdown
+
+--on tablet drag, mouseover (disable dragging)
+
+--background color
+
+--cool to 0 after industry split

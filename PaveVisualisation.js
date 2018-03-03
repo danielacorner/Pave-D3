@@ -4,6 +4,7 @@ $( "body" ).click(function( event ) {
 });
 
 var graph, store; // displayed, stored data
+var clicked = 0; // on: tooltips don't disappear
 
 // load the data
 d3.csv("NOC_403.csv", function(error, datapoints) {
@@ -41,6 +42,7 @@ var canvas = d3.select("#chart"),
     maxRadius = 30; // Max circle radius
 
 
+
 // number of distinct clusters
 var industries = [];
 datapoints.forEach(function(row){
@@ -56,6 +58,20 @@ var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.wor
     // Color scale for 10 categories
 var color = d3.scaleOrdinal(d3.schemeCategory10)
 .domain(d3.range(m));
+
+var colorTooltip = d3.scaleOrdinal()
+    .domain([0,1,2,3,4,5,6,7,8,9])
+    .range(["#E1F8F9", // blue
+            "#FFF3E1", // orange
+            "#CFF0BE", // green
+            "#F5DFDF", // red
+            "#E9EBF8", // purple
+            "white", // brown
+            "#FCF5F7", // pink
+            "#E8F1F2", // grey
+            "#ECFCF5", // yellow-green
+            "#D7F9E9" ]) // teal
+// .domain(d3.range(m));
     // Scale Circle Area = Number of Workers
     // Sqrt scale because radius of a cicrle
 var radiusScale = d3.scaleSqrt()
@@ -180,6 +196,9 @@ var div = d3.select("body").append("div")
 .attr("class", "tooltip")
 .style("opacity", 0);
 
+var div2 = d3.select("body").append("div")
+.style("opacity", 0)
+.attr("transform", "translate(0," + 200 + ")");
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
@@ -188,8 +207,8 @@ var svg = d3.select("#chart")
 
 
 
-
-///////////////////////// Circles /////////////////////////////
+// TODO: merge pre, post-filtering
+///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
 // Add the circles with tooltips
 var circles = svg.selectAll("circle")
 .data(nodes)
@@ -198,26 +217,43 @@ var circles = svg.selectAll("circle")
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
+      if (clicked == 1) return;
       // highlight the current circle
-      // clicked = 0;
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      // create the hover tooltip
       div.transition()
       .duration(200)
-      .style("opacity", .9)
-      .style("height", "60px");
+      .style("opacity", .96)
+      .style("height", "140px")
+      .style("border",   "1px solid black;");
 
-      d3.select("#tooltip")
-      .append("image")
-        .attr("src", "img/logo.png")
-        .attr("class", "img-rounded");
+      // d3.select("#tooltip")
+      // .append("image")
+      //   .attr("src", "img/logo.png")
+      //   .attr("class", "img-rounded");
 
-      // Display NOC, Industry
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
+      // Display Hover Tooltip
+      div.html("<span style='font-size: 15px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</span>"
+                +"<span style='color: " + colorTooltip(d.cluster) +";'><br/>"
+                +"<br/><span style='padding-left: 130px'>NOC "+ d.noc
+                +"</span><br/>"+ d.industry)
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
+        .style("background", color(d.cluster) )
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
+
+      div2.transition()
+      .duration(200)
+      .style("left", (d3.event.pageX) + 20 + "px")
+      .style("top", (d3.event.pageY - 80) - d.radius + "px")
+      .style("opacity", .9)
+
+      div2.html("test")
       })
     .on("mouseout", function(d) {
+      if (clicked == 1) return;
+
       // clicked = 0;
       d3.select(this).attr("stroke", "none");
       div.transition()
@@ -225,17 +261,23 @@ var circles = svg.selectAll("circle")
       .style("opacity", 0);
     })
     .on("click", function(d) {
-      // clicked = 1-clicked;
-      // if(clicked=1) {}
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
+      // click-on, click-off
+      clicked = 1-clicked;
+      div.html("<span style='font-size: 16px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</span>"
+                +"<span style='color: " + colorTooltip(d.cluster) +";'><br/>"
+                +"<br/>Industry<span style='padding-left: 90px'>NOC "+ d.noc
+                +"</span><br/>"+ d.industry + "</span>"
         // Insert extra info to display on click
-        + "<br/><br/>"+ d.job +"<br/><br/>"
-        + "Automation Risk: " + d.automationRisk 
-        + "<br/><br/>Workers: " + d.workers)
+        + "<br/><span style='font-size: 14px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>"
+        + "<br/>Automation Risk: " + d.automationRisk 
+        + "<br/><br/>Workers: " + d.workers + "</span>"
+        +"<br/><a href='www.google.ca'>More info</a>")
         // Unfurl downward
         .transition()
         .duration(200)
-        .style("height", "200px");
+        .style("height", "250px");
       })
 
 
@@ -296,11 +338,16 @@ d3.select("#industry").on('click', function() {
   simulation
   .force("x", forceXSeparate).alpha(0.5)
   .force("y", forceYSeparate).alpha(0.5)
-    .alphaTarget(0.2) // after click, cool down to minimal temperature
+    .alphaTarget(0) // after click, cool down to minimal temperature
     .restart()
+
+  legend.transition().duration(500).style("opacity", 0).remove();
+  // createBottomLegend();
   })
 
 d3.select("#random").on('click', function() {
+  legend.transition().duration(500).style("opacity", 0).remove();
+  // createBottomLegend();
   if (graphMode == 1) {
     graphMode = 0;
     graphModeOff();
@@ -314,9 +361,12 @@ d3.select("#random").on('click', function() {
   .force("y", forceYSeparateRandom).alpha(0.8)
   .alphaTarget(0.2)
   .restart()
+
+
 })
 
 d3.select("#combine").on('click', function(d) {
+  createLegend();
   if (graphMode == 0 && futureMode == 0) {
     simulation
     .force("x", forceXCombine).alpha(0.4)
@@ -395,6 +445,7 @@ var originalRadius = {};
   });
 
 d3.select("#graph").on('click', function(d) {
+  // createGraphModeLegend();
   // Toggle mode on or off
       simulation.alpha(0); //cool to 0 degrees
 
@@ -403,10 +454,12 @@ d3.select("#graph").on('click', function(d) {
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
+    legend.transition().duration(500).style("opacity", 0).remove();
     graphModeOn();
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
+    createLegend();
     // if future mode is on, return to future mode
     if (futureMode == 1) { 
       futureMode = 0;
@@ -558,11 +611,13 @@ d3.select("#futureView").on('click', function(d) {
   console.log("futureMode = ", futureMode);
   ////////////// FUTURE VIEW ON! ////////////////
   if (futureMode == 1) {
+    legend.remove();
     futureModeOn();
   }  //////////////// Future mode off. ///////////////////
 
   // If turning off:
   if (futureMode == 0) {
+    if (graphMode == 0) { createLegend() }
     futureModeOff();
   }; 
   
@@ -590,7 +645,9 @@ function futureModeOn() {
     // create random positions & store for un-filtering
     nodes.forEach(function(d) {
       futurePositions[d.id] = [
+        // x positions
         d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
+        // y positions
         d.automationRisk*height*0.9 - height/2 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
       ];
     });
@@ -735,9 +792,10 @@ function enterUpdateCircles() {
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
+      if (clicked == 1) return;
       // highlight the current circle
-      // clicked = 0;
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3).attr("class", "panel");
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3).attr("class", "panel")
+      .style("fill", function(d) { return color(d.cluster); });
       div.transition()
       .duration(200)
       .style("opacity", .9)
@@ -749,22 +807,27 @@ function enterUpdateCircles() {
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
       })
     .on("mouseout", function(d) {
+      if (clicked == 1) return;
       d3.select(this).attr("stroke", "none");
       div.transition()
       .duration(500)
       .style("opacity", 0);
     })
     .on("click", function(d) {
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-        // Insert extra info to display on click
-        + "<br/><br/>"+ d.job +"<br/><br/>"
-        + "Automation Risk: " + d.automationRisk 
-        + "<br/><br/>Workers: " + d.workers)
-        // Unfurl downward
-        .transition()
-        .duration(200)
-        .style("height", "200px");
-      });
+    // click-on, click-off
+    clicked = 1-clicked;
+
+    div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
+      // Insert info to display on click
+      + "<br/><br/>"+ d.job +"<br/><br/>"
+      + "Automation Risk: " + d.automationRisk 
+      + "<br/><br/>Workers: " + d.workers 
+      + "<br/><a href=#>somelink</a>")
+      // Unfurl downward
+      .transition()
+      .duration(200)
+      .style("height", "200px");
+    });
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
@@ -1213,7 +1276,14 @@ filterAll = function() {
 
 var legendHeight = 15;
 
-var legend = svg.selectAll("#legend")
+var legend;
+var bottomLegend;
+
+// function createBottomLegend() {}
+
+function createLegend() {
+
+legend = svg.selectAll("#legend")
     .data(d3.range(10))
     .enter().append("g")
     .attr("class", "legend")
@@ -1225,7 +1295,6 @@ legend.append("rect")
     .attr("width", 18)
     .attr("height", 18)
     .attr("transform", "translate(0," + legendHeight + ")")
-    .style("fill", );
 
 industriesArray = [
 'Natural resources, agriculture and related production occupations',
@@ -1248,7 +1317,9 @@ legend.append("text")
     .style("text-anchor", "end")
     .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; });
 
+}
 
+createLegend();
 
 
 // Expand buttons
@@ -1262,8 +1333,6 @@ for(var i=0; i<sliderArray.length; i++) {
   d3.select("#slider_"+i)
     .style("visibility", hidden)
       .text("test1")
-
-
 
 
   // d3.select("#slider_"+i).append("text").text("test")
