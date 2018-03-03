@@ -562,6 +562,8 @@ d3.select("#futureView").on('click', function(d) {
   // TODO: modularize graph mode in js folder
   // $.getScript("./js/graph-module.js");
 })
+//store the positions in future mode for un-filtering
+var futurePositions = [];
 
 function futureModeOn() {
 
@@ -577,11 +579,19 @@ function futureModeOn() {
  
     // if graph mode off
     if (graphMode == 0) {
+
+    // create random positions & store for un-filtering
+    nodes.forEach(function(d) {
+      futurePositions[d.id] = [
+        d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
+        d.automationRisk*height*0.9 - height/2 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
+      ];
+    });
     // transition circles' areas, colours, positions
     circles.transition()
     .duration(750)
-      .attr("cx", function(d) { return d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4 })
-      .attr("cy", function(d) { return d.automationRisk*height*0.9 - height/2 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100 })
+      .attr("cx", function(d) { return futurePositions[d.id][0] })
+      .attr("cy", function(d) { return futurePositions[d.id][1] })
       .attrTween("r", function(d) { // transition x position to...
         var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
         return function(t) { return d.radius = i(t); };
@@ -591,6 +601,8 @@ function futureModeOn() {
         return function(t) { return d.color = i(t); };
       });
     }
+
+
     // if graph mode on
     if (graphMode == 1) {
     // transition circles' areas & colours
@@ -1071,13 +1083,16 @@ for(var i=0; i<sliderArray.length; i++) {
 // Update function which detects current slider
 //  general update pattern for updating the graph
 function updateMulti(h) {
-  var sliderID = event.target.id;
+ 
   // using the slider handle
+  var sliderID = event.target.id;
   handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider ball
+  
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
   //  UPDATE
   circles = circles.data(filterAll(), function(d) { return d.id });
+  
   // EXIT
   circles.exit().transition().duration(300)
   // exit transition: "pop" radius * 1.5 + 5 & fade out
@@ -1087,10 +1102,12 @@ function updateMulti(h) {
     return function(t) { return d.opacity = i(t); };
   })
   .remove();
+
   // ENTER (create the circles with all attributes)
   enterUpdateCircles();
+
   // reset simulation if graph mode = off
-  if (graphMode == 0) {
+  if (graphMode == 0 && futureMode == 0) {
     simulation.nodes(filterAll())
     .force("collide", forceCollide)
     .force("cluster", forceCluster)
@@ -1103,6 +1120,13 @@ function updateMulti(h) {
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
     .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+  } else if (futureMode == 1) {
+    circles
+    .attr("cx", function(d){ return futurePositions[d.id][0] })
+    .attr("cy", function(d){ return futurePositions[d.id][1] })
+    .attr("r", function(d) { return d.radius; })
+    .style("fill", function(d) { return d.color; })
+    .style("stroke", "black")
   }
 };
 
