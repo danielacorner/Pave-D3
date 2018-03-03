@@ -166,36 +166,45 @@
 	<!-- buttons -->
 	<div id="buttons">
 
+			<span style='padding-left: 0px'></span>
 			<!-- Button group 1 -->
-			<div class="btn-group" role="group" aria-label="...">
+			<div class="btn-group" style="box-shadow: 3px 3px 3px grey" role="group" aria-label="...">
 
-				<button id="industry" type="button" class="btn btn-default">
-				Industry Split <i class="fa fa-expand-arrows-alt"></i></button>
+				<button id="industry" type="button" style="background: #BABABA" class="btn btn-md">
+				<span style="color: white; font-family: Poppins">
+				Industry Split</span> <i class="fa fa-expand-arrows-alt"></i></button>
 
-				<button id="combine" type="button" class="btn btn-default">
-				Combine <i class="fa fa-compress"></i></button>
+				<button id="combine" type="button" style="background: #BABABA" class="btn btn-md">
+				<span style="color: white; font-family: Poppins">
+				Combine</span> <i class="fa fa-compress"></i></button>
 
-				<button id="random" type="button" class="btn btn-default">
-				Shuffle <i class="fa fa-random"></i></button>
+				<button id="random" type="button" style="background: #BABABA" class="btn btn-md">
+				<span style="color: white; font-family: Poppins">
+				Shuffle</span> <i class="fa fa-random"></i></button>
 
-			</div>
+			</div><span style='padding-left: 10px'></span>
 
-			<button id="graph" data-toggle="button" type="button" class="btn btn-default" aria-pre autocomplete="off">
-			Graph Mode <i class="fa fa-chart-bar"></i></button>
+			<button id="graph" data-toggle="button" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md" aria-pre autocomplete="off">
+			<span style="color: white; font-family: Poppins">
+			Graph View</span> <i class="fa fa-chart-bar"></i></button>
 
-			<button id="freeze" type="button" class="btn btn-default">
-			Pause Simulation <i class="fa fa-pause"></i></button>
+			<span style='padding-left: 10px'></span>
 
-			<button id="resetFilters" type="button" class="btn btn-default">
-			Reset Filters <i class="fa fa-undo-alt"></i></button>
+			<button id="futureView" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+			<span style="color: white; font-family: Poppins">
+			Future View</span> <i class="fa fa-fast-forward"></i></button>
 
-			<button id="futureView" type="button" class="btn btn-default">
-			Future View <i class="fa fa-fast-forward"></i></button>
+			<span style='padding-left: 10px'></span>
+
+			<button id="freeze" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+			<span style="color: white; font-family: Poppins">
+			Pause</span> <i class="fa fa-pause"></i></button>
 
 	</div> <!-- buttons -->
 
 	<!-- Search Jobs -->
 	<!-- could make this into a dropdown-search for "search job groups, job titles, ..." -->
+	<br/>
 	<div class="input-group input-group-sm">
 	  <input type="text" class="form-control" placeholder="Search Jobs by Title or Keyword">
 	  <span class="input-group-btn">
@@ -223,8 +232,11 @@
 	
 	<!-- legend container -->
 	<g class="legend" id="legend"></g>		
-
-
+<div align="left" style="transform: translate(10px); padding-bottom: 10px; padding-top: 5px">
+			<button id="resetFilters" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+			<span style="color: white; font-family: Poppins">
+			Reset Filters</span> <i class="fa fa-undo-alt"></i></button>
+</div>
 
 
 

@@ -28,6 +28,8 @@ div.tooltip {
 div.tooltip:hover {
   visibility: visible
 }
+
+
 /*
 .slider {
 	background: url('../img/grid.png') -25px -25px;
