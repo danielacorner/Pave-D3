@@ -27,3 +27,6 @@ todos
 
 
 --math skills bug
+
+
+--Navbar design

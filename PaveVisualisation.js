@@ -273,7 +273,7 @@ var circles = svg.selectAll("circle")
         // Insert extra info to display on click
                 +"<br/><br/>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group."
                 +"<br/><br/>Median wage is $" + Math.round(100*d.wage)/100 + " per hr."
-        + "<br/>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%"
+        + "<br/><br/>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%"
         + "<br/><br/>This group currently has " + d.workers + " Jobs</span>"
         +"<br/><br/><span style='padding-left: 170px'></span><button class='btn btn-md btn-default'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
