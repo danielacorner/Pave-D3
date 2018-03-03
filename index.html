@@ -63,19 +63,28 @@
     </div>
  
     <!-- Collect the nav links, forms, and other content for toggling -->
+    (This navbar is supposed to appear only for small screen sizes)
     <div class="collapse navbar-collapse" id="navbar_collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">About</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact Us <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Email</a></li>
-            <li><a href="#">Phone</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Set Appointment</a></li>
-          </ul>
-        </li>
+
+	  <li class="active">
+	  	<a data-toggle="tab" href="#filtering" style="padding-left:4px">
+	  		Filtering</a>
+		</li>
+	  <li><a data-toggle="tab" href="#graph-mode" style="padding-left:4px">
+	  		Graph Mode</a></li>
+	 	  <!-- Dropdown menu item -->
+	  <li class="dropdown">
+	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:4px">
+	    	About the Data<span class="caret"></span></a>
+	    <ul class="dropdown-menu">
+	 
+	      <!-- Disable a tab -->
+	      <li><a data-toggle="tab" href="#the-industries">The NOC Industries</a></li>
+	      <li><a data-toggle="tab" href="#other-industries">Other classification systems</a></li>
+	    </ul>
+	  </li>
+
       </ul>
       <!-- navbar-left will move the search to the left -->
       <form class="navbar-form navbar-right" role="search">
@@ -90,23 +99,6 @@
 </div>
 <br>
 
-<!-- Title and logo -->
-<div class="container">
-
-	<div class="title">
-		<span style="display: inline-block; width: 900"></span>
-		<h1 style="font-family: Poppins; text-align: left;">
-				<!-- responsive image logo -->
-	
-<span style="padding-left: 50px;"></span>
-			Pave <span style="padding-left: 50px;"></span> <img src="img/logo.png" id="logo" style="width: 7%; height: 7%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image">
-			<h3 style="font-family: Dosis; text-align: right;">the Canadian Job Explorer</h3>
-		</h1>
-
-</div>
-
-
- 
 <!-- Navigation elements -->
 <div class="container">
  
@@ -123,6 +115,7 @@
 	  <li class="dropdown">
 	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:5em">
 	    	About the Data<span class="caret"></span></a>
+	    	(This navbar is supposed to appear only for large screen sizes)
 	    <ul class="dropdown-menu">
 	 
 	      <!-- Disable a tab -->
@@ -149,6 +142,23 @@
  
 </div>
 
+<!-- Title and logo -->
+<div class="container">
+
+	<div class="title">
+		<h1 style="font-family: Poppins; text-align: left;">
+	
+			<span style="padding-left: 50px;"></span>
+				<!-- responsive image logo -->
+			Pave <span style="padding-left: 50px;"></span> <img src="img/logo.png" id="logo" style="width: 6%; height: 6%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image">
+			<span style="font-family: Dosis; font-size: 30px; text-align: right; padding-left: 50px">the Canadian Job Explorer</span>
+		</h1>
+
+</div>
+
+
+ 
+
 </div>
 
 <!-- Buttons and Search -->
@@ -170,7 +180,7 @@
 
 			</div>
 
-			<button id="graph" type="button" class="btn btn-default">
+			<button id="graph" data-toggle="button" type="button" class="btn btn-default" aria-pre autocomplete="off">
 			Graph Mode <i class="fa fa-chart-bar"></i></button>
 
 			<button id="freeze" type="button" class="btn btn-default">
@@ -256,7 +266,7 @@
 	<div class="jumbotron">
 			<!-- dropdown menu for graph views -->
 			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle btn-lg"
+				<button class="btn btn-primary dropdown-toggle btn-lg" style="visibility: hidden;"
 				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
 				 	<span class="caret"></span>
 				 </button>

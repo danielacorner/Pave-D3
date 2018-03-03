@@ -16,3 +16,7 @@ todos
 --background color
 
 --cool to 0 after industry split
+
+--search filter
+
+--favourites section

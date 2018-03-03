@@ -273,7 +273,7 @@ var circles = svg.selectAll("circle")
         +"; font: bold'>"
         + "<br/>Automation Risk: " + d.automationRisk 
         + "<br/><br/>Workers: " + d.workers + "</span>"
-        +"<br/><a href='www.google.ca'>More info</a>")
+        +"<br/><br/><a href='http://www.google.ca' style='font-size: 16px'>More info</a>")
         // Unfurl downward
         .transition()
         .duration(200)
@@ -454,11 +454,16 @@ d3.select("#graph").on('click', function(d) {
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
+    d3.select("#graphModeDropdown").style("visibility", "visible")
+
     legend.transition().duration(500).style("opacity", 0).remove();
     graphModeOn();
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
+    d3.select("#graphModeDropdown").style("visibility", "hidden")
+
+
     createLegend();
     // if future mode is on, return to future mode
     if (futureMode == 1) { 
