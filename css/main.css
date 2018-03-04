@@ -28,7 +28,9 @@ div.tooltip {
 div.tooltip:hover {
   visibility: visible
 }
-
+.btn-search {
+  background: #70B207;
+}
 
 /*
 .slider {

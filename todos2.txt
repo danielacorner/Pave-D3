@@ -29,11 +29,14 @@ todos
 --math skills bug
 
 
---Navbar design
-
+--esxpand canvas and add top padding
 
 ---modularize graph mode
 
 --get rid of pause button or put within canvas
 
 --enlarge canvas, lower x-axis
+
+--slider design
+
+--future-view legend

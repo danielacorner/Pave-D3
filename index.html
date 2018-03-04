@@ -119,6 +119,12 @@
 				<a style="font: bold; padding-left: 30px; font-family: Poppins; color: #579E38;" href="#" > Feedback</a>
 			</span>
 			<!-- <span style="font-family: Dosis; font-size: 30px; text-align: right; padding-left: 50px">the Canadian Job Explorer</span> -->
+		<div class="input-group input-group-sm">
+	  <input type="text" class="form-control" placeholder="Search Jobs by Title or Keyword"></input>
+	  <span class="input-group-btn">
+	    <button class="btn-lg btn btn-search" type="button"><i class="fa fa-search"></i></button>
+	  </span>
+	</div>
 		</h1>
 
 </div>
@@ -131,56 +137,54 @@
 <!-- Buttons and Search -->
 <div class="container">
 	<!-- buttons -->
-	<div id="buttons">
+	<div style="position: fixed; top: 140px; left: 460px;  z-index: 99;" id="buttons">
 
 			<span style='padding-left: 0px'></span>
 			<!-- Button group 1 -->
 			<div class="btn-group" style="box-shadow: 3px 3px 3px grey" role="group" aria-label="...">
 
-				<button id="industry" type="button" style="background: #BABABA" class="btn btn-md">
+				<button id="industry" type="button" style="background: #BABABA" class="btn btn-xs">
 				<span style="color: white; font-family: Poppins">
 				Industry Split</span> <i class="fa fa-expand-arrows-alt"></i></button>
 
-				<button id="combine" type="button" style="background: #BABABA" class="btn btn-md">
+				<button id="combine" type="button" style="background: #BABABA" class="btn btn-xs">
 				<span style="color: white; font-family: Poppins">
 				Combine</span> <i class="fa fa-compress"></i></button>
 
-				<button id="random" type="button" style="background: #BABABA" class="btn btn-md">
+				<button id="random" type="button" style="background: #BABABA" class="btn btn-xs">
 				<span style="color: white; font-family: Poppins">
 				Shuffle</span> <i class="fa fa-random"></i></button>
 
 			</div><span style='padding-left: 10px'></span>
 
-			<button id="graph" data-toggle="button" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md" aria-pre autocomplete="off">
+			<button id="graph" data-toggle="button" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-xs" aria-pre autocomplete="off">
 			<span style="color: white; font-family: Poppins">
 			Graph View</span> <i class="fa fa-chart-bar"></i></button>
 
 			<span style='padding-left: 10px'></span>
 
-			<button id="futureView" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+			<button id="futureView" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-xs">
 			<span style="color: white; font-family: Poppins">
 			Future View</span> <i class="fa fa-fast-forward"></i></button>
 
 			<span style='padding-left: 10px'></span>
 
-			<button id="freeze" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+		<!-- 	<button id="freeze" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
 			<span style="color: white; font-family: Poppins">
 			Pause</span> <i class="fa fa-pause"></i></button>
-
+ -->
 	</div> <!-- buttons -->
 
 	<!-- Search Jobs -->
 	<!-- could make this into a dropdown-search for "search job groups, job titles, ..." -->
-	<br/>
-	<div class="input-group input-group-sm">
-	  <input type="text" class="form-control" placeholder="Search Jobs by Title or Keyword">
-	  <span class="input-group-btn">
-	    <button class="btn btn-default" type="button">Search</button>
-	  </span>
-	</div><br>
+	
 
 	<!-- the graphing canvas -->
-	<svg id="chart" width="960" height="500" class="chart"></svg>
+	<svg id="chart" width="960" height="500" class="chart">
+		
+
+
+	</svg>
 	
 	<!-- This is D3, our graphing library -->
 	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
