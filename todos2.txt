@@ -47,3 +47,9 @@ toggle indicator
 --mobile view zooming
 
 -filter flexibility
+
+--remove axis ticks
+
+--axis styles
+
+--graph mode dropdown -> preset buttons
