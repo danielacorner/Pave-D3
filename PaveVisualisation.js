@@ -425,10 +425,10 @@ d3.select("#combine").on('click', function(d) {
 
 // TODO: maxWorkers, maxWage, skillsMath not working
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
-minWage = d3.min(nodes, function(d) {return d.wage}),
-maxWage = d3.max(nodes, function(d) {return d.wage});//d3.max(datapoints, function(d) {return d.wage});
+minWage = d3.min(nodes, function(d) {return d.wage});
+// maxWage = d3.max(nodes, function(d) {return d.wage});//d3.max(datapoints, function(d) {return d.wage});
 
-maxwage = 116.18; //busted
+var maxWage = 116.18; //busted
 
 maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
@@ -553,7 +553,7 @@ function graphModeOn(mode) {
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (d.wage/maxWage)*height*0.9 - height/2 + 100);
+                var i = d3.interpolate(d.y, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + 100);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -567,7 +567,7 @@ function graphModeOn(mode) {
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (d.wage/maxWage)*height*0.9 - height/2 + 100);
+                var i = d3.interpolate(d.y, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + 100);
                 return function(t) { return d.cy = i(t); };
               });
             break;

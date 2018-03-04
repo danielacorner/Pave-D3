@@ -49,6 +49,7 @@ toggle indicator
 -filter flexibility
 
 --remove axis ticks
+--format auto risk ticks to %s
 
 --axis styles
 
