@@ -42,12 +42,13 @@
 <div class="container">
  
 <!-- .navbar-fixed-top, or .navbar-fixed-bottom can be added to keep the nav bar fixed on the screen -->
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-fixed-top  d-lg-none">
   <div class="container-fluid">
  
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
- 
+  	
+
       <!-- Button that toggles the navbar on and off on small screens -->
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar_collapse" aria-expanded="false">
  
@@ -55,33 +56,35 @@
         <span class="sr-only"></span>
  
         <!-- Draws 3 bars in navbar button when in small mode -->
-        <span class="fas fa-bars"></span>
+       <span class="fas fa-bars pull-right"></span>
       </button>
  
+  	<span class="pull-right" style="padding-left: 5px; font: bold; font-size: 25px; font-family: Poppins; color: #579E38; text-align: left;"+ >Pave</span>
       <!-- You'll have to add padding in your image on the top and right of a few pixels (CSS Styling will break the navbar) -->
-      <a class="pull-right" href="#"><img src="img/logo.png" style="width: 6%; height: 6%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image"></a>
+      <a class="pull-right" href="#"></a>
     </div>
  
     <!-- Collect the nav links, forms, and other content for toggling -->
-    (This navbar is supposed to appear only for small screen sizes)
+    <!-- (This navbar is supposed to appear only for small screen sizes) -->
     <div class="collapse navbar-collapse" id="navbar_collapse">
       <ul class="nav navbar-nav">
 
 	  <li class="active">
 	  	<a data-toggle="tab" href="#filtering" style="padding-left:4px">
-	  		Filtering</a>
+	  		About</a>
 		</li>
 	  <li><a data-toggle="tab" href="#graph-mode" style="padding-left:4px">
-	  		Graph Mode</a></li>
+	  		Help</a></li>
+
 	 	  <!-- Dropdown menu item -->
 	  <li class="dropdown">
 	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:4px">
-	    	About the Data<span class="caret"></span></a>
+	    	Feedback<span class="caret"></span></a>
 	    <ul class="dropdown-menu">
 	 
 	      <!-- Disable a tab -->
-	      <li><a data-toggle="tab" href="#the-industries">The NOC Industries</a></li>
-	      <li><a data-toggle="tab" href="#other-industries">Other classification systems</a></li>
+	      <li><a data-toggle="tab" href="#the-industries">Feedback 1</a></li>
+	      <li><a data-toggle="tab" href="#other-industries">Feedback 2</a></li>
 	    </ul>
 	  </li>
 
@@ -99,51 +102,9 @@
 </div>
 <br>
 
-<!-- Navigation elements -->
-<div class="container">
- 
-
-	<!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
-	<ul class="nav nav-pills">
-	  <li class="active">
-	  	<a data-toggle="tab" href="#filtering" style="padding-left:5em">
-	  		Filtering</a>
-		</li>
-	  <li><a data-toggle="tab" href="#graph-mode" style="padding-left:5em">
-	  		Graph Mode</a></li>
-	 	  <!-- Dropdown menu item -->
-	  <li class="dropdown">
-	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:5em">
-	    	About the Data<span class="caret"></span></a>
-	    	(This navbar is supposed to appear only for large screen sizes)
-	    <ul class="dropdown-menu">
-	 
-	      <!-- Disable a tab -->
-	      <li><a data-toggle="tab" href="#the-industries">The NOC Industries</a></li>
-	      <li><a data-toggle="tab" href="#other-industries">Other classification systems</a></li>
-	    </ul>
-	  </li>
-	</ul>
-	 
-	<div class="tab-content">
-	  <div id="filtering" class="tab-pane fade in active">
-	    <p>Here is a description of transferable skills and some filtering tips.</p>
-	  </div>
-	  <div id="graph-mode" class="tab-pane fade">
-	    <p>Here is some amazing advice on how to interpret the graph.</p>
-	  </div>
-	  <div id="the-industries" class="tab-pane fade">
-	    <p>Here's a short summary of the 10 NOC industries.</p>
-	  </div>
-	  <div id="other-industries" class="tab-pane fade">
-	    <p>Other job classification sources.</p>
-	  </div>
-	</div>
- 
-</div>
 
 <!-- Title and logo -->
-<div class="container">
+<div class="container d-sm-none d-lg-block">
 
 	<div class="title">
 		<h1 style="font: bold; font-family: Poppins; color: #579E38; text-align: left;">

@@ -17,7 +17,7 @@ todos
 
 --cool to 0 after industry split
 
---search filter
+--search filter & move button in top right
 
 --favourites section
 
@@ -33,3 +33,7 @@ todos
 
 
 ---modularize graph mode
+
+--get rid of pause button or put within canvas
+
+--enlarge canvas, lower x-axis
