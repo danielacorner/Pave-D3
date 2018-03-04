@@ -1322,6 +1322,8 @@ var bottomLegend;
 
 function createLegend() {
 
+legend.remove();
+
 legend = svg.selectAll("#legend")
     .data(d3.range(10))
     .enter().append("g")
