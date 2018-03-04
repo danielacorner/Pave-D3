@@ -438,9 +438,9 @@ maxwage = 116.18; //busted
 
 
 // ////////////////// Freeze! ////////////////////////
-d3.select("#freeze").on('click', function(d) {
-  simulation.stop();
-});
+// d3.select("#freeze").on('click', function(d) {
+//   simulation.stop();
+// });
 
 
 
@@ -473,7 +473,7 @@ d3.select("#graph").on('click', function(d) {
   if (graphMode == 1) {
     d3.select("#graphModeDropdown").style("visibility", "visible")
 
-    legend.transition().duration(500).style("opacity", 0).remove();
+    // legend.transition().duration(500).style("opacity", 0).remove();
     graphModeOn();
   }
   //////////////// Graph mode OFF. ///////////////////
@@ -485,7 +485,8 @@ d3.select("#graph").on('click', function(d) {
     // if future mode is on, return to future mode
     if (futureMode == 1) { 
       futureMode = 0;
-      futureModeOff(); }
+      futureModeOff(); 
+      createLegend();}
     // console.log("futureMode: ", futureMode);
     graphModeOff();
   }; // transition back to clusters
@@ -495,6 +496,7 @@ d3.select("#graph").on('click', function(d) {
 })
 
 function graphModeOn() {
+  legend.transition().duration(500).style("opacity", 0).remove();
 
     // cool to 0 degrees
     simulation.stop();
@@ -647,7 +649,6 @@ d3.select("#futureView").on('click', function(d) {
   console.log("futureMode = ", futureMode);
   ////////////// FUTURE VIEW ON! ////////////////
   if (futureMode == 1) {
-    legend.remove();
     futureModeOn();
   }  //////////////// Future mode off. ///////////////////
 
@@ -664,6 +665,7 @@ d3.select("#futureView").on('click', function(d) {
 var futurePositions = [];
 
 function futureModeOn() {
+    legend.transition().duration(500).attr("opacity", 0);
 
     // cool to 0 degrees
     simulation.stop();
@@ -901,7 +903,7 @@ function enterUpdateCircles() {
         // .duration(200)
         // .style("height", "auto")
         .style("height", "auto");
-      })
+      });
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
@@ -1357,7 +1359,7 @@ var bottomLegend;
 
 function createLegend() {
 
-legend.remove();
+// legend.remove();
 
 legend = svg.selectAll("#legend")
     .data(d3.range(10))
@@ -1371,6 +1373,7 @@ legend.append("rect")
     .attr("width", 18)
     .attr("height", 18)
     .attr("transform", "translate(0," + legendHeight + ")")
+    .style("opacity",0).transition().duration(500).style("opacity", 1)
 
 industriesArray = [
 'Natural resources, agriculture and related production occupations',
@@ -1391,7 +1394,8 @@ legend.append("text")
     .attr("dy", ".35em")
     .attr("transform", "translate(0," + legendHeight + ")")
     .style("text-anchor", "end")
-    .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; });
+    .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; })
+    .style("opacity",0).transition().duration(500).style("opacity", 1);
 
 }
 
