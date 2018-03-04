@@ -631,9 +631,11 @@ function graphModeOn(mode) {
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0,100)");
 
+  d3.select("xaxis").remove();
+
   // Add the X Axis
   axisX = axisG.append("g")
- .attr("class", "x axis")
+ .attr("class", "xaxis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
   + (height/2-30) + ")")
  .call(d3.axisBottom(x).ticks(5))
@@ -641,13 +643,15 @@ function graphModeOn(mode) {
    // text label for the x axis
   axisLabelX = axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
-                      + (height/2) + ")") // top
+                      + (height/2) +")") // top
   .style("text-anchor", "middle")
   .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
+  d3.select("yaxis").remove();
+
   // Add the Y Axis
   axisY = axisG.append("g")
- .attr("class", "y axis")
+ .attr("class", "yaxis")
  .attr("transform", "translate("+ (-width/2+margin.left) +"," 
   + (-height/2-margin.bottom) + ")")
  .call(d3.axisLeft(y).ticks(5))
@@ -664,28 +668,52 @@ function graphModeOn(mode) {
       // x = Number of Jobs
       // y = Automation Risk
         case 0:
-            d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs")
+
+            // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
+
+            axisY.call(d3.axisLeft(y).ticks(5))
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
-            axisLabelY.text("Risk of Machine Automation")
+            axisX.call(d3.axisBottom(x).ticks(5))
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Risk of Machine Automation").style("font-family", "Dosis").style("font-size", "20px")
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
             break;
       // x = Years of Study
       // y = Wage
         case 1:
-            d3.selectAll("text").text("");
-            axisLabelX.text("Years of Study")
+            
+            // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
+
+            axisY.call(d3.axisLeft(y).ticks(5))
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
-            axisLabelY.text("Wage ($ per hr)")
+            axisX.call(d3.axisBottom(x).ticks(5))
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+
+            d3.selectAll("text").text("");
+            axisLabelX.text("Years of Study").style("font-family", "Dosis").style("font-size", "20px")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
             break;
       // x = Number of Jobs
       // y = Wage
         case 2:
-            d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs")
+
+            // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
+
+            axisY.call(d3.axisLeft(y).ticks(5))
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
-            axisLabelY.text("Wage ($ per hr)")
+            axisX.call(d3.axisBottom(x).ticks(5))
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
             .attr("opacity", 0).transition().duration(500).attr("opacity",1);
             break;
   }
