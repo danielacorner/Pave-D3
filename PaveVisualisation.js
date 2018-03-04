@@ -833,40 +833,75 @@ function enterUpdateCircles() {
     .on("mouseover", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3).attr("class", "panel")
-      .style("fill", function(d) { return color(d.cluster); });
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      // create the hover tooltip
       div.transition()
       .duration(200)
-      .style("opacity", .9)
-      .style("height", "60px");
-      // Display NOC, Industry
-      div.html("<br/>Industry:<br/>" + d.industry)
+      .style("opacity", .96)
+      .style("height", "auto")
+      .style("width", "350px")
+      // .style("border",   "1px solid black;");
+
+      // d3.select("#tooltip")
+      // .append("image")
+      //   .attr("src", "img/logo.png")
+      //   .attr("class", "img-rounded");
+
+      // Display Hover Tooltip
+      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</div>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Poppins;'>"
+                                +"<br/>Some job titles from this group are ..."
+                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
+        .style("background", color(d.cluster) )
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
+
+      // div2.transition()
+      // .duration(200)
+      // .style("left", (d3.event.pageX) + 20 + "px")
+      // .style("top", (d3.event.pageY - 80) - d.radius + "px")
+      // .style("opacity", .9)
+
+      // div2.html("test")
       })
     .on("mouseout", function(d) {
       if (clicked == 1) return;
+
+      // clicked = 0;
       d3.select(this).attr("stroke", "none");
       div.transition()
       .duration(500)
       .style("opacity", 0);
     })
     .on("click", function(d) {
-    // click-on, click-off
-    clicked = 1-clicked;
-
-    div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry
-      // Insert info to display on click
-      + "<br/><br/>"+ d.job +"<br/><br/>"
-      + "Automation Risk: " + d.automationRisk 
-      + "<br/><br/>Workers: " + d.workers 
-      + "<br/><a href=#>somelink</a>")
-      // Unfurl downward
-      .transition()
-      .duration(200)
-      .style("height", "200px");
-    });
+      // click-on, click-off
+      clicked = 1-clicked;
+      div
+      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</div>"
+                +"<div style='padding-left: 10px; font-family: Poppins; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<br/>Some job titles from this group are ..."
+                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
+                +"Top Jobs Placeholder" 
+                +"<br/><br/>Top skills are (placeholders)" + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang
+        // Insert extra info to display on click
+                +"<br/><br/>" + 
+                "<ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
+        + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
+        + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
+        +"<br/><br/></div><span style='padding-left: 225px'></span><button class='btn btn-md btn-default'"+
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
+         +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
+        // Unfurl downward
+        // .style("height", 200)
+        // .transition()
+        // .duration(200)
+        // .style("height", "auto")
+        .style("height", "auto");
+      })
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
