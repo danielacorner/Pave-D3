@@ -40,3 +40,5 @@ todos
 --slider design
 
 --future-view legend
+
+--filters positions and reset position
