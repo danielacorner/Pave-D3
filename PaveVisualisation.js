@@ -226,7 +226,7 @@ var circles = svg.selectAll("circle")
       .style("opacity", .96)
       .style("height", "auto")
       .style("width", "350px")
-      .style("border",   "1px solid black;");
+      // .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
       // .append("image")

@@ -19,7 +19,7 @@ div.tooltip {
   padding: 2px;
   font: 12px sans-serif;
   background: ;
-  border: 1px solid black;
+  border: 0px solid black;
   box-shadow: 5px 10px 20px grey;
   border-radius: 6px;
   pointer-events: none;
