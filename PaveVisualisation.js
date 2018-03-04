@@ -517,7 +517,7 @@ function graphModeOn() {
       })
         // set y values
         .attrTween("cy", function(d) {
-          var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2);
+          var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2 + 100);
           return function(t) { return d.cy = i(t); };
         });
 
@@ -533,13 +533,13 @@ function graphModeOn() {
   y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
 
   // Add an axis-holder group
-  axisG = svg.append("g");
+  axisG = svg.append("g").attr("transform", "translate(0,100)");
 
   // Add the X Axis
   axisX = axisG.append("g")
  .attr("class", "x axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
-  + (height/2-40) + ")")
+  + (height/2-30) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
    // text label for the x axis
@@ -570,7 +570,9 @@ function graphModeOn() {
 d3.select("#industry").style("display","none");
 d3.select("#random").style("display","none");
 d3.select("#combine").style("width", "305px");
-d3.select(".btn-group").style("padding-left", "0px")
+d3.select(".btn-group").style("padding-left", "0px");
+
+d3.select("#chart").transition().duration(500).attr("height","700px");
 
 }
 
@@ -580,6 +582,8 @@ d3.select("#industry").transition().duration(500).style("display","inline");
 d3.select("#random").style("display","inline").style("box-shadow", "3px 3px 3px grey");
 d3.select("#combine").style("width", "");
 d3.select(".btn-group").style("padding-left", "0px")
+
+d3.select("#chart").transition().duration(500).attr("height","600px");
 
     // remove axes
     axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
