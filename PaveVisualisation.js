@@ -828,6 +828,7 @@ function enterUpdateCircles() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .style("fill", function(d) { return color(d.cluster); })
+
     // Tooltips
     .on("mouseover", function(d) {
       if (clicked == 1) return;
@@ -1238,7 +1239,7 @@ function updateMulti(h) {
   } else if (graphMode == 1) { // else reposition nodes on graph
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
   } else if (futureMode == 1) {
     circles
     .attr("cx", function(d){ return futurePositions[d.id][0] })
