@@ -224,8 +224,8 @@ var circles = svg.selectAll("circle")
       div.transition()
       .duration(200)
       .style("opacity", .96)
-      .style("height", "140px")
-      .style("width", "250px")
+      .style("height", "auto")
+      .style("width", "350px")
       .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
@@ -234,23 +234,23 @@ var circles = svg.selectAll("circle")
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<span style='font-size: 15px; font-family: Poppins; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</span>"
-                +"<span style='color: " + colorTooltip(d.cluster) +";'><br/>"
-                +"<br/><span style='padding-left: 130px'>NOC "+ d.noc
-                +"</span><br/>"+ d.industry)
+      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</div>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Poppins;'>"
+                                +"<br/>Some job titles from this group are ..."
+                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
 
-      div2.transition()
-      .duration(200)
-      .style("left", (d3.event.pageX) + 20 + "px")
-      .style("top", (d3.event.pageY - 80) - d.radius + "px")
-      .style("opacity", .9)
+      // div2.transition()
+      // .duration(200)
+      // .style("left", (d3.event.pageX) + 20 + "px")
+      // .style("top", (d3.event.pageY - 80) - d.radius + "px")
+      // .style("opacity", .9)
 
-      div2.html("test")
+      // div2.html("test")
       })
     .on("mouseout", function(d) {
       if (clicked == 1) return;
@@ -264,25 +264,29 @@ var circles = svg.selectAll("circle")
     .on("click", function(d) {
       // click-on, click-off
       clicked = 1-clicked;
-      div.html("<span style='font-size: 18px; font-family: Poppins; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</span>"
-                +"<span style='font-size: 15px; color: " + colorTooltip(d.cluster) +";'><br/>"
-                +"<br/>Some job titles from this group are ...</br><span style='padding-left: 90px'>"+
-                +"<br/>"+ " Top Jobs Placeholder" 
+      div
+      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+        +"; font: bold'>" + d.job + "</div>"
+                +"<div style='padding-left: 10px; font-family: Poppins; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<br/>Some job titles from this group are ..."
+                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
+                +"Top Jobs Placeholder" 
                 +"<br/><br/>Top skills are (placeholders)" + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang
         // Insert extra info to display on click
-                +"<br/><br/>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group."
-                +"<br/><br/>Median wage is $" + Math.round(100*d.wage)/100 + " per hr."
-        + "<br/><br/>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%"
-        + "<br/><br/>This group currently has " + d.workers + " Jobs</span>"
-        +"<br/><br/><span style='padding-left: 170px'></span><button class='btn btn-md btn-default'"+
+                +"<br/><br/>" + 
+                "<ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
+        + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
+        + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
+        +"<br/><br/></div><span style='padding-left: 225px'></span><button class='btn btn-md btn-default'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
-         +";'> View more</button>")
+         +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
-        .transition()
-        .duration(200)
-        .style("height", "350px")
-        .style("width", "300px");
+        // .style("height", 200)
+        // .transition()
+        // .duration(200)
+        // .style("height", "auto")
+        .style("height", "auto");
       })
     // .on("dblclick", dblclick())
 
@@ -349,8 +353,8 @@ drag_handler(circles);
 d3.select("#industry").on('click', function() {
   if (graphMode == 1 || futureMode == 1) return;
   simulation
-  .force("x", forceXSeparate).alpha(0.5)
-  .force("y", forceYSeparate).alpha(0.5)
+  .force("x", forceXSeparate).alpha(0.4)
+  .force("y", forceYSeparate).alpha(0.4)
     .alphaTarget(0) // after click, cool down to minimal temperature
     .restart()
 
@@ -370,10 +374,9 @@ d3.select("#random").on('click', function() {
     futureModeOff();
   }
   simulation
-  .force("x", forceXSeparateRandom).alpha(0.8)
-  .force("y", forceYSeparateRandom).alpha(0.8)
-  .alphaTarget(0.2)
-  .restart()
+  .force("x", forceXSeparateRandom)
+  .force("y", forceYSeparateRandom)
+  .alpha(0.15).alphaTarget(0).restart();
 
 
 })
@@ -382,9 +385,10 @@ d3.select("#combine").on('click', function(d) {
   createLegend();
   if (graphMode == 0 && futureMode == 0) {
     simulation
+    // .force("gravity", forceGravity)
     .force("x", forceXCombine).alpha(0.4)
     .force("y", forceYCombine).alpha(0.4)
-    .alphaTarget(0.2)
+    .alphaTarget(0)
     .restart()
   } else {
     if (futureMode==1) {
@@ -804,6 +808,8 @@ function resetSimulation() {
   simulation.alphaTarget(0.2).restart();
 }
 
+/////// Tooltips (post-filter)
+
 function enterUpdateCircles() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
@@ -819,7 +825,7 @@ function enterUpdateCircles() {
       .style("opacity", .9)
       .style("height", "60px");
       // Display NOC, Industry
-      div.html("NOC " + d.noc + "<br/>Industry:<br/>" + d.industry)
+      div.html("<br/>Industry:<br/>" + d.industry)
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
