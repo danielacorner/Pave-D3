@@ -90,18 +90,18 @@ div.tooltip:hover {
 .track,
 .track-inset,
 .track-overlay {
-  stroke-linecap: round;
+  /*stroke-linecap: round;*/
 }
 
 .track {
   stroke: #000;
   stroke-opacity: 0.3;
-  stroke-width: 10px;
+  stroke-width: 5px;
 }
 
 .track-inset {
-  stroke: #ddd;
-  stroke-width: 8px;
+  stroke: #379392;
+  stroke-width: 3px;
 }
 
 .track-overlay {
@@ -111,8 +111,8 @@ div.tooltip:hover {
 }
 
 .handle {
-  fill: #fff;
-  stroke: #000;
-  stroke-opacity: 0.5;
-  stroke-width: 1.25px;
+  fill: white;
+  stroke: #379392;
+  stroke-opacity: 0.9;
+  stroke-width: 3px;
 }

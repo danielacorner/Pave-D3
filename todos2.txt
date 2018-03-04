@@ -45,3 +45,5 @@ todos
 
 --graph view on == hide buttons 1/3 of group
 toggle indicator
+
+--mobile view zooming
