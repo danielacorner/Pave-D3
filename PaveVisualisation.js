@@ -539,13 +539,13 @@ function graphModeOn() {
   axisX = axisG.append("g")
  .attr("class", "x axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
-  + (height/2-margin.bottom) + ")")
+  + (height/2-40) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
    // text label for the x axis
   axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
-                      + (height/2-10) + ")") // top
+                      + (height/2) + ")") // top
   .style("text-anchor", "middle")
   .text("Number of Jobs")
   .attr("opacity", 0).transition().duration(500).attr("opacity",1);
@@ -567,9 +567,19 @@ function graphModeOn() {
   .text("Risk of Machine Automation")
   .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
+d3.select("#industry").style("display","none");
+d3.select("#random").style("display","none");
+d3.select("#combine").style("width", "305px");
+d3.select(".btn-group").style("padding-left", "0px")
+
 }
 
 function graphModeOff() {
+
+d3.select("#industry").transition().duration(500).style("display","inline");
+d3.select("#random").style("display","inline").style("box-shadow", "3px 3px 3px grey");
+d3.select("#combine").style("width", "");
+d3.select(".btn-group").style("padding-left", "0px")
 
     // remove axes
     axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)

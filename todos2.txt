@@ -42,3 +42,6 @@ todos
 --future-view legend
 
 --filters positions and reset position
+
+--graph view on == hide buttons 1/3 of group
+toggle indicator
