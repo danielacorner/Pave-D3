@@ -806,7 +806,7 @@ function resetFilters() {
   } else if (graphMode == 1) { // TODO: not working
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
   };
 };
 
