@@ -222,7 +222,7 @@ var circles = svg.selectAll("circle")
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       // create the hover tooltip
       div.transition()
-      .duration(200)
+      .duration(300)
       .style("opacity", .96)
       .style("height", "auto")
       .style("width", "350px")
@@ -382,7 +382,7 @@ d3.select("#random").on('click', function() {
 })
 
 d3.select("#combine").on('click', function(d) {
-  createLegend();
+  createLegend(0);
   if (graphMode == 0 && futureMode == 0) {
     simulation
     // .force("gravity", forceGravity)
@@ -430,6 +430,7 @@ maxWage = d3.max(nodes, function(d) {return d.wage});//d3.max(datapoints, functi
 
 maxwage = 116.18; //busted
 
+maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
 
 
@@ -437,10 +438,10 @@ maxwage = 116.18; //busted
 
 
 
-// ////////////////// Freeze! ////////////////////////
-// d3.select("#freeze").on('click', function(d) {
-//   simulation.stop();
-// });
+////////////////// Freeze! (Pause) ////////////////////////
+d3.select("#freeze").on('click', function(d) {
+  simulation.stop();
+});
 
 
 
@@ -474,19 +475,19 @@ d3.select("#graph").on('click', function(d) {
     d3.select("#graphModeDropdown").style("visibility", "visible")
 
     // legend.transition().duration(500).style("opacity", 0).remove();
-    graphModeOn();
+    graphModeOn(0);
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
     d3.select("#graphModeDropdown").style("visibility", "hidden")
 
 
-    createLegend();
+    createLegend(0);
     // if future mode is on, return to future mode
     if (futureMode == 1) { 
       futureMode = 0;
       futureModeOff(); 
-      createLegend();}
+      createLegend(0);}
     // console.log("futureMode: ", futureMode);
     graphModeOff();
   }; // transition back to clusters
@@ -495,9 +496,23 @@ d3.select("#graph").on('click', function(d) {
   // $.getScript("./js/graph-module.js");
 })
 
-function graphModeOn() {
-  legend.transition().duration(500).style("opacity", 0).remove();
 
+d3.select("#a0").on('click', function() {
+  // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
+  graphModeOn(0);
+  // createLegend(0);
+});
+d3.select("#a1").on('click', function() {
+  graphModeOn(1);
+});
+d3.select("#a2").on('click', function() {
+  graphModeOn(2);
+});
+
+
+function graphModeOn(mode) {
+  if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
+  d3.select("#freeze").transition().duration(500).style("opacity", 0);
     // cool to 0 degrees
     simulation.stop();
 
@@ -509,19 +524,67 @@ function graphModeOn() {
       positionsY[d.id] = d.y;
     });
 
-    // transition circles to graph positions
-    circles.transition()
-    .duration(750)
-        // set x values
-      .attrTween("cx", function(d) { // transition x position to...
-        var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left);
-        return function(t) { return d.cx = i(t); };
-      })
-        // set y values
-        .attrTween("cy", function(d) {
-          var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2 + 100);
-          return function(t) { return d.cy = i(t); };
-        });
+    // CHOOSE / SWITCH for graph-mode dropdown
+    switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+          // transition circles to graph positions
+          circles.transition()
+          .duration(750)
+              // set x values
+            .attrTween("cx", function(d) { // transition x position to...
+              var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              return function(t) { return d.cx = i(t); };
+            })
+              // set y values
+              .attrTween("cy", function(d) {
+                var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2 + 100);
+                return function(t) { return d.cy = i(t); };
+              });
+            break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+          circles.transition()
+          .duration(750)
+            .attrTween("cx", function(d) {
+              var i = d3.interpolate(d.x, d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              return function(t) { return d.cx = i(t); };
+            })
+              .attrTween("cy", function(d) {
+                var i = d3.interpolate(d.y, (d.wage/maxWage)*height*0.9 - height/2 + 100);
+                return function(t) { return d.cy = i(t); };
+              });
+            break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+          circles.transition()
+          .duration(750)
+            .attrTween("cx", function(d) {
+              var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              return function(t) { return d.cx = i(t); };
+            })
+              .attrTween("cy", function(d) {
+                var i = d3.interpolate(d.y, (d.wage/maxWage)*height*0.9 - height/2 + 100);
+                return function(t) { return d.cy = i(t); };
+              });
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+    }
 
   //////////////////////// Axes ////////////////////////////
 
@@ -529,10 +592,41 @@ function graphModeOn() {
   var x = d3.scaleLinear().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
 
-  // Scale the range of the data (using globally-stored nodes)
-  // TODO: modularize for axis selection
-  x.domain([0, maxWorkers]); //minmax workers
-  y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
+   switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+               // Scale the range of the data (using globally-stored nodes)
+                x.domain([0, maxWorkers]); //minmax workers
+                y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
+            break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+                x.domain([0, maxYearsStudy]); //minmax workers
+                y.domain([0, maxWage]);
+            break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+                x.domain([0, maxWorkers]); //minmax workers
+                y.domain([0, maxWage]);
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+    }
+
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0,100)");
@@ -545,11 +639,10 @@ function graphModeOn() {
  .call(d3.axisBottom(x).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
    // text label for the x axis
-  axisG.append("text")
+  axisLabelX = axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
                       + (height/2) + ")") // top
   .style("text-anchor", "middle")
-  .text("Number of Jobs")
   .attr("opacity", 0).transition().duration(500).attr("opacity",1);
 
   // Add the Y Axis
@@ -560,14 +653,43 @@ function graphModeOn() {
  .call(d3.axisLeft(y).ticks(5))
  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
    // text label for the y axis
-  axisG.append("text")
+  axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
   .attr("y", -width/2)
   .attr("x", 0)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .text("Risk of Machine Automation")
-  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+
+  switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Risk of Machine Automation")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+            d3.selectAll("text").text("");
+            axisLabelX.text("Years of Study")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Wage ($ per hr)")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            axisLabelY.text("Wage ($ per hr)")
+            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            break;
+  }
+
 
 d3.select("#industry").style("display","none");
 d3.select("#random").style("display","none");
@@ -578,7 +700,13 @@ d3.select("#chart").transition().duration(500).attr("height","700px");
 
 }
 
+
+
+
+
 function graphModeOff() {
+
+d3.select("#freeze").transition().duration(500).style("opacity", 1);
 
 d3.select("#industry").transition().duration(500).style("display","inline");
 d3.select("#random").style("display","inline").style("box-shadow", "3px 3px 3px grey");
@@ -654,7 +782,7 @@ d3.select("#futureView").on('click', function(d) {
 
   // If turning off:
   if (futureMode == 0) {
-    if (graphMode == 0) { createLegend() }
+    if (graphMode == 0) { createLegend(0) }
     futureModeOff();
   }; 
   
@@ -1357,49 +1485,78 @@ var bottomLegend;
 
 // function createBottomLegend() {}
 
-function createLegend() {
+function createLegend(mode) {
 
-// legend.remove();
+              industriesArray = [
+              'Natural resources, agriculture and related production occupations',
+              'Management occupations',
+              'Occupations in art, culture, recreation and sport',
+              'Trades, transport and equipment operators and related occupations',
+              'Business, finance and administration occupations',
+              'Occupations in education, law and social, community and government services',
+              'Natural and applied sciences and related occupations',
+              'Occupations in manufacturing and utilities',
+              'Health occupations',
+              'Sales and service occupations',
+              ]
 
-legend = svg.selectAll("#legend")
-    .data(d3.range(10))
-    .enter().append("g")
-    .attr("class", "legend")
-    .attr("transform", function(d, i) { return "translate(0," + i * 22 + ")"; })
-    .style("fill", function(d, i) { return d3.schemeCategory10[i] });
+    switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+          // transition circles to graph positions
 
-legend.append("rect")
-    .attr("x", width/2 - margin.right - 20)
-    .attr("width", 18)
-    .attr("height", 18)
-    .attr("transform", "translate(0," + legendHeight + ")")
-    .style("opacity",0).transition().duration(500).style("opacity", 1)
+              legend = svg.selectAll("#legend")
+                  .data(d3.range(10))
+                  .enter().append("g")
+                  .attr("class", "legend")
+                  .attr("transform", function(d, i) { return "translate(0," + i * 22 + ")"; })
+                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
-industriesArray = [
-'Natural resources, agriculture and related production occupations',
-'Management occupations',
-'Occupations in art, culture, recreation and sport',
-'Trades, transport and equipment operators and related occupations',
-'Business, finance and administration occupations',
-'Occupations in education, law and social, community and government services',
-'Natural and applied sciences and related occupations',
-'Occupations in manufacturing and utilities',
-'Health occupations',
-'Sales and service occupations',
-]
+              legend.append("rect")
+                  .attr("x", width/2 - margin.right - 20)
+                  .attr("width", 18)
+                  .attr("height", 18)
+                  .attr("transform", "translate(0," + legendHeight + ")")
+                  .style("opacity",0).transition().duration(500).style("opacity", 1)
 
-legend.append("text")
-    .attr("x", width/2 - margin.right - 27 )
-    .attr("y", 9)
-    .attr("dy", ".35em")
-    .attr("transform", "translate(0," + legendHeight + ")")
-    .style("text-anchor", "end")
-    .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; })
-    .style("opacity",0).transition().duration(500).style("opacity", 1);
+              legend.append("text")
+                  .attr("x", width/2 - margin.right - 27 )
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .attr("transform", "translate(0," + legendHeight + ")")
+                  .style("text-anchor", "end")
+                  .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; })
+                  .style("opacity",0).transition().duration(500).style("opacity", 1);
+
+          break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+          break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+    }
+
 
 }
 
-createLegend();
+createLegend(0);
 
 
 // Expand buttons

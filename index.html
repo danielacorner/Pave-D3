@@ -12,6 +12,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
 	<!-- Bootstrap -->
+		<script src="js/bootstrap.min.js"></script>
+
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -166,12 +168,12 @@
 			<span style="color: white; font-family: Poppins">
 			Future View</span> <i class="fa fa-fast-forward"></i></button>
 
-			<span style='padding-left: 10px'></span>
+			<span style='padding-left: 130px'></span>
 
-		<!-- 	<button id="freeze" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
+			<button id="freeze" type="button" style="box-shadow: 2px 2px 2px grey; position: relative; top: 50px; background: #BABABA" class="btn btn-sm">
 			<span style="color: white; font-family: Poppins">
-			Pause</span> <i class="fa fa-pause"></i></button>
- -->
+			</span> <i class="fa fa-pause"></i></button>
+
 	</div> <!-- buttons -->
 
 	<!-- Search Jobs -->
@@ -243,28 +245,22 @@
 
 
 	<div class="jumbotron" style="background: white">
+			<div align="center" class="dropdown">
+				<!-- graph mode dropdown -->
+					<button class="btn btn-primary dropdown-toggle" style="visibility: hidden; background: #579E38; font-family: Poppins; box-shadow: 3px 3px 3px grey;"
+				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
+				 	<span class="caret"></span></button>
+				 <ul class="dropdown-menu">
+				 	<li style="font-family: Poppins; color: grey;" class="dropdown-header">Suggested Views</li>
+				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a0" href="#">Machine Automation   vs.  Number of Jobs</a></li>
+				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a1" href="#">Wage   vs.  Years of Study</a></li>
+				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a2"  href="#">Wage  vs.  Number of Jobs</a></li>
+				 </ul>
+			</div>
 			<button id="resetFilters" type="button" style="box-shadow: 3px 3px 3px grey; background: #BABABA" class="btn btn-md">
 			<span style="color: white; font-family: Poppins; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button>
 			<!-- dropdown menu for graph views -->
-			<div class="dropdown">
-				<!-- graph mode dropdown -->
-				<button class="btn btn-primary dropdown-toggle btn-lg" style="visibility: hidden;"
-				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
-				 	<span class="caret"></span>
-				 </button>
-				 <ul class="dropdown-menu">
-				 	<li class="dropdown-header">Suggested views</li>
-				 	<li><a href="#">Wage vs Years of Study</a></li>
-				 	<li><a href="#">Machine Automation Risk vs Number of Jobs</a></li>
-				 	<li><a href="#">Wage vs Number of Jobs</a></li>
-
-				 	<li role="separator" class="divider"></li>
-				 	<li class="disabled"><a href="#">Can't touch this</a></li>
-				 	<li><a href="#">Can touch this</a></li>
-
-				 </ul>
-			</div>
 
 <div class="row">
 	<!-- sliders -->
@@ -273,7 +269,7 @@
 			<!-- Title -->
 			<div id="dropdown1Title"></div>
 			<!-- Dropdown for the Slider -->
-			<select class="dropdown col-md-12" id="dropdown1"></select> 
+			<select class="col-12" id="dropdown1"></select> 
 			<!-- Slider attached to Dropdown -->
 			<div type="text" class="slider" id="slider2"></div>
 			<!-- slider array 1: Filter by Stats-->
@@ -313,7 +309,6 @@
 	<!-- bootstrapcdn -->
 	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 	
-	<script src="js/bootstrap.min.js"></script>
 
 	</body>
 	</html>
