@@ -1121,7 +1121,7 @@ function createLegend(mode) {
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate(0," + ((i * 22) - 100) + ")"; })
+                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) - 130) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -1483,19 +1483,19 @@ function createSliders(){
     var column, 
         hidden = "visible", 
         mainskill = false, 
-        ytranslate = 0;
+        ytranslate = -50;
     // Wage, Number of Jobs
     if (i<2) { column = 2, hidden = "hidden"
-      ytranslate = 500;
+      ytranslate = 550;
     // Language, Logic skills
     } else if (i<4) { column = 1, mainskill = true;
       if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 500;
+        ytranslate = 550;
       }
     // Math, Computer skills
     } else if (i<6) { column = 3, mainskill = true;
       if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 500;
+        ytranslate = 550;
       }
       // language subskills
     } else if ([13,15,19].includes(i)) { column = 1, hidden = "hidden"
