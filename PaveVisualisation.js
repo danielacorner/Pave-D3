@@ -234,9 +234,9 @@ var circles = svg.selectAll("circle")
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font: bold'>" + d.job + "</div>"
-                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Poppins;'>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
@@ -265,9 +265,9 @@ var circles = svg.selectAll("circle")
       // click-on, click-off
       clicked = 1-clicked;
       div
-      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font: bold'>" + d.job + "</div>"
-                +"<div style='padding-left: 10px; font-family: Poppins; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
                 +"Top Jobs Placeholder" 
@@ -279,7 +279,7 @@ var circles = svg.selectAll("circle")
         + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
         +"<br/><br/></div><span style='padding-left: 225px'></span><button class='btn btn-md btn-default'"+
-         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
          +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
@@ -1006,9 +1006,9 @@ function enterUpdateCircles() {
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font: bold'>" + d.job + "</div>"
-                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Poppins;'>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
@@ -1037,9 +1037,9 @@ function enterUpdateCircles() {
       // click-on, click-off
       clicked = 1-clicked;
       div
-      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Poppins; color: " + colorTooltip(d.cluster)
+      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font: bold'>" + d.job + "</div>"
-                +"<div style='padding-left: 10px; font-family: Poppins; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
                 +"Top Jobs Placeholder" 
@@ -1051,7 +1051,7 @@ function enterUpdateCircles() {
         + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
         +"<br/><br/></div><span style='padding-left: 225px'></span><button class='btn btn-md btn-default'"+
-         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Poppins; background: white; color: " + color(d.cluster) 
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
          +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
@@ -1327,6 +1327,7 @@ for(var i=0; i<sliderArray.length; i++) {
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
   .append("text")
   	.style("visibility", hidden)
+    // .style("font-family", "Raleway")
   	.html("<br>"+sliderTitlesArray[i]+"<br>"+"Less<span style='padding-left: 195px'></span>"+"More")
   .append("svg")
   	.style("visibility", hidden)

@@ -29,7 +29,7 @@
 	<link rel="stylesheet" href="css/main.css">
 
 	<!-- Google fonts -->
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis">
 
 	<!-- Jquery -->
@@ -44,96 +44,83 @@
 <div class="container">
  
 <!-- .navbar-fixed-top, or .navbar-fixed-bottom can be added to keep the nav bar fixed on the screen -->
-<nav class="navbar navbar-fixed-top  d-lg-none">
-  <div class="container-fluid">
+	<nav class="navbar navbar-fixed-top d-sm-none d-md-none d-lg-none">
+  
+  	<div class="container-fluid">
  
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+     <!-- Brand and toggle get grouped for better mobile display -->
+    	<div class="navbar-header">
   	
 
-      <!-- Button that toggles the navbar on and off on small screens -->
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar_collapse" aria-expanded="false">
- 
-      <!-- Hides information from screen readers -->
-        <span class="sr-only"></span>
- 
-        <!-- Draws 3 bars in navbar button when in small mode -->
-       <span class="fas fa-bars pull-right"></span>
-      </button>
- 
-  	<span class="pull-right" style="padding-left: 5px; font: bold; font-size: 25px; font-family: Poppins; color: #579E38; text-align: left;"+ >Pave</span>
-      <!-- You'll have to add padding in your image on the top and right of a few pixels (CSS Styling will break the navbar) -->
-      <a class="pull-right" href="#"></a>
-    </div>
- 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <!-- (This navbar is supposed to appear only for small screen sizes) -->
-    <div class="collapse navbar-collapse" id="navbar_collapse">
-      <ul class="nav navbar-nav">
+			  	<span style="padding-left: 5px; font: bold; font-size: 25px; font-family: Raleway; color: #579E38; text-align: left;"+ ><a class="pull-right" href="#">Pave</a></span>
+			      <!-- You'll have to add padding in your image on the top and right of a few pixels (CSS Styling will break the navbar) -->
+			      
+			 
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <!-- (This navbar is supposed to appear only for small screen sizes) -->
+					<div style="display: none" class="container d-xs-block">
 
-	  <li class="active">
-	  	<a data-toggle="tab" href="#filtering" style="padding-left:4px">
-	  		About</a>
-		</li>
-	  <li><a data-toggle="tab" href="#graph-mode" style="padding-left:4px">
-	  		Help</a></li>
+						<div class="title">
+							<h1 style="font: bold; font-family: Raleway; color: #579E38; text-align: left;">
+						
+								<span style="padding-left: 10px;"></span>
+									Pave <span style="padding-left: 0px;"></span> 
+								<span style="font-size: 16px; font-family: Raleway">
+									<a style="font: bold; padding-left: 10px; font-family: Raleway; color: #579E38;" href="#" > About</a>
+									<a style="font: bold; padding-left: 10px; font-family: Raleway; color: #579E38;" href="#" > Help</a>
+									<a style="font: bold; padding-left: 10px; font-family: Raleway; color: #579E38;" href="#" > Feedback</a>
+						  		<div style="position: fixed; right: 10px;">
+						  			<span class="input-group-btn">
+								  	<!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
+										    <button style="position: fixed; right: 30px;" class="btn-lg btn btn-search"  type="button">
+										    	<i class="fas fa-search fa-lg"></i>
+										    </button>
+										</span>
+						 			</div>
 
-	 	  <!-- Dropdown menu item -->
-	  <li class="dropdown">
-	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding-left:4px">
-	    	Feedback<span class="caret"></span></a>
-	    <ul class="dropdown-menu">
-	 
-	      <!-- Disable a tab -->
-	      <li><a data-toggle="tab" href="#the-industries">Feedback 1</a></li>
-	      <li><a data-toggle="tab" href="#other-industries">Feedback 2</a></li>
-	    </ul>
-	  </li>
+								</span>
+					
+				 				</h1>
 
-      </ul>
-      <!-- navbar-left will move the search to the left -->
-      <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+
+						 </div>
+					 </div>
+			 </div>
+		 </div><!-- /.container-fluid -->
+
+	</nav>
 </div>
 <br>
 
 
 <!-- Title and logo -->
-<div style="display: none" class="container d-lg-block">
+<div style="display: none" class="container d-sm-block d-md-block d-lg-block">
 
 	<div class="title">
-		<h1 style="font: bold; font-family: Poppins; color: #579E38; text-align: left;">
+		<h1 style="font: bold; font-family: Raleway; color: #579E38; text-align: left;">
 	
 			<span style="padding-left: 10px;"></span>
-				<!-- responsive image logo -->
-			<!-- <img src="img/logo.png" id="logo" style="width: 5%; height: 5%;" class="img-responsive img-thumbnail pull-right" alt="Responsive image"> -->
 			Pave <span style="padding-left: 0px;"></span> 
-			<span style="font-size: 22px; font-family: Poppins">
-				<a style="font: bold; padding-left: 30px; font-family: Poppins; color: #579E38;" href="#" > About</a>
-				<a style="font: bold; padding-left: 30px; font-family: Poppins; color: #579E38;" href="#" > Help</a>
-				<a style="font: bold; padding-left: 30px; font-family: Poppins; color: #579E38;" href="#" > Feedback</a>
-	  <div style="position: fixed; right: 30px;"><span class="input-group-btn"></div>
+			<span style="font-size: 22px; font-family: Raleway">
+				<a style="font: bold; padding-left: 30px; font-family: Raleway; color: #579E38;" href="#" > About</a>
+				<a style="font: bold; padding-left: 30px; font-family: Raleway; color: #579E38;" href="#" > Help</a>
+				<a style="font: bold; padding-left: 30px; font-family: Raleway; color: #579E38;" href="#" > Feedback</a>
+	  		<div style="position: fixed; right: 30px;">
+	  			<span class="input-group-btn">
 			  <!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-	    <button style="position: fixed; right: 30px;" class="btn-lg btn btn-search"  type="button"><i class="fas fa-search fa-lg"></i></button>
-	  </span>
-			</span>
+				    <button style="position: fixed; right: 30px;" class="btn-lg btn btn-search"  type="button">
+				    	<i class="fas fa-search fa-lg"></i>
+				    </button>
+		  			</span>
+	  			</div>
+				</span>
 			<!-- <span style="font-family: Dosis; font-size: 30px; text-align: right; padding-left: 50px">the Canadian Job Explorer</span> -->
 
-		</h1>
+			</h1>
 
-</div>
+		</div>
 
-
- 
-
-</div>
+	</div>
 
 <!-- Buttons and Search -->
 <div class="container">
@@ -145,33 +132,33 @@
 			<div class="btn-group" style="box-shadow: 3px 3px 17px grey" role="group" aria-label="...">
 
 				<button id="industry" type="button" style="background: #BABABA" class="btn btn-sm">
-				<span style="color: white; font-family: Poppins">
+				<span style="color: white; font-family: Raleway">
 				Industry Split</span> <i class="fa fa-expand-arrows-alt"></i></button>
 
 				<button id="combine" type="button" style="background: #BABABA" class="btn btn-sm">
-				<span style="color: white; font-family: Poppins">
+				<span style="color: white; font-family: Raleway">
 				Combine</span> <i class="fa fa-compress"></i></button>
 
 				<button id="random" type="button" style="background: #BABABA" class="btn btn-sm">
-				<span style="color: white; font-family: Poppins">
+				<span style="color: white; font-family: Raleway">
 				Shuffle</span> <i class="fa fa-random"></i></button>
 
 			</div><span style='padding-left: 10px'></span>
 
 			<button id="graph" data-toggle="button" type="button" style="box-shadow: 3px 3px 17px grey; background: #BABABA" class="btn btn-sm" aria-pre autocomplete="off">
-			<span style="color: white; font-family: Poppins">
+			<span style="color: white; font-family: Raleway">
 			Graph View</span> <i class="fa fa-chart-bar"></i></button>
 
 			<span style='padding-left: 10px'></span>
 
 			<button id="futureView" type="button" style="box-shadow: 3px 3px 17px grey; background: #BABABA" class="btn btn-sm">
-			<span style="color: white; font-family: Poppins">
+			<span style="color: white; font-family: Raleway">
 			Future View</span> <i class="fa fa-fast-forward"></i></button>
 
 			<span style='padding-left: 130px'></span>
 
 			<button id="freeze" type="button" style="box-shadow: 2px 2px 17px grey; position: relative; top: 50px; background: #BABABA" class="btn btn-sm">
-			<span style="color: white; font-family: Poppins">
+			<span style="color: white; font-family: Raleway">
 			</span> <i class="fa fa-pause"></i></button>
 
 	</div> <!-- buttons -->
@@ -247,18 +234,18 @@
 	<div class="jumbotron" style="background: white">
 			<div align="center" class="dropdown">
 				<!-- graph mode dropdown -->
-					<button class="btn btn-primary dropdown-toggle" style="visibility: hidden; background: #579E38; font-family: Poppins; box-shadow: 3px 3px 17px grey;"
+					<button class="btn btn-primary dropdown-toggle" style="visibility: hidden; background: #579E38; font-family: Raleway; box-shadow: 3px 3px 17px grey;"
 				 type="button" id="graphModeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Graph Mode views
 				 	<span class="caret"></span></button>
 				 <ul class="dropdown-menu">
-				 	<li style="font-family: Poppins; color: grey;" class="dropdown-header">Suggested Views</li>
-				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a0" href="#">Machine Automation   vs.  Number of Jobs</a></li>
-				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a1" href="#">Wage   vs.  Years of Study</a></li>
-				 	<li><a style="font-family: Poppins; color:  #579E38;" id="a2"  href="#">Wage  vs.  Number of Jobs</a></li>
+				 	<li style="font-family: Raleway; color: grey;" class="dropdown-header">Suggested Views</li>
+				 	<li><a style="font-family: Raleway; color:  #579E38;" id="a0" href="#">Machine Automation   vs.  Number of Jobs</a></li>
+				 	<li><a style="font-family: Raleway; color:  #579E38;" id="a1" href="#">Wage   vs.  Years of Study</a></li>
+				 	<li><a style="font-family: Raleway; color:  #579E38;" id="a2"  href="#">Wage  vs.  Number of Jobs</a></li>
 				 </ul>
 			</div>
 			<button id="resetFilters" type="button" style="box-shadow: 3px 3px 17px grey; background: #BABABA" class="btn btn-md">
-			<span style="color: white; font-family: Poppins; padding-right: 7px">
+			<span style="color: white; font-family: Raleway; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button>
 			<!-- dropdown menu for graph views -->
 

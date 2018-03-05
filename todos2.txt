@@ -48,6 +48,8 @@ toggle indicator
 
 -filter flexibility
 
+-filter positioning, disappearing reappearing
+
 --remove axis ticks
 --format auto risk ticks to %s
 
