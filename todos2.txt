@@ -70,4 +70,4 @@ view more button
 
 --increase legend size
 
-page logo
+--tooltip link
