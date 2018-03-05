@@ -53,8 +53,11 @@ toggle indicator
 --make canvas responsive
 
 --remove axis ticks
+
 --format auto risk ticks to %s
 
 --axis styles
 
 --graph mode dropdown -> preset buttons
+
+slider handles stuck

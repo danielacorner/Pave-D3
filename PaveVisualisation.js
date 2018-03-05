@@ -3,6 +3,13 @@ $( "body" ).click(function( event ) {
     console.log( "clicked: " + event.target.nodeName, event.target.id);
 });
 
+d3.selection.prototype.moveToFront = function() {  
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+
+
 var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
 
@@ -207,6 +214,7 @@ var svg = d3.select("#chart")
 
 
 
+
 // TODO: merge pre, post-filtering
 ///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
 // Add the circles with tooltips
@@ -220,6 +228,8 @@ var circles = svg.selectAll("circle")
       if (clicked == 1) return;
       // highlight the current circle
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+
+
       // create the hover tooltip
       div.transition()
       .duration(300)
@@ -480,7 +490,7 @@ d3.select("#graph").on('click', function(d) {
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
     d3.select("#graphModeDropdown").style("visibility", "hidden")
-
+    // d3.select("#slider_1").style("visibility", "visible")
 
     createLegend(0);
     // if future mode is on, return to future mode
@@ -724,7 +734,7 @@ d3.select("#random").style("display","none");
 d3.select("#combine").style("width", "305px");
 d3.select(".btn-group").style("padding-left", "0px");
 
-d3.select("#chart").transition().duration(500).attr("height","700px");
+d3.select("#chart").transition().duration(500).attr("height","800px");
 
 }
 
@@ -733,6 +743,7 @@ d3.select("#chart").transition().duration(500).attr("height","700px");
 
 
 function graphModeOff() {
+createSliders();
 
 d3.select("#freeze").transition().duration(500).style("opacity", 1);
 
@@ -741,7 +752,7 @@ d3.select("#random").style("display","inline").style("box-shadow", "3px 3px 3px 
 d3.select("#combine").style("width", "");
 d3.select(".btn-group").style("padding-left", "0px")
 
-d3.select("#chart").transition().duration(500).attr("height","600px");
+d3.select("#chart").transition().duration(500).attr("height","700px");
 
     // remove axes
     axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
@@ -1066,6 +1077,156 @@ function enterUpdateCircles() {
 
 }
 
+
+
+  /////////// Legend /////////////////
+// legendG = d3.select("#legend").append("");
+// legendG = d3.select("#legend").append("");
+
+var legendHeight = 10;
+
+var legend;
+var bottomLegend;
+
+// function createBottomLegend() {}
+
+function createLegend(mode) {
+
+              industriesArray = [
+              'Natural resources, agriculture and related production occupations',
+              'Management occupations',
+              'Occupations in art, culture, recreation and sport',
+              'Trades, transport and equipment operators and related occupations',
+              'Business, finance and administration occupations',
+              'Occupations in education, law and social, community and government services',
+              'Natural and applied sciences and related occupations',
+              'Occupations in manufacturing and utilities',
+              'Health occupations',
+              'Sales and service occupations',
+              ]
+
+    switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+          // transition circles to graph positions
+
+              legend = svg.selectAll("#legend")
+                  .data(d3.range(10))
+                  .enter().append("g")
+                  .attr("class", "legend")
+                  .attr("transform", function(d, i) { return "translate(0," + ((i * 22) - 100) + ")"; })
+                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
+
+              legend.append("rect")
+                  .attr("x", width/2 - margin.right - 10)
+                  .attr("width", 16)
+                  .attr("height", 16)
+                  .attr("transform", "translate(10," + legendHeight + ")")
+                  .style("opacity",0).transition().duration(500).style("opacity", 1)
+
+              legend.append("text")
+                  .attr("x", width/2 - margin.right - 0 )
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .attr("transform", "translate(0," + legendHeight + ")")
+                  .style("text-anchor", "end")
+                  .style("font-family", "Raleway")
+                  .text(function(d, i) { return industriesArray[i].substring(0,30) + "..."; })
+                  .style("opacity",0).transition().duration(500).style("opacity", 1);
+
+          break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+          break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+    }
+
+
+}
+
+createLegend(0);
+
+
+// Expand buttons
+d3.select("#expandSkills1").on('click', function() {
+// For Each Slider create the slider
+for(var i=0; i<sliderArray.length; i++) {
+   
+    // Language subskills
+  if ([13,15,19].includes(i)) { column = 1, hidden = "visible"
+    // Title & SVG
+  // d3.select("#slider_"+i)
+  //   .style("visibility", hidden)
+  //     .text("test1")
+
+
+  // d3.select("#slider_"+i).append("text").text("test")
+    // .append("text")
+    // .html("test")
+    // .html("<br>"+sliderTitlesArray[i]+"<br>")
+  // .append("svg")
+  //   .style("visibility", hidden)
+  //   .attr("id", "slider_"+i)
+  //   .attr("width", 250)
+  //   .attr("height", 50);
+
+    // logic subskills
+  } else if ([7,9,14,20].includes(i)) { column = 1, hidden = "visible";
+  // Title & SVG
+  sliderSVGArray[i].style("visibility", "visible")
+    .append("text")
+      // .attr("class", "sliderTitle_"+i)
+
+  }
+
+}
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // d3.select("#chart").moveToFront();
+
+
+
 ///////////////////////////////// Filters ////////////////////////////////////
 
 
@@ -1292,6 +1453,7 @@ var sliderArray = ["wage", "workers",
 //     // subskills
 //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
 
+
 var sliderPositionsArray = []; // array to track all sliders
 var sliderSVGArray = []; // array of slider SVGs
 var sliderScaleArray = []; // array of slider scale functions
@@ -1306,59 +1468,70 @@ var sliderTitlesArray = [
     "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
     "Document Use","Writing","Critical Thinking"
     ]
+
+createSliders();
+
+function createSliders(){
 // For Each Slider create the slider
-for(var i=0; i<sliderArray.length; i++) {
-	var column, hidden = "visible", mainskill = false;
-	// Wage, Number of Jobs
-  if (i<2) { column = 1
-  // Language, Logic skills
-	} else if (i<4) { column = 2, mainskill = true;
-  // Math, Computer skills
-	} else if (i<6) { column = 3, mainskill = true;
-		// language subskills
-	} else if ([13,15,19].includes(i)) { column = 2, hidden = "visible"
-		// logic subskills
-	} else if ([7,9,14,20].includes(i)) { column = 2, hidden = "visible"
-		// Math subskills
-	} else if ([10,11,12,16].includes(i)) { column = 3, hidden = "hidden"
-		// Computer subskills
-	} else if ([6,8,17,18].includes(i)) { column = 3, hidden = "hidden"}
+  for(var i=0; i<sliderArray.length; i++) {
+    var column, 
+        hidden = "visible", 
+        mainskill = false, 
+        ytranslate = 0;
+    // Wage, Number of Jobs
+    if (i<2) { column = 2, hidden = "hidden"
+      ytranslate = 500;
+    // Language, Logic skills
+    } else if (i<4) { column = 1, mainskill = true;
+      if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
+        ytranslate = 480;
+      }
+    // Math, Computer skills
+    } else if (i<6) { column = 3, mainskill = true;
+      if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
+        ytranslate = 480;
+      }
+      // language subskills
+    } else if ([13,15,19].includes(i)) { column = 1, hidden = "hidden"
+      // logic subskills
+    } else if ([7,9,14,20].includes(i)) { column = 1, hidden = "hidden"
+      // Math subskills
+    } else if ([10,11,12,16].includes(i)) { column = 3, hidden = "hidden"
+      // Computer subskills
+    } else if ([6,8,17,18].includes(i)) { column = 3, hidden = "hidden"}
+  
+    //  if(i==2 || i==3) {ytranslate=ytranslate+20};
+
   // Title & SVG
+
+  var sliderPositionsOnPageHeight = 665;
+
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
   .append("text")
-  	.style("visibility", hidden)
-    // .style("font-family", "Raleway")
-  	.html("<br>"+sliderTitlesArray[i]+"<br>"+"Less<span style='padding-left: 195px'></span>"+"More")
+    .style("visibility", hidden)
+     // .style("font-family", "Raleway")
+    .html("<br><div style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-55+ytranslate)+"px; padding-right: 80px; font-size: 18px; font: bold; font-family: Raleway' align='left'>"
+      +sliderTitlesArray[i]
+      +"</div>"+"<span style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-25+ytranslate)+"px; font-family: Raleway'>Not much<span style='padding-left: 135px'></span>"+"Lots</span>")
   .append("svg")
-  	.style("visibility", hidden)
+    .style("visibility", hidden)
+    .style("position", "absolute").style("top", (-sliderPositionsOnPageHeight+ytranslate)+"px").style("right", 140+"px")
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
 
-
-
-
-
-  // if (mainskill = true){
-  // 	sliderSVGArray[i]
-  // 		.append("button")
-  // 			.html("Subskills")
-  //       .attr("href", "#")
-  // }
-
-
-
-
-  
   // Scale
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, d3.max(nodes, function(d){ return d[sliderArray[i]]})])
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
-  // Slider
+
+  // Move Wage, Number of Jobs down
+    // Slider
   sliderMulti[i] = sliderSVGArray[i].append("g")
   .attr("class", "slider")
   .attr("transform", "translate(" + 25 + "," + 25 + ")");
+
   // track
   sliderMulti[i].append("line")
   .attr("class", "track")
@@ -1391,7 +1564,7 @@ for(var i=0; i<sliderArray.length; i++) {
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 9);
-
+};
 
 
 // Update function which detects current slider
@@ -1499,152 +1672,6 @@ filterAll = function() {
 }
 
   // sliderArrayUpdateFunctions[i] = updateMulti;
-
-
-
-
-  /////////// Legend /////////////////
-// legendG = d3.select("#legend").append("");
-// legendG = d3.select("#legend").append("");
-
-var legendHeight = 15;
-
-var legend;
-var bottomLegend;
-
-// function createBottomLegend() {}
-
-function createLegend(mode) {
-
-              industriesArray = [
-              'Natural resources, agriculture and related production occupations',
-              'Management occupations',
-              'Occupations in art, culture, recreation and sport',
-              'Trades, transport and equipment operators and related occupations',
-              'Business, finance and administration occupations',
-              'Occupations in education, law and social, community and government services',
-              'Natural and applied sciences and related occupations',
-              'Occupations in manufacturing and utilities',
-              'Health occupations',
-              'Sales and service occupations',
-              ]
-
-    switch (mode) {
-      // x = Number of Jobs
-      // y = Automation Risk
-        case 0:
-          // transition circles to graph positions
-
-              legend = svg.selectAll("#legend")
-                  .data(d3.range(10))
-                  .enter().append("g")
-                  .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate(0," + i * 22 + ")"; })
-                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
-
-              legend.append("rect")
-                  .attr("x", width/2 - margin.right - 20)
-                  .attr("width", 18)
-                  .attr("height", 18)
-                  .attr("transform", "translate(0," + legendHeight + ")")
-                  .style("opacity",0).transition().duration(500).style("opacity", 1)
-
-              legend.append("text")
-                  .attr("x", width/2 - margin.right - 27 )
-                  .attr("y", 9)
-                  .attr("dy", ".35em")
-                  .attr("transform", "translate(0," + legendHeight + ")")
-                  .style("text-anchor", "end")
-                  .text(function(d, i) { return industriesArray[i].substring(0,25) + "..."; })
-                  .style("opacity",0).transition().duration(500).style("opacity", 1);
-
-          break;
-      // x = Years of Study
-      // y = Wage
-        case 1:
-          break;
-      // x = Number of Jobs
-      // y = Wage
-        case 2:
-            break;
-      // x = Number of Jobs
-      // y = Automation Risk
-        case 3:
-
-            break;
-        case 4:
-
-            break;
-        case 5:
-
-            break;
-        case 6:
-
-    }
-
-
-}
-
-createLegend(0);
-
-
-// Expand buttons
-d3.select("#expandSkills1").on('click', function() {
-// For Each Slider create the slider
-for(var i=0; i<sliderArray.length; i++) {
-   
-    // Language subskills
-  if ([13,15,19].includes(i)) { column = 2, hidden = "visible"
-    // Title & SVG
-  d3.select("#slider_"+i)
-    .style("visibility", hidden)
-      .text("test1")
-
-
-  // d3.select("#slider_"+i).append("text").text("test")
-    // .append("text")
-    // .html("test")
-    // .html("<br>"+sliderTitlesArray[i]+"<br>")
-  // .append("svg")
-  //   .style("visibility", hidden)
-  //   .attr("id", "slider_"+i)
-  //   .attr("width", 250)
-  //   .attr("height", 50);
-
-    // logic subskills
-  } else if ([7,9,14,20].includes(i)) { column = 2, hidden = "visible";
-  // Title & SVG
-  sliderSVGArray[i].style("visibility", "visible")
-    .append("text")
-      .attr("class", "sliderTitle_"+i)
-
-  }
-
-}
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
