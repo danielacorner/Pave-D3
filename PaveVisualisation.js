@@ -291,9 +291,9 @@ var circles = svg.selectAll("circle")
                 +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
         + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
-        +"<br/><br/></div><span style='padding-left: 225px'></span><button class='btn btn-md btn-default'"+
+        +"<br/><br/></div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
-         +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
+         +";'> View more</a></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
         // .transition()
@@ -1067,9 +1067,9 @@ function enterUpdateCircles() {
                 +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
         + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
-        +"<br/><br/></div><span style='padding-left: 225px'></span><button href='www.google.ca' class='btn btn-md btn-default'"+
+        +"<br/><br/></div><span style='padding-left: 225px'></span><form method='get' action='/page2'><a href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
-         +";'> View more</button></span></br></br> ").transition().duration(300).style("width", "350px")
+         +";'> View more</a></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
         // .transition()
