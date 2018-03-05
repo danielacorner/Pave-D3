@@ -290,7 +290,7 @@ var circles = svg.selectAll("circle")
                 +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
                 +"</li></ul>" + 
-                "Input, Output, Risk</br><ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                "Input, Output, Risk</br><ul style='padding-top: 5px;'> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
                 +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
         + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<li>This group currently has " + d.workers + " Jobs</li></ul>"
@@ -1067,7 +1067,7 @@ function enterUpdateCircles() {
                 +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
                 +"</li></ul>" + 
-                "Input, Output, Risk</br><ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                "Input, Output, Risk</br><ul style='padding-top: 5px;'> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
                 +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
         + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
         + "<li>This group currently has " + d.workers + " Jobs</li></ul>"

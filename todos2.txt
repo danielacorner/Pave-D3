@@ -70,6 +70,8 @@ view more button
 
 --increase legend size
 
+--tooltip dual-colour style
+
 --tooltip link (not appearing in front)
 
 top skills
