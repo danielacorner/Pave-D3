@@ -21,7 +21,7 @@ todos
 
 --favourites section
 
-
+--style legend
 
 --skills expansion buttons
 
@@ -61,3 +61,11 @@ toggle indicator
 --graph mode dropdown -> preset buttons
 
 slider handles stuck
+
+--reduce btn sizes
+
+view more button
+
+--increase legend size
+
+page logo

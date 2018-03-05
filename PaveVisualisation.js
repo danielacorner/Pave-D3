@@ -244,8 +244,8 @@ var circles = svg.selectAll("circle")
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</div>"
+      div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
@@ -275,8 +275,8 @@ var circles = svg.selectAll("circle")
       // click-on, click-off
       clicked = 1-clicked;
       div
-      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</div>"
+      .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
@@ -523,6 +523,7 @@ d3.select("#a2").on('click', function() {
 function graphModeOn(mode) {
   if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   d3.select("#freeze").transition().duration(500).style("opacity", 0);
+  d3.select("#graphModesDiv").style("visibility", "visible");
     // cool to 0 degrees
     simulation.stop();
 
@@ -745,10 +746,12 @@ d3.select("#chart").transition().duration(500).attr("height","800px");
 function graphModeOff() {
 createSliders();
 
+d3.select("#graphModesDiv").style("visibility","hidden");
+
 d3.select("#freeze").transition().duration(500).style("opacity", 1);
 
 d3.select("#industry").transition().duration(500).style("display","inline");
-d3.select("#random").style("display","inline").style("box-shadow", "3px 3px 3px grey");
+d3.select("#random").style("display","inline");
 d3.select("#combine").style("width", "");
 d3.select(".btn-group").style("padding-left", "0px")
 
@@ -1017,8 +1020,8 @@ function enterUpdateCircles() {
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</div>"
+      div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
@@ -1048,8 +1051,8 @@ function enterUpdateCircles() {
       // click-on, click-off
       clicked = 1-clicked;
       div
-      .html("<div style='font: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font: bold'>" + d.job + "</div>"
+      .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
                 +"<br/>Some job titles from this group are ..."
                 +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
@@ -1484,12 +1487,12 @@ function createSliders(){
     // Language, Logic skills
     } else if (i<4) { column = 1, mainskill = true;
       if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 480;
+        ytranslate = 500;
       }
     // Math, Computer skills
     } else if (i<6) { column = 3, mainskill = true;
       if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 480;
+        ytranslate = 500;
       }
       // language subskills
     } else if ([13,15,19].includes(i)) { column = 1, hidden = "hidden"
@@ -1504,18 +1507,20 @@ function createSliders(){
 
   // Title & SVG
 
-  var sliderPositionsOnPageHeight = 665;
+  var sliderPositionsOnPageHeight = 875;
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
   .append("text")
     .style("visibility", hidden)
-     // .style("font-family", "Raleway")
-    .html("<br><div style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-55+ytranslate)+"px; padding-right: 80px; font-size: 18px; font: bold; font-family: Raleway' align='left'>"
-      +sliderTitlesArray[i]
-      +"</div>"+"<span style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-25+ytranslate)+"px; font-family: Raleway'>Not much<span style='padding-left: 135px'></span>"+"Lots</span>")
+    .html("<br><div style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-55+ytranslate)+"px; padding-right: 80px; font-size: 18px; font-weight: bold; color:  #579E38; font-family: Raleway' align='left'>"
+      +sliderTitlesArray[i] // "Language Skills"
+      +"<span style='padding-left: 10px'></span><img style='padding-bottom: 2px;' src='img/question.png' alt='help' height='20' width = '18'>"
+      +"</div>"+"<span style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight+20+ytranslate)+"px; color:  #579E38; font-weight: bold; font-family: Raleway'>Not much<span style='padding-left: 135px'></span>"+"Lots</span>")
   .append("svg")
     .style("visibility", hidden)
-    .style("position", "absolute").style("top", (-sliderPositionsOnPageHeight+ytranslate)+"px").style("right", 140+"px")
+    .style("position", "absolute")
+    .style("top", (-sliderPositionsOnPageHeight+ytranslate)-30+"px") // y position
+    .style("right", 140+"px") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
