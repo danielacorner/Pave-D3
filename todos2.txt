@@ -70,4 +70,4 @@ view more button
 
 --increase legend size
 
---tooltip link
+--tooltip link (not appearing in front)

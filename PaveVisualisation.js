@@ -98,6 +98,9 @@ var nodes = datapoints.map(function(el) {
     cluster: i, 
     radius: r, 
     job: el.job,
+    title1: el.title1,
+    title2: el.title2,
+    title3: el.title3,
     industry: el.industry, 
     noc: el.noc, 
     workers: +el.workers,
@@ -248,7 +251,7 @@ var circles = svg.selectAll("circle")
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
-                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
+                +"<ul><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
@@ -279,9 +282,9 @@ var circles = svg.selectAll("circle")
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
                 +"<br/>Some job titles from this group are ..."
-                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
-                +"Top Jobs Placeholder" 
-                +"<br/><br/>Top skills are (placeholders)" + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang
+                +"<ul><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
+                +"[Top Jobs Placeholder]" 
+                +"<br/><br/>Top skills are..." + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang //TOP SKILLS
         // Insert extra info to display on click
                 +"<br/><br/>" + 
                 "<ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
@@ -1024,7 +1027,7 @@ function enterUpdateCircles() {
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
                                 +"<br/>Some job titles from this group are ..."
-                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul></div>")
+                +"<ul><li>"+d.title1+"</li><li>"+d.title1+"</li><li>"+d.title1+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
