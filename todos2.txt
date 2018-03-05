@@ -48,6 +48,8 @@ toggle indicator
 
 -filter flexibility
 
+-sliders position relative
+
 -filter positioning, disappearing reappearing
 
 --make canvas responsive
