@@ -98,6 +98,9 @@ var nodes = datapoints.map(function(el) {
     cluster: i, 
     radius: r, 
     job: el.job,
+    topSkill1: el.topSkill1,
+    topSkill2: el.topSkill2,
+    topSkill3: el.topSkill3,
     title1: el.title1,
     title2: el.title2,
     title3: el.title3,
@@ -250,8 +253,8 @@ var circles = svg.selectAll("circle")
       div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
-                                +"<br/>Some job titles from this group are ..."
-                +"<ul><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
+                                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
@@ -281,17 +284,18 @@ var circles = svg.selectAll("circle")
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
-                +"<br/>Some job titles from this group are ..."
-                +"<ul><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
-                +"[Top Jobs Placeholder]" 
-                +"<br/><br/>Top skills are..." + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang //TOP SKILLS
+                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
+                +"Top skills are...</br>"
+                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
-                +"<br/><br/>" + 
-                "<ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
-                +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
-        + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
-        + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
-        +"<br/><br/></div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
+                +"</li></ul>" + 
+                "Input, Output, Risk</br><ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
+        + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
+        + "<li>This group currently has " + d.workers + " Jobs</li></ul>"
+        // +"<br/>" 
+                +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
          +";'> View more</a></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
@@ -1026,8 +1030,8 @@ function enterUpdateCircles() {
       div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
-                                +"<br/>Some job titles from this group are ..."
-                +"<ul><li>"+d.title1+"</li><li>"+d.title1+"</li><li>"+d.title1+"</li></ul></div>")
+                                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
@@ -1057,17 +1061,18 @@ function enterUpdateCircles() {
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
-                +"<br/>Some job titles from this group are ..."
-                +"<ul><li>Title1</li><li>Title2</li><li>Title3</li></ul>"
-                +"Top Jobs Placeholder" 
-                +"<br/><br/>Top skills are (placeholders)" + d.skillsComp + ", " + d.skillsMath + ", and " + d.skillsLang
+                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
+                +"Top skills are...</br>"
+                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
-                +"<br/><br/>" + 
-                "<ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
-                +"<br/><li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
-        + "<br/><li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
-        + "<br/><li>This group currently has " + d.workers + " Jobs</li>"
-        +"<br/><br/></div><span style='padding-left: 225px'></span><form method='get' action='/page2'><a href='http://www.google.ca'"+
+                +"</li></ul>" + 
+                "Input, Output, Risk</br><ul> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
+                +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
+        + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
+        + "<li>This group currently has " + d.workers + " Jobs</li></ul>"
+        // +"<br/>" 
+                +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
          +";'> View more</a></span></br></br> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
@@ -1438,7 +1443,14 @@ var sliderArray = ["wage", "workers",
     "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
     "s13DocumentUse","s14Writing","s15CriticalThinking"
 ];
-
+var sliderTitlesArray = [
+"Wage ($/hr)", "Number of Jobs", "Language Skills", "Logic Skills", "Math Skills", "Computer Skills",
+  // subskills
+    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
+    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
+    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
+    "Document Use","Writing","Critical Thinking"
+    ]
 // var sliderArrayStats = ["wage", "workers"];
 
 // var sliderArrayLang = ["skillsLang",
@@ -1466,14 +1478,7 @@ var sliderScaleArray = []; // array of slider scale functions
 var sliderMulti = []; // array of sliders
 var handleArray = []; // array of slider handles
 var listToDeleteMulti = []; // filtered IDs
-var sliderTitlesArray = [
-"Wage ($/hr)", "Number of Jobs", "Language Skills", "Logic Skills", "Math Skills", "Computer Skills",
-  // subskills
-    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
-    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
-    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
-    "Document Use","Writing","Critical Thinking"
-    ]
+
 
 createSliders();
 

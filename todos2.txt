@@ -71,3 +71,5 @@ view more button
 --increase legend size
 
 --tooltip link (not appearing in front)
+
+top skills
