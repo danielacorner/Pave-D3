@@ -9,6 +9,7 @@ d3.selection.prototype.moveToFront = function() {
       });
     };
 
+// d3.select("#combine").style("display", "none");
 
 var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
@@ -157,9 +158,9 @@ var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
 .strength(function(d) { return -7 * d.radius })
-var forceFutureMode = d3.forceManyBody()
-.strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
-var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
+// var forceFutureMode = d3.forceManyBody()
+// .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
+// var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 25) * 1.1
 }).strength(0.3)
@@ -253,6 +254,22 @@ var circles = svg.selectAll("circle")
       div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+        
+                +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>"                                
                                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
@@ -284,16 +301,29 @@ var circles = svg.selectAll("circle")
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+
+                 +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>" 
+
                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
                 +"Top skills are...</br>"
                 +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
-                +"</li></ul>" + 
-                "Input, Output, Risk</br><ul style='padding-top: 5px;'> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
-                +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
-        + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
-        + "<li>This group currently has " + d.workers + " Jobs</li></ul>"
+
         // +"<br/>" 
                 +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
@@ -375,8 +405,12 @@ d3.select("#industry").on('click', function() {
     .alphaTarget(0) // after click, cool down to minimal temperature
     .restart()
 
+  d3.select("#industry").style("display","none");
+  d3.select("#random").style("display","none");
+  d3.select("#combine").style("display", "inline");
+
   legend.transition().duration(500).style("opacity", 0).remove();
-  // createBottomLegend();
+  createLegend(1); // create Industry split legend
   })
 
 d3.select("#random").on('click', function() {
@@ -399,7 +433,13 @@ d3.select("#random").on('click', function() {
 })
 
 d3.select("#combine").on('click', function(d) {
+  legend.transition().duration(500).style("opacity", 0).remove();
   createLegend(0);
+
+  d3.select("#industry").style("display","inline");
+  d3.select("#random").style("display","inline");
+  d3.select("#combine").style("display", "none");
+
   if (graphMode == 0 && futureMode == 0) {
     simulation
     // .force("gravity", forceGravity)
@@ -458,8 +498,19 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 ////////////////// Freeze! (Pause) ////////////////////////
 d3.select("#freeze").on('click', function(d) {
   simulation.stop();
-});
 
+  d3.select("#freeze").style("display", "none");
+  d3.select("#unfreeze").style("display", "inline");
+
+});
+////////////////// unFreeze! (unPause) ////////////////////////
+d3.select("#unfreeze").on('click', function(d) {
+  simulation.alpha(0.7).alphaTarget(0.001).restart();
+
+  d3.select("#freeze").style("display", "inline");
+  d3.select("#unfreeze").style("display", "none");
+
+});
 
 
 
@@ -530,6 +581,7 @@ d3.select("#a2").on('click', function() {
 function graphModeOn(mode) {
   if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   d3.select("#freeze").transition().duration(500).style("opacity", 0);
+  d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
   d3.select("#graphModesDiv").style("visibility", "visible");
     // cool to 0 degrees
     simulation.stop();
@@ -739,7 +791,7 @@ function graphModeOn(mode) {
 
 d3.select("#industry").style("display","none");
 d3.select("#random").style("display","none");
-d3.select("#combine").style("width", "305px");
+d3.select("#combine").style("display", "inline");
 d3.select(".btn-group").style("padding-left", "0px");
 
 d3.select("#chart").transition().duration(500).attr("height","800px");
@@ -753,13 +805,16 @@ d3.select("#chart").transition().duration(500).attr("height","800px");
 function graphModeOff() {
 createSliders();
 
+d3.select("#combine").style("display", "none");
+
 d3.select("#graphModesDiv").style("visibility","hidden");
 
 d3.select("#freeze").transition().duration(500).style("opacity", 1);
+d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
 
 d3.select("#industry").transition().duration(500).style("display","inline");
 d3.select("#random").style("display","inline");
-d3.select("#combine").style("width", "");
+// d3.select("#combine").style("width", "");
 d3.select(".btn-group").style("padding-left", "0px")
 
 d3.select("#chart").transition().duration(500).attr("height","700px");
@@ -1030,6 +1085,22 @@ function enterUpdateCircles() {
       div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+        
+                +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>"                                
                                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
@@ -1061,16 +1132,30 @@ function enterUpdateCircles() {
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+
+                 +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>" 
+
                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
                 +"Top skills are...</br>"
                 +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
                 +"</li></ul>" + 
-                "Input, Output, Risk</br><ul style='padding-top: 5px;'> <li>" + Math.round(10*d.yearsStudy)/10 + " years is the typical number of years of studying required to do jobs in this group.</li>"
-                +"<li>Median wage is $" + Math.round(100*d.wage)/100 + " per hr.</li>"
-        + "<li>Machine automation risk is " + Math.round(1000*d.automationRisk)/10 + "%</li>"
-        + "<li>This group currently has " + d.workers + " Jobs</li></ul>"
+
         // +"<br/>" 
                 +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
@@ -1117,11 +1202,9 @@ function createLegend(mode) {
               ]
 
     switch (mode) {
-      // x = Number of Jobs
-      // y = Automation Risk
+        // Standard right-side legend
         case 0:
           // transition circles to graph positions
-
               legend = svg.selectAll("#legend")
                   .data(d3.range(10))
                   .enter().append("g")
@@ -1147,9 +1230,32 @@ function createLegend(mode) {
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
 
           break;
-      // x = Years of Study
-      // y = Wage
+        // Industry Split
         case 1:
+              legend = svg.selectAll("#legend")
+                  .data(d3.range(10))
+                  .enter().append("g")
+                  .attr("class", "legend")
+                  .attr("transform", function(d, i) { if(i<5){return "translate(" + ((i * 60) - 740) + ","+ (145 + (i * 20))+")"; } // bottom left
+                                                      else{return "translate(" + ((i * 60) - 600) + ","+ (-330 + (i * 20))+")"} }) // top right
+                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
+
+              legend.append("rect")
+                  .attr("x", width/2 - margin.right - 10)
+                  .attr("width", 16)
+                  .attr("height", 16)
+                  .attr("transform", "translate(10," + legendHeight + ")")
+                  .style("opacity",0).transition().duration(500).style("opacity", 1)
+
+              legend.append("text")
+                  .attr("x", width/2 - margin.right - 0 )
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .attr("transform", "translate(0," + legendHeight + ")")
+                  .style("text-anchor", "end")
+                  .style("font-family", "Raleway")
+                  .text(function(d, i) { return industriesArray[i].substring(0,30) + "..."; })
+                  .style("opacity",0).transition().duration(500).style("opacity", 1);
           break;
       // x = Number of Jobs
       // y = Wage
@@ -1157,16 +1263,6 @@ function createLegend(mode) {
             break;
       // x = Number of Jobs
       // y = Automation Risk
-        case 3:
-
-            break;
-        case 4:
-
-            break;
-        case 5:
-
-            break;
-        case 6:
 
     }
 

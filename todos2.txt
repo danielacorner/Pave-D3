@@ -1,5 +1,18 @@
 todos
 
+Main todos:
+- responsive design for the canvas
+- responsive design for the sliders
+- legend for future mode
+- within-tooltip bar charts
+
+- combine button fun physics atom-smasher???
+
+
+Other todos:
+
+-some circles aren't on top
+
 -switch "pause simulation" to a toggle & disable other buttons
 -retain filter mode colours, sizes on graph filtering
 
