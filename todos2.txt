@@ -3,13 +3,13 @@ todos
 Main todos:
 - responsive design for the canvas
 - responsive design for the sliders
-- legend for future mode
-- within-tooltip bar charts
 
-- combine button fun physics atom-smasher???
+- legend for future mode
 
 
 Other todos:
+
+- combine button fun physics atom-smasher???
 
 -some circles aren't on top
 

@@ -297,10 +297,11 @@ var circles = svg.selectAll("circle")
     .on("click", function(d) {
       // click-on, click-off
       clicked = 1-clicked;
+    if (clicked == 1) {
       div
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
 
                  +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
@@ -333,7 +334,29 @@ var circles = svg.selectAll("circle")
         // .transition()
         // .duration(200)
         // .style("height", "auto")
-        .style("height", "auto");
+       d3.select("#tooltipContent").transition().duration(250).style("height", "300px");
+     } else if (clicked == 0) {d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
+      setTimeout(function() {div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+        
+                +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>"                                
+                                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)}
       })
     // .on("dblclick", dblclick())
 
@@ -1128,10 +1151,11 @@ function enterUpdateCircles() {
     .on("click", function(d) {
       // click-on, click-off
       clicked = 1-clicked;
+        if (clicked == 1) {
       div
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div style='padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+                +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
 
                  +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
@@ -1154,7 +1178,6 @@ function enterUpdateCircles() {
                 +"Top skills are...</br>"
                 +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
         // Insert extra info to display on click
-                +"</li></ul>" + 
 
         // +"<br/>" 
                 +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
@@ -1165,7 +1188,29 @@ function enterUpdateCircles() {
         // .transition()
         // .duration(200)
         // .style("height", "auto")
-        .style("height", "auto");
+       d3.select("#tooltipContent").transition().duration(250).style("height", "300px");
+     } else if (clicked == 0) {d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
+      setTimeout(function() {div.html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
+                +"<div style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+        
+                +"<svg height='64px' style='padding-top: 5px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>"                                
+                                +"<br/>Some job titles from this group are ...</br>"
+                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)}
       });
   drag_handler(newCircles);
   //  ENTER + UPDATE
