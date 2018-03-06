@@ -57,6 +57,8 @@ function resize() {
     
   width = d3.select("#chart").attr("width"), // set chart dimensions
   height = d3.select("#chart").attr("height");
+
+  // svg.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
   // svg.attr("width", width).attr("height", height);
 }
 
@@ -1697,7 +1699,7 @@ function createSliders(){
 
   // Move Wage, Number of Jobs down
     // Slider
-  sliderMulti[i] = sliderSVGArray[i].append("g")
+  sliderMulti[i] = sliderSVGArray[i].append("g") // switch to SVG with viewBox?
   .attr("class", "slider")
   .attr("transform", "translate(" + 25 + "," + 25 + ")");
 
