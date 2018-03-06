@@ -44,11 +44,21 @@ d3.select("#dropdown1").on('click', function(d){
 
 // Viz dimensions & margins
 var margin = {top: 20, right: 20, bottom: 50, left: 50};
-var canvas = d3.select("#chart"),
-    width = canvas.attr("width"), // set chart dimensions
-    height = canvas.attr("height"),
+var width = d3.select("#chart").attr("width"), // set chart dimensions
+    height = d3.select("#chart").attr("height"),
     maxRadius = 30; // Max circle radius
 
+resize();
+d3.select(window).on("resize", resize);
+// resize the window
+function resize() {
+  d3.select("#chart").attr("width", window.innerWidth/1.5);
+  d3.select("#chart").attr("height", window.innerHeight/1.5);
+    
+  width = d3.select("#chart").attr("width"), // set chart dimensions
+  height = d3.select("#chart").attr("height");
+  // svg.attr("width", width).attr("height", height);
+}
 
 
 // number of distinct clusters
@@ -193,6 +203,8 @@ function tick() {
   .attr("cx", function(d) { return d.x; })
   .attr("cy", function(d) { return d.y; });
 }
+
+
     // The force simulation
 var simulation = d3.forceSimulation()
 .nodes(store)
@@ -216,8 +228,10 @@ var div2 = d3.select("body").append("div")
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
-.append('g')
-.attr('transform', 'translate('+width/2+','+height/2+')');
+.append('svg')    
+.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
+
+// .attr('transform', 'translate('+width/2+','+height/2+')');
 
 
 
@@ -228,6 +242,7 @@ var svg = d3.select("#chart")
 var circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
+    // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
