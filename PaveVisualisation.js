@@ -1671,7 +1671,7 @@ function createSliders(){
 
   // Title & SVG
 
-  var sliderPositionsOnPageHeight = 875;
+  var sliderPositionsOnPageHeight = 840;
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
   .append("text")
@@ -1680,7 +1680,7 @@ function createSliders(){
       +sliderTitlesArray[i] // "Language Skills"
       +"<span style='padding-left: 10px'></span><img style='padding-bottom: 2px;' src='img/question.png' alt='help' height='20' width = '18'>"
       +"</div>"+"<span style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight+20+ytranslate)+"px; color:  #579E38; font-weight: bold; font-family: Raleway'>Not much<span style='padding-left: 135px'></span>"+"Lots</span>")
-  .append("svg")
+  .append("svg").attr("viewBox", "0 0 "+250+" "+50)
     .style("visibility", hidden)
     .style("position", "absolute")
     .style("top", (-sliderPositionsOnPageHeight+ytranslate)-30+"px") // y position

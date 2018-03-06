@@ -93,8 +93,6 @@
 </div>
 <br>
 
-
-<!-- Title and logo -->
 <div style="display: none; position: relative; right: 20px" class="container d-sm-block d-md-block d-lg-block">
 
 	<div class="title">
@@ -124,11 +122,11 @@
 	</div>
 
 <!-- Buttons and Search -->
-<div class="container">
+<div align="center" class="container">
 	<!-- buttons -->
-	<div style="font-size: 10px; position: relative; top: 60px; left: 195px;  z-index: 99;" id="buttons">
+	<div style="font-size: 10px; position: relative; top: 40px; right: 80px;  z-index: 99;" id="buttons">
 
-			<span style='padding-left: 75px'></span>
+			<span style='padding-left: 0px'></span>
 			<!-- Button group 1 -->
 			<div class="btn-group" style="box-shadow: 3px 3px 17px grey" role="group" aria-label="...">
 
@@ -161,7 +159,6 @@
 
 	<!-- Search Jobs -->
 	<!-- could make this into a dropdown-search for "search job groups, job titles, ..." -->
-	
 
 	<!-- the graphing canvas -->
 	<svg id="chart" width="960" height="700" class="chart">	</svg>
@@ -228,18 +225,21 @@
 				 	<li style='list-style: none;padding-bottom: 10px'><button style="height: 60px; width: 200px; background: white; border-width: 3px; border-color: #579E38; border-radius: 7px; box-shadow: 0px; font-weight: bold; font-family: Raleway; color:  #579E38;" id="a2"  href="#">Wage  vs.  Number of Jobs</button></li>
 				 
 			</div>
-			<button style="box-shadow: 3px 3px 17px grey; position: relative; bottom: 310px; left: 390px; background: #A6B0A8; font-size: 14px; height: 32px;" id="resetFilters" type="button" class="btn btn-md">
-			<span style="color: white; font-weight: bold; font-family: Raleway; padding-right: 7px">
-			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
-			<!-- <span style='padding-left: 130px'></span> -->
-			<button style="font-size: 14px; height: 32px; position: relative; bottom: 310px; left: 400px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="freeze" type="button" class="btn">
-			<span style="color: white; font-weight: 560; font-family: Raleway">
-			</span> <i  class="fa fa-pause"></i></button>
+			<div align="center">
+				
+				<button style="box-shadow: 3px 3px 17px grey; position: relative; bottom: 280px; right: 100px; background: #A6B0A8; font-size: 14px; height: 32px;" id="resetFilters" type="button" class="btn btn-md">
+				<span style="color: white; font-weight: bold; font-family: Raleway; padding-right: 7px">
+				Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
+				<!-- <span style='padding-left: 130px'></span> -->
+				<button style="font-size: 14px; height: 32px; position: relative; bottom: 280px; right: 90px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="freeze" type="button" class="btn">
+				<span style="color: white; font-weight: 560; font-family: Raleway">
+				</span> <i  class="fa fa-pause"></i></button>
 
-			<button style="display: none; font-size: 14px; height: 32px; position: relative; bottom: 310px; left: 400px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="unfreeze" type="button" class="btn">
-			<span style="color: white; font-weight: 560; font-family: Raleway">
-			</span> <i  class="fa fa-play"></i></button>
-			<!-- dropdown menu for graph views -->
+				<button style="display: none; font-size: 14px; height: 32px; position: relative; bottom: 280px; left: 400px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="unfreeze" type="button" class="btn">
+				<span style="color: white; font-weight: 560; font-family: Raleway">
+				</span> <i  class="fa fa-play"></i></button>
+				
+			</div>
 
 	<div class="row">
 		<!-- sliders -->
@@ -282,7 +282,6 @@
 		
 </div>	<!-- container -->
 
-</div>
 	
 	<!-- bootstrapcdn -->
 	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->

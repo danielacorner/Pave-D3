@@ -1,7 +1,9 @@
 todos
 
 Main todos:
-- responsive design for the canvas
+- responsive design for the canvas:
+ - resize works, but viz starts too big on small windows
+
 - responsive design for the sliders
 
 - legend for future mode
