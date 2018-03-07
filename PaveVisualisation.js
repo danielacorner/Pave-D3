@@ -55,8 +55,8 @@ function resize() {
   d3.select("#chart").attr("width", window.innerWidth/1.5);
   d3.select("#chart").attr("height", window.innerHeight/1.5);
     
-  width = d3.select("#chart").attr("width"), // set chart dimensions
-  height = d3.select("#chart").attr("height");
+  // width = d3.select("#chart").attr("width"), // set chart dimensions
+  // height = d3.select("#chart").attr("height");
 
   // svg.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
   // svg.attr("width", width).attr("height", height);
@@ -1645,21 +1645,22 @@ function createSliders(){
   for(var i=0; i<sliderArray.length; i++) {
     var column, 
         hidden = "visible", 
-        mainskill = false, 
-        ytranslate = -50;
+        mainskill = false,
+        xtranslate = 0;
+        // ytranslate = -50;
     // Wage, Number of Jobs
     if (i<2) { column = 2, hidden = "hidden"
-      ytranslate = 550;
+      ytranslate = 50;
     // Language, Logic skills
     } else if (i<4) { column = 1, mainskill = true;
-      if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 550;
-      }
+      // if (["Logic Skills"].includes(sliderTitlesArray[i])) {
+      //   ytranslate = 100; //62, 115
+      // }
     // Math, Computer skills
     } else if (i<6) { column = 3, mainskill = true;
-      if (["Logic Skills","Computer Skills"].includes(sliderTitlesArray[i])) {
-        ytranslate = 550;
-      }
+      // if (["Computer Skills"].includes(sliderTitlesArray[i])) {
+      //   ytranslate = 130;
+      // }
       // language subskills
     } else if ([13,15,19].includes(i)) { column = 1, hidden = "hidden"
       // logic subskills
@@ -1669,27 +1670,36 @@ function createSliders(){
       // Computer subskills
     } else if ([6,8,17,18].includes(i)) { column = 3, hidden = "hidden"}
   
-    //  if(i==2 || i==3) {ytranslate=ytranslate+20};
-
+	if(["Language Skills", "Computer Skills"].includes(sliderTitlesArray[i])){
+		xtranslate = -700;
+	}
   // Title & SVG
 
-  var sliderPositionsOnPageHeight = 840;
+  var sliderPositionsOnPageHeight = 280;
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
-  .append("text")
+  .append("g")
     .style("visibility", hidden)
-    .html("<br><div style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight-55+ytranslate)+"px; padding-right: 80px; font-size: 18px; font-weight: bold; color:  #579E38; font-family: Raleway' align='left'>"
+    .html("<br/><div align='left' style='width: 200%; position: absolute; left: "+(-100-xtranslate)+"%;"
+    	+" top: "+(-sliderPositionsOnPageHeight-35)+"%; font-size: 150%; font-weight: bold;"
+    	+" color:  #579E38; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language Skills"
-      +"<span style='padding-left: 10px'></span><img style='padding-bottom: 2px;' src='img/question.png' alt='help' height='20' width = '18'>"
-      +"</div>"+"<span style='position: absolute; left: 0px; top: "+(-sliderPositionsOnPageHeight+20+ytranslate)+"px; color:  #579E38; font-weight: bold; font-family: Raleway'>Not much<span style='padding-left: 135px'></span>"+"Lots</span>")
+      +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +"alt='help' height='21' width = '24'>"
+      +"</div>"
+      +"<div align='left' style='position: absolute; left: "+(-100-xtranslate)+"%; top: "
+      +(-sliderPositionsOnPageHeight)+"%; color:  #579E38; font-weight: "
+      +"bold; font-family: Raleway'>Not&nbspmuch<span style='padding-left: 135px'></span>"
+      +"Lots</div>")
   .append("svg").attr("viewBox", "0 0 "+250+" "+50)
     .style("visibility", hidden)
     .style("position", "absolute")
-    .style("top", (-sliderPositionsOnPageHeight+ytranslate)-30+"px") // y position
-    .style("right", 140+"px") // x position
+    .style("top", (-sliderPositionsOnPageHeight)-20+"%") // y position
+    .style("right", 12+xtranslate+"%") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
+
 
   // Scale
   sliderScaleArray[i] = d3.scaleLinear()
