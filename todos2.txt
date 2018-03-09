@@ -1,6 +1,13 @@
 todos
 
+- bar chart skill levels on tooltip
+
 Main todos:
+- graph view fixes
+
+- clean up layout:
+ - 3 columns, centered viz
+
 - search job titles
 - responsive design for the canvas:
  - resize works, but viz starts too big on small windows
@@ -16,6 +23,8 @@ Other todos:
 - combine button fun physics atom-smasher???
 
 -some circles aren't on top
+
+-lang slider not on top
 
 -switch "pause simulation" to a toggle & disable other buttons
 -retain filter mode colours, sizes on graph filtering

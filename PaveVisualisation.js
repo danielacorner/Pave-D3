@@ -339,9 +339,31 @@ var circles = svg.selectAll("circle")
                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
                 +"Top skills are...</br>"
-                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
-        // Insert extra info to display on click
-
+                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+        // Skill levels
+                 +"<svg height='64px' style='padding-top: 15px; padding-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='-50' y='-5' dy='.35em'>Language</text>"+
+                    "<rect height='"+(d.skillsLang)+"' style='fill: #256D1B; margin-left: 5px;' width='15' x='5' y='"+(50-d.skillsLang)+"' ></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='15'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='-50' y='35' dy='.35em'>Logic</text>"+
+                    "<rect height='"+(d.skillsLogi)+"' style='fill: #256D1B' width='15' y='"+(50-d.skillsLogi)+"' x='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='50'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='-50' y='70' dy='.35em'>Math</text>"+
+                    "<rect height='"+(d.skillsMath)+"' width='15' style='fill: #256D1B' y='"+(50-d.skillsMath)+"' x='75'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='85'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='-50' y='105' dy='.35em'>Computers</text>"+
+                    "<rect height='"+(d.skillsComp)+"' width='15' style='fill: #256D1B' y='"+(50-d.skillsComp)+"' x='110'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='120'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+                  "</g>"+
+                "</svg>" 
         // +"<br/>" 
                 +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
@@ -1707,6 +1729,13 @@ function createSliders(){
     .domain([0, d3.max(nodes, function(d){ return d[sliderArrayMain[i]]})])
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
+  // Bugfix: math max not working
+  if(["Math Skills"].includes(sliderTitlesArrayMain[i])) {
+  sliderScaleArray[i] = d3.scaleLinear()
+    .domain([0, 59])
+    .range([0, 200]) // Width of slider is 200 px
+    .clamp(true);
+  }
 
   // Move Wage, Number of Jobs down
     // Slider
@@ -1734,7 +1763,7 @@ function createSliders(){
     return this.parentNode;
   }) // overlay
   .append("line")
-  // .style("z-index", 98)
+  // .style("z-index", 99)
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
@@ -1749,8 +1778,14 @@ function createSliders(){
 
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
     .attr("class", "handle")
-    // .style("z-index", 99)
+    .style("z-index", 99)
     .attr("r", 9);
+
+    // Bugfix: lang slider not on top
+  // if(["Language Skills"].includes(sliderTitlesArrayMain[i])) {
+  //   d3.select("#"+i).style("z-index", 99);
+  // }
+
 };
 
 
@@ -1808,16 +1843,6 @@ function updateMulti(h) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
 filterAll = function() {
@@ -1831,7 +1856,7 @@ filterAll = function() {
       for(var s=0; s<sliderPositionsArray.length; s++){
         // if the slider position is above your value, put you on the list
         var checkMin = sliderPositionsArray[s];
-        if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+        if(d[sliderArrayMain[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArrayMain[s]])) {
           listToDeleteMulti.push(d.id);
         }
 
