@@ -1673,7 +1673,8 @@ function createSliders(){
   for(var i=0; i<sliderArrayMain.length; i++) {
     var column = 3, 
         xtranslate = 3,
-        ytranslate = 0;
+        ytranslate = 0,
+        posn = "relative";
   // Left column
 	if(["Language Skills", "Logic Skills"].includes(sliderTitlesArrayMain[i])){
  		column = 1;
@@ -1685,6 +1686,7 @@ function createSliders(){
 	// Bottom row
 	if(["Logic Skills", "Computer Skills"].includes(sliderTitlesArrayMain[i])){
 		ytranslate = 115;
+    posn = "fixed";
 	}
   // Title & SVG
 

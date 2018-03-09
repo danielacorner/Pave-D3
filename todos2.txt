@@ -1,6 +1,6 @@
 todos
 
-- bar chart skill levels on tooltip
+- keep sliders at bottom (fixed?)
 
 Main todos:
 - graph view fixes
