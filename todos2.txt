@@ -1,8 +1,10 @@
 todos
 
 Main todos:
+- search job titles
 - responsive design for the canvas:
  - resize works, but viz starts too big on small windows
+sliderSVGArray[i].append("g") // switch to SVG with viewBox?
 
 - responsive design for the sliders
 

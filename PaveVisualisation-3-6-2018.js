@@ -21,25 +21,25 @@ d3.csv("NOC_403.csv", function(error, datapoints) {
 
 // Setting the dropdown options
   // grab the headers array
-// var headersString = [];
-// datapoints.forEach(function(row) { 
-//   if (row.id == 1) headersString += (String(Object.keys(row)));
-// });
-// var headersSplit = headersString.split(",");
+var headersString = [];
+datapoints.forEach(function(row) { 
+  if (row.id == 1) headersString += (String(Object.keys(row)));
+});
+var headersSplit = headersString.split(",");
   // add the options html string
-// var options;
-// for(var h=0; h<=headersSplit.length; h++){
-// options += "<option>"+ headersSplit[h] +"</option>"; // switch to headersString[h]
+var options;
+for(var h=0; h<=headersSplit.length; h++){
+options += "<option>"+ headersSplit[h] +"</option>"; // switch to headersString[h]
   // when you get to the last subskill, end
-// if(headersSplit[h] == "s15CriticalThinking") h = headersSplit.length;
-// }
+if(headersSplit[h] == "s15CriticalThinking") h = headersSplit.length;
+}
     // set the options 
-// document.getElementById("dropdown1").innerHTML = options;
+document.getElementById("dropdown1").innerHTML = options;
     // set title & reset the title when new option selected
-// document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
-// d3.select("#dropdown1").on('click', function(d){
-    // document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
-// })
+document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
+d3.select("#dropdown1").on('click', function(d){
+    document.getElementById("dropdown1Title").innerHTML = "Filter Jobs by: " + dropdown1.value;
+})
 
 
 // Viz dimensions & margins
@@ -1404,175 +1404,175 @@ for(var i=0; i<sliderArray.length; i++) {
 
 
 
-// //////////////// Filter Slider 1: Filter by Dropdown //////////////////////
+//////////////// Filter Slider 1: Filter by Dropdown //////////////////////
 
-// var sliderDropdownSVG = d3.select("#slider2").append("svg")
-// .attr("width", 250)
-// .attr("height", 50);
+var sliderDropdownSVG = d3.select("#slider2").append("svg")
+.attr("width", 250)
+.attr("height", 50);
 
-// var sliderDropdownScale = d3.scaleLinear()
-//   .domain([ 0, d3.max(nodes, function(d){ return d[dropdown1.value] }) ]) 
-//   .range([0, 200]) // Width of slider is 200 px
-//   .clamp(true);
+var sliderDropdownScale = d3.scaleLinear()
+  .domain([ 0, d3.max(nodes, function(d){ return d[dropdown1.value] }) ]) 
+  .range([0, 200]) // Width of slider is 200 px
+  .clamp(true);
 
-// d3.select("#dropdown1").on('click', function(){
-//   sliderDropdownScale = d3.scaleLinear()
-//     .domain([0, d3.max(nodes, function(d){return d[dropdown1.value]})])
-//     .range([0, 200]) // Width of slider is 200 px
-//     .clamp(true);
-//     console.log(d3.max(nodes, function(d){return d[dropdown1.value]}));
-//   // display (range: min to max) after dropdown title
-//   document.getElementById("dropdown1Title").innerHTML = "Minimum "+ dropdown1.value
-//       +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
-//         +" to "+ d3.max(nodes, function(d){ return d[dropdown1.value] }) +")";
-// })
+d3.select("#dropdown1").on('click', function(){
+  sliderDropdownScale = d3.scaleLinear()
+    .domain([0, d3.max(nodes, function(d){return d[dropdown1.value]})])
+    .range([0, 200]) // Width of slider is 200 px
+    .clamp(true);
+    console.log(d3.max(nodes, function(d){return d[dropdown1.value]}));
+  // display (range: min to max) after dropdown title
+  document.getElementById("dropdown1Title").innerHTML = "Minimum "+ dropdown1.value
+      +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
+        +" to "+ d3.max(nodes, function(d){ return d[dropdown1.value] }) +")";
+})
 
-//   var sliderDropdown = sliderDropdownSVG.append("g")
-//   .attr("class", "slider")
-//   .attr("transform", "translate(" + 25 + "," + 25 + ")");
+  var sliderDropdown = sliderDropdownSVG.append("g")
+  .attr("class", "slider")
+  .attr("transform", "translate(" + 25 + "," + 25 + ")");
 
-//   sliderDropdown.append("line")
-//   .attr("class", "track")
-//   .attr("x1", sliderDropdownScale.range()[0])
-//   .attr("x2", sliderDropdownScale.range()[1])
-//   .select(function() {
-//     return this.parentNode;
-//   })
-//   .append("line")
-//   .attr("x1", sliderDropdownScale.range()[0])
-//   .attr("x2", sliderDropdownScale.range()[1])
-//   .attr("class", "track-inset")
-//   .select(function() {
-//     return this.parentNode;
-//   })
-//   .append("line")
-//   .attr("x1", sliderDropdownScale.range()[0])
-//   .attr("x2", sliderDropdownScale.range()[1])
-//   .attr("class", "track-overlay")
-//   .call(d3.drag()
-//     .on("start.interrupt", function() {
-//       sliderDropdown.interrupt();
-//     })
-//     .on("start drag", function() {
-//       // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
-//       updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
-//     }));
+  sliderDropdown.append("line")
+  .attr("class", "track")
+  .attr("x1", sliderDropdownScale.range()[0])
+  .attr("x2", sliderDropdownScale.range()[1])
+  .select(function() {
+    return this.parentNode;
+  })
+  .append("line")
+  .attr("x1", sliderDropdownScale.range()[0])
+  .attr("x2", sliderDropdownScale.range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  })
+  .append("line")
+  .attr("x1", sliderDropdownScale.range()[0])
+  .attr("x2", sliderDropdownScale.range()[1])
+  .attr("class", "track-overlay")
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      sliderDropdown.interrupt();
+    })
+    .on("start drag", function() {
+      // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
+      updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
+    }));
 
-//   var handleDropdown = sliderDropdown.insert("circle", ".track-overlay")
-//   .attr("class", "handle")
-//   .attr("r", 9);
+  var handleDropdown = sliderDropdown.insert("circle", ".track-overlay")
+  .attr("class", "handle")
+  .attr("r", 9);
 
 
-//   // on dropdown click, reset the slider
-//   d3.select("#dropdown1").on('click', function(){
-//     sliderDropdownScale = d3.scaleLinear()
-//       .domain([0, d3.max(nodes, function(d){return d[dropdown1.value]})])
-//       .range([0, 200]) // Width of slider is 200 px
-//       .clamp(true);
-//     // display (range: min to max) after dropdown title
-//     document.getElementById("dropdown1Title").innerHTML = "Minimum "+ dropdown1.value
-//         +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
-//           +" to "+ d3.max(nodes, function(d){ return d[dropdown1.value] }) +")";
+  // on dropdown click, reset the slider
+  d3.select("#dropdown1").on('click', function(){
+    sliderDropdownScale = d3.scaleLinear()
+      .domain([0, d3.max(nodes, function(d){return d[dropdown1.value]})])
+      .range([0, 200]) // Width of slider is 200 px
+      .clamp(true);
+    // display (range: min to max) after dropdown title
+    document.getElementById("dropdown1Title").innerHTML = "Minimum "+ dropdown1.value
+        +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
+          +" to "+ d3.max(nodes, function(d){ return d[dropdown1.value] }) +")";
   
-//     sliderDropdown.remove();
-//     var sliderDropdown = sliderDropdownSVG.append("g")
-//     .attr("class", "slider")
-//     .attr("transform", "translate(" + 25 + "," + 25 + ")");
+    sliderDropdown.remove();
+    var sliderDropdown = sliderDropdownSVG.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + 25 + "," + 25 + ")");
 
-//     sliderDropdown.append("line")
-//     .attr("class", "track")
-//     .attr("x1", sliderDropdownScale.range()[0])
-//     .attr("x2", sliderDropdownScale.range()[1])
-//     .select(function() {
-//       return this.parentNode;
-//     })
-//     .append("line")
-//     .attr("x1", sliderDropdownScale.range()[0])
-//     .attr("x2", sliderDropdownScale.range()[1])
-//     .attr("class", "track-inset")
-//     .select(function() {
-//       return this.parentNode;
-//     })
-//     .append("line")
-//     .attr("x1", sliderDropdownScale.range()[0])
-//     .attr("x2", sliderDropdownScale.range()[1])
-//     .attr("class", "track-overlay")
-//     .call(d3.drag()
-//       .on("start.interrupt", function() {
-//         sliderDropdown.interrupt();
-//       })
-//       .on("start drag", function() {
-//         // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
-//         updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
-//       }));
+    sliderDropdown.append("line")
+    .attr("class", "track")
+    .attr("x1", sliderDropdownScale.range()[0])
+    .attr("x2", sliderDropdownScale.range()[1])
+    .select(function() {
+      return this.parentNode;
+    })
+    .append("line")
+    .attr("x1", sliderDropdownScale.range()[0])
+    .attr("x2", sliderDropdownScale.range()[1])
+    .attr("class", "track-inset")
+    .select(function() {
+      return this.parentNode;
+    })
+    .append("line")
+    .attr("x1", sliderDropdownScale.range()[0])
+    .attr("x2", sliderDropdownScale.range()[1])
+    .attr("class", "track-overlay")
+    .call(d3.drag()
+      .on("start.interrupt", function() {
+        sliderDropdown.interrupt();
+      })
+      .on("start drag", function() {
+        // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
+        updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
+      }));
 
-//     handleDropdown.remove();
-//     var handleDropdown = sliderDropdown.insert("circle", ".track-overlay")
-//       .attr("class", "handle")
-//       .attr("r", 9);
+    handleDropdown.remove();
+    var handleDropdown = sliderDropdown.insert("circle", ".track-overlay")
+      .attr("class", "handle")
+      .attr("r", 9);
 
-//   })
+  })
 
-// //////////////// Filter Functions 1: Dropdown //////////////////////
+//////////////// Filter Functions 1: Dropdown //////////////////////
 
-// // filtered IDs
-// listToDeleteDropdown = [];
+// filtered IDs
+listToDeleteDropdown = [];
 
-// function filterNodesDropdown(dropdownMin) { // return nodes with workers > "dropdownMin"
-// store.forEach(function(d) {
-//     // first, take any nodes off the list
-//     if (listToDeleteDropdown.includes(d.id)) listToDeleteDropdown.splice(listToDeleteDropdown.indexOf(d.id),1);
-//     // then if you're under the min (bad) && if you're not on the list
-//     if (d[dropdown1.value] < dropdownMin && !listToDeleteDropdown.includes(d.id)) {
-//       // put you on the list
-//       listToDeleteDropdown.push(d.id);
-//     }
-//   });
-//   // reset the graph
-//   graph = [];
-//   //  add and remove nodes from data based on filters
-//   store.forEach(function(n) {
-//     // if you're not on the filter list
-//     if (n[dropdown1.value] >= dropdownMin && !listToDeleteDropdown.includes(n.id)) {
-//       // put you on the graph         (start graph empty? or check)
-//       graph.push(n);
-//     } else if (n[dropdown1.value] < dropdownMin && listToDeleteDropdown.includes(n.id)) {
-//       graph.forEach(function(d, i) {
-//         if (n.id === d.id) {
-//           graph.splice(i, 1);
-//         }
-//       })
-//     };
-//   });
-//   return graph;
-// }
-// //  general update pattern for updating the graph
-// function updateNodesDropdown(h) {
-//   // update the slider handle position
-//   handleDropdown.attr("cx", sliderDropdownScale(h));
-//   //  UPDATE
-//   circles = circles.data(filterNodesDropdown(h), function(d) { return d.id });
-//   // EXIT
-//   circles.exit().transition().duration(300)
-//   // exit transition: "pop" radius * 1.5 + 5 & fade out
-//   .attr("r", function(d) { return d.radius * 1.5 + 5 })
-//   .attrTween("opacity", function(d) {
-//     var i = d3.interpolate(1, 0);
-//     return function(t) { return d.opacity = i(t); };
-//   })
-//   .remove();
-//   // ENTER
-//   enterUpdateCircles();
-//   // simulation forces on filter
-//   simulation.nodes(filterNodesDropdown(h))
-//   .force("collide", forceCollide)
-//   .force("cluster", forceCluster)
-//   .force("gravity", forceGravity)
-//   .force("x", forceXCombine)
-//   .force("y", forceYCombine)
-//   .on("tick", tick);
-//   simulation.alphaTarget(0.2).restart();
-// }
+function filterNodesDropdown(dropdownMin) { // return nodes with workers > "dropdownMin"
+store.forEach(function(d) {
+    // first, take any nodes off the list
+    if (listToDeleteDropdown.includes(d.id)) listToDeleteDropdown.splice(listToDeleteDropdown.indexOf(d.id),1);
+    // then if you're under the min (bad) && if you're not on the list
+    if (d[dropdown1.value] < dropdownMin && !listToDeleteDropdown.includes(d.id)) {
+      // put you on the list
+      listToDeleteDropdown.push(d.id);
+    }
+  });
+  // reset the graph
+  graph = [];
+  //  add and remove nodes from data based on filters
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (n[dropdown1.value] >= dropdownMin && !listToDeleteDropdown.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    } else if (n[dropdown1.value] < dropdownMin && listToDeleteDropdown.includes(n.id)) {
+      graph.forEach(function(d, i) {
+        if (n.id === d.id) {
+          graph.splice(i, 1);
+        }
+      })
+    };
+  });
+  return graph;
+}
+//  general update pattern for updating the graph
+function updateNodesDropdown(h) {
+  // update the slider handle position
+  handleDropdown.attr("cx", sliderDropdownScale(h));
+  //  UPDATE
+  circles = circles.data(filterNodesDropdown(h), function(d) { return d.id });
+  // EXIT
+  circles.exit().transition().duration(300)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attrTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return d.opacity = i(t); };
+  })
+  .remove();
+  // ENTER
+  enterUpdateCircles();
+  // simulation forces on filter
+  simulation.nodes(filterNodesDropdown(h))
+  .force("collide", forceCollide)
+  .force("cluster", forceCluster)
+  .force("gravity", forceGravity)
+  .force("x", forceXCombine)
+  .force("y", forceYCombine)
+  .on("tick", tick);
+  simulation.alphaTarget(0.2).restart();
+}
 
 
 
@@ -1659,7 +1659,7 @@ function createSliders(){
     // Math, Computer skills
     } else if (i<6) { column = 3, mainskill = true;
       // if (["Computer Skills"].includes(sliderTitlesArray[i])) {
-        // ytranslate = 130;
+      //   ytranslate = 130;
       // }
       // language subskills
     } else if ([13,15,19].includes(i)) { column = 1, hidden = "hidden"
@@ -1670,46 +1670,32 @@ function createSliders(){
       // Computer subskills
     } else if ([6,8,17,18].includes(i)) { column = 3, hidden = "hidden"}
   
-  	// Right column
-	if(["Math Skills", "Computer Skills"].includes(sliderTitlesArray[i])){
-		// xtranslate = 700;
-	}
-	// Bottom row
-	if(["Logic Skills", "Computer Skills"].includes(sliderTitlesArray[i])){
-		ytranslate = 800;
+	if(["Language Skills", "Computer Skills"].includes(sliderTitlesArray[i])){
+		xtranslate = -700;
 	}
   // Title & SVG
 
-  var sliderPositionsOnPageHeight = 0;
+  var sliderPositionsOnPageHeight = 280;
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
-  .append("div").attr("id", "sliderDiv_"+i)
+  .append("g")
     .style("visibility", hidden)
-    .style("position", "relative")
-    // .style("bottom", ytranslate+"%")
-    .html("<br/><div align='left' style='left: "+(xtranslate)+"%;"
-    	+" position: relative; font-size: 150%; font-weight: bold;"
+    .html("<br/><div align='left' style='width: 200%; position: absolute; left: "+(-100-xtranslate)+"%;"
+    	+" top: "+(-sliderPositionsOnPageHeight-35)+"%; font-size: 150%; font-weight: bold;"
     	+" color:  #579E38; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language Skills"
       +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
-      +"</div>")
-  .append("div").style("visibility", hidden)
-    .attr("align", "left")
-    .style("position", "absolute")
-    .style("top", "95%")
-    .style("color", "#579E38")
-    .style("font-weight", "bold")
-    .style("font-family", "Raleway")
-    .html("Not much"
-      +"<span style='padding-left: 45%'></span>"
-      +"Lots")
-  .append("svg")
-  	.attr("viewBox", "0 0 "+250+" "+50)
+      +"</div>"
+      +"<div align='left' style='position: absolute; left: "+(-100-xtranslate)+"%; top: "
+      +(-sliderPositionsOnPageHeight)+"%; color:  #579E38; font-weight: "
+      +"bold; font-family: Raleway'>Not&nbspmuch<span style='padding-left: 135px'></span>"
+      +"Lots</div>")
+  .append("svg").attr("viewBox", "0 0 "+250+" "+50)
     .style("visibility", hidden)
-    .style("position", "relative")
+    .style("position", "absolute")
     .style("top", (-sliderPositionsOnPageHeight)-20+"%") // y position
-    // .style("right", 12+xtranslate+"%") // x position
+    .style("right", 12+xtranslate+"%") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);

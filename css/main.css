@@ -32,51 +32,6 @@ div.tooltip:hover {
   background: #70B207;
 }
 
-/*
-.slider {
-	background: url('../img/grid.png') -25px -25px;
-  position: relative;
-  top: 0px;
-  left: 0px;
-  height: 60px;
-  position: relative;
-  width: 60%;
-  transform: translate(0px, 100px);
-}
-
-.slider > .progress{
-	background: #14aaf6;
-	border: 3px solid white;
-	box-shadow: 1px 1px 3px 0px #ccc;
-	border-radius: 10px;
-	cursor: pointer;
-	position: absolute;
-	height: 40%;
-	top: 25%;
-	width: 100%;
-}
-
-.slider > .emptyprogress{ 
-	background: #97d9fb;
-	border: 3px solid white;
-	box-shadow: 1px 1px 3px 0px #ccc;
-	border-radius: 10px;
-	cursor: pointer;
-	position: absolute;
-	height: 40%;
-	top: 25%;
-	width: 100%;
-}
-
-.slider > .indicator{
-	background: url('../img/pointer.png') no-repeat;
-	cursor: move;
-	position: absolute;
-	margin: 8px auto auto -30px;
-	left: 100%;
-	height: 100%;
-	width: 60px;
-}*/
 
 /*simple slider*/
 .ticks {
