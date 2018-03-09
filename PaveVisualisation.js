@@ -387,7 +387,7 @@ var circles = svg.selectAll("circle")
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(100*d.wage)/100+" per hr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
