@@ -2,7 +2,7 @@
 * {
 			font-family: "Helvetica Neue";
 		}
-
+svg {width: 100%; height: auto;}
 p, text {
 	font-size: 0.85em;
 }
