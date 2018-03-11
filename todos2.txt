@@ -1,6 +1,12 @@
 todos
 
-- keep sliders at bottom (fixed?)
+- mobile compatibility
+
+- search button
+
+- favourite toggle
+
+- bug: skills bar chart height on longer tooltips
 
 Main todos:
 - graph view fixes
