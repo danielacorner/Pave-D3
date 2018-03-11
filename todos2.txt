@@ -1,6 +1,6 @@
 todos
 
-- graph view fix
+- graph view fix: move graph up
 
 - expanded skills filters
 
@@ -11,9 +11,7 @@ todos
 - favourite toggle
 
 - bug: skills bar chart height on longer tooltips
-
-Main todos:
-- graph view fixes
+-bug: reet filters button moving in graph mode
 
 - clean up layout:
  - 3 columns, centered viz

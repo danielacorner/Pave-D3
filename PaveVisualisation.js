@@ -644,6 +644,13 @@ d3.select("#a2").on('click', function() {
 
 
 function graphModeOn(mode) {
+
+    //move sliders down
+d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.55+"px");
+d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.55+"px");
+
+
+  // if there is already a legend, remove the legend
   if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   d3.select("#freeze").transition().duration(500).style("opacity", 0);
   d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
@@ -867,8 +874,14 @@ d3.select("#chart").transition().duration(500).attr("height","800px");
 
 
 
+
+
+
+
+
+
 function graphModeOff() {
-createSliders();
+
 
 d3.select("#combine").style("display", "none");
 
@@ -883,6 +896,11 @@ d3.select("#random").style("display","inline");
 d3.select(".btn-group").style("padding-left", "0px")
 
 d3.select("#chart").transition().duration(500).attr("height","700px");
+
+
+// move sliders back up
+d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
+d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
 
     // remove axes
     axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
@@ -918,6 +936,12 @@ d3.select("#chart").transition().duration(500).attr("height","700px");
     return;
 
 }
+
+
+
+
+
+
 
 
 
@@ -1131,12 +1155,13 @@ function enterUpdateCircles() {
     // Tooltips
     .on("mouseover", function(d) {
       if (clicked == 1) return;
-      if (d.favourite == 1) { d3.select(this).attr("stroke","yellow").attr("stroke-width",)}
       // highlight the current circle
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+
+
       // create the hover tooltip
       div.transition()
-      .duration(200)
+      .duration(300)
       .style("opacity", .96)
       .style("height", "auto")
       .style("width", "350px")
@@ -1194,7 +1219,7 @@ function enterUpdateCircles() {
     .on("click", function(d) {
       // click-on, click-off
       clicked = 1-clicked;
-        if (clicked == 1) {
+    if (clicked == 1) {
       div
       .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
@@ -1212,20 +1237,46 @@ function enterUpdateCircles() {
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway; font-size: 14px' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>" 
 
                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
                 +"Top skills are...</br>"
-                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 //TOP SKILLS
-        // Insert extra info to display on click
-
+                +"<ul style='padding-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+        // Skill levels
+                 +"<svg height='64px' style='padding-top: "+50+"px; padding-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-70' y='-7' dy='.35em'>Language</text>"+
+                    "<rect height='"+(d.skillsLang*stretch_y)+"' style='fill: #256D1B; margin-left: 5px;' width='18' x='5' y='"+(50-d.skillsLang)+"' ></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='15'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-70' y='30' dy='.35em'>Logic</text>"+
+                    "<rect height='"+(d.skillsLogi*stretch_y)+"' style='fill: #256D1B' width='18' y='"+(50-d.skillsLogi)+"' x='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='50'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-70' y='65' dy='.35em'>Math</text>"+
+                    "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B' y='"+(50-d.skillsMath)+"' x='75'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-50)+"' y='85'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-70' y='100' dy='.35em'>Computers</text>"+
+                    "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B' y='"+(50-d.skillsComp)+"' x='110'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='"+(-50)+"' y='120'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+                  "</g>"+
+                "</svg>" 
         // +"<br/>" 
-                +"</div><span style='padding-left: 225px'></span><a class='btn btn-lg' href='http://www.google.ca'"+
-         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-family: Raleway; background: white; color: " + color(d.cluster) 
-         +";'> View more</a></span></br></br> ").transition().duration(300).style("width", "350px")
+                +"</div>"+
+                "<span style='padding-left: 236px'></span>"+"<button onclick='function() { d.favourite = 1 - d.favourite }' class='btn btn-lg' href='http://www.google.ca'"+
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
+         +"Favourite</button><br/>"+
+         "<span style='margin-top: 10px; padding-left: 225px'></span>"+"<a class='btn btn-lg' href='http://www.google.ca'"+
+         "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
+         +"View more</a><br/><br/> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
         // .transition()
@@ -1245,7 +1296,7 @@ function enterUpdateCircles() {
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+d.wage+" per hr</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(100*d.wage)/100+" per hr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
@@ -1254,7 +1305,7 @@ function enterUpdateCircles() {
                 "</svg>"                                
                                 +"<br/>Some job titles from this group are ...</br>"
                 +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)}
-      });
+      })
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
@@ -1706,7 +1757,7 @@ function createSliders(){
   // Title & SVG
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
-  .append("div").attr("id", "sliderDiv_"+i)
+  .append("div").attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
     .style("position", "relative")
     .style("margin-top", ytranslate+"px")
     .html("<div class='hidden-xs hidden-sm col-md-4 col-lg-4' align='left' style='margin-left: "+(xtranslate)+"%;"
