@@ -74,10 +74,10 @@
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > Feedback</a>
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > Help</a>
 							  		<div style="position: fixed; right: 10px;">
-							  			<span class="input-group-btn">
+							  			<span id="searchSpan" class="input-group-btn">
 									  	<!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-										    <button style="border: none;background: none; position: fixed; right: 30px; top: 31px;" class=""  type="button">
-										    	<img src="img/search.png" alt='help' height='40' width = '40'>
+										    <button id="searchBtn" style="border: none;background: none; position: fixed; right: 30px; top: 31px;" class="" type="button">
+										    	<img  id="searchImg" src="img/search.png" alt='help' height='40' width = '40'>
 										    </button>
 										</span>
 							 		</div>
@@ -97,6 +97,16 @@
 </div>
 
 <!-- end of navbar -->
+<script>
+document.getElementById("searchImg").addEventListener("click", searchFunction());
+document.getElementById("searchBtn").addEventListener("click", searchFunction());
+document.getElementById("searchSpan").addEventListener("click", searchFunction());
+
+	function searchFunction() {
+		document.getElementById("searchBtn").innerHTML="hihihi";
+	}
+</script>
+
 
 <br/>
 

@@ -108,6 +108,7 @@ var nodes = datapoints.map(function(el) {
   r = radiusScale(el.workers),
   d = {
     id: +el.id,
+    favourite: 0,
     cluster: i, 
     radius: r, 
     job: el.job,
@@ -366,7 +367,7 @@ var circles = svg.selectAll("circle")
                 "</svg>" 
         // +"<br/>" 
                 +"</div>"+
-                "<span style='padding-left: 236px'></span>"+"<button onclick='favouriteCircle('"+function(d){return d.id}+"')' class='btn btn-lg' href='http://www.google.ca'"+
+                "<span style='padding-left: 236px'></span>"+"<button onclick='function() { d.favourite = 1 - d.favourite }' class='btn btn-lg' href='http://www.google.ca'"+
          "style='box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
          +"Favourite</button><br/>"+
          "<span style='margin-top: 10px; padding-left: 225px'></span>"+"<a class='btn btn-lg' href='http://www.google.ca'"+
@@ -447,10 +448,6 @@ var drag_handler = d3.drag()
 
 drag_handler(circles);
 
-
-function favouriteCircle(id) {
-  d3.selectAll("circle").filter(function(d){ return d.id==id }).attr("stroke-width", "15px;")
-}
 
 
 
@@ -1134,6 +1131,7 @@ function enterUpdateCircles() {
     // Tooltips
     .on("mouseover", function(d) {
       if (clicked == 1) return;
+      if (d.favourite == 1) { d3.select(this).attr("stroke","yellow").attr("stroke-width",)}
       // highlight the current circle
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       // create the hover tooltip
@@ -1265,6 +1263,14 @@ function enterUpdateCircles() {
 
 
 
+
+
+
+
+
+
+
+
   /////////// Legend /////////////////
 // legendG = d3.select("#legend").append("");
 // legendG = d3.select("#legend").append("");
@@ -1361,7 +1367,10 @@ function createLegend(mode) {
 
 createLegend(0);
 
-
+d3.select("#searchImg").on('click', function() {
+  console.log("hohohoho");
+  d3.select("searchImg").style("padding-left", "100px")
+})
 // Expand buttons
 d3.select("#expandSkills1").on('click', function() {
 // For Each Slider create the slider
