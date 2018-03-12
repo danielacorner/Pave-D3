@@ -662,8 +662,8 @@ function graphModeOn(mode) {
 d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.15+"px");
 d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.15+"px");
 
-
   // if there is already a legend, remove the legend
+  if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
   if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0).remove();
   d3.select("#freeze").transition().duration(500).style("opacity", 0);
