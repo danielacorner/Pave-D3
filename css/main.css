@@ -11,6 +11,8 @@ svg {
 	background: none;
 }
 
+.axis { font: 14px sans-serif; }
+
 div.tooltip {
   position: absolute;
   text-align: left;

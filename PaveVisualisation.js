@@ -791,9 +791,9 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
 
   // Add the X Axis
   axisX = axisG.append("g")
- .attr("class", "xaxis")
+ .attr("class", "axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +","
-  + (height/2-30+graphYtranslate) + ")")
+  + (height/2-40+graphYtranslate) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the x axis
@@ -807,7 +807,7 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
 
   // Add the Y Axis
   axisY = axisG.append("g")
- .attr("class", "yaxis")
+ .attr("class", "axis")
  .attr("transform", "translate("+ (-width/2+margin.left) +"," 
   + (-height/2-margin.bottom ) + ")")
  .call(d3.axisLeft(y).ticks(5))
@@ -815,7 +815,7 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", -width/2)
+  .attr("y", -width/2-5)
   .attr("x", 0)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
@@ -833,9 +833,9 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
@@ -850,9 +850,9 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Years of Study").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelX.text("Years of Study").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -867,9 +867,9 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
+            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
   }
@@ -1157,6 +1157,28 @@ function futureModeOff() {
 
 
 
+
+
+
+
+
+///////////////////// Search ///////////////////////
+
+
+// d3.select("#searchBtn").on('click', function() {
+
+//   console.log("heeeeeey");
+
+
+// });
+
+
+
+
+
+
+
+
 ///////////// Reset Filters /////////////
 
 d3.select("#resetFilters").on('click', function(d) {
@@ -1164,13 +1186,13 @@ d3.select("#resetFilters").on('click', function(d) {
   //   graphMode = 0;
 
   //   graphModeOff();
-  // }
+  // }c
   resetFilters();
 });
 
 function resetFilters() {
   // reset the slider positions
-  for(var i=0; i<sliderArray.length; i++) {
+  for(var i=0; i<sliderArrayMain.length; i++) {
     handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
     sliderPositionsArray[i] = 0; // Update the slider positions array
   };
@@ -1355,7 +1377,7 @@ d3.select("#searchImg").on('click', function() {
 // Expand buttons
 d3.select("#expandSkills1").on('click', function() {
 // For Each Slider create the slider
-for(var i=0; i<sliderArray.length; i++) {
+for(var i=0; i<sliderArrayMain.length; i++) {
    
     // Language subskills
   if ([13,15,19].includes(i)) { column = 1, hidden = "visible"
