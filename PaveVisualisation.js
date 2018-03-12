@@ -96,6 +96,14 @@ if(window.innerWidth<=1024){
         if(window.innerWidth<576){
           for(var i=0; i<4; i++){
             d3.select("#notmuchlots_"+i).html("<span style='font-size: 24px;'>-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp+</span>")
+            d3.select("#sliderArray1").style("margin-right", "-700%")
+            d3.select("#sliderArray3").style("margin-left", "-700%")
+          }        
+          if(window.innerWidth<512){
+            for(var i=0; i<4; i++){
+              d3.select("#sliderArray1").style("margin-right", "-700%")
+              d3.select("#sliderArray3").style("margin-left", "-700%")
+            }
           }
         }
       }

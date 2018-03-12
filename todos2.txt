@@ -1,5 +1,7 @@
 todos
 
+- mobile sliders sizes
+
 - move sliders down on future view
 
 - mobile tooltip on touch
