@@ -1243,18 +1243,6 @@ function futureModeOff() {
 
 
 
-///////////////////// Search ///////////////////////
-
-
-d3.select("#searchImg").on('click', function(d) {
-  resetFilters();
-
-  console.log("heeeeeey");
-
-
-});
-
-
 
 
 
@@ -2010,6 +1998,30 @@ filterAll = function() {
   // sliderArrayUpdateFunctions[i] = updateMulti;
 
 
-      resize();
+      // resize();
+
+
+
+
+
+
+      ///////////////////// Search ///////////////////////
+var searchExpanded = 0;
+
+searchDiv = d3.select("body")
+  .append("div")
+    .style("width", "0px")
+    .style("height", "40px")
+    .style("position", "absolute")
+    .style("top", "31px")
+    .style("right", "76px")
+    // .style("background-color", "black")
+    .style("border", "1px solid grey")
+    .style("border-radius", "7px")
+    .style("visibility", "hidden")
+    // .style("visibility", "visible")
+
+
+
 
 })

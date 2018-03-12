@@ -75,11 +75,11 @@
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > Help</a>
 							  		
 							  		<div style="position: absolute; right: 10px;">
-							  			<span id="searchSpan" class="input-group-btn">
+							  			<span class="input-group-btn">
 									  	<!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-										    <button id="searchBtnSmall" style="border: none; background: none; position: fixed; right: 30px; top: 31px;" class="" type="button">
-										    	<img  id="searchImg" src="img/search.png" alt='help' height='40' width = '40'>
-										    </button>
+										    <button style="border: none; background: none; position: absolute; right: 0px; bottom: 0px;" class=""  type="button" onclick='expandSearch()'>
+										    	<img id="searchbutton_mobile" src="img/search.png" alt='help' height='40' width = '40'>
+									   	 	</button>
 										</span>
 							 		</div>
 
@@ -96,6 +96,24 @@
 
 	</nav>
 </div>
+
+<script type="text/javascript">
+var searchExpanded = 0;
+function expandSearch() {
+	searchExpanded = 1-searchExpanded;
+	if(searchExpanded == 1){
+		searchDiv.style("visibility", "visible")
+			.transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
+				
+	}
+	if(searchExpanded == 0){
+		searchDiv.transition().duration(500).style("width", "0px");
+		setTimeout(function() {
+	      searchDiv.style("visibility", "hidden");
+	    }, 500);
+	}
+}
+</script>
 
 <!-- end of navbar -->
 <!-- <script>
@@ -129,11 +147,11 @@
 				
 				Feedback</a>
 	  			<!-- search button -->
-	  			<div style="position: fixed; right: 30px;">
+	  			<div style="position: absolute; right: 30px;">
 	  				<span class="input-group-btn">
 				 		 <!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-					    <button style="border: none;background: none; position: fixed; right: 30px; top: 31px;" class=""  type="button">
-					    	<img src="img/search.png" alt='help' height='40' width = '40'>
+					    <button style="border: none; background: none; position: absolute; right: 0px; bottom: 0px;" class="" onclick='expandSearch()' type="button">
+					    	<img id="searchbutton_PC" src="img/search.png" alt='help' height='40' width = '40'>
 				   	 	</button>
 		  			</span>
 	  			</div>
