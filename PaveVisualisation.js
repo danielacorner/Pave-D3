@@ -909,7 +909,7 @@ d3.select("#random").style("display","inline");
 // d3.select("#combine").style("width", "");
 d3.select(".btn-group").style("padding-left", "0px")
 
-d3.select("#chart").transition().duration(500).attr("height","700px");
+d3.select("#chart").transition().duration(500).attr("height",window.innerHeight/1.5);
 
 
 // move sliders back up
@@ -998,6 +998,7 @@ d3.select("#futureView").on('click', function(d) {
 })
 //store the positions in future mode for un-filtering
 var futurePositions = [];
+var futureLegendHeight = 80;
 
 function futureModeOn() {
     legend.transition().duration(500).style("opacity", 0);
@@ -1006,7 +1007,7 @@ function futureModeOn() {
                   .data(d3.range(5))
                   .enter().append("g")
                   .attr("class", "futureLegend")
-                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) + 100) + ")"; })
+                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) + futureLegendHeight) + ")"; })
                   .style("fill", function(d, i) { return automationColor(i*0.2) });
 
               futureLegend.append("rect")
