@@ -223,6 +223,8 @@ var simulation = d3.forceSimulation()
 // Tooltip div (on hover)
 var div = d3.select("body").append("div")
 .attr("class", "tooltip")
+// .style("z-index", 99)
+// .style("position", "absolute")
 .style("opacity", 0);
 
 var div2 = d3.select("body").append("div")
@@ -272,11 +274,7 @@ var circles = svg.selectAll("circle")
      } else if (clicked == 0) {
       tooltipSmall(d);}
       })
-    // .on("dblclick", dblclick())
 
-function dblclick(d){
-  d3.select(this).classed("fixed", d.fixed = false)
-}
 
 function tooltipLarge(d) {
 div
@@ -305,7 +303,7 @@ div
                 +"Top skills are...</br>"
                 +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
         // Skill levels
-                 +"<svg height='160px' style='margin-top: "+50+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+                 +"<svg height='160px' style='margin-top: "+30+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
@@ -323,25 +321,25 @@ div
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
                   "</g>"+
                   "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computers</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
                     "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
                   "</g>"+
                 "</svg>"+
         // +"<br/>" 
                 "</div>"+
-                "<span style='margin-left: 236px'></span>"+"<button onclick='function() { d.favourite = 1 - d.favourite }' class='btn btn-lg' href='http://www.google.ca' "+
-         "style='z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
+                "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('hiiiiiiii') }' class='btn btn-lg' "+
+         "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
          +"Favourite</button><br/>"+
-         "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a class='btn btn-lg' href='http://www.google.ca' "+
-         "style='z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
+         "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a id='viewMoreBtn' class='btn btn-lg' href='http://.google.com' target='_blank'"+
+         "style='position: absolute; bottom: 13px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
          +"View more</a><br/><br/> ").transition().duration(300).style("width", "350px")
         // Unfurl downward
         // .style("height", 200)
         // .transition()
         // .duration(200)
         // .style("height", "auto")
-       d3.select("#tooltipContent").transition().duration(250).style("height", "300px");
+       d3.select("#tooltipContent").transition().duration(250).style("height", "350px");
 
 };
 
@@ -378,6 +376,8 @@ function tooltipSmall(d) {
       .style("opacity", .96)
       .style("height", "auto")
       .style("width", "350px")
+      .style("z-index", 99)
+      .style("position", "absolute")
       // .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
