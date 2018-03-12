@@ -54,7 +54,80 @@ d3.select(window).on("resize", resize);
 function resize() {
   d3.select("#chart").attr("width", window.innerWidth/1.5);
   d3.select("#chart").attr("height", window.innerHeight/1.5);
-    
+
+if(window.innerWidth>1024){
+  for(var i=0; i<4; i++){
+    d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: 50%'></span>"
+      +"Lots")  
+  }  
+}
+if(window.innerWidth<=1024){
+  for(var i=0; i<4; i++){
+    d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: 50%'></span>"
+      +"Lots")  
+  }  
+  if(window.innerWidth<=954){
+    for(var i=0; i<4; i++){
+      d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+        +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
+        +"Lots")  
+    }
+    if(window.innerWidth<768){
+      for(var i=0; i<4; i++){
+        d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+          +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
+          +"Lots")
+      } 
+      if(window.innerWidth<684){
+        for(var i=0; i<4; i++){
+          d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+            +"<span id='notmuchSpan_"+i+"' style='margin-left: 30%'></span>"
+            +"Lots")
+        }
+        
+        for(var i=0; i<4; i++){
+          d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+            +"<span id='notmuchSpan_"+i+"' style='margin-left: 20%'></span>"
+            +"Lots")
+        }
+
+        if(window.innerWidth<576){
+          for(var i=0; i<4; i++){
+            d3.select("#notmuchlots_"+i).html("<span style='font-size: 24px;'>-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp+</span>")
+          }
+        }
+      }
+    }  
+  }
+}
+  
+d3.select("#futureView").style("margin-top", "0px")
+if(window.innerWidth<576){
+  d3.select("#futureView").style("margin-top", "10px")
+}
+
+if(window.innerWidth<768){
+  d3.select("#sliderArray1").style("margin-right", "-500%")
+  d3.select("#sliderArray3").style("margin-left", "-500%")
+  d3.select("#industry").style("display","none")
+
+  d3.select("#random").style("display", "inline")
+  if(window.innerWidth<750) {
+    d3.select("#random").style("display", "none")
+    if(window.innerWidth<684) {
+      d3.select("#sliderArray1").style("margin-right", "-600%")
+      d3.select("#sliderArray3").style("margin-left", "-600%")
+    }
+  }
+}
+if(window.innerWidth>=768){
+  d3.select("#sliderArray1").style("margin-right", "-300%")
+  d3.select("#sliderArray3").style("margin-left", "-300%")
+  d3.select("#industry").style("display","inline")
+
+}
   // width = d3.select("#chart").attr("width"), // set chart dimensions
   // height = d3.select("#chart").attr("height");
 
@@ -1165,12 +1238,13 @@ function futureModeOff() {
 ///////////////////// Search ///////////////////////
 
 
-// d3.select("#searchBtn").on('click', function() {
+d3.select("#searchImg").on('click', function(d) {
+  resetFilters();
 
-//   console.log("heeeeeey");
+  console.log("heeeeeey");
 
 
-// });
+});
 
 
 
@@ -1709,23 +1783,35 @@ function createSliders(){
   // Title & SVG
 
   sliderSVGArray[i] = d3.select("#sliderArray"+column)
-  .append("div").attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
+  .append("div")
+    .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
     .style("position", "relative")
     .style("margin-top", ytranslate+"px")
-    .html("<div class='hidden-xs hidden-sm col-md-4 col-lg-4' align='left' style='margin-left: "+(xtranslate)+"%;"
-      +"font-size: 150%; font-weight: bold;"
-      +" color:  #579E38; font-family: Raleway'>"
-      +sliderTitlesArrayMain[i] // "Language Skills"
-      +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-      +"alt='help' height='21' width = '24'>"
-      +"</div>")
-    .html("<div align='left' style='margin-left: "+(xtranslate)+"%;"
+    // lg and xl
+    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
     	+"font-size: 150%; font-weight: bold;"
     	+" color:  #579E38; font-family: Raleway'>"
-      +sliderTitlesArrayMain[i] // "Language Skills"
-      +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +sliderTitlesArrayMain[i] // "Language skills"
+      +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
-      +"</div>")
+      +"</div>"
+    // md sm and xs
+  +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
+      +"font-size: 150%; font-weight: bold;"
+      +" color:  #579E38; font-family: Raleway'>"
+      +sliderTitlesArrayMain[i].substring(0,sliderTitlesArrayMain[i].length - 7) // "Language skills"
+      +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +"alt='help' height='21' width = '24'>"
+      +"</div>"
+    // sm and xs
+  // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
+  //     +"font-size: 100%; font-weight: bold;"
+  //     +" color:  #579E38; font-family: Raleway'>"
+  //     +sliderTitlesArrayMain[i].substring(0,sliderTitlesArrayMain[i].length - 7) // "Language skills"
+  //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+  //     +"alt='help' height='21' width = '24'>"
+  //     +"</div>"
+      )
   .append("div")
     .attr("align", "left")
     .style("position", "relative")
@@ -1734,9 +1820,9 @@ function createSliders(){
     .style("color", "#579E38")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("Not much"
-      +"<span style='padding-left: 65%'></span>"
-      +"Lots")
+    .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
+      +"Lots</div>")
     .select(function() {
     return this.parentNode;
   	})
@@ -1744,11 +1830,14 @@ function createSliders(){
   	.style("z-index", 99)
   	.attr("viewBox", "0 0 "+250+" "+50)
     .style("position", "absolute")
-    .style("top", 23+"%") // y position
+    .style("top", 32+"%") // y position
     // .style("margin-left", -xtranslate+"%") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
     .attr("height", 50);
+
+
+  sliderSVGArray[i].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
 
   // Scale
@@ -1913,5 +2002,6 @@ filterAll = function() {
   // sliderArrayUpdateFunctions[i] = updateMulti;
 
 
+      resize();
 
 })

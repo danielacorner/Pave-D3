@@ -73,10 +73,11 @@
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > About</a>
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > Feedback</a>
 										<a style="padding-left: 10px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > Help</a>
-							  		<div style="position: fixed; right: 10px;">
+							  		
+							  		<div style="position: absolute; right: 10px;">
 							  			<span id="searchSpan" class="input-group-btn">
 									  	<!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-										    <button id="searchBtn" style="border: none;background: none; position: fixed; right: 30px; top: 31px;" class="" type="button">
+										    <button id="searchBtnSmall" style="border: none; background: none; position: fixed; right: 30px; top: 31px;" class="" type="button">
 										    	<img  id="searchImg" src="img/search.png" alt='help' height='40' width = '40'>
 										    </button>
 										</span>
@@ -97,22 +98,22 @@
 </div>
 
 <!-- end of navbar -->
-<script>
-document.getElementById("searchImg").addEventListener("click", searchFunction());
-document.getElementById("searchBtn").addEventListener("click", searchFunction());
-document.getElementById("searchSpan").addEventListener("click", searchFunction());
+<!-- <script>
+// document.getElementById("searchImg").addEventListener("click", searchFunction());
+// document.getElementById("searchBtn").addEventListener("click", searchFunction());
+// document.getElementById("searchSpan").addEventListener("click", searchFunction());
 
-	function searchFunction() {
-		document.getElementById("searchBtn").innerHTML="hihihi";
-	}
-</script>
+	// function searchFunction() {
+	// 	document.getElementById("searchBtn").innerHTML="hihihi";
+	// }
+</script> -->
 
 
 <br/>
 
 <!-- title (hidden for xs displays like mobile) -->
 
-<div style="margin-left: 2.2%; margin-bottom: 1.5%" class="d-sm-block d-md-block d-lg-block">
+<div style="margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
 	<div class="title" align="left">
 		<h1 style="font-weight: bold; font-family: Raleway; color: #579E38; text-align: left;">
 			
@@ -208,10 +209,9 @@ document.getElementById("searchSpan").addEventListener("click", searchFunction()
 
 				<span style='padding-left: 10px'></span>
 
-				<button style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey;background: #A6B0A8" id="futureView" type="button" class="btn">
+				<button style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="futureView" type="button" class="btn d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
 				<span style="color: white; font-weight: 560; font-family: Raleway">
 				Future View</span></i></button>
-
 
 		</div> <!-- end of buttons -->
 
