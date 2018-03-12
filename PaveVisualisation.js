@@ -992,7 +992,7 @@ function futureModeOn() {
                   .data(d3.range(5))
                   .enter().append("g")
                   .attr("class", "futureLegend")
-                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) - 130) + ")"; })
+                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) + 100) + ")"; })
                   .style("fill", function(d, i) { return automationColor(i*0.2) });
 
               futureLegend.append("rect")
@@ -1016,7 +1016,7 @@ function futureModeOn() {
                     .attr("x", width/2 - margin.right - 5 )
                     .attr("y", 12)
                     .attr("dy", ".35em")
-                    .attr("transform", "translate(20," + (legendHeight-30) + ")")
+                    .attr("transform", "translate(20," + (legendHeight-25) + ")")
                     .attr("width", "100px")
                     .style("text-anchor", "end").style("font-weight", "bold")
                     .style("font-family", "Raleway")
