@@ -1,8 +1,14 @@
 todos
 
+- move sliders down on future view
+
+- mobile tooltip on touch
+
 - graph view fix: move graph up
 
 - expanded skills filters
+
+-legend titles
 
 - mobile compatibility
 

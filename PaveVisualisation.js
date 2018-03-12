@@ -781,13 +781,13 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
  .attr("transform", "translate("+ (-width/2+margin.left) +","
   + (height/2-30) + ")")
  .call(d3.axisBottom(x).ticks(5))
- .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+ .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the x axis
   axisLabelX = axisG.append("text")
   .attr("transform","translate(" + (margin.left) + ","
                       + (height/2) +")") // top
   .style("text-anchor", "middle")
-  .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+  .style("opacity", 0).transition().duration(500).style("opacity",1);
 
   d3.select("yaxis").remove();
 
@@ -797,7 +797,7 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
  .attr("transform", "translate("+ (-width/2+margin.left) +"," 
   + (-height/2-margin.bottom) + ")")
  .call(d3.axisLeft(y).ticks(5))
- .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+ .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
@@ -814,15 +814,15 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
 
             axisY.call(d3.axisLeft(y).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Risk of Machine Automation").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
       // y = Wage
@@ -831,15 +831,15 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
 
             axisY.call(d3.axisLeft(y).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
             axisLabelX.text("Years of Study").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
       // y = Wage
@@ -848,15 +848,15 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
 
             axisY.call(d3.axisLeft(y).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Wage ($ per hr)").style("font-family", "Dosis").style("font-size", "20px")
-            .attr("opacity", 0).transition().duration(500).attr("opacity",1);
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
   }
 
@@ -903,7 +903,7 @@ d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top"
 d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
 
     // remove axes
-    axisG.attr("opacity", 1).transition().duration(500).attr("opacity",0)
+    axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
     .remove();
 
     // Transition back to original positions
@@ -986,7 +986,45 @@ d3.select("#futureView").on('click', function(d) {
 var futurePositions = [];
 
 function futureModeOn() {
-    legend.transition().duration(500).attr("opacity", 0);
+    legend.transition().duration(500).style("opacity", 0);
+
+    futureLegend = svg.selectAll("#futureLegend")
+                  .data(d3.range(5))
+                  .enter().append("g")
+                  .attr("class", "futureLegend")
+                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) - 130) + ")"; })
+                  .style("fill", function(d, i) { return automationColor(i*0.2) });
+
+              futureLegend.append("rect")
+                  .attr("x", width/2 - margin.right - 10)
+                  .attr("width", 16)
+                  .attr("height", 16)
+                  .attr("transform", "translate(10," + legendHeight + ")")
+                  .style("opacity",0).transition().duration(500).style("opacity", 1)
+
+              futureLegend.append("text")
+                  .attr("x", width/2 - margin.right - 5 )
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .attr("transform", "translate(0," + legendHeight + ")")
+                  .style("text-anchor", "end")
+                  .style("font-family", "Raleway")
+                  .text(function(d, i) { return Math.round(10*i*0.2)/10 })
+                  .style("opacity",0).transition().duration(500).style("opacity", 1);
+
+      futureLegendTitle = futureLegend.filter(function(d,i){ return i==0 }).append("text")
+                    .attr("x", width/2 - margin.right - 5 )
+                    .attr("y", 12)
+                    .attr("dy", ".35em")
+                    .attr("transform", "translate(20," + (legendHeight-30) + ")")
+                    .attr("width", "100px")
+                    .style("text-anchor", "end").style("font-weight", "bold")
+                    .style("font-family", "Raleway")
+                    .style("overflow-wrap", "normal")
+                    .text("% Risk of Machine Automation");
+                    
+      futureLegendTitle.style("opacity",0).transition().duration(500).style("opacity", 1);
+
 
     // cool to 0 degrees
     simulation.stop();
@@ -1050,6 +1088,10 @@ function futureModeOn() {
 function futureModeOff() {
     // if graph mode off
     if (graphMode == 0) {
+
+    futureLegend.transition().duration(500).style("opacity",0);
+    futureLegendTitle.transition().duration(500).style("opacity",0);
+
     // Transition back to original attributes, styles, positions
     circles.transition()
     .duration(750)
@@ -1071,6 +1113,10 @@ function futureModeOff() {
   }
   // if graph mode on
   if (graphMode == 1) {
+
+    futureLegend.transition().duration(500).style("opacity",0);
+    futureLegendTitle.transition().duration(500).style("opacity",0);
+
   // Transition back to original attributes & styles
     circles.transition()
     .duration(750)
@@ -1692,11 +1738,11 @@ var sliderArray = ["wage", "workers",
 var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
 
 var sliderTitlesArrayMain = [
-"Language Skills", "Logic Skills", "Math Skills", "Computer Skills",
+"Language skills", "Logic skills", "Math skills", "Computer skills",
 ];
 
 var sliderTitlesArray = [
-"Wage ($/hr)", "Number of Jobs", "Language Skills", "Logic Skills", "Math Skills", "Computer Skills",
+"Wage ($/hr)", "Number of Jobs", "Language skills", "Logic skills", "Math skills", "Computer skills",
   // subskills
     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
     "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
@@ -1742,15 +1788,15 @@ function createSliders(){
         ytranslate = 0,
         posn = "relative";
   // Left column
-	if(["Language Skills", "Logic Skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Language skills", "Logic skills"].includes(sliderTitlesArrayMain[i])){
  		column = 1;
  	}
  	 // Right column
-	if(["Math Skills", "Computer Skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Math skills", "Computer skills"].includes(sliderTitlesArrayMain[i])){
  		column = 3;
 	}
 	// Bottom row
-	if(["Logic Skills", "Computer Skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Logic skills", "Computer skills"].includes(sliderTitlesArrayMain[i])){
 		ytranslate = window.innerHeight/1.8;
     // posn = "fixed";
 	}
@@ -1805,7 +1851,7 @@ function createSliders(){
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
-  if(["Math Skills"].includes(sliderTitlesArrayMain[i])) {
+  if(["Math skills"].includes(sliderTitlesArrayMain[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, 59])
     .range([0, 200]) // Width of slider is 200 px
