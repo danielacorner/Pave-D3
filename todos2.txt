@@ -1,5 +1,8 @@
 todos
 
+- one-time tutorial div with
+	"hide for now" or "ok, got it!"
+
 - keep same size on future view
 
 - mobile sliders sizes

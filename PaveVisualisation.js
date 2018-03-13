@@ -1143,7 +1143,7 @@ function futureModeOn() {
         // x positions
         d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
         // y positions
-        d.automationRisk*height*0.9 - height/2 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
+        d.automationRisk*height*0.7 - height/2.5 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
       ];
     });
     // transition circles' areas, colours, positions
