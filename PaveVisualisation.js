@@ -2019,8 +2019,10 @@ searchDiv = d3.select("body")
     .style("border-radius", "7px")
     .style("visibility", "hidden")
     // .style("visibility", "visible")
-    .html("<input placeholder='Search job titles' class='d-inline form-control' style='padding-bottom: 8px; width: 70%' type='text' id='jobTitle'>"+
-          "<button class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
+    .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
+           "style='padding-bottom: 8px; width: 70%' type='text' "+
+           "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
+          "<button id='searchSubmitBtn' class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
           )
 
 
@@ -2126,7 +2128,13 @@ var query = document.getElementById("jobTitle").value;
 
 
 
+// let search box respond to Enter
 
-
-
+// document.getElementById("searchInput")
+//     .addEventListener("keyup", function(event) {
+//     event.preventDefault();
+//     if (event.keyCode === 13) {
+//         document.getElementById("searchSubmitBtn").click();
+//     }
+// });
 
