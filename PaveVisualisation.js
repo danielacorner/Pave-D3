@@ -1,3 +1,6 @@
+var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
+forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
 // Log Clicked Node & ID using jQuery
 $( "body" ).click(function( event ) {
     console.log( "clicked: " + event.target.nodeName, event.target.id);
@@ -238,7 +241,7 @@ var maxWorkers = d3.max(nodes, function(d){ return d.workers});
 
 // Graph mode
     // Toggle for graph mode = off initially
-var graphMode = 0;
+graphMode = 0;
     // store nodes for drawing axes in graph mode
 graph = nodes;
 store = nodes;
@@ -256,17 +259,17 @@ var forceGravity = d3.forceManyBody()
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 // var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
-  return ((width / m) * d.cluster - width/2 - 25) * 1.1
+  return ((width / m) * d.cluster - width/2) * 1.3 + 50 //try window.innerWidth??
 }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
   return ((height / 2) * d.cluster/40 - 20)
 }).strength(0.3)
 var forceXSeparateRandom = d3.forceX(function(d) {
   Math.random();
-  return ( (width / m) * 10 * Math.random() - width/2 )
+  return ( (width / m) * 10 * Math.random() - width/2 + 50)
 }).strength(0.4)
 var forceYSeparateRandom = d3.forceY(function(d) {
-  return ( Math.random() * (height/2) - 125 )
+  return ( Math.random() * (height/2) - 120 )
 }).strength(0.3)
 // var forceX5By2 = d3.forceX(function(d) { // 10-grid force example
 //     if (d.cluster/5<1) return d.cluster/5;
@@ -282,7 +285,7 @@ function forceCluster(alpha) {
   }
   }
     // Update the positions each tick
-function tick() {
+tick = function() {
   circles
   .attr("cx", function(d) { return d.x; })
   .attr("cy", function(d) { return d.y; });
@@ -290,7 +293,7 @@ function tick() {
 
 
     // The force simulation
-var simulation = d3.forceSimulation()
+simulation = d3.forceSimulation()
 .nodes(store)
     // .force("center", d3.forceCenter())
     .force("collide", forceCollide)
@@ -325,7 +328,7 @@ var skillsBarsYtranslate = -15;
 // TODO: merge pre, post-filtering
 ///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
 // Add the circles with tooltips
-var circles = svg.selectAll("circle")
+circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
     // .attr("viewBox", "0 0 500 500")
@@ -534,7 +537,7 @@ function dragended(d) {
   d.fy = null;
 } 
 
-var drag_handler = d3.drag()
+drag_handler = d3.drag()
 .on("start", dragstarted)
 .on("drag", dragged)
 .on("end", dragended);
@@ -694,7 +697,6 @@ d3.select("#graph").on('click', function(d) {
       simulation.alpha(0); //cool to 0 degrees
 
       graphMode = 1-graphMode;
-      console.log("graphMode = ", graphMode);
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
@@ -1048,7 +1050,7 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
 ///////////////// Future View Mode ////////////////////
 
 
-var futureMode = 0;
+futureMode = 0;
 var automationRadiusScale = d3.scaleSqrt()
   .domain([0,1]).range([maxRadius,0]);
 var automationColor = d3.scaleLinear()
@@ -1062,7 +1064,6 @@ var automationColor = d3.scaleLinear()
 d3.select("#futureView").on('click', function(d) {
   // Toggle mode on or off
   futureMode = 1-futureMode;
-  console.log("futureMode = ", futureMode);
   ////////////// FUTURE VIEW ON! ////////////////
   if (futureMode == 1) {
     futureModeOn();
@@ -1083,7 +1084,8 @@ var futureLegendHeight = 80;
 
 function futureModeOn() {
     legend.transition().duration(500).style("opacity", 0);
-
+ 
+    //legend
     futureLegend = svg.selectAll("#futureLegend")
                   .data(d3.range(5))
                   .enter().append("g")
@@ -1149,10 +1151,10 @@ function futureModeOn() {
     .duration(750)
       .attr("cx", function(d) { return futurePositions[d.id][0] })
       .attr("cy", function(d) { return futurePositions[d.id][1] })
-      .attrTween("r", function(d) { // transition x position to...
-        var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
-        return function(t) { return d.radius = i(t); };
-      })
+      // .attrTween("r", function(d) { // transition x position to...
+      //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+      //   return function(t) { return d.radius = i(t); };
+      // })
       .styleTween("fill", function(d) {
         var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
         return function(t) { return d.color = i(t); };
@@ -1165,10 +1167,10 @@ function futureModeOn() {
     // transition circles' areas & colours
     circles.transition()
     .duration(750)
-      .attrTween("r", function(d) { 
-        var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
-        return function(t) { return d.radius = i(t); };
-      })
+      // .attrTween("r", function(d) { 
+      //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+      //   return function(t) { return d.radius = i(t); };
+      // })
       .styleTween("fill", function(d) {
         var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
         return function(t) { return d.color = i(t); };
@@ -1194,10 +1196,10 @@ function futureModeOff() {
       // set x, y values
     .attr("cx", function(d) { return pastPosX[d.id] })
     .attr("cy", function(d) { return pastPosY[d.id] })
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
-      return function(t) { return d.radius = i(t); };
-    })
+    // .attrTween("r", function(d) {
+    //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+    //   return function(t) { return d.radius = i(t); };
+    // })
     .styleTween("fill", function(d) {
       var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
       return function(t) { return d.color = i(t); };
@@ -1216,10 +1218,10 @@ function futureModeOff() {
   // Transition back to original attributes & styles
     circles.transition()
     .duration(750)
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
-      return function(t) { return d.radius = i(t); };
-    })
+    // .attrTween("r", function(d) {
+    //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+    //   return function(t) { return d.radius = i(t); };
+    // })
     .styleTween("fill", function(d) {
       var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
       return function(t) { return d.color = i(t); };
@@ -1300,7 +1302,7 @@ function resetSimulation() {
 
 /////// Tooltips (post-filter)
 
-function enterUpdateCircles() {
+enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .style("fill", function(d) { return color(d.cluster); })
@@ -1440,10 +1442,7 @@ function createLegend(mode) {
 
 createLegend(0);
 
-d3.select("#searchImg").on('click', function() {
-  console.log("hohohoho");
-  d3.select("searchImg").style("padding-left", "100px")
-})
+
 // Expand buttons
 d3.select("#expandSkills1").on('click', function() {
 // For Each Slider create the slider
@@ -1751,7 +1750,7 @@ var sliderSVGArray = []; // array of slider SVGs
 var sliderScaleArray = []; // array of slider scale functions
 var sliderMulti = []; // array of sliders
 var handleArray = []; // array of slider handles
-var listToDeleteMulti = []; // filtered IDs
+listToDeleteMulti = []; // filtered IDs
 
 
 createSliders();
@@ -1907,7 +1906,7 @@ function updateMulti(h) {
  
   // using the slider handle
   var sliderID = event.target.id;
-  handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider ball
+  handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
   
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
@@ -2013,15 +2012,121 @@ searchDiv = d3.select("body")
     .style("width", "0px")
     .style("height", "40px")
     .style("position", "absolute")
-    .style("top", "31px")
-    .style("right", "76px")
+    .style("top", "33px")
+    .style("right", "77px")
     // .style("background-color", "black")
-    .style("border", "1px solid grey")
+    // .style("border", "1px solid grey")
     .style("border-radius", "7px")
     .style("visibility", "hidden")
     // .style("visibility", "visible")
-
-
+    .html("<input placeholder='Search job titles' class='d-inline form-control' style='padding-bottom: 8px; width: 70%' type='text' id='jobTitle'>"+
+          "<button class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
+          )
 
 
 })
+
+var searchExpanded = 0;
+function expandSearch() {
+  searchExpanded = 1-searchExpanded;
+  if(searchExpanded == 1){
+    searchDiv.style("visibility", "visible")
+      .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
+        
+  }
+  if(searchExpanded == 0){
+    searchDiv.transition().duration(500).style("width", "0px");
+    setTimeout(function() {
+        searchDiv.style("visibility", "hidden");
+      }, 500);
+  }
+}
+
+function searchJobTitles() {
+
+var query = document.getElementById("jobTitle").value;
+
+//  UPDATE
+  circles = circles.data(filterBySearch(), function(d) { return d.id });
+  
+  // EXIT
+  circles.exit().transition().duration(300)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attrTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return d.opacity = i(t); };
+  })
+  .remove();
+
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+
+  // reset simulation if graph mode = off
+  if (graphMode == 0 && futureMode == 0) {
+    simulation.nodes(filterBySearch())
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+    simulation.alphaTarget(0.2).restart();
+  } else if (graphMode == 1) { // else reposition nodes on graph
+    circles
+    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
+  } else if (futureMode == 1) {
+    circles
+    .attr("cx", function(d){ return futurePositions[d.id][0] })
+    .attr("cy", function(d){ return futurePositions[d.id][1] })
+    .attr("r", function(d) { return d.radius; })
+    .style("fill", function(d) { return d.color; })
+    .style("stroke", "black")
+  }
+
+}
+
+
+function filterBySearch() {
+  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
+var query = document.getElementById("jobTitle").value;
+  // START by filtering out nodes under the minimums
+  store.forEach(function(d) {
+    // INEFFICIENT -- TODO: fewer loops
+      // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
+      if (listToDeleteMulti.includes(d.id)) {
+        listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
+      }
+      // then if each job contains the query, add to the list
+      //indexOf returns the position of the string in the other string. If not found, it will return -1.
+      if(d.job.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
+          listToDeleteMulti.push(d.id);
+      }
+    });
+    // reset the graph
+  graph = [];
+  // THEN update the graph based on the filter list
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!listToDeleteMulti.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    // if you're on the list
+    } else if (listToDeleteMulti.includes(n.id)) {
+      graph.forEach(function(d, p) {
+        if (n.id === d.id) {
+          graph.splice(p, 1); // get you off of there!
+        }
+      })
+    };
+  });
+  return graph;
+}
+
+
+
+
+
+
+

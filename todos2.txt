@@ -1,5 +1,7 @@
 todos
 
+- keep same size on future view
+
 - mobile sliders sizes
 
 - move sliders down on future view

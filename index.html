@@ -97,23 +97,6 @@
 	</nav>
 </div>
 
-<script type="text/javascript">
-var searchExpanded = 0;
-function expandSearch() {
-	searchExpanded = 1-searchExpanded;
-	if(searchExpanded == 1){
-		searchDiv.style("visibility", "visible")
-			.transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
-				
-	}
-	if(searchExpanded == 0){
-		searchDiv.transition().duration(500).style("width", "0px");
-		setTimeout(function() {
-	      searchDiv.style("visibility", "hidden");
-	    }, 500);
-	}
-}
-</script>
 
 <!-- end of navbar -->
 <!-- <script>
@@ -234,7 +217,7 @@ function expandSearch() {
 		</div> <!-- end of buttons -->
 
 		<!-- the graphing canvas -->
-		<svg viewBox="0 0 400 300" id="chart" style="z-index: 1; margin-left:auto; margin-right:auto; display:block;" width="960" height="700" class="chart">	</svg>
+		<svg viewBox="0 0 400 300" id="chart" style="z-index: 1; margin-top: -5%; margin-left:auto; margin-right:auto; display:block;" width="960" height="700" class="chart">	</svg>
 
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
@@ -310,5 +293,11 @@ function expandSearch() {
 	</div>	<!-- end of rightDiv -->	
 
 </div> <!-- row -->
+
+
+<script type="text/javascript">
+
+</script>
+
 </body>
 </html>
