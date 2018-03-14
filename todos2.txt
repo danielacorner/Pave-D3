@@ -1,4 +1,9 @@
 todos
+- job titles search (within job groups)
+
+- bug: language slider line in front of overlay?
+
+- bug: tiny empty job in right side under purple group
 
 - one-time tutorial div with
 	"hide for now" or "ok, got it!"

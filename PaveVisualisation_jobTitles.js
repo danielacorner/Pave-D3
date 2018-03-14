@@ -6,9 +6,6 @@ $( "body" ).click(function( event ) {
     console.log( "clicked: " + event.target.nodeName, event.target.id);
 });
 
-// init foundation (used for joyride) (redundant?)
-// $(document).foundation()
-
 d3.selection.prototype.moveToFront = function() {  
       return this.each(function(){
         this.parentNode.appendChild(this);
@@ -21,7 +18,7 @@ var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
 
 // load the data
-d3.csv("NOC_403.csv", function(error, datapoints) {
+d3.csv("NOC_403_withJobTitles.csv", function(error, datapoints) {
   if (error) throw error;
 
 
@@ -60,7 +57,7 @@ d3.select(window).on("resize", resize);
 function resize() {
   d3.select("#chart").attr("width", window.innerWidth/1.5);
   d3.select("#chart").attr("height", window.innerHeight/1.5);
-
+// different sizes = different modes
 if(window.innerWidth>1024){
   for(var i=0; i<4; i++){
     d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
@@ -166,6 +163,7 @@ var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.wor
 var color = d3.scaleOrdinal(d3.schemeCategory10)
 .domain(d3.range(m));
 
+// Color scheme for tooltip text on colored backgrounds
 var colorTooltip = d3.scaleOrdinal()
     .domain([0,1,2,3,4,5,6,7,8,9])
     .range(["#E1F8F9", // blue
@@ -232,8 +230,10 @@ var nodes = datapoints.map(function(el) {
     s14Writing: el.s14Writing,
     s15CriticalThinking: el.s15CriticalThinking,
 
+    titlesNum: el.titlesNum,
+
 };
-  // if there's no cluster i OR if biggest radius yet, set cluster
+  // if there's no cluster i OR if biggest radius yet, set as cluster center
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
 });
@@ -241,6 +241,65 @@ var nodes = datapoints.map(function(el) {
 // Maximum values
 var maxWorkers = d3.max(nodes, function(d){ return d.workers});
 
+// job titles sub-nodes
+var subNodes = [];
+
+nodes.map(function(el){
+  var i = el.cluster,
+  r = radiusScale(el.workers/el.titlesNum); // split all groups into equal sized job titles
+  // for each job title, push a node to subNodes
+  for(var i=0; i<el.titlesNum; i++){
+    d = {
+      id: +el.id,
+      id_title: el.id + "_" + el.titlesNum, // e.g. 42_37 = 37th title of #42
+      favourite: 0,
+      cluster: i, 
+      radius: r, 
+      job: el.job,
+      topSkill1: el.topSkill1,
+      topSkill2: el.topSkill2,
+      topSkill3: el.topSkill3,
+      title1: el.title1,
+      title2: el.title2,
+      title3: el.title3,
+      industry: el.industry, 
+      noc: el.noc, 
+      workers: +el.workers,
+      wage: el.wage,
+      automationRisk: el.automationRisk,
+      yearsStudy: el.yearsStudy,
+      job: el.job,
+      skillsComp: el.skillsComp,
+      skillsLogi: el.skillsLogi,
+      skillsMath: el.skillsMath,
+      skillsLang: el.skillsLang,
+      s1DataAnalysis: el.s1DataAnalysis,
+      s2DecisionMaking: el.s2DecisionMaking,
+      s3FindingInformation: el.s3FindingInformation,
+      s4JobTaskPlanningandOrganizing: el.s4JobTaskPlanningandOrganizing,
+      s5MeasurementandCalculation: el.s5MeasurementandCalculation,
+      s6MoneyMath: el.s6MoneyMath,
+      s7NumericalEstimation: el.s7NumericalEstimation,
+      s8OralCommunication: el.s8OralCommunication,
+      s9ProblemSolving: el.s9ProblemSolving,
+      s10Reading: el.s10Reading,
+      s11SchedulingorBudgetingandAccounting: el.s11SchedulingorBudgetingandAccounting,
+      s12DigitalTechnology: el.s12DigitalTechnology,
+      s13DocumentUse: el.s13DocumentUse,
+      s14Writing: el.s14Writing,
+      s15CriticalThinking: el.s15CriticalThinking,
+
+      title: el["title_"+(i+1)],
+      titlesNum: el.titlesNum,
+    };  
+    // if there's no cluster i OR if biggest radius yet, set as cluster center
+    if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
+    
+    subNodes.push(d);
+  }
+});
+// now, use the job titles instead of the NOCs
+nodes = subNodes;
 
 // Graph mode
     // Toggle for graph mode = off initially

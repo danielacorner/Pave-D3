@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/dcorn068/Pave-D3/issues"
   },
-  "homepage": "https://github.com/dcorn068/Pave-D3#readme"
+  "homepage": "https://github.com/dcorn068/Pave-D3#readme",
+  "dependencies": {
+    "foundation-joyride": "^3.0.0",
+    "jquery.joyride": "^2.2.0",
+    "what-input": "git+https://github.com/ten1seven/what-input.git"
+  }
 }

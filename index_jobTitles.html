@@ -22,7 +22,6 @@
 
 
 
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<!-- Page title (name on the tab) -->
 	<title>Pave: the Canadian Job Explorer</title>
 
@@ -35,21 +34,11 @@
 
 	<!-- Jquery -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
-	<!-- <script src="foundation-joyride/node_modules/jquery/dist/jquery.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
 
-	<!-- Attach the Joyride CSS file -->
-	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
-
-	<!-- Then attach the Joyride plugin -->
-	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
-	<!-- <script src="joyride-master/dist/solo.joyride.js"></script> -->
-
-	<!-- what-input for joyride -->
-	<!-- <script src="what-input/dist/what-input.js"></script> -->
-	<!-- joyride site tour wizard -->
-	<!-- <script src="node_modules/foundation-joyride/js/joyride.js"></script> -->
 
 </head>
 <body>
@@ -58,8 +47,8 @@
 
 <!-- Navigation Bar (visible only on mobile -->
 
-<div id="top_of_page" class="container">
-
+<div class="container">
+ 
 <!-- .navbar-fixed-top, or .navbar-fixed-bottom can be added to keep the nav bar fixed on the screen -->
 	<nav class="navbar navbar-fixed-top d-sm-none d-md-none d-lg-none">
   
@@ -214,14 +203,14 @@
 
 				<span style='padding-left: 10px'></span>
 
-				<button id="graph" style="font-size: 14px; height: 32px; background: #A6B0A8; box-shadow: 3px 3px 17px grey" data-toggle="button" type="button" class="btn" aria-pre autocomplete="off">
+				<button style="font-size: 14px; height: 32px; background: #A6B0A8; box-shadow: 3px 3px 17px grey" id="graph" data-toggle="button" type="button" class="btn" aria-pre autocomplete="off">
 					<span style="color: white; font-weight: 560; font-family: Raleway">
 					Graph View</span>
 				</button>
 
 				<span style='padding-left: 10px'></span>
 
-				<button id="futureView" style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
+				<button style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="futureView" type="button" class="btn d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
 				<span style="color: white; font-weight: 560; font-family: Raleway">
 				Future View</span></i></button>
 
@@ -246,7 +235,7 @@
 		<g class="legend" id="legend"></g>		
 
 		<!-- The data visualization -->
-		<script src="PaveVisualisation.js"></script>
+		<script src="PaveVisualisation_jobTitles.js"></script>
 
 		<!-- Reset, pause, play buttons -->
 		<div align="center" style="position: relative; bottom: 10%">
@@ -306,37 +295,9 @@
 </div> <!-- row -->
 
 
-<!-- /* Launching joyride when page is loaded */ -->
-<script>
-$(window).load(function() {
-  $("#joyrideTour").joyride({
-    'autoStart': true,
-    'nextButton': true,
-    'tipAnimation': 'fade',
-    // 'nubPosition': 'auto',
-    /* Options will go here */
-  });
-});
+<script type="text/javascript">
+
 </script>
-
- <!-- joyride site tour -->
-<ol style="display: none;" id="joyrideTour">
-  <!-- /* data-id needs to be the same as the parent it will attach to */ -->
-  <li data-id="top_of_page" data-button="Take the tour" data-options="tipLocation: bottom;">Welcome to Pave!<span style="padding-left: 10px;"/></li>
-
-  <!-- /* This tip will be display as a modal */ -->
-  <li>Each circle here is a Job Group.</br></br>The bigger the circle, the more people working in that job group.</br></br>Colours are different "industries".</br></br></li>
-
-  <!-- /* using 'data-button' lets you have custom button text */ -->
-  <li data-id="sliderArray1" data-options="tipLocation:top;">Use these sliders to filter jobs by the amount of each skill used.<span style="padding-left: 10px;"/></li>
-
-  <!-- /* you can put a class for custom styling */ -->
-  <li data-id="industry" class="custom-class">Here you can separate the jobs into their industries, or shuffle them all together if you like.<span style="padding-left: 10px;"/></li>
-
-  <li data-id="graph" class="custom-class">Not all jobs are equal! Use this button to compare jobs by variables like wage, years of study, and job security.</br></br></li>
-
-  <li data-id="futureView" class="custom-class" data-button="Ok, got it!">Machines are getting better at performing new kinds of tasks every day -- This button lets you see how soon each job is likely to be replaced by machine work.</br></br></li>
-</ol>
 
 </body>
 </html>
