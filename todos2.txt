@@ -1,4 +1,16 @@
 todos
+- subskill dropdowns
+
+- bug: circles move down after future view & filtering
+
+- bug: y axis not accurate on fullscreen, viewbox could be bigger on fullscreen
+
+- look up refactoring
+
+- bind legend to right-side of chart (currently slipping off-screen at some widths)
+
+- joyride style
+
 - job titles search (within job groups)
 
 - bug: language slider line in front of overlay?
@@ -19,8 +31,6 @@ todos
 - graph view fix: move graph up
 
 - expanded skills filters
-
--legend titles
 
 - mobile compatibility
 

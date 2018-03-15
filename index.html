@@ -36,7 +36,6 @@
 	<!-- Jquery -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
-	<!-- <script src="foundation-joyride/node_modules/jquery/dist/jquery.js"></script> -->
 
 
 	<!-- Attach the Joyride CSS file -->
@@ -44,7 +43,6 @@
 
 	<!-- Then attach the Joyride plugin -->
 	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
-	<!-- <script src="joyride-master/dist/solo.joyride.js"></script> -->
 
 	<!-- what-input for joyride -->
 	<!-- <script src="what-input/dist/what-input.js"></script> -->
@@ -110,15 +108,6 @@
 
 
 <!-- end of navbar -->
-<!-- <script>
-// document.getElementById("searchImg").addEventListener("click", searchFunction());
-// document.getElementById("searchBtn").addEventListener("click", searchFunction());
-// document.getElementById("searchSpan").addEventListener("click", searchFunction());
-
-	// function searchFunction() {
-	// 	document.getElementById("searchBtn").innerHTML="hihihi";
-	// }
-</script> -->
 
 
 <br/>
@@ -155,10 +144,6 @@
 </div> <!-- end of title -->
 
 <!-- end of headers -->
-
-
-
-
 
 
 <!-- Three columns with the visualisation & buttons in the middle -->
@@ -228,7 +213,7 @@
 		</div> <!-- end of buttons -->
 
 		<!-- the graphing canvas -->
-		<svg viewBox="0 0 400 300" id="chart" style="z-index: 1; margin-top: -5%; margin-left:auto; margin-right:auto; display:block;" width="960" height="700" class="chart">	</svg>
+		<svg viewBox="0 0 400 300" id="chart" style="margin-top: 10%; margin-left:auto; margin-right:auto; display:block; width: 100%; height: auto;" class="chart">	</svg>
 
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
@@ -249,16 +234,16 @@
 		<script src="PaveVisualisation.js"></script>
 
 		<!-- Reset, pause, play buttons -->
-		<div align="center" style="position: relative; bottom: 10%">
-			<button style="box-shadow: 3px 3px 17px grey; background: #A6B0A8; font-size: 14px; height: 32px;" id="resetFilters" type="button" class="btn btn-md">
+		<div align="center" style="position: relative; bottom: 22%">
+			<button id="resetFilters" style="box-shadow: 3px 3px 17px grey; background: #A6B0A8; font-size: 14px; height: 32px;" type="button" class="btn btn-md">
 			<span style="color: white; font-weight: bold; font-family: Raleway; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
 			<!-- <span style='padding-left: 130px'></span> -->
-			<button style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="freeze" type="button" class="btn">
+			<button id="freeze" style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
 			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-pause"></i></button>
 
-			<button style="display: none; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" id="unfreeze" type="button" class="btn">
+			<button id="unfreeze" style="display: none; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
 			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-play"></i></button>
 		</div>
@@ -325,17 +310,21 @@ $(window).load(function() {
   <li data-id="top_of_page" data-button="Take the tour" data-options="tipLocation: bottom;">Welcome to Pave!<span style="padding-left: 10px;"/></li>
 
   <!-- /* This tip will be display as a modal */ -->
-  <li>Each circle here is a Job Group.</br></br>The bigger the circle, the more people working in that job group.</br></br>Colours are different "industries".</br></br></li>
+	<li>This is a tool to compare jobs in Canada by various statistics.
+	  </br></br>Each circle is a Job Group.
+		</br></br>The bigger the circle, the more people working in that group.
+		</br></br>Colour represents different industries.
+	  </br></br><!-- Next --></li>
 
   <!-- /* using 'data-button' lets you have custom button text */ -->
-  <li data-id="sliderArray1" data-options="tipLocation:top;">Use these sliders to filter jobs by the amount of each skill used.<span style="padding-left: 10px;"/></li>
+  <li data-id="sliderArray1" data-options="tipLocation:top;">Use the sliders to filter jobs by the amount of each skill used.<span style="padding-left: 10px;"/></li>
 
   <!-- /* you can put a class for custom styling */ -->
-  <li data-id="industry" class="custom-class">Here you can separate the jobs into their industries, or shuffle them all together if you like.<span style="padding-left: 10px;"/></li>
+  <li data-id="industry" class="custom-class">Here you can separate the jobs into their industries, or shuffle them all together if you like.</br></br></li>
 
-  <li data-id="graph" class="custom-class">Not all jobs are equal! Use this button to compare jobs by variables like wage, years of study, and job security.</br></br></li>
+  <li data-id="graph" class="custom-class">Not all jobs are equal! Use this button to compare jobs by factors like wage, years of study, and job security.</br></br></li>
 
-  <li data-id="futureView" class="custom-class" data-button="Ok, got it!">Machines are getting better at performing new kinds of tasks every day -- This button lets you see how soon each job is likely to be replaced by machine work.</br></br></li>
+  <li data-id="futureView" class="custom-class" data-options="" data-button="Ok, got it!">Machines are getting better at performing new tasks every day -- This button shows how soon each job may be replaced by machine work.</br></br></li>
 </ol>
 
 </body>

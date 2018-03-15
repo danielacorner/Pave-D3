@@ -1,6 +1,81 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, sliderArrayMain;
+
+// sliders to create
+var sliderArray = ["wage", "workers", 
+    // skills
+    "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+    // subskills
+    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
+    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
+    "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
+    "s13DocumentUse","s14Writing","s15CriticalThinking"
+];
+sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+
+var sliderTitlesArrayMain = [
+"Language skills", "Logic skills", "Math skills", "Computer skills",
+];
+
+var sliderTitlesArray = [
+"Wage ($/hr)", "Number of Jobs", "Language skills", "Logic skills", "Math skills", "Computer skills",
+  // subskills
+    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
+    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
+    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
+    "Document Use","Writing","Critical Thinking"
+    ]
+// var sliderArrayStats = ["wage", "workers"];
+
+var sliderArrayLang = [
+    // subskills
+   "s8OralCommunication","s10Reading","s14Writing"],
+
+sliderTitlesArrayLang = ["Oral Communication","Reading","Writing",]
+
+
+var sliderArrayLogi = [
+    // subskills
+    "s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
+    "s9ProblemSolving","s15CriticalThinking"];
+
+sliderTitlesArrayLogi = ["Oral Communication","Reading","Writing",]
+
+var sliderArrayMath = [
+    // subskills
+    "s1DataAnalysis","s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation",
+    "s11SchedulingorBudgetingandAccounting"];
+
+sliderTitlesArrayMath = ["Oral Communication","Reading","Writing",]
+
+var sliderArrayComp = [
+    // subskills
+    "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
+
+sliderTitlesArrayComp = ["Oral Communication","Reading","Writing",]
+
+
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = []; // array of sliders
+var handleArray = []; // array of slider handles
+listToDeleteMulti = []; // filtered IDs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Log Clicked Node & ID using jQuery
 $( "body" ).click(function( event ) {
     console.log( "clicked: " + event.target.nodeName, event.target.id);
@@ -21,6 +96,8 @@ var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
 
 // load the data
+createViz();
+function createViz() {
 d3.csv("NOC_403.csv", function(error, datapoints) {
   if (error) throw error;
 
@@ -50,8 +127,8 @@ d3.csv("NOC_403.csv", function(error, datapoints) {
 
 // Viz dimensions & margins
 var margin = {top: 20, right: 20, bottom: 50, left: 50};
-var width = d3.select("#chart").attr("width"), // set chart dimensions
-    height = d3.select("#chart").attr("height"),
+var width = window.innerWidth/1.5, // set chart dimensions
+    height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
 resize();
@@ -321,7 +398,7 @@ var div2 = d3.select("body").append("div")
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
 .append('svg')    
-.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
+.attr("viewBox", "-"+window.innerWidth/3+" -"+window.innerHeight/3+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 
@@ -336,6 +413,7 @@ circles = svg.selectAll("circle")
 .enter().append("circle")
     // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
+    .attr("transform", "translate(0,-100)")
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
@@ -745,8 +823,9 @@ var graphYtranslate = 0;
 function graphModeOn(mode) {
 
     //move sliders down
-d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.15+"px");
-d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.15+"px");
+d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
+d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
+d3.select("#resetFilters").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -781,7 +860,7 @@ d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top"
             })
               // set y values
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 +100 - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -966,7 +1045,7 @@ d3.select("#random").style("display","none");
 d3.select("#combine").style("display", "inline");
 d3.select(".btn-group").style("padding-left", "0px");
 
-d3.select("#chart").transition().duration(500).attr("height","800px");
+d3.select("#chart").attr("height", (window.innerHeight*0.6) );
 
 }
 
@@ -1001,6 +1080,7 @@ d3.select("#chart").transition().duration(500).attr("height",window.innerHeight/
 // move sliders back up
 d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
 d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
+d3.select("#resetFilters").transition().duration(500).style("margin-top", 0+"px");
 
     // remove axes
     axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
@@ -1083,11 +1163,12 @@ d3.select("#futureView").on('click', function(d) {
 })
 //store the positions in future mode for un-filtering
 var futurePositions = [];
-var futureLegendHeight = 80;
+var futureLegendHeight = -20;
 
 function futureModeOn() {
     legend.transition().duration(500).style("opacity", 0);
  
+
     //legend
     futureLegend = svg.selectAll("#futureLegend")
                   .data(d3.range(5))
@@ -1110,20 +1191,24 @@ function futureModeOn() {
                   .attr("transform", "translate(0," + legendHeight + ")")
                   .style("text-anchor", "end")
                   .style("font-family", "Raleway")
-                  .text(function(d, i) { return Math.round(10*i*0.2)/10 })
+                  .text(function(d, i) { return Math.round(10*i*0.2)*10 + "%" })
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
 
       futureLegendTitle = futureLegend.filter(function(d,i){ return i==0 }).append("text")
                     .attr("x", width/2 - margin.right - 5 )
                     .attr("y", 12)
                     .attr("dy", ".35em")
-                    .attr("transform", "translate(20," + (legendHeight-25) + ")")
-                    .attr("width", "100px")
-                    .style("text-anchor", "end").style("font-weight", "bold")
+                    // .attr("transform", "translate(20," + (legendHeight-25) + ")")
+                    .style("width", "70px")
+                    .style("color", "black")
                     .style("font-family", "Raleway")
-                    .style("overflow-wrap", "normal")
-                    .text("% Risk of Machine Automation");
-                    
+                    .style("word-wrap", "break-word")
+                    // .style("overflow-wrap", "normal")
+                    .text("Risk of Machine Automation")
+                    .style("font-size", 18)
+                    .style("text-decoration", "underline")
+                    .attr("transform", "translate(-200,-20)")
+
       futureLegendTitle.style("opacity",0).transition().duration(500).style("opacity", 1);
 
 
@@ -1140,13 +1225,21 @@ function futureModeOn() {
     // if graph mode off
     if (graphMode == 0) {
 
+        //move sliders down
+    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
+    d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
+    d3.select("#resetFilters").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
+        //hide pause/play
+    d3.select("#freeze").transition().duration(500).style("opacity", 0);
+    d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
+
     // create random positions & store for un-filtering
     nodes.forEach(function(d) {
       futurePositions[d.id] = [
         // x positions
         d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
         // y positions
-        d.automationRisk*height*0.7 - height/2.5 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
+        d.automationRisk*height*0.95 - height/2.5 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
       ];
     });
     // transition circles' areas, colours, positions
@@ -1187,8 +1280,18 @@ function futureModeOn() {
 }
 
 function futureModeOff() {
+    
+
     // if graph mode off
     if (graphMode == 0) {
+
+    // move sliders back up
+    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
+    d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
+    d3.select("#resetFilters").transition().duration(500).style("margin-top", 0+"px");
+        //show pause/play
+    d3.select("#freeze").transition().duration(500).style("opacity", 1);
+    d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
 
     futureLegend.transition().duration(500).style("opacity",0);
     futureLegendTitle.transition().duration(500).style("opacity",0);
@@ -1383,7 +1486,7 @@ function createLegend(mode) {
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) - 130) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+ 37 +","+ ((i * 22) - 150) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -1400,8 +1503,23 @@ function createLegend(mode) {
                   .attr("transform", "translate(0," + legendHeight + ")")
                   .style("text-anchor", "end")
                   .style("font-family", "Raleway")
-                  .text(function(d, i) { return industriesArray[i].substring(0,30) + "..."; })
+                  .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
+                                          else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
+
+              svg.select(".legend")
+              .append("text") // title
+                  .attr("x", width/2 - margin.right - 0 )
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .attr("transform", "translate(-50," + (legendHeight-25) + ")")
+                  .style("text-anchor", "end")
+                  .style("font-family", "Raleway")
+                  .style("font-size", "18")
+                  .text("Industries")
+                  .style("opacity",0).transition().duration(500).style("opacity", 1)
+                  // .style("font-weight", "bold");
+                  .style("text-decoration", "underline")
 
           break;
         // Industry Split
@@ -1703,78 +1821,62 @@ for(var i=0; i<sliderArrayMain.length; i++) {
 //////////////// Filter Sliders 2: Multiple Sliders from an Array //////////////////////
 
 
-// sliders to create
-var sliderArray = ["wage", "workers", 
-    // skills
-    "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
-    // subskills
-    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
-    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
-    "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
-    "s13DocumentUse","s14Writing","s15CriticalThinking"
-];
-var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
-
-var sliderTitlesArrayMain = [
-"Language skills", "Logic skills", "Math skills", "Computer skills",
-];
-
-var sliderTitlesArray = [
-"Wage ($/hr)", "Number of Jobs", "Language skills", "Logic skills", "Math skills", "Computer skills",
-  // subskills
-    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
-    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
-    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
-    "Document Use","Writing","Critical Thinking"
-    ]
-// var sliderArrayStats = ["wage", "workers"];
-
-// var sliderArrayLang = ["skillsLang",
-//     // subskills
-//    "s8OralCommunication","s10Reading","s14Writing"];
-
-// var sliderArrayLogi = ["skillsLogi",
-//     // subskills
-//     "s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
-//     "s9ProblemSolving","s15CriticalThinking"];
-
-// var sliderArrayMath = ["skillsMath",
-//     // subskills
-//     "s1DataAnalysis","s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation",
-//     "s11SchedulingorBudgetingandAccounting"];
-
-// var sliderArrayComp = ["skillsComp",
-//     // subskills
-//     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
 
 
-var sliderPositionsArray = []; // array to track all sliders
-var sliderSVGArray = []; // array of slider SVGs
-var sliderScaleArray = []; // array of slider scale functions
-var sliderMulti = []; // array of sliders
-var handleArray = []; // array of slider handles
-listToDeleteMulti = []; // filtered IDs
+
+createSliders(sliderArrayMain, sliderTitlesArrayMain);
+
+// dictionary of slider columns/locations
+sliderLocations = {
+
+  1: ["Language skills","Logic skills"],
+  3: ["Math skills", "Computer skills"]
+
+}
 
 
-createSliders();
 
-function createSliders(){
+
+
+// map slider name to y position
+var sliderYTranslateMap = new Map();
+
+sliderYTranslateMap.set("Logic skills", window.innerHeight/1.8);
+sliderYTranslateMap.set("Computer skills", window.innerHeight/1.8);
+
+// add all subskill title arrays to the map
+function mapSliders(titlesArray, toHeight) {
+  for (var i = titlesArray.length - 1; i >= 0; i--) {
+    sliderYTranslateMap.set(titlesArray[i], toHeight);
+  }
+}
+
+mapSliders(sliderTitlesArrayLang, window.innerHeight/1.8);
+
+
+
+
+
+
+// createSliders(sliderArrayLang, sliderTitlesArrayLang);
+
+function createSliders(sliderArray, sliderTitlesArray){
 // For Each Slider create the slider
-  for(var i=0; i<sliderArrayMain.length; i++) {
+  for(var i=0; i<sliderArray.length; i++) {
     var column = 3, 
         xtranslate = 3,
         ytranslate = 0,
         posn = "relative";
   // Left column
-	if(["Language skills", "Logic skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
  		column = 1;
  	}
  	 // Right column
-	if(["Math skills", "Computer skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
  		column = 3;
 	}
 	// Bottom row
-	if(["Logic skills", "Computer skills"].includes(sliderTitlesArrayMain[i])){
+	if(["Logic skills", "Computer skills"].includes(sliderTitlesArray[i])){
 		ytranslate = window.innerHeight/1.8;
     // posn = "fixed";
 	}
@@ -1789,7 +1891,7 @@ function createSliders(){
     .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
     	+"font-size: 150%; font-weight: bold;"
     	+" color:  #579E38; font-family: Raleway'>"
-      +sliderTitlesArrayMain[i] // "Language skills"
+      +sliderTitlesArray[i] // "Language skills"
       +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
       +"</div>"
@@ -1797,7 +1899,7 @@ function createSliders(){
   +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       +"font-size: 150%; font-weight: bold;"
       +" color:  #579E38; font-family: Raleway'>"
-      +sliderTitlesArrayMain[i].substring(0,sliderTitlesArrayMain[i].length - 7) // "Language skills"
+      +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
       +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
       +"</div>"
@@ -1805,7 +1907,7 @@ function createSliders(){
   // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
   //     +"font-size: 100%; font-weight: bold;"
   //     +" color:  #579E38; font-family: Raleway'>"
-  //     +sliderTitlesArrayMain[i].substring(0,sliderTitlesArrayMain[i].length - 7) // "Language skills"
+  //     +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
   //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
   //     +"alt='help' height='21' width = '24'>"
   //     +"</div>"
@@ -1844,7 +1946,7 @@ function createSliders(){
     .range([0, 200]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
-  if(["Math skills"].includes(sliderTitlesArrayMain[i])) {
+  if(["Math skills"].includes(sliderTitlesArray[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, 59])
     .range([0, 200]) // Width of slider is 200 px
@@ -1896,7 +1998,7 @@ function createSliders(){
     .attr("r", 9);
 
     // Bugfix: lang slider not on top
-  // if(["Language Skills"].includes(sliderTitlesArrayMain[i])) {
+  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
   //   d3.select("#"+i).style("z-index", 99);
   // }
 
@@ -1954,7 +2056,6 @@ function updateMulti(h) {
 };
 
 };
-
 
 
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
@@ -2128,16 +2229,46 @@ var query = document.getElementById("jobTitle").value;
   });
   return graph;
 }
+}
 
+function createExpandSliderDiv(sliderTitle) { return 
+"<span class='expand-sliders-btn'>"+
+  "<button style='background: none; border: 2px solid green; border-radius: 16px;' onclick='expandSliders()' type='button'>"+
+    "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38'>"+sliderTitle+"</span>"+
+  "</button>"+
+"</span>"
+}
+// append subskill sliders to sliders: (later: on hover, expand a preview div)
 
+// first, append an expand button to the sliders
+function makeSubSliders() {
+  for (var i = sliderArrayMain.length - 1; i >= 0; i--) {
+    // append a button
+    d3.select("#slider"+i)
+      .append("div")
+      .html(createExpandSliderDiv(sliderTitlesArrayMain[i]))
+  }
+}
 
-// let search box respond to Enter
+makeSubSliders();
 
-// document.getElementById("searchInput")
-//     .addEventListener("keyup", function(event) {
-//     event.preventDefault();
-//     if (event.keyCode === 13) {
-//         document.getElementById("searchSubmitBtn").click();
-//     }
-// });
+// expand the subskill sliders
+var slidersExpanded = 0;
+function expandSliders() {
+  slidersExpanded = 1-slidersExpanded;
+  if(slidersExpanded == 1){
+    searchDiv.style("visibility", "visible")
+      .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
+        
+  }
+  if(slidersExpanded == 0){
+    searchDiv.transition().duration(500).style("width", "0px");
+    setTimeout(function() {
+        searchDiv.style("visibility", "hidden");
+      }, 500);
+  }
+}
 
+// add onclick buttons
+
+// onclick, append 4 subskill sliders, or remove subskill sliders
