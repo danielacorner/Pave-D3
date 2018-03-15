@@ -1,4 +1,12 @@
 todos
+
+- move sliderarrays to bottom?
+	or negative margins on chart?
+
+- move legends off of chart
+
+- bug: chart too high, chart moves, areas unclickable
+industry split legend
 - subskill dropdowns
 
 - bug: circles move down after future view & filtering

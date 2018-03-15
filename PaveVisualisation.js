@@ -339,7 +339,7 @@ var forceGravity = d3.forceManyBody()
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 // var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
-  return ((width / m) * d.cluster - width/2) * 1.3 + 50 //try window.innerWidth??
+  return ((d3.select("#chart").attr("width") / m) * d.cluster - d3.select("#chart").attr("width")/2) //try window.innerWidth??
 }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
   return ((height / 2) * d.cluster/40 - 20)
@@ -414,6 +414,7 @@ circles = svg.selectAll("circle")
     // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
     .attr("transform", "translate(0,-100)")
+    .style("z-index", 100)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
@@ -825,7 +826,7 @@ function graphModeOn(mode) {
     //move sliders down
 d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
 d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
-d3.select("#resetFilters").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
+d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -1080,7 +1081,7 @@ d3.select("#chart").transition().duration(500).attr("height",window.innerHeight/
 // move sliders back up
 d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
 d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-d3.select("#resetFilters").transition().duration(500).style("margin-top", 0+"px");
+d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
 
     // remove axes
     axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
@@ -1228,7 +1229,7 @@ function futureModeOn() {
         //move sliders down
     d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
     d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
-    d3.select("#resetFilters").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
+    d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
         //hide pause/play
     d3.select("#freeze").transition().duration(500).style("opacity", 0);
     d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
@@ -1288,7 +1289,7 @@ function futureModeOff() {
     // move sliders back up
     d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
     d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-    d3.select("#resetFilters").transition().duration(500).style("margin-top", 0+"px");
+    d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
         //show pause/play
     d3.select("#freeze").transition().duration(500).style("opacity", 1);
     d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
@@ -1528,8 +1529,14 @@ function createLegend(mode) {
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { if(i<5){return "translate(" + ((i * 60) - 740) + ","+ (145 + (i * 20))+")"; } // bottom left
-                                                      else{return "translate(" + ((i * 60) - 600) + ","+ (-330 + (i * 20))+")"} }) // top right
+                  .attr("transform", function(d, i) { 
+                                    if(i<5){ //first 5 (bottom left)
+                                      return "translate(" + 
+                                      ((i * 60) - d3.select("#chart").attr("width")*0.8) + ","+ // x-translate 
+                                      ((i * 20))+")"; } // y-translate
+                                    else{ // top-right
+                                      return "translate(" + ((i * 60) - d3.select("#chart").attr("width")*0.7) + ","+ //x
+                                      (-d3.select("#chart").attr("height")*0.72 + (i * 20))+")"} }) //y
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
