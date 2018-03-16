@@ -1,7 +1,10 @@
 todos
 
-- move sliderarrays to bottom?
-	or negative margins on chart?
+- search-like button to expand & unhide
+sliders (display: inline)
+
+reorganize html:
+- move sliderarrays to navbar & bottom of chart with negative margins (chart takes entire row)
 
 - move legends off of chart
 
