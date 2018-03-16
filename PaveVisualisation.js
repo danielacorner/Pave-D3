@@ -398,7 +398,7 @@ circles = svg.selectAll("circle")
 .enter().append("circle")
     // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate(0,-110)") //flag!
+    .attr("transform", "translate(0,-105)") //flag!
     .style("z-index", 100)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -1398,7 +1398,7 @@ function resetSimulation() {
 enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate(0,-110)") //flag!
+    .attr("transform", "translate(0,-105)") //flag!
     .style("fill", function(d) { return color(d.cluster); })
 
     // Tooltips
