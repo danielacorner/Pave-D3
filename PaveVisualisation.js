@@ -5,11 +5,23 @@ forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
 // sliders to create
 var sliderArray = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp",
     // subskills
-    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing",
+    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing", // reorganize to match lang-log-mat-com
     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
     "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
     "s13DocumentUse","s14Writing","s15CriticalThinking"
 ];
+
+// var sliderArray = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+//     // subskills
+//     "s8OralCommunication","s10Reading","s14Writing",
+    
+//     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+    
+//     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+      
+//     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+// ];
+
 var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
   // subskills
     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
@@ -1844,7 +1856,8 @@ function createSliders(sliderArray, sliderTitlesArray){
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span class='expand-sliders-btn'>"+
-        "<button style='margin: 5px 0px 0px 10px; width: "+window.innerWidth*0.205+"px; background: none; border: 2px solid green; border-radius: 16px;' onclick='expandSliders("+i+")' type='button'>"+
+        "<button style='margin: 5px 0px 0px 10px; width: "+window.innerWidth*0.205+"px; background: none; border: 2px solid green; border-radius: 16px;' "+
+        "onclick='expandSliders("+i+")' type='button'>"+
           "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" more "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
       "</span></div>")
@@ -1969,11 +1982,11 @@ for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
 
 createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
 
-createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 1, 8);
+createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 1, 7);
 
-createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 3, 12);
+createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 3, 11);
 
-createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 16);
+createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 15);
 
 
 
@@ -1999,7 +2012,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
 
     // Title & SVG
     sliderSVGArray[i+j] = d3.select("#sliderArray"+parentSliderColumn)
-      .append("div").style("display","none")
+      .append("div").style("visibility","hidden")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
         .style("top", ytranslate+160+"px")
@@ -2036,8 +2049,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .style("color", "#579E38")
         .style("font-weight", "bold")
         .style("font-family", "Raleway")
-        .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
-          +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
+        .html("<div id='notmuchlots_"+i+j+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+          +"<span id='notmuchSpan_"+i+j+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
           +"Lots</div>")
         .select(function() {
         return this.parentNode;
@@ -2048,7 +2061,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .style("position", "absolute")
         .style("top", window.innerHeight*0.0335+"px") // y position
         // .style("margin-left", -xtranslate+"%") // x position
-        .attr("id", "slider_"+i)
+        .attr("id", "slider_"+i+j)
         .attr("width", 250)
         .attr("height", 50);
 
@@ -2222,32 +2235,6 @@ filterAll = function() {
 }
 
 
-
-  // sliderArrayUpdateFunctions[i] = updateMulti;
-
-
-      // resize();
-
-
-
-//   makeSubSliders();
-
-// // append subskill sliders to sliders: (later: on hover, expand a preview div)
-
-// // first, append an expand button to the sliders
-//   function makeSubSliders() {
-//     for (var i = sliderArrayMain.length - 1; i >= 0; i--) {
-//       // append a button
-//       d3.select("body")
-//         // .append("g")
-//         .append("div").attr("id", "subsliderDiv_"+i)
-//         .html("<span class='expand-sliders-btn'>"+
-//                 "<button style='background: none; border: 2px solid green; border-radius: 16px;' onclick='expandSliders()' type='button'>"+
-//                   "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38'>&#9650 more "+sliderTitlesArrayMain[i]+" &#9660</span>"+
-//                 "</button>"+
-//               "</span>")
-//     }
-//   }
 };// Update function which detects current slider
 
 
@@ -2444,7 +2431,7 @@ var subSliderDivComp;
       .attr("id", "subSliderWindow_0")
       .style("width", "263px")
       // .style("z-index", 99)
-      .style("height", window.innerHeight*0.35+"px")
+      .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.24+"px")
       .style("left", window.innerWidth*0.034+"px")
@@ -2459,22 +2446,47 @@ var subSliderDivComp;
       //       "<button id='searchSubmitBtn' class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
       //       )
 
+
+// createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
+
+// createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 1, 8);
+
+// createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 3, 12);
+
+// createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 16);
+
+
 var slidersExpanded = [0,0,0,0];
 
-function expandSliders(s) { // (1: Language 2: Logic 3: Math 4: Computer)
+function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Computer)
 
-  slidersExpanded[s] = 1-slidersExpanded[s];
+  slidersExpanded[sliderGroup] = 1-slidersExpanded[sliderGroup];
 
-  if(slidersExpanded[s] == 1){
-    sliderSVGArray[13].style("display", "inline")
-      // .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
-        
-  }
-  if(slidersExpanded[s] == 0){
-    searchDiv.transition().duration(500).style("width", "0px");
-    setTimeout(function() {
-        searchDiv.style("visibility", "hidden");
-      }, 500);
+  switch (sliderGroup) {
+    case 0:
+      if(slidersExpanded[sliderGroup] == 1){ // on
+
+        subSliderDivLang.style("visibility", "visible")
+          .transition().duration(500).style("height", window.innerHeight*0.35+"px");
+
+        setTimeout(function() {
+          for(var i=4; i<7; i++){ // unhide the sliders
+            sliderSVGArray[i].style("visibility", "visible");
+          }
+        }, 500);
+      }
+      if(slidersExpanded[sliderGroup] == 0){ // off
+
+        subSliderDivLang.transition().duration(500).style("height", "0px");
+        setTimeout(function() {
+            subSliderDivLang.style("visibility", "hidden");
+          }, 500);
+
+        for(var i=4; i<7; i++){
+          sliderSVGArray[i].style("visibility", "hidden");
+        }
+      }
+      
   }
 }
 
