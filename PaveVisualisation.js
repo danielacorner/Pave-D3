@@ -1842,12 +1842,12 @@ function createSliders(sliderArray, sliderTitlesArray){
     .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
       +"Lots</div>"+
-      "<div id=subsliderDiv_"+i+">"+
+      "<div id=subSliderDiv_"+i+">"+
       "<span class='expand-sliders-btn'>"+
-              "<button style='margin: 5px 0px 0px 10px; width: "+window.innerWidth*0.205+"px; background: none; border: 2px solid green; border-radius: 16px;' onclick='expandSliders()' type='button'>"+
-                "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" more "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
-              "</button>"+
-            "</span></div>")
+        "<button style='margin: 5px 0px 0px 10px; width: "+window.innerWidth*0.205+"px; background: none; border: 2px solid green; border-radius: 16px;' onclick='expandSliders("+i+")' type='button'>"+
+          "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" more "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+        "</button>"+
+      "</span></div>")
     .select(function() {
     return this.parentNode;
   	})
@@ -1938,54 +1938,7 @@ function createSliders(sliderArray, sliderTitlesArray){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////// Create Sub Sliders //////////////////////////////////////////////////////////////////////
-
+//////////////////////// Create Sub Sliders ///////////////////////////////
 
 // for each slider_1-4,                           (1: Language 2: Logic 3: Math 4: Computer)
 //  for each subskill in that skill
@@ -2055,16 +2008,16 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
           +"font-size: 150%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i] // "Language skills"
-          +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-          +"alt='help' height='21' width = '24'>"
+          // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+          // +"alt='help' height='21' width = '24'>"
           +"</div>"
         // md sm and xs
       +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
           +"font-size: 150%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Language skills"
-          +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-          +"alt='help' height='21' width = '24'>"
+          // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+          // +"alt='help' height='21' width = '24'>"
           +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
@@ -2341,8 +2294,14 @@ searchDiv = d3.select("body")
           )
 
 
+
+
 var searchExpanded = 0;
+
+
+
 function expandSearch() {
+
   searchExpanded = 1-searchExpanded;
   if(searchExpanded == 1){
     searchDiv.style("visibility", "visible")
@@ -2456,19 +2415,62 @@ var query = document.getElementById("jobTitle").value;
 
 
 
-// expand the subskill sliders
-var slidersExpanded = 0;
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
+/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
 
-function expandSliders() {
+// (1: Language 2: Logic 3: Math 4: Computer)
 
-  slidersExpanded = 1-slidersExpanded;
+// create 4 hidden subslider divs 
+var subSliderDivLang;
+var subSliderDivLogi;
+var subSliderDivMath;
+var subSliderDivComp;
 
-  if(slidersExpanded == 1){
-    searchDiv.style("visibility", "visible")
-      .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
+  subSliderDivLang = d3.select("body")
+    .append("div")
+      .attr("id", "subSliderWindow_0")
+      .style("width", "263px")
+      // .style("z-index", 99)
+      .style("height", window.innerHeight*0.35+"px")
+      .style("position", "absolute")
+      .style("top", window.innerHeight*0.24+"px")
+      .style("left", window.innerWidth*0.034+"px")
+      // .style("background-color", "black")
+      .style("border", "2px solid green")
+      .style("border-radius", "16px")
+      .style("visibility", "hidden")
+      // .style("visibility", "visible")
+      // .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
+      //        "style='padding-bottom: 8px; width: 70%' type='text' "+
+      //        "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
+      //       "<button id='searchSubmitBtn' class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
+      //       )
+
+var slidersExpanded = [0,0,0,0];
+
+function expandSliders(s) { // (1: Language 2: Logic 3: Math 4: Computer)
+
+  slidersExpanded[s] = 1-slidersExpanded[s];
+
+  if(slidersExpanded[s] == 1){
+    sliderSVGArray[13].style("display", "inline")
+      // .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
         
   }
-  if(slidersExpanded == 0){
+  if(slidersExpanded[s] == 0){
     searchDiv.transition().duration(500).style("width", "0px");
     setTimeout(function() {
         searchDiv.style("visibility", "hidden");
