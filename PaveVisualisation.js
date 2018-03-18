@@ -2068,23 +2068,45 @@ for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
 }
 
 var sliderXTranslateMap = new Map();
+var fontSizeMap = new Map();
+
+for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
+  fontSizeMap.set(sliderTitlesArray[i], 115)
+}
 
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayLang[i], 10)
+  if(["Job Task Planning and Organizing","Measurement and Calculation",
+    "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLang[i])){
+      fontSizeMap.set(sliderTitlesArrayLang[i], 90)
+  }
 }
 
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 10)
+  if(["Job Task Planning and Organizing","Measurement and Calculation",
+    "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLogi[i])){
+      fontSizeMap.set(sliderTitlesArrayLogi[i], 90)
+  }
 }
 
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayMath[i], 5)
+  if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
+      fontSizeMap.set(sliderTitlesArrayMath[i], 90)
+  }
+  if(["Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayMath[i])){
+      fontSizeMap.set(sliderTitlesArrayMath[i], 70)
+  }
 }
 
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayComp[i], 5)
+  if(["Job Task Planning and Organizing","Measurement and Calculation",
+    "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayComp[i])){
+      fontSizeMap.set(sliderTitlesArrayComp[i], 90)
+  }
 }
-
 
 
 
@@ -2125,21 +2147,21 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .style("position", "absolute")
         .style("top", ytranslate+160+"px")
         // lg and xl
-        .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
-          +"font-size: 115%; font-weight: bold;"
+        .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
+          +"font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i] // "Language skills"
           // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
           // +"alt='help' height='21' width = '24'>"
           +"</div>"
         // md sm and xs
-      +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
-          +"font-size: 115%; font-weight: bold;"
-          +" color:  #579E38; font-family: Raleway'>"
-          +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
-          // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-          // +"alt='help' height='21' width = '24'>"
-          +"</div>"
+      // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
+      //     +"font-size: 115%; font-weight: bold;"
+      //     +" color:  #579E38; font-family: Raleway'>"
+      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
+      //     // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      //     // +"alt='help' height='21' width = '24'>"
+      //     +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 100%; font-weight: bold;"
