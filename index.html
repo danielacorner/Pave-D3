@@ -238,7 +238,7 @@
 			<button id="resetFilters" style="box-shadow: 3px 3px 17px grey; background: #A6B0A8; font-size: 14px; height: 32px;" type="button" class="btn btn-md">
 			<span style="color: white; font-weight: bold; font-family: Raleway; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
-			<!-- <span style='padding-left: 130px'></span> -->
+
 			<button id="freeze" style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
 			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-pause"></i></button>
@@ -246,8 +246,20 @@
 			<button id="unfreeze" style="display: none; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
 			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-play"></i></button>
-		</div>
 
+		<!-- Size dropdown -->
+
+			<div class="dropdown" id="sizeByDropdown" style="display: inline; font-size: 14px; height: 32px;">
+		  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px; display: inline; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8">Size 
+		  <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    <li><a id="workLink" href="#">Workers</a></li>
+		    <li><a id="wageLink" href="#">Wage</a></li>
+		    <li><a id="autoLink" href="#">Automation risk</a></li>
+		    <li><a id="yearLink" href="#">Years of study</a></li>
+		  </ul>
+			</div>
+		</div>
 		<!-- end of centerDiv -->
 	</div>
 

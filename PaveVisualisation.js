@@ -631,8 +631,83 @@ drag_handler(circles);
 
 ///////////////////////////////// Buttons ////////////////////////////////////
 
+// Size dropdown
+
+var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
+.domain([10, d3.max(nodes, function(d) { return d.wage })]) // input
+.range([1,maxRadius]); // output -- need to think about relative scales for each set of sizes
+
+var automationRadiusScale = d3.scaleSqrt()
+.domain([0.01, d3.max(nodes, function(d) { return d.automationRisk })])
+.range([1,maxRadius]);
+
+var skillsLangRadiusScale = d3.scaleSqrt()
+.domain([10, d3.max(nodes, function(d) { return d.skillsLang })])
+.range([1,maxRadius]);
 
 
+d3.select("#workLink").on('click', function() {
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, radiusScale(d.workers));
+      return function(t) { return d.radius = i(t); };
+    });
+
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
+
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+  }
+});
+d3.select("#wageLink").on('click', function() {
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, wageRadiusScale(d.wage));
+      return function(t) { return d.radius = i(t); };
+    });
+
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
+    
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+  }
+});
+d3.select("#autoLink").on('click', function() {
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
+    
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+  }
+});
+d3.select("#yearLink").on('click', function() {
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, skillsLangRadiusScale(d.skillsLang));
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
+
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+  }
+});
 
 
 //////////// Industry Split ////////////////

@@ -1,5 +1,12 @@
 todos
 
+- "size represents: " dropdown
+
+- mini-bars to display on hover tooltip
+
+- fix bars: append a 2nd div to click tooltip with bars
+(can get fancy w the design)
+
 - search-like button to expand & unhide
 sliders (display: inline)
 
