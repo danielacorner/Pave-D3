@@ -3,31 +3,42 @@ forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceY
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
 
 // sliders to create
-var sliderArray = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp",
-    // subskills
-    "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing", // reorganize to match lang-log-mat-com
-    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
-    "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
-    "s13DocumentUse","s14Writing","s15CriticalThinking"
-];
-
-// var sliderArray = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+// var sliderArray = [
+// // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
 //     // subskills
-//     "s8OralCommunication","s10Reading","s14Writing",
-    
-//     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
-    
-//     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
-      
-//     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+//     "s1DataAnalysis","s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing", // reorganize to match lang-log-mat-com
+//     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s8OralCommunication",
+//     "s9ProblemSolving","s10Reading","s11SchedulingorBudgetingandAccounting","s12DigitalTechnology",
+//     "s13DocumentUse","s14Writing","s15CriticalThinking"
 // ];
 
-var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
+var sliderArray = [
+// "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+    // subskills
+    "s8OralCommunication","s10Reading","s14Writing",
+    
+    "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+    
+    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+      
+    "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+];
+
+// var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
+//   // subskills
+//     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
+//     "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
+//     "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
+//     "Document Use","Writing","Critical Thinking"
+//     ];
+
+var sliderTitlesArray = [
+// "Language skills", "Logic skills", "Math skills", "Computer skills",
   // subskills
-    "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
-    "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
-    "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
-    "Document Use","Writing","Critical Thinking"
+    "Oral Communication","Reading","Writing",
+    "Job Task Planning and Organizing","Problem Solving","Critical Thinking","Decision-Making",
+    "Measurement and Calculation","Money Math","Numerical Estimation","Scheduling or Budgeting and Accounting",
+    "Data Analysis","Finding Information","Digital Technology","Document Use"
     ];
 
 var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
@@ -41,8 +52,8 @@ var sliderTitlesArrayMain = [
 var sliderArrayLang = ["s8OralCommunication","s10Reading","s14Writing"];
 var sliderTitlesArrayLang = ["Oral Communication","Reading","Writing"];
 
-var sliderArrayLogi = ["s2DecisionMaking","s3FindingInformation","s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking"];
-var sliderTitlesArrayLogi = ["Decision-Making","Finding Information","Job Task Planning and Organizing","Problem Solving","Critical Thinking"];
+var sliderArrayLogi = ["s2DecisionMaking","s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking"];
+var sliderTitlesArrayLogi = ["Decision-Making","Job Task Planning and Organizing","Problem Solving","Critical Thinking"];
 
 var sliderArrayMath = ["s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting"];
 var sliderTitlesArrayMath = ["Measurement and Calculation","Money Math","Numerical Estimation","Scheduling or Budgeting and Accounting"];
@@ -634,16 +645,16 @@ drag_handler(circles);
 // Size dropdown
 
 var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
-.domain([10, d3.max(nodes, function(d) { return d.wage })]) // input
-.range([1,maxRadius]); // output -- need to think about relative scales for each set of sizes
+.domain([d3.min(nodes, function(d) { return d.wage }), d3.max(nodes, function(d) { return d.wage })]) // input
+.range([1,maxRadius/1.2]); // output -- need to think about relative scales for each set of sizes
 
 var automationRadiusScale = d3.scaleSqrt()
 .domain([0.01, d3.max(nodes, function(d) { return d.automationRisk })])
-.range([1,maxRadius]);
+.range([1,maxRadius/3]);
 
-var skillsLangRadiusScale = d3.scaleSqrt()
-.domain([10, d3.max(nodes, function(d) { return d.skillsLang })])
-.range([1,maxRadius]);
+var yearRadiusScale = d3.scaleSqrt()
+.domain([d3.min(nodes, function(d) { return d.yearsStudy }), d3.max(nodes, function(d) { return d.yearsStudy })])
+.range([0.01,maxRadius/2]);
 
 
 d3.select("#workLink").on('click', function() {
@@ -660,7 +671,7 @@ d3.select("#workLink").on('click', function() {
     setTimeout(function() { resetSimulation() }, 700);
 
     setTimeout(function() { enterUpdateCircles();
-      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
   }
 });
 d3.select("#wageLink").on('click', function() {
@@ -677,7 +688,7 @@ d3.select("#wageLink").on('click', function() {
     setTimeout(function() { resetSimulation() }, 700);
     
     setTimeout(function() { enterUpdateCircles();
-      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
   }
 });
 d3.select("#autoLink").on('click', function() {
@@ -693,7 +704,7 @@ d3.select("#autoLink").on('click', function() {
     setTimeout(function() { resetSimulation() }, 700);
     
     setTimeout(function() { enterUpdateCircles();
-      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
   }
 });
 d3.select("#yearLink").on('click', function() {
@@ -701,7 +712,7 @@ d3.select("#yearLink").on('click', function() {
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
-      var i = d3.interpolate(d.radius, skillsLangRadiusScale(d.skillsLang));
+      var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
       return function(t) { return d.radius = i(t); };
     });
   if(graphMode == 0 && futureMode == 0) {
@@ -709,7 +720,7 @@ d3.select("#yearLink").on('click', function() {
     setTimeout(function() { resetSimulation() }, 700);
 
     setTimeout(function() { enterUpdateCircles();
-      simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
   }
 });
 
@@ -2084,14 +2095,13 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
 
     var xtranslate = 3,
         ytranslate = 0,
-        posn = "relative";
     // Left column
 
     ytranslate = sliderYTranslateMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
     sliderSVGArray[i+j] = d3.select("#sliderArray"+parentSliderColumn)
-      .append("div").style("visibility","hidden")
+      .append("div").style("visibility","visible")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
         .style("top", ytranslate+160+"px")
@@ -2107,7 +2117,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
       +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
           +"font-size: 150%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
-          +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Language skills"
+          +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
           // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
           // +"alt='help' height='21' width = '24'>"
           +"</div>"
@@ -2120,7 +2130,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
       //     +"alt='help' height='21' width = '24'>"
       //     +"</div>"
           )
-      .append("div")
+      .append("div").attr("id", "sliderDiv2_"+subSliderArray[i])
         .attr("align", "left")
         .style("position", "relative")
         .style("margin-top", "19%")
@@ -2134,7 +2144,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .select(function() {
         return this.parentNode;
         })
-      .append("svg")
+      .append("svg").attr("id", "sliderSvg_"+subSliderArray[i])
         .style("z-index", 99)
         .attr("viewBox", "0 0 "+250+" "+50)
         .style("position", "absolute")
@@ -2147,6 +2157,13 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
 
      
     sliderSVGArray[i+j].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
+
+    // hide until shown
+    sliderSVGArray[i+j].style("visibility","hidden")
+    // d3.select("#sliderDiv2_"+sliderArray[i+j]).style("visibility", "hidden")
+    d3.select("#notmuchlots_"+i+j).style("visibility", "hidden")
+    d3.select("#sliderDiv_"+subSliderArray[i]).style("visibility", "hidden")
+
 
 
     // Scale
@@ -2549,8 +2566,11 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .transition().duration(500).style("height", window.innerHeight*0.35+"px");
 
         setTimeout(function() {
-          for(var i=4; i<7; i++){ // unhide the sliders
-            sliderSVGArray[i].style("visibility", "visible");
+          for(var i=0; i<3; i++){ // unhide the sliders
+            sliderSVGArray[i+4].style("visibility", "visible");
+            d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
+            d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
+            d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
         }, 500);
       }
@@ -2561,8 +2581,11 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
             subSliderDivLang.style("visibility", "hidden");
           }, 500);
 
-        for(var i=4; i<7; i++){
-          sliderSVGArray[i].style("visibility", "hidden");
+        for(var i=0; i<3; i++){
+          sliderSVGArray[i+4].style("visibility", "hidden");
+          d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
+          d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
+          d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
         }
       }
       
