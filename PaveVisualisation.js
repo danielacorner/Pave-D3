@@ -2052,19 +2052,37 @@ function createSliders(sliderArray, sliderTitlesArray){
 var sliderYTranslateMap = new Map();
 
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.1*i)
+  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i)
 }
 
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.1*i+30)
+  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i+180)
 }
 
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.1*i)
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i)
 }
 
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.1*i+140)
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+180)
+}
+
+var sliderXTranslateMap = new Map();
+
+for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
+  sliderXTranslateMap.set(sliderTitlesArrayLang[i], 10)
+}
+
+for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
+  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 10)
+}
+
+for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
+  sliderXTranslateMap.set(sliderTitlesArrayMath[i], 5)
+}
+
+for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
+  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 5)
 }
 
 
@@ -2093,11 +2111,12 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
     // --> increment i by j
     var j = indexIn_sliderArray;
 
-    var xtranslate = 3,
+    var xtranslate = 13,
         ytranslate = 0,
     // Left column
 
     ytranslate = sliderYTranslateMap.get(subSliderTitlesArray[i])
+    xtranslate = sliderXTranslateMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
     sliderSVGArray[i+j] = d3.select("#sliderArray"+parentSliderColumn)
@@ -2107,7 +2126,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .style("top", ytranslate+160+"px")
         // lg and xl
         .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
-          +"font-size: 150%; font-weight: bold;"
+          +"font-size: 115%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i] // "Language skills"
           // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
@@ -2115,7 +2134,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
           +"</div>"
         // md sm and xs
       +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
-          +"font-size: 150%; font-weight: bold;"
+          +"font-size: 115%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
           // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
@@ -2134,7 +2153,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         .attr("align", "left")
         .style("position", "relative")
         .style("margin-top", "19%")
-        .style("margin-left", (xtranslate)+"%")
+        .style("margin-left", 13+"%")
         .style("color", "#579E38")
         .style("font-weight", "bold")
         .style("font-family", "Raleway")
@@ -2146,7 +2165,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
         })
       .append("svg").attr("id", "sliderSvg_"+subSliderArray[i])
         .style("z-index", 99)
-        .attr("viewBox", "0 0 "+250+" "+50)
+        .style("left", xtranslate+"px")
+        .attr("viewBox", "0 10 "+250+" "+50)
         .style("position", "absolute")
         .style("top", window.innerHeight*0.0335+"px") // y position
         // .style("margin-left", -xtranslate+"%") // x position
@@ -2183,7 +2203,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
     sliderMulti[i+j] = sliderSVGArray[i+j].append("g") // switch to SVG with viewBox?
       .attr("class", "slider")
       // .style("z-index", 99)
-      .attr("transform", "translate(" + 25 + "," + 25 + ")");
+      .attr("transform", "translate(" + (15+xtranslate) + "," + 25 + ")");
 
       // track
       sliderMulti[i+j].append("line")
@@ -2525,23 +2545,50 @@ var subSliderDivComp;
   subSliderDivLang = d3.select("body")
     .append("div")
       .attr("id", "subSliderWindow_0")
-      .style("width", "263px")
-      // .style("z-index", 99)
+      .style("width", "250px")
       .style("height", "0px")
       .style("position", "absolute")
-      .style("top", window.innerHeight*0.24+"px")
-      .style("left", window.innerWidth*0.034+"px")
-      // .style("background-color", "black")
+      .style("top", window.innerHeight*0.26+"px")
+      .style("left", window.innerWidth*0.032+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
-      // .style("visibility", "visible")
-      // .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
-      //        "style='padding-bottom: 8px; width: 70%' type='text' "+
-      //        "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-      //       "<button id='searchSubmitBtn' class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
-      //       )
 
+  subSliderDivLogi = d3.select("body")
+    .append("div")
+      .attr("id", "subSliderWindow_1")
+      .style("width", "250px")
+      .style("height", "0px")
+      .style("position", "absolute")
+      .style("top", window.innerHeight*0.95+"px")
+      .style("left", window.innerWidth*0.034+"px")
+      .style("border", "2px solid green")
+      .style("border-radius", "16px")
+      .style("visibility", "hidden")
+
+  subSliderDivMath = d3.select("body")
+    .append("div")
+      .attr("id", "subSliderWindow_0")
+      .style("width", "250px")
+      .style("height", "0px")
+      .style("position", "absolute")
+      .style("top", window.innerHeight*0.26+"px")
+      .style("right", window.innerWidth*0.014+"px")
+      .style("border", "2px solid green")
+      .style("border-radius", "16px")
+      .style("visibility", "hidden")
+
+  subSliderDivComp = d3.select("body")
+    .append("div")
+      .attr("id", "subSliderWindow_1")
+      .style("width", "250px")
+      .style("height", "0px")
+      .style("position", "absolute")
+      .style("top", window.innerHeight*0.95+"px")
+      .style("right", window.innerWidth*0.014+"px")
+      .style("border", "2px solid green")
+      .style("border-radius", "16px")
+      .style("visibility", "hidden")
 
 // createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
 
@@ -2559,39 +2606,202 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
   slidersExpanded[sliderGroup] = 1-slidersExpanded[sliderGroup];
 
   switch (sliderGroup) {
-    case 0:
-      if(slidersExpanded[sliderGroup] == 1){ // on
+
+    case 0: // Language
+
+      if(slidersExpanded[0] == 1){ // on
+        
+        //if any others are on, turn them off
+        if(slidersExpanded[1] == 1){
+          slidersExpanded[1] = 0;
+          hideLogi() }
+        if(slidersExpanded[2] == 1){ 
+          slidersExpanded[2] = 0;
+          hideMath() }
+        if(slidersExpanded[3] == 1){ 
+          slidersExpanded[3] = 0;
+          hideComp() }
 
         subSliderDivLang.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.35+"px");
+          .transition().duration(500).style("height", window.innerHeight*0.25+"px");
 
         setTimeout(function() {
           for(var i=0; i<3; i++){ // unhide the sliders
             sliderSVGArray[i+4].style("visibility", "visible");
             d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
-            d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
+            // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
         }, 500);
       }
-      if(slidersExpanded[sliderGroup] == 0){ // off
+      if(slidersExpanded[0] == 0){ // off
+        hideLang()
+      }
+      
+    case 1: // Logic
 
-        subSliderDivLang.transition().duration(500).style("height", "0px");
+      if(slidersExpanded[1] == 1){ // on
+
+        //if any others are on, turn them off
+        if(slidersExpanded[0] == 1){
+          slidersExpanded[0] = 0;
+          hideLang() }
+        if(slidersExpanded[2] == 1){ 
+          slidersExpanded[2] = 0;
+          hideMath() }
+        if(slidersExpanded[3] == 1){ 
+          slidersExpanded[3] = 0;
+          hideComp() }
+
+        subSliderDivLogi.style("visibility", "visible")
+          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+          .style("top", window.innerHeight*0.45+"px");
+
         setTimeout(function() {
-            subSliderDivLang.style("visibility", "hidden");
-          }, 500);
+          for(var i=3; i<7; i++){ // unhide the sliders
+            sliderSVGArray[i+4].style("visibility", "visible");
+            d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
+            // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
+            d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
+          }
+        }, 500);
+      }
+      if(slidersExpanded[1] == 0){ // off
+        hideLogi()
+      }
+      
+    case 2: // Math
 
-        for(var i=0; i<3; i++){
-          sliderSVGArray[i+4].style("visibility", "hidden");
-          d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
-          d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
-          d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
-        }
+      if(slidersExpanded[2] == 1){ // on
+
+        //if any others are on, turn them off
+        if(slidersExpanded[0] == 1){
+          slidersExpanded[0] = 0;
+          hideLang() }
+        if(slidersExpanded[1] == 1){ 
+          slidersExpanded[1] = 0;
+          hideLogi() }
+        if(slidersExpanded[3] == 1){ 
+          slidersExpanded[3] = 0;
+          hideComp() }
+
+        subSliderDivMath.style("visibility", "visible")
+          .transition().duration(500).style("height", window.innerHeight*0.35+"px");
+
+        setTimeout(function() {
+          for(var i=7; i<11; i++){ // unhide the sliders
+            sliderSVGArray[i+4].style("visibility", "visible");
+            d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
+            // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
+            d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
+          }
+        }, 500);
+      }
+      if(slidersExpanded[2] == 0){ // off
+        hideMath()
+      }
+      
+    case 3: // Computers
+
+      if(slidersExpanded[3] == 1){ // on
+
+        //if any others are on, turn them off
+        if(slidersExpanded[0] == 1){
+          slidersExpanded[0] = 0;
+          hideLang() }
+        if(slidersExpanded[2] == 1){ 
+          slidersExpanded[2] = 0;
+          hideMath() }
+        if(slidersExpanded[1] == 1){ 
+          slidersExpanded[1] = 0;
+          hideLogi() }
+
+        subSliderDivComp.style("visibility", "visible")
+          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+          .style("top", window.innerHeight*0.45+"px");
+
+        setTimeout(function() {
+          for(var i=11; i<15; i++){ // unhide the sliders
+            sliderSVGArray[i+4].style("visibility", "visible");
+            d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
+            // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
+            d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
+          }
+        }, 500);
+      }
+      if(slidersExpanded[3] == 0){ // off
+        hideComp()
       }
       
   }
 }
 
+function hideLang() {
+  subSliderDivLang.transition().duration(500).style("height", "0px");
+  setTimeout(function() {
+      subSliderDivLang.style("visibility", "hidden");
+    }, 500);
+
+  for(var i=0; i<3; i++){
+    sliderSVGArray[i+4].style("visibility", "hidden");
+    d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
+    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
+    d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
+  }
+}
+
+function hideLogi() {
+  subSliderDivLogi.transition().duration(500).style("height", "0px")
+  .style("top", window.innerHeight*0.95+"px");
+
+  setTimeout(function() {
+      subSliderDivLogi.style("visibility", "hidden");
+    }, 500);
+
+  for(var i=3; i<7; i++){
+    sliderSVGArray[i+4].style("visibility", "hidden");
+    d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
+    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
+    d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
+  }
+}
+
+function hideMath() {
+  subSliderDivMath.transition().duration(500).style("height", "0px");
+  setTimeout(function() {
+      subSliderDivMath.style("visibility", "hidden");
+    }, 500);
+
+  for(var i=7; i<11; i++){
+    sliderSVGArray[i+4].style("visibility", "hidden");
+    d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
+    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
+    d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
+  }
+}
+
+function hideComp() {
+  subSliderDivComp.transition().duration(500).style("height", "0px")
+  .style("top", window.innerHeight*0.95+"px");
+
+  setTimeout(function() {
+      subSliderDivComp.style("visibility", "hidden");
+    }, 500);
+
+  for(var i=11; i<15; i++){
+    sliderSVGArray[i+4].style("visibility", "hidden");
+    d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
+    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
+    d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
+  }
+}
+
+function hideAll() {
+  hideLang()
+  hideLogi()
+  hideMath()
+  hideComp()
+}
 // add onclick buttons
 
 // onclick, append? 4 subskill sliders, or remove subskill sliders

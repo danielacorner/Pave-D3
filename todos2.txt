@@ -1,6 +1,7 @@
 todos
 
-- "size represents: " dropdown
+- subskill slider function
+- subskill slider white background
 
 - mini-bars to display on hover tooltip
 
