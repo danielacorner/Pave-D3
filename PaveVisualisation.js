@@ -13,7 +13,7 @@ forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
 // ];
 
 var sliderArray = [
-// "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+"skillsLang", "skillsLogi", "skillsMath", "skillsComp",
     // subskills
     "s8OralCommunication","s10Reading","s14Writing",
     
@@ -96,7 +96,7 @@ d3.selection.prototype.moveToFront = function() {
       });
     };
 
-// d3.select("#combine").style("display", "none");
+// d3.select("#combine").style("visibility", "hidden");
 
 var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
@@ -212,9 +212,9 @@ if(window.innerWidth<768){
   d3.select("#sliderArray3").style("margin-left", "-500%")
   d3.select("#industry").style("display","none")
 
-  d3.select("#random").style("display", "inline")
+  d3.select("#random").style("visibility", "visible")
   if(window.innerWidth<750) {
-    d3.select("#random").style("display", "none")
+    d3.select("#random").style("visibility", "hidden")
     if(window.innerWidth<684) {
       d3.select("#sliderArray1").style("margin-right", "-600%")
       d3.select("#sliderArray3").style("margin-left", "-600%")
@@ -737,7 +737,7 @@ d3.select("#industry").on('click', function() {
 
   d3.select("#industry").style("display","none");
   d3.select("#random").style("display","none");
-  d3.select("#combine").style("display", "inline");
+  d3.select("#combine").style("visibility", "visible");
 
   legend.transition().duration(500).style("opacity", 0).remove();
   createLegend(1); // create Industry split legend
@@ -768,7 +768,7 @@ d3.select("#combine").on('click', function(d) {
 
   d3.select("#industry").style("display","inline");
   d3.select("#random").style("display","inline");
-  d3.select("#combine").style("display", "none");
+  d3.select("#combine").style("visibility", "hidden");
 
   if (graphMode == 0 && futureMode == 0) {
     simulation
@@ -829,16 +829,16 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 d3.select("#freeze").on('click', function(d) {
   simulation.stop();
 
-  d3.select("#freeze").style("display", "none");
-  d3.select("#unfreeze").style("display", "inline");
+  d3.select("#freeze").style("visibility", "hidden");
+  d3.select("#unfreeze").style("visibility", "visible");
 
 });
 ////////////////// unFreeze! (unPause) ////////////////////////
 d3.select("#unfreeze").on('click', function(d) {
   simulation.alpha(0.7).alphaTarget(0.001).restart();
 
-  d3.select("#freeze").style("display", "inline");
-  d3.select("#unfreeze").style("display", "none");
+  d3.select("#freeze").style("visibility", "visible");
+  d3.select("#unfreeze").style("visibility", "hidden");
 
 });
 
@@ -1130,7 +1130,7 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
 
 d3.select("#industry").style("display","none");
 d3.select("#random").style("display","none");
-d3.select("#combine").style("display", "inline");
+d3.select("#combine").style("visibility", "visible");
 d3.select(".btn-group").style("padding-left", "0px");
 
 d3.select("#chart").attr("height", (window.innerHeight*0.6) );
@@ -1150,9 +1150,9 @@ d3.select("#chart").attr("height", (window.innerHeight*0.6) );
 function graphModeOff() {
 
 
-d3.select("#combine").style("display", "none");
+d3.select("#combine").style("visibility", "hidden");
 
-d3.select("#graphModesDiv").style("visibility","hidden");
+d3.select("#graphModesDiv").style("display","none");
 
 d3.select("#freeze").transition().duration(500).style("opacity", 1);
 d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
@@ -1878,9 +1878,9 @@ createSliders(sliderArrayMain, sliderTitlesArrayMain);
 
 
 
-function createSliders(sliderArray, sliderTitlesArray){
+function createSliders(createSliderArray, sliderTitlesArray){
 // For Each Slider create the slider
-  for(var i=0; i<sliderArray.length; i++) {
+  for(var i=0; i<createSliderArray.length; i++) {
     var column = 3, 
         xtranslate = 3,
         ytranslate = 0,
@@ -2142,7 +2142,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
 
     // Title & SVG
     sliderSVGArray[i+j] = d3.select("#sliderArray"+parentSliderColumn)
-      .append("div").style("visibility","visible")
+      .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
         .style("top", ytranslate+160+"px")
@@ -2201,7 +2201,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
     sliderSVGArray[i+j].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
     // hide until shown
-    sliderSVGArray[i+j].style("visibility","hidden")
+    sliderSVGArray[i+j].style("display","none")
     // d3.select("#sliderDiv2_"+sliderArray[i+j]).style("visibility", "hidden")
     d3.select("#notmuchlots_"+i+j).style("visibility", "hidden")
     d3.select("#sliderDiv_"+subSliderArray[i]).style("visibility", "hidden")
@@ -2286,9 +2286,10 @@ function updateMulti(h) {
   // using the slider handle
   var sliderID = event.target.id;
   handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
-  
+
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
+
   //  UPDATE
   circles = circles.data(filterAll(), function(d) { return d.id });
   
@@ -2345,8 +2346,10 @@ filterAll = function() {
       for(var s=0; s<sliderPositionsArray.length; s++){
         // if the slider position is above your value, put you on the list
         var checkMin = sliderPositionsArray[s];
-        if(d[sliderArrayMain[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArrayMain[s]])) {
+        if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
           listToDeleteMulti.push(d.id);
+          console.log(sliderArray[s])
+          console.log(d[sliderArray[s]])
         }
 
       }
@@ -2558,7 +2561,7 @@ var query = document.getElementById("jobTitle").value;
 
 // (1: Language 2: Logic 3: Math 4: Computer)
 
-// create 4 hidden subslider divs 
+// create 4 none subslider divs 
 var subSliderDivLang;
 var subSliderDivLogi;
 var subSliderDivMath;
@@ -2648,8 +2651,10 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .transition().duration(500).style("height", window.innerHeight*0.25+"px");
 
         setTimeout(function() {
-          for(var i=0; i<3; i++){ // unhide the sliders
-            sliderSVGArray[i+4].style("visibility", "visible");
+          for(var i=4; i<7; i++){ // unhide the sliders
+            sliderSVGArray[i].style("display", "inline");
+            handleArray[i].style("display", "inline");
+            sliderMulti[i].style("display", "inline")
             d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
@@ -2680,8 +2685,10 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
-          for(var i=3; i<7; i++){ // unhide the sliders
-            sliderSVGArray[i+4].style("visibility", "visible");
+          for(var i=7; i<11; i++){ // unhide the sliders
+            sliderSVGArray[i].style("display", "inline");
+            handleArray[i].style("display", "inline");
+            sliderMulti[i].style("display", "inline")
             d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
@@ -2711,8 +2718,10 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .transition().duration(500).style("height", window.innerHeight*0.35+"px");
 
         setTimeout(function() {
-          for(var i=7; i<11; i++){ // unhide the sliders
-            sliderSVGArray[i+4].style("visibility", "visible");
+          for(var i=11; i<15; i++){ // unhide the sliders
+            sliderSVGArray[i].style("display", "inline");
+            handleArray[i].style("display", "inline");
+            sliderMulti[i].style("display", "inline")
             d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
@@ -2743,8 +2752,10 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
-          for(var i=11; i<15; i++){ // unhide the sliders
-            sliderSVGArray[i+4].style("visibility", "visible");
+          for(var i=15; i<19; i++){ // unhide the sliders
+            sliderSVGArray[i].style("display", "inline");
+            handleArray[i].style("display", "inline");
+            sliderMulti[i].style("display", "inline")
             d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "visible");
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
@@ -2764,8 +2775,10 @@ function hideLang() {
       subSliderDivLang.style("visibility", "hidden");
     }, 500);
 
-  for(var i=0; i<3; i++){
-    sliderSVGArray[i+4].style("visibility", "hidden");
+  for(var i=4; i<7; i++){
+    sliderSVGArray[i].style("display", "none");
+    handleArray[i].style("display", "none");
+    sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
@@ -2780,8 +2793,10 @@ function hideLogi() {
       subSliderDivLogi.style("visibility", "hidden");
     }, 500);
 
-  for(var i=3; i<7; i++){
-    sliderSVGArray[i+4].style("visibility", "hidden");
+  for(var i=7; i<11; i++){
+    sliderSVGArray[i].style("display", "none");
+    handleArray[i].style("display", "none");
+    sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
@@ -2794,8 +2809,10 @@ function hideMath() {
       subSliderDivMath.style("visibility", "hidden");
     }, 500);
 
-  for(var i=7; i<11; i++){
-    sliderSVGArray[i+4].style("visibility", "hidden");
+  for(var i=11; i<15; i++){
+    sliderSVGArray[i].style("display", "none");
+    handleArray[i].style("display", "none");
+    sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
@@ -2810,8 +2827,10 @@ function hideComp() {
       subSliderDivComp.style("visibility", "hidden");
     }, 500);
 
-  for(var i=11; i<15; i++){
-    sliderSVGArray[i+4].style("visibility", "hidden");
+  for(var i=15; i<19; i++){
+    sliderSVGArray[i].style("display", "none");
+    handleArray[i].style("display", "none");
+    sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");

@@ -1,5 +1,9 @@
 todos
 
+- Future view y-axis
+
+- switch html from row to cols
+
 - subskill slider function
 - subskill slider white background
 
