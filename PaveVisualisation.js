@@ -2213,6 +2213,85 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
       .domain([0, d3.max(nodes, function(d){ return d[subSliderArray[i]]})])
       .range([0, 200]) // Width of slider is 200 px
       .clamp(true);
+
+    if(["Oral Communication"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 43])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Reading"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 49])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Writing"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 55])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Job Task Planning and Organizing"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 23])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Critical Thinking"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 20])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Problem Solving"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 23])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Document Use"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 33])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Data Analysis"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 25])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Finding Information"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 20])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Digital Technology"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 58])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Measurement and Calculation"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 31])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Scheduling or Budgeting and Accounting"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 28])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
+    if(["Numerical Estimation"].includes(subSliderTitlesArray[i])){
+      sliderScaleArray[i+j] = d3.scaleLinear()
+        .domain([0, 11])
+        .range([0, 200]) // Width of slider is 200 px
+        .clamp(true);      
+    }
     // Bugfix: math max not working
     // if(["Math skills"].includes(subSliderTitlesArray[i])) {
     // sliderScaleArray[i] = d3.scaleLinear()
