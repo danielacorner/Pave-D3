@@ -137,7 +137,7 @@
 
 	<div id="topDiv">			
 		<!-- logic, math -->
-		<div id="sliderArray1" type="text" class="col-2 slider"></div>
+		<div id="sliderArray1" type="text" class="slider"></div>
 		
 		<!-- removed: slider with dropdown selection -->
 		<!-- <div style="visibility: hidden; position: relative; bottom: 600px; left: 270px" align="left" id="dropdownSliderDiv"> -->
@@ -157,7 +157,7 @@
 
 	<!-- Column 2: Buttons & Viz -->
 
-	<div id="centerDiv" class="col-10">
+	<div id="centerDiv">
 		
 		<!-- Buttons -->
 
@@ -196,7 +196,22 @@
 		</div> <!-- end of buttons -->
 
 		<!-- the graphing canvas -->
-		<svg viewBox="0 0 400 300" id="chart" style="margin-top: 10%; margin-left:auto; margin-right:auto; display:block; width: 100%; height: auto;" class="chart">	</svg>
+		<svg viewBox="0 0 400 300" id="chart" style="margin-top: 10%; display:block; width: 100%; height: auto;" class="chart">	</svg>
+
+		<!-- suggested views buttons -->
+		<div id="graphModesDiv" style="position: absolute; bottom: 50%; right: 25%; visibility: hidden;">
+
+			<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px;">
+			Suggested Views</span>
+			 	
+		 	<li class="list-graphModes" style="padding-top: 10px;"><button class="btn-graphModes" id="a0" href="#">
+		 	Machine Automation   vs.  Number of Jobs</button></li>
+		 	<li class="list-graphModes"><button class="btn-graphModes" id="a1" href="#">
+		 	Wage   vs.  Years of Study</button></li>
+		 	<li class="list-graphModes"><button class="btn-graphModes" id="a2"  href="#">
+		 	Wage  vs.  Number of Jobs</button></li>
+				 
+		</div>
 
 		<!-- This is D3, our graphing library -->
 		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
@@ -214,7 +229,7 @@
 		<g class="legend" id="legend"></g>		
 
 		<!-- The data visualization -->
-		<script src="PaveVisualisation.js"></script>
+		<script src="PaveVisualisation_redo.js"></script>
 
 		<!-- Reset, pause, play buttons -->
 		<div id="playPauseDiv" align="center" style="position: relative; bottom: 15%">
@@ -262,7 +277,7 @@
 
 	<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
 
-	<div id="rightDiv" class="col-1">
+	<div id="bottomDiv" class="col-1">
 
 
 		<!-- slider array 2 -->
@@ -273,24 +288,9 @@
 	
 		<!-- slider array 3 -->
 
-		<div id="sliderArray3" style="position: relative;  margin-left: -300%; right: 10px;" type="text" class="slider"></div>
+		<div id="sliderArray3" type="text" class="slider"></div>
 
-		<!-- suggested views buttons -->
-		<div id="graphModesDiv" style="position: absolute; bottom: 50%; right: 25%; visibility: hidden;">
-
-			<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px;">
-			Suggested Views</span>
-			 	
-		 	<li class="list-graphModes" style="padding-top: 10px;"><button class="btn-graphModes" id="a0" href="#">
-		 	Machine Automation   vs.  Number of Jobs</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a1" href="#">
-		 	Wage   vs.  Years of Study</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a2"  href="#">
-		 	Wage  vs.  Number of Jobs</button></li>
-				 
-		</div>
-
-	</div>	<!-- end of rightDiv -->	
+	</div>	<!-- end of bottomDiv -->	
 
 
 <!-- /* Launching joyride when page is loaded */ -->
