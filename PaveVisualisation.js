@@ -679,7 +679,7 @@ d3.select("#wageLink").on('click', function() {
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
-      var i = d3.interpolate(d.radius, wageRadiusScale(d.wage));
+      var i = d3.interpolate(d.radius, wageRadiusScale(d.wage)/1.2);
       return function(t) { return d.radius = i(t); };
     });
 
@@ -696,7 +696,7 @@ d3.select("#autoLink").on('click', function() {
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
-      var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+      var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk)/2);
       return function(t) { return d.radius = i(t); };
     });
   if(graphMode == 0 && futureMode == 0) {
@@ -1913,7 +1913,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     	+"font-size: 150%; font-weight: bold;"
     	+" color:  #579E38; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
-      +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +"<img class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
       +"</div>"
     // md sm and xs
@@ -1941,12 +1941,12 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("color", "#579E38")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+    .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline'>Not&nbspmuch"
       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
-      "<span class='expand-sliders-btn'>"+
-        "<button style='margin: 5px 0px 0px 10px; width: "+window.innerWidth*0.205+"px; background: none; border: 2px solid green; border-radius: 16px;' "+
+      "<span>"+
+        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.205+"px;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
           "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
@@ -2497,7 +2497,7 @@ searchDiv = d3.select("body")
     .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
            "style='padding-bottom: 8px; width: 70%' type='text' "+
            "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-          "<button id='searchSubmitBtn' class='d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
+          "<button id='searchSubmitBtn' class='submit-btn d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
           )
 
 

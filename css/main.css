@@ -3,7 +3,82 @@
 			font-family: "Raleway";
       /*color: #579E38;*/
 		}
-svg {width: 100%; height: auto;}
+
+.link-top {
+ font-size: 16px;
+ padding-left: 30px; 
+ font-weight: bold; 
+ /*font-family: Raleway; */
+ color: #579E38;
+}
+img.img-question {
+  padding-left: 5px; 
+  padding-bottom: 2px;
+}
+.search-div {
+  position: absolute; 
+  right: 30px;
+}
+button.expand-sliders-btn:hover {
+  background: #eaeaea;
+}
+button.expand-sliders-btn{
+  margin: 5px 0px 0px 10px; 
+  background: none; 
+  border: 2px solid green; 
+  border-radius: 16px;'
+}
+button.btn-grey {
+  font-size: 14px; 
+  height: 32px; 
+  box-shadow: 3px 3px 17px grey; 
+  background: #A6B0A8;
+}
+button.btn-grey:hover {
+  background: #888;
+}
+button.btn-group:hover {
+  background: #888;
+}
+button.btn-graphModes {
+  height: 60px;
+  width: 200px;
+  background: white;
+  border-width: 3px;
+  border-color: #579E38;
+  border-radius: 7px;
+  box-shadow: 0px;
+  font-weight: bold;
+  font-family: Raleway;
+  color:  #579E38;
+}
+li.list-graphModes {
+  list-style: none; 
+  padding-bottom: 10px;
+}
+button.search-btn {
+  border: none;
+  background: none;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+img.search-img:hover {
+  border: none;
+  background: none;
+  position: absolute;
+  right: 7px;
+  bottom: 3px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 3px grey;
+}
+button.submit-btn:hover {
+  background: #eaeaea;
+  color: #333;
+}
+
+svg {width: 100%;
+  height: auto;}
 p, text {
 	font-size: 0.85em;
 }

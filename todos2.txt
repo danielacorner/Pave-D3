@@ -1,5 +1,11 @@
 todos
 
+- on dragstarted, keep id constant, let go on dragended
+
+- bug: graph view buttons disappear after future view
+
+- cleaning code to css
+
 - Future view y-axis
 
 - switch html from row to cols

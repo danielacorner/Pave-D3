@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
-	
+<meta charset="utf-8">
+<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
+
+<!-- Imports -->
+
 	<!-- Bootstrap sources -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
+
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	
-	<!-- Jquery -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-	<!-- Joyride CSS file -->
-	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
-	<!-- Joyride plugin -->
-	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
 
 	<!-- Font Awesome icons -->
 	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-	<!-- Page icon -->
+
+
+
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<!-- Page title (name on the tab) -->
 	<title>Pave: the Canadian Job Explorer</title>
@@ -35,8 +33,26 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
 
+	<!-- Jquery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+
+
+	<!-- Attach the Joyride CSS file -->
+	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
+
+	<!-- Then attach the Joyride plugin -->
+	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
+
+	<!-- what-input for joyride -->
+	<!-- <script src="what-input/dist/what-input.js"></script> -->
+	<!-- joyride site tour wizard -->
+	<!-- <script src="node_modules/foundation-joyride/js/joyride.js"></script> -->
+
 </head>
 <body>
+
+
 
 <!-- Navigation Bar (visible only on mobile -->
 
@@ -93,32 +109,32 @@
 
 <!-- end of navbar -->
 
+
 <br/>
 
 <!-- title (hidden for xs displays like mobile) -->
 
 <div style="margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
 	<div class="title" align="left">
-		<h1 style="font-weight: bold; color: #579E38; text-align: left;">
+		<h1 style="font-weight: bold; font-family: Raleway; color: #579E38; text-align: left;">
 			
 			Pave 
-			<span>
-				<a class="link-top" href="#" > 
+			<span style="font-size: 16px; font-weight: bold; font-family: Raleway">
+				<a style="padding-left: 30px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > 
 				
 				About</a>
-				<a class="link-top" href="#" > 
+				<a style="padding-left: 30px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > 
 				
 				Help</a>
-				<a class="link-top" href="#" > 
+				<a style="padding-left: 30px; font-weight: bold; font-family: Raleway; color: #579E38;" href="#" > 
 				
 				Feedback</a>
-
 	  			<!-- search button -->
-	  			<div class="search-div">
+	  			<div style="position: absolute; right: 30px;">
 	  				<span class="input-group-btn">
 				 		 <!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-					    <button id="searchbuttonPC" class="search-btn" onclick='expandSearch()' type="button">
-					    	<img id="searchbutton_PC" class="search-img" src="img/search.png" alt='help' height='40' width = '40'>
+					    <button style="border: none; background: none; position: absolute; right: 0px; bottom: 0px;" class="" onclick='expandSearch()' type="button">
+					    	<img id="searchbutton_PC" src="img/search.png" alt='help' height='40' width = '40'>
 				   	 	</button>
 		  			</span>
 	  			</div>
@@ -166,31 +182,31 @@
 
 				<span style='padding-left: 0px'></span>
 				<!-- Button group 1 -->
-				<div class="btn-group" role="group" aria-label="...">
+				<div class="btn-group" style="box-shadow: 3px 3px 17px grey" role="group" aria-label="...">
 
-					<button id="industry" type="button" class="btn btn-grey">
+					<button style="font-size: 14px; height: 32px; background: #A6B0A8" id="industry" type="button" class="btn">
 					<span style="color: white; font-weight: 560; font-family: Raleway">
 					Industry Split</span> </button>
 
-					<button id="combine" type="button" class="btn btn-grey" style="display: none; width: 182px;">
+					<button style="display: none; border-radius: 5px; font-size: 14px; height: 32px; width: 182px; background: #A6B0A8" id="combine" type="button" class="btn">
 					<span style="color: white; font-weight: 560; font-family: Raleway">
 					Combine</span> </i></button>
 
-					<button id="random" type="button" class="btn btn-grey" style="font-size: 14px;">
-					<span style="color: white; font-weight: 560;">
+					<button style="font-size: 14px; height: 32px; background: #A6B0A8" id="random" type="button" class="btn">
+					<span style="color: white; font-weight: 560; font-family: Raleway">
 					Shuffle</span> </button>
 				</div>
 
 				<span style='padding-left: 10px'></span>
 
-				<button id="graph" data-toggle="button" type="button" class="btn btn-grey" aria-pre autocomplete="off">
+				<button id="graph" style="font-size: 14px; height: 32px; background: #A6B0A8; box-shadow: 3px 3px 17px grey" data-toggle="button" type="button" class="btn" aria-pre autocomplete="off">
 					<span style="color: white; font-weight: 560; font-family: Raleway">
 					Graph View</span>
 				</button>
 
 				<span style='padding-left: 10px'></span>
 
-				<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
+				<button id="futureView" style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
 				<span style="color: white; font-weight: 560; font-family: Raleway">
 				Future View</span></i></button>
 
@@ -219,47 +235,34 @@
 
 		<!-- Reset, pause, play buttons -->
 		<div id="playPauseDiv" align="center" style="position: relative; bottom: 15%">
-			<button id="resetFilters" type="button" class="btn btn-md btn-grey">
-			<span style="color: white; padding-right: 7px">
+			<button id="resetFilters" style="box-shadow: 3px 3px 17px grey; background: #A6B0A8; font-size: 14px; height: 32px;" type="button" class="btn btn-md">
+			<span style="color: white; font-weight: bold; font-family: Raleway; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
 
-			<button id="freeze" type="button" class="btn btn-grey" style="margin-left: 1%;">
-			<span>
+			<button id="freeze" style="font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
+			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-pause"></i></button>
 
-			<button id="unfreeze" style="display: none;" type="button" class="btn btn-grey" style="margin-left: 1%;">
-			<span>
+			<button id="unfreeze" style="display: none; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8" type="button" class="btn">
+			<span style="color: white; font-weight: 560; font-family: Raleway">
 			</span> <i  class="fa fa-play"></i></button>
 
 		<!-- Size dropdown -->
 
-			<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
-		  <button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px;">Size = Workers<span class="caret"></span></button>
-		  <ul class="dropdown-menu" style="padding-left: 5px;">
-		    <li><a id="workLink" href="#" onclick="clickWork()">Workers</a></li>
-		    <li><a id="wageLink" href="#" onclick="clickWage()">Wage</a></li>
-		    <li><a id="autoLink" href="#" onclick="clickAuto()">Automation risk</a></li>
-		    <li><a id="yearLink" href="#" onclick="clickYear()">Years of study</a></li>
+			<div class="dropdown" id="sizeDropdown" style="display: inline; font-size: 14px; height: 32px;">
+		  <button id="sizeDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px; display: inline; font-size: 14px; height: 32px; box-shadow: 3px 3px 17px grey; background: #A6B0A8">Size = Workers
+		  <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    <li><a id="workLink" href="#">Workers</a></li>
+		    <li><a id="wageLink" href="#">Wage</a></li>
+		    <li><a id="autoLink" href="#">Automation risk</a></li>
+		    <li><a id="yearLink" href="#">Years of study</a></li>
 		  </ul>
 			</div>
 		</div>
 		<!-- end of centerDiv -->
 	</div>
 
-	<script type="text/javascript">
-		function clickWork() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Workers";
-		}
-		function clickWage() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Wage";
-		}
-		function clickAuto() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = (-Automation Risk)";
-		}
-		function clickYear() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Years of study";
-		}
-	</script>
 
 	<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
 
@@ -277,19 +280,23 @@
 		<div id="sliderArray3" style="position: relative;  margin-left: -300%; right: 10px;" type="text" class="slider"></div>
 
 		<!-- suggested views buttons -->
-		<div id="graphModesDiv" style="position: absolute; bottom: 50%; right: 25%; visibility: hidden;">
+		<div id="graphModesDiv" class="col-12" align="right" style="position: relative; bottom: 700px; margin-left: -40px; visibility: hidden;">
 
-			<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px;">
+			<span style="font-weight: bold; font-family: Raleway; color: grey;">
 			Suggested Views</span>
 			 	
-		 	<li class="list-graphModes" style="padding-top: 10px;"><button class="btn-graphModes" id="a0" href="#">
+		 	<li style='list-style: none; padding-bottom: 10px'><button style="height: 60px; width: 200px; background: white; border-width: 3px; border-color: #579E38; border-radius: 7px; box-shadow: 0px; font-weight: bold; font-family: Raleway; color:  #579E38;" id="a0" href="#">
 		 	Machine Automation   vs.  Number of Jobs</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a1" href="#">
+		 	<li style='list-style: none; padding-bottom: 10px'><button style="height: 60px; width: 200px; background: white; border-width: 3px; border-color: #579E38; border-radius: 7px; box-shadow: 0px; font-weight: bold; font-family: Raleway; color:  #579E38;" id="a1" href="#">
 		 	Wage   vs.  Years of Study</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a2"  href="#">
+		 	<li style='list-style: none;padding-bottom: 10px'><button style="height: 60px; width: 200px; background: white; border-width: 3px; border-color: #579E38; border-radius: 7px; box-shadow: 0px; font-weight: bold; font-family: Raleway; color:  #579E38;" id="a2"  href="#">
 		 	Wage  vs.  Number of Jobs</button></li>
 				 
 		</div>
+
+			<button id="expandSkills2" style="visibility: hidden; background: #A6B0A8" class="btn-md btn btn-default" type="button" aria-haspopup="true" aria-expanded="true">
+			<span class="caret"></span>
+			</button>
 
 	</div>	<!-- end of rightDiv -->	
 
@@ -315,7 +322,7 @@ $(window).load(function() {
   <li data-id="top_of_page" data-button="Take the tour" data-options="tipLocation: bottom;">Welcome to Pave!<span style="padding-left: 10px;"/></li>
 
   <!-- /* This tip will be display as a modal */ -->
-		<li>Welcome! This is a tool to compare jobs in Canada by factors like wage and years of study.
+	<li>Welcome! This is a tool to compare jobs in Canada by factors like wage and years of study.
 		</br>
 		</br>Each circle is a Job Group.
 		</br>The bigger the circle, the more people working in that group.
