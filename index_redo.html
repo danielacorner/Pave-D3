@@ -196,7 +196,7 @@
 		</div> <!-- end of buttons -->
 
 		<!-- the graphing canvas -->
-		<svg viewBox="0 0 400 300" id="chart" style="margin-top: 10%; display:block; width: 100%; height: auto;" class="chart">	</svg>
+		<svg viewBox="0 0 300 300" id="chart" style="display:block; width: 100%; height: auto;" class="chart">	</svg>
 
 		<!-- suggested views buttons -->
 		<div id="graphModesDiv" style="position: absolute; bottom: 50%; right: 25%; visibility: hidden;">
@@ -232,23 +232,24 @@
 		<script src="PaveVisualisation_redo.js"></script>
 
 		<!-- Reset, pause, play buttons -->
-		<div id="playPauseDiv" align="center" style="position: relative; bottom: 15%">
-			<button id="resetFilters" type="button" class="btn btn-md btn-grey">
+		<div id="playPauseDiv" align="center">
+			
+			<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm">
 			<span style="color: white; padding-right: 7px">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
 
-			<button id="freeze" type="button" class="btn btn-grey" style="margin-left: 1%;">
+			<button id="freeze" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
 			<span>
 			</span> <i  class="fa fa-pause"></i></button>
 
-			<button id="unfreeze" style="display: none;" type="button" class="btn btn-grey" style="margin-left: 1%;">
+			<button id="unfreeze" style="display: none;" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
 			<span>
 			</span> <i  class="fa fa-play"></i></button>
 
 		<!-- Size dropdown -->
 
 			<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
-		  <button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px;">Size = Workers<span class="caret"></span></button>
+		  <button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle btn-btm" type="button" data-toggle="dropdown" style="border-width: 0px;">Size = Workers<span class="caret"></span></button>
 		  <ul class="dropdown-menu" style="padding-left: 5px;">
 		    <li><a id="workLink" href="#" onclick="clickWork()">Workers</a></li>
 		    <li><a id="wageLink" href="#" onclick="clickWage()">Wage</a></li>
@@ -324,7 +325,7 @@ $(window).load(function() {
   <!-- /* using 'data-button' lets you have custom button text */ -->
   <li data-id="sliderArray1" data-options="tipLocation:top;">Use the sliders to filter jobs by the amount of each skill used.<span style="padding-left: 10px;"/></li>
 
-  <li data-id="sliderArray1" data-options="tipLocation:right;">Each skillset contains 3-5 skills. Click "view skills" to filter by skills instead.<span style="padding-left: 10px;"/></li>
+  <li data-id="subSliderDiv_0" data-options="tipLocation:right;">Each skillset contains 3-5 skills. Click "view skills" to filter by skills instead.<span style="padding-left: 10px;"/></li>
 
   <!-- /* you can put a class for custom styling */ -->
   <li data-id="industry" class="custom-class">Click here to separate the jobs into their industries, or shuffle them all together if you like.</br></br></li>

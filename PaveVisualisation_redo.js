@@ -399,14 +399,14 @@ var div = d3.select("body").append("div")
 // .style("position", "absolute")
 .style("opacity", 0);
 
-var div2 = d3.select("body").append("div")
-.style("opacity", 0)
-.attr("transform", "translate(0," + 200 + ")");
+// var div2 = d3.select("body").append("div")
+// .style("opacity", 0)
+// .attr("transform", "translate(0," + 200 + ")");
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
 .append('svg')    
-.attr("viewBox", "-"+window.innerWidth/3+" -"+window.innerHeight/3+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
+.attr("viewBox", "-"+0+" -"+0+" "+window.innerWidth/2+" "+window.innerHeight/2+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 
@@ -421,7 +421,7 @@ circles = svg.selectAll("circle")
 .enter().append("circle")
     // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate(0,-105)") //flag!
+    .attr("transform", "translate("+window.innerWidth/4+","+window.innerHeight/6.5+")") //flag! need to make equation for width/height ratio
     .style("z-index", 100)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -502,7 +502,7 @@ div
                 "</svg>"+
         // +"<br/>" 
                 "</div>"+
-                "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('hiiiiiiii') }' class='btn btn-lg' "+
+                "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('favourited') }' class='btn btn-lg' "+
          "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
          +"Favourite</button><br/>"+
          "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a id='viewMoreBtn' class='btn btn-lg' href='http://.google.com' target='_blank'"+
@@ -885,7 +885,6 @@ d3.select("#graph").on('click', function(d) {
       futureMode = 0;
       futureModeOff(); 
       createLegend(0);}
-    // console.log("futureMode: ", futureMode);
     graphModeOff();
   }; // transition back to clusters
   
@@ -1251,18 +1250,18 @@ d3.select("#futureView").on('click', function(d) {
 })
 //store the positions in future mode for un-filtering
 var futurePositions = [];
-var futureLegendHeight = -20;
+var futureLegendHeight = window.innerHeight/4 -20;
 
 function futureModeOn() {
     legend.transition().duration(500).style("opacity", 0);
  
 
     //legend
-    futureLegend = svg.selectAll("#futureLegend")
+    futureLegend = svg.selectAll("#futureLegend") // switch to axis
                   .data(d3.range(5))
                   .enter().append("g")
                   .attr("class", "futureLegend")
-                  .attr("transform", function(d, i) { return "translate(5," + ((i * 22) + futureLegendHeight) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+window.innerWidth/6+"," + ((i * 22) + futureLegendHeight) + ")"; })
                   .style("fill", function(d, i) { return automationColor(i*0.2) });
 
               futureLegend.append("rect")
@@ -1500,7 +1499,7 @@ function resetSimulation() {
 enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate(0,-105)") //flag!
+    .attr("transform", "translate("+window.innerWidth/4+","+window.innerHeight/6.5+")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
 
     // Tooltips
@@ -1572,11 +1571,11 @@ function createLegend(mode) {
         // Standard right-side legend
         case 0:
           // transition circles to graph positions
-              legend = svg.selectAll("#legend")
+              legend = d3.selectAll("#chart").selectAll("#legend")
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate("+ 37 +","+ ((i * 22) - 150) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+ window.innerWidth/3.1 +","+ ((i * 22) + window.innerHeight/6.25) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -1696,7 +1695,6 @@ createLegend(0);
 //     .domain([0, d3.max(nodes, function(d){return d[dropdown1.value]})])
 //     .range([0, 200]) // Width of slider is 200 px
 //     .clamp(true);
-//     console.log(d3.max(nodes, function(d){return d[dropdown1.value]}));
 //   // display (range: min to max) after dropdown title
 //   document.getElementById("dropdown1Title").innerHTML = "Minimum "+ dropdown1.value
 //       +" (range: "+ d3.min(nodes, function(d){ return d[dropdown1.value] }) 
@@ -1730,7 +1728,6 @@ createLegend(0);
 //       sliderDropdown.interrupt();
 //     })
 //     .on("start drag", function() {
-//       // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
 //       updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
 //     }));
 
@@ -1778,7 +1775,6 @@ createLegend(0);
 //         sliderDropdown.interrupt();
 //       })
 //       .on("start drag", function() {
-//         // console.log("filtering for workers > ", sliderDropdownScale.invert(d3.event.x));
 //         updateNodesDropdown(sliderDropdownScale.invert(d3.event.x));
 //       }));
 
@@ -1997,7 +1993,6 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .select(function() {
-    // console.log("i4: ", i);
     return this.parentNode;
   }) // inset
   .append("line")
@@ -2315,7 +2310,6 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
       .attr("x1", sliderScaleArray[i+j].range()[0])
       .attr("x2", sliderScaleArray[i+j].range()[1])
       .select(function() {
-        // console.log("i4: ", i);
         return this.parentNode;
       }) // inset
       .append("line")
@@ -2429,8 +2423,6 @@ filterAll = function() {
         var checkMin = sliderPositionsArray[s];
         if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
           listToDeleteMulti.push(d.id);
-          console.log(sliderArray[s])
-          console.log(d[sliderArray[s]])
         }
 
       }
