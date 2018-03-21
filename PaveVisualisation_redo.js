@@ -96,7 +96,6 @@ d3.selection.prototype.moveToFront = function() {
       });
     };
 
-// d3.select("#combine").style("visibility", "hidden");
 
 var graph, store; // displayed, stored data
 var clicked = 0; // on: tooltips don't disappear
@@ -406,7 +405,7 @@ var div = d3.select("body").append("div")
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
 .append('svg')    
-.attr("viewBox", "-"+0+" -"+0+" "+window.innerWidth/2+" "+window.innerHeight/2+"");
+.attr("viewBox", "-"+0+" -"+0+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 
@@ -419,9 +418,8 @@ var skillsBarsYtranslate = -15;
 circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
-    // .attr("viewBox", "0 0 500 500")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate("+window.innerWidth/4+","+window.innerHeight/6.5+")") //flag! need to make equation for width/height ratio
+    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("z-index", 100)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -737,7 +735,7 @@ d3.select("#industry").on('click', function() {
 
   d3.select("#industry").style("display","none");
   d3.select("#random").style("display","none");
-  d3.select("#combine").style("visibility", "visible");
+  d3.select("#combine").style("display", "inline");
 
   legend.transition().duration(500).style("opacity", 0).remove();
   createLegend(1); // create Industry split legend
@@ -768,7 +766,7 @@ d3.select("#combine").on('click', function(d) {
 
   d3.select("#industry").style("display","inline");
   d3.select("#random").style("display","inline");
-  d3.select("#combine").style("visibility", "hidden");
+  d3.select("#combine").style("display", "none");
 
   if (graphMode == 0 && futureMode == 0) {
     simulation
@@ -861,22 +859,22 @@ var originalRadius = {};
   });
 
 d3.select("#graph").on('click', function(d) {
-  // createGraphModeLegend();
-  // Toggle mode on or off
-      simulation.alpha(0); //cool to 0 degrees
 
-      graphMode = 1-graphMode;
+  // Toggle mode on or off
+  graphMode = 1-graphMode;
+  //cool to 0 degrees
+  simulation.alpha(0);
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
-    d3.select("#graphModeDropdown").style("visibility", "visible")
+    // d3.select("#graphModeDropdown").style("visibility", "visible")
 
     // legend.transition().duration(500).style("opacity", 0).remove();
     graphModeOn(0);
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
-    d3.select("#graphModeDropdown").style("visibility", "hidden")
+    // d3.select("#graphModeDropdown").style("visibility", "hidden")
     // d3.select("#slider_1").style("visibility", "visible")
 
     createLegend(0);
@@ -892,10 +890,16 @@ d3.select("#graph").on('click', function(d) {
   // $.getScript("./js/graph-module.js");
 })
 
+function moveBottomDown() {
+  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.7)+"px");
+}
+function moveBottomUp() {
+  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
+}
 
 d3.select("#a0").on('click', function() {
   // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
-  graphModeOn(0);
+  graphModeOn(3);
   // createLegend(0);
 });
 d3.select("#a1").on('click', function() {
@@ -905,14 +909,10 @@ d3.select("#a2").on('click', function() {
   graphModeOn(2);
 });
 
-var graphYtranslate = 0;
 
 function graphModeOn(mode) {
 
-    //move sliders down
-d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
-d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.5+"px");
-d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
+    moveBottomDown();
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -920,7 +920,7 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
   if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0).remove();
   d3.select("#freeze").transition().duration(500).style("opacity", 0);
   d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
-  d3.select("#graphModesDiv").style("visibility", "visible");
+  d3.select("#graphModesDiv").style("display", "inline");
     // cool to 0 degrees
     simulation.stop();
 
@@ -947,7 +947,7 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
             })
               // set y values
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (1-d.automationRisk)*height*0.9 +100 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.y, (1-d.automationRisk)*height - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -957,11 +957,11 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
           circles.transition()
           .duration(750)
             .attrTween("cx", function(d) {
-              var i = d3.interpolate(d.x, d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.cx, d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left); // here: create a dropdown
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -971,18 +971,30 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
           circles.transition()
           .duration(750)
             .attrTween("cx", function(d) {
-              var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.cx, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
       // x = Number of Jobs
-      // y = Automation Risk
+      // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
-
+          circles.transition()
+          .duration(750)
+              // set x values
+            .attrTween("cx", function(d) { // transition x position to...
+              var i = d3.interpolate(d.cx, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              return function(t) { return d.cx = i(t); };
+            })
+              // set y values
+              .attrTween("cy", function(d) {
+                var i = d3.interpolate(d.cy, (1-d.automationRisk)*height - height/2 + graphYtranslate);
+                return function(t) { return d.cy = i(t); };
+              });
+            break;
             break;
         case 4:
 
@@ -1035,6 +1047,7 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
 
     }
 
+  var graphYtranslate = window.innerHeight*0.13;
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
@@ -1044,14 +1057,14 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
   // Add the X Axis
   axisX = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+ (-width/2+margin.left) +","
-  + (height/2-40+graphYtranslate) + ")")
+ .attr("transform", "translate("+ (-2+margin.left) +","
+  + (window.innerHeight/2.32+graphYtranslate) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the x axis
   axisLabelX = axisG.append("text")
-  .attr("transform","translate(" + (margin.left) + ","
-                      + (height/2) +")") // top
+  .attr("transform", "translate("+ (window.innerWidth/3.5+margin.left) +","
+  + (window.innerHeight/2.1+graphYtranslate) + ")")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
@@ -1060,15 +1073,15 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+ (-width/2+margin.left) +"," 
-  + (-height/2-margin.bottom ) + ")")
+ .attr("transform", "translate("+ (-4+margin.left) +"," 
+  + (-graphYtranslate*0.6-margin.bottom ) + ")")
  .call(d3.axisLeft(y).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", -width/2-5)
-  .attr("x", 0)
+  .attr("y", -7)
+  .attr("x", -window.innerHeight/4)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
@@ -1085,9 +1098,9 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
@@ -1102,9 +1115,9 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Years of Study").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelX.text("Years of Study").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -1129,10 +1142,8 @@ d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (windo
 
 d3.select("#industry").style("display","none");
 d3.select("#random").style("display","none");
-d3.select("#combine").style("visibility", "visible");
+d3.select("#combine").style("display", "inline");
 d3.select(".btn-group").style("padding-left", "0px");
-
-d3.select("#chart").attr("height", (window.innerHeight*0.6) );
 
 }
 
@@ -1148,26 +1159,18 @@ d3.select("#chart").attr("height", (window.innerHeight*0.6) );
 
 function graphModeOff() {
 
-
-d3.select("#combine").style("visibility", "hidden");
-
-d3.select("#graphModesDiv").style("display","none");
-
-d3.select("#freeze").transition().duration(500).style("opacity", 1);
-d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
-
-d3.select("#industry").transition().duration(500).style("display","inline");
-d3.select("#random").style("display","inline");
-// d3.select("#combine").style("width", "");
-d3.select(".btn-group").style("padding-left", "0px")
-
-d3.select("#chart").transition().duration(500).attr("height",window.innerHeight/1.5);
-
-
-// move sliders back up
-d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
+  // change available buttons
+  d3.select("#combine").style("display", "none");
+  d3.select("#freeze").transition().duration(500).style("opacity", 1);
+  d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
+  d3.select("#industry").transition().duration(500).style("display","inline");
+  d3.select("#random").style("display","inline");
+  d3.select(".btn-group").style("padding-left", "0px")
+  // hide graph modes options
+  d3.select("#graphModesDiv").style("display","none");
+  
+  // move sliders back up
+  moveBottomUp();
 
     // remove axes
     axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
@@ -1313,9 +1316,7 @@ function futureModeOn() {
     if (graphMode == 0) {
 
         //move sliders down
-    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
-    d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.2+"px");
-    d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.9)+"px");
+    moveBottomDown();
         //hide pause/play
     d3.select("#freeze").transition().duration(500).style("opacity", 0);
     d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
@@ -1373,9 +1374,7 @@ function futureModeOff() {
     if (graphMode == 0) {
 
     // move sliders back up
-    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-    d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("margin-top", window.innerHeight/1.8+"px");
-    d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
+    moveBottomUp();
         //show pause/play
     d3.select("#freeze").transition().duration(500).style("opacity", 1);
     d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
@@ -1499,7 +1498,7 @@ function resetSimulation() {
 enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate("+window.innerWidth/4+","+window.innerHeight/6.5+")") //flag! need to make equation for width/height ratio
+    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
 
     // Tooltips
@@ -1618,13 +1617,14 @@ function createLegend(mode) {
                   .enter().append("g")
                   .attr("class", "legend")
                   .attr("transform", function(d, i) { 
-                                    if(i<5){ // first 5 (bottom left)
+                                    if(i<5){ // first 5 (top right)
                                       return "translate(" + 
-                                      ((i * 60) - d3.select("#chart").attr("width")*0.76) + ","+ // x-translate 
-                                      ((i * 20))+")"; } // y-translate
-                                    else{ // last 5 (top-right)
-                                      return "translate(" + ((i * 60) - d3.select("#chart").attr("width")*0.65) + ","+ //x
-                                      (-d3.select("#chart").attr("height")*0.65 + (i * 20))+")"} }) //y
+                                      ((i * 60) + window.innerWidth*0.14) + ","+ // x-translate 
+                                      ((i * 20) - window.innerHeight*0.04)+")"; } // y-translate
+                                    else{ // last 5 (bottom left)
+                                      return "translate(" +
+                                      ((i * 60) - window.innerWidth*0.38) + ","+ //x
+                                      ((i * 20) + window.innerHeight*0.25)+")"} }) //y
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -2195,7 +2195,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
 
 
      
-    sliderSVGArray[i+j].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
+    // sliderSVGArray[i+j].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
     // hide until shown
     sliderSVGArray[i+j].style("display","none")
@@ -2482,16 +2482,17 @@ searchDiv = d3.select("body")
     .style("height", "40px")
     .style("position", "absolute")
     .style("top", "33px")
-    .style("right", "77px")
+    .style("right", "55px")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
     .style("border-radius", "7px")
-    .style("visibility", "hidden")
+    .style("display", "none")
     // .style("visibility", "visible")
     .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
-           "style='padding-bottom: 8px; width: 70%' type='text' "+
+           "style='padding-bottom: 8px; width: 80%; opacity: 0' type='text' "+
            "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-          "<button id='searchSubmitBtn' class='submit-btn d-inline btn btn-default' onclick='searchJobTitles()'>Submit</button>"
+          "<button id='searchSubmitBtn' class='submit-btn btn btn-default' "+
+          "style='opacity: 0' onclick='searchJobTitles()'>Submit</button>"
           )
 
 
@@ -2505,14 +2506,19 @@ function expandSearch() {
 
   searchExpanded = 1-searchExpanded;
   if(searchExpanded == 1){
-    searchDiv.style("visibility", "visible")
+    searchDiv.style("display", "inline")
       .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
-        
+    d3.select("#jobTitle").transition().duration(500).style("opacity","1")
+    setTimeout(function() {
+      d3.select("#searchSubmitBtn").transition().duration(300).style("opacity", "1")
+    }, 200);
   }
   if(searchExpanded == 0){
+    d3.select("#searchSubmitBtn").transition().duration(300).style("opacity", "0")
     searchDiv.transition().duration(500).style("width", "0px");
+    d3.select("#jobTitle").transition().duration(500).style("opacity","0")
     setTimeout(function() {
-        searchDiv.style("visibility", "hidden");
+        searchDiv.style("display", "none");
       }, 500);
   }
 }

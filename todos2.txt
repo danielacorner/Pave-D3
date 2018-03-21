@@ -1,6 +1,12 @@
 todos
 
-- on dragstarted, keep id constant, let go on dragended
+- subskill dropdowns
+
+- bug: logic skills slider not aligned
+
+- bug: mouse-off of sliders while dragging stops dragging -- potential fix: on dragstarted, keep id constant, let go on dragended
+
+- suggested views minimize button
 
 - bug: graph view buttons disappear after future view
 
