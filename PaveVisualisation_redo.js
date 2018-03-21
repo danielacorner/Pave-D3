@@ -1571,27 +1571,27 @@ function createLegend(mode) {
         // Standard right-side legend
         case 0:
           // transition circles to graph positions
-              legend = d3.selectAll("#chart").selectAll("#legend")
+              legend = d3.select("#chart").selectAll("#legend")
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate("+ window.innerWidth/3.1 +","+ ((i * 22) + window.innerHeight/6.25) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13 +","+ ((i * 10) + window.innerHeight/24) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
                   .attr("x", width/2 - margin.right - 10)
-                  .attr("width", 16)
-                  .attr("height", 16)
-                  .attr("transform", "translate(10," + legendHeight + ")")
+                  .attr("width", 8)
+                  .attr("height", 8)
+                  .attr("transform", "translate(10," + legendHeight*1.25 + ")")
                   .style("opacity",0).transition().duration(500).style("opacity", 1)
 
               legend.append("text")
                   .attr("x", width/2 - margin.right - 0 )
                   .attr("y", 9)
-                  .attr("dy", ".35em")
+                  .attr("dy", ".1em")
+                  .style("font-size","5px")
                   .attr("transform", "translate(0," + legendHeight + ")")
                   .style("text-anchor", "end")
-                  .style("font-family", "Raleway")
                   .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
                                           else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
