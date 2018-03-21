@@ -2134,24 +2134,26 @@ function createSliders(createSliderArray, sliderTitlesArray){
 //  for each subskill in that skill
 //    append/create a subslider with that subskill's y-translate height
 
+// TODO: append divs to appropriate parents
+
 // y-translate map
 // map slider name to y position
 var sliderYTranslateMap = new Map();
-
+// Lang Y
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i)
+  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i+110)
 }
-
+// Logi Y
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
   sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i+180)
 }
-
+// Math Y
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i)
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2)
 }
-
+// Comp Y
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+180)
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2)
 }
 
 var sliderXTranslateMap = new Map();
@@ -2160,7 +2162,7 @@ var fontSizeMap = new Map();
 for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
   fontSizeMap.set(sliderTitlesArray[i], 115)
 }
-
+// Lang X
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayLang[i], 10)
   if(["Job Task Planning and Organizing","Measurement and Calculation",
@@ -2168,15 +2170,15 @@ for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
       fontSizeMap.set(sliderTitlesArrayLang[i], 90)
   }
 }
-
+// Logi X
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 10)
+  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 5)
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLogi[i])){
       fontSizeMap.set(sliderTitlesArrayLogi[i], 90)
   }
 }
-
+// Math X
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayMath[i], 5)
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
@@ -2186,9 +2188,9 @@ for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
       fontSizeMap.set(sliderTitlesArrayMath[i], 70)
   }
 }
-
+// Comp X
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 5)
+  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 10)
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayComp[i])){
       fontSizeMap.set(sliderTitlesArrayComp[i], 90)
@@ -2197,18 +2199,18 @@ for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
 
 
 
-createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
+createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 4);
 
-createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 1, 7);
+createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 7);
 
-createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 3, 11);
+createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 11);
 
-createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 15);
-
-
+createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 15);
 
 
-function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColumn, indexIn_sliderArray){
+
+
+function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderArray){
   
   // For Each Slider create the slider
   for(var i=0; i<subSliderArray.length; i++) {
@@ -2228,7 +2230,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, parentSliderColu
     xtranslate = sliderXTranslateMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
-    sliderSVGArray[i+j] = d3.select("#sliderArray"+parentSliderColumn)
+    sliderSVGArray[i+j] = d3.select("#sliderArray1")
       .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
@@ -2742,8 +2744,8 @@ var subSliderDivComp;
       .style("width", "250px")
       .style("height", "0px")
       .style("position", "absolute")
-      .style("top", window.innerHeight*0.26+"px")
-      .style("left", window.innerWidth*0.032+"px")
+      .style("top", window.innerHeight*0.20+"px")
+      .style("left", window.innerWidth*0.014+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2754,32 +2756,32 @@ var subSliderDivComp;
       .style("width", "250px")
       .style("height", "0px")
       .style("position", "absolute")
-      .style("top", window.innerHeight*0.95+"px")
-      .style("left", window.innerWidth*0.034+"px")
-      .style("border", "2px solid green")
-      .style("border-radius", "16px")
-      .style("visibility", "hidden")
-
-  subSliderDivMath = d3.select("body")
-    .append("div")
-      .attr("id", "subSliderWindow_0")
-      .style("width", "250px")
-      .style("height", "0px")
-      .style("position", "absolute")
-      .style("top", window.innerHeight*0.26+"px")
-      .style("right", window.innerWidth*0.014+"px")
+      .style("top", window.innerHeight*0.20+"px")
+      .style("right", window.innerWidth*0.010+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
 
   subSliderDivComp = d3.select("body")
     .append("div")
-      .attr("id", "subSliderWindow_1")
+      .attr("id", "subSliderWindow_2")
       .style("width", "250px")
       .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.95+"px")
-      .style("right", window.innerWidth*0.014+"px")
+      .style("left", window.innerWidth*0.014+"px")
+      .style("border", "2px solid green")
+      .style("border-radius", "16px")
+      .style("visibility", "hidden")
+
+  subSliderDivMath = d3.select("body")
+    .append("div")
+      .attr("id", "subSliderWindow_3")
+      .style("width", "250px")
+      .style("height", "0px")
+      .style("position", "absolute")
+      .style("top", window.innerHeight*0.95+"px")
+      .style("right", window.innerWidth*0.010+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2801,7 +2803,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 
   switch (sliderGroup) {
 
-    case 0: // Language
+    case 0: // showLanguage
 
       if(slidersExpanded[0] == 1){ // on
         
@@ -2817,7 +2819,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivLang.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.25+"px");
+          .transition().duration(500).style("height", window.innerHeight*0.25+"px")
+                .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
           for(var i=4; i<7; i++){ // unhide the sliders
@@ -2834,7 +2837,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         hideLang()
       }
       
-    case 1: // Logic
+    case 1: // showLogic
 
       if(slidersExpanded[1] == 1){ // on
 
@@ -2851,7 +2854,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 
         subSliderDivLogi.style("visibility", "visible")
           .transition().duration(500).style("height", window.innerHeight*0.35+"px")
-          .style("top", window.innerHeight*0.45+"px");
+          .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
           for(var i=7; i<11; i++){ // unhide the sliders
@@ -2868,7 +2871,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         hideLogi()
       }
       
-    case 2: // Math
+    case 2: // showMath
 
       if(slidersExpanded[2] == 1){ // on
 
@@ -2884,7 +2887,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivMath.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.35+"px");
+          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+            .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
           for(var i=11; i<15; i++){ // unhide the sliders
@@ -2901,7 +2905,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         hideMath()
       }
       
-    case 3: // Computers
+    case 3: // showComputers
 
       if(slidersExpanded[3] == 1){ // on
 
@@ -2939,7 +2943,9 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 }
 
 function hideLang() {
-  subSliderDivLang.transition().duration(500).style("height", "0px");
+  subSliderDivLang.transition().duration(500).style("height", "0px")
+    .style("top", window.innerHeight*0.20+"px");
+
   setTimeout(function() {
       subSliderDivLang.style("visibility", "hidden");
     }, 500);
@@ -2956,7 +2962,7 @@ function hideLang() {
 
 function hideLogi() {
   subSliderDivLogi.transition().duration(500).style("height", "0px")
-  .style("top", window.innerHeight*0.95+"px");
+    .style("top", window.innerHeight*0.20+"px");
 
   setTimeout(function() {
       subSliderDivLogi.style("visibility", "hidden");
@@ -2973,7 +2979,9 @@ function hideLogi() {
 }
 
 function hideMath() {
-  subSliderDivMath.transition().duration(500).style("height", "0px");
+  subSliderDivMath.transition().duration(500).style("height", "0px")
+  .style("top", window.innerHeight*0.95+"px");
+
   setTimeout(function() {
       subSliderDivMath.style("visibility", "hidden");
     }, 500);

@@ -1,24 +1,16 @@
 todos
 
-- tooltip div side always on-screen (based on mouse location)
+- subskill dropdowns -- math & logic (switch position: absolute; right: some%)
 
-- subskill dropdowns
+- mobile: stretch distance between sliders based on window width
+
+- tooltip div side always on-screen (based on mouse location)
 
 - smooth hide "combine" on graph and future modes
 
-- bug: logic skills slider not aligned
-
 - bug: mouse-off of sliders while dragging stops dragging -- potential fix: on dragstarted, keep id constant, let go on dragended
 
-- suggested views minimize button
-
-- bug: graph view buttons disappear after future view
-
 - cleaning code to css
-
-- Future view y-axis
-
-- switch html from row to cols
 
 - subskill slider function
 - subskill slider white background
@@ -28,62 +20,23 @@ todos
 - fix bars: append a 2nd div to click tooltip with bars
 (can get fancy w the design)
 
-- search-like button to expand & unhide
-sliders (display: inline)
-
-reorganize html:
-- move sliderarrays to navbar & bottom of chart with negative margins (chart takes entire row)
-
-- move legends off of chart
-
-- bug: chart too high, chart moves, areas unclickable
-industry split legend
-- subskill dropdowns
-
-- bug: circles move down after future view & filtering
-
-- bug: y axis not accurate on fullscreen, viewbox could be bigger on fullscreen
-
 - look up refactoring
-
-- bind legend to right-side of chart (currently slipping off-screen at some widths)
 
 - joyride style
 
 - job titles search (within job groups)
 
-- bug: language slider line in front of overlay?
-
 - bug: tiny empty job in right side under purple group
 
-- one-time tutorial div with
-	"hide for now" or "ok, got it!"
-
-- keep same size on future view
-
+- mobile compatibility
 - mobile sliders sizes
 
-- move sliders down on future view
-
 - mobile tooltip on touch
-
-- graph view fix: move graph up
-
-- expanded skills filters
-
-- mobile compatibility
-
-- search button
 
 - favourite toggle
 
 - bug: skills bar chart height on longer tooltips
--bug: reet filters button moving in graph mode
 
-- clean up layout:
- - 3 columns, centered viz
-
-- search job titles
 - responsive design for the canvas:
  - resize works, but viz starts too big on small windows
 sliderSVGArray[i].append("g") // switch to SVG with viewBox?
@@ -107,10 +60,6 @@ Other todos:
 -tooltip div styling
 
 -dropdowns not working
-
--legend show/hide
-
--graph mode views dropdown
 
 --on tablet drag, mouseover (disable dragging)
 
