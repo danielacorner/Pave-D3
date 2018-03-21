@@ -2,6 +2,8 @@ todos
 
 - subskill dropdowns
 
+- smooth hide "combine" on graph and future modes
+
 - bug: logic skills slider not aligned
 
 - bug: mouse-off of sliders while dragging stops dragging -- potential fix: on dragstarted, keep id constant, let go on dragended

@@ -735,6 +735,7 @@ d3.select("#industry").on('click', function() {
 
   d3.select("#industry").style("display","none");
   d3.select("#random").style("display","none");
+
   d3.select("#combine").style("display", "inline");
 
   legend.transition().duration(500).style("opacity", 0).remove();
@@ -760,50 +761,25 @@ d3.select("#random").on('click', function() {
 
 })
 
+function smashTogether(force, temp) {
+  simulation
+  .force("x", d3.forceX().strength(force)).alpha(temp)
+  .force("y", d3.forceY().strength(force)).alpha(temp)
+  .alphaTarget(0.001)
+  .restart()
+}
+
 d3.select("#combine").on('click', function(d) {
   legend.transition().duration(500).style("opacity", 0).remove();
   createLegend(0);
 
-  d3.select("#industry").style("display","inline");
-  d3.select("#random").style("display","inline");
+  d3.select("#industry").style("display", "inline");
+  d3.select("#random").style("display", "inline");
+
   d3.select("#combine").style("display", "none");
 
   if (graphMode == 0 && futureMode == 0) {
-    simulation
-    // .force("gravity", forceGravity)
-    .force("x", forceXCombine).alpha(0.4)
-    .force("y", forceYCombine).alpha(0.4)
-    .alphaTarget(0)
-    .restart()
-  } else {
-    if (futureMode==1) {
-      futureMode = 0;
-      futureModeOff();
-    }
-    if (graphMode==1) {
-      graphMode = 0; // turn off graph mode
-      graphModeOff();
-    }
-    // transition circles back to middle for 400 ms
-    // but restart the simulation at 250 ms (looks ok,
-    // could make similar to graphMode on/off transition) 
-    circles.transition()
-    .duration(400)
-    .attrTween("cx", function(d) {
-      var i = d3.interpolate(d.cx, 0);
-      return function(t) { return d.cx = i(t); };
-    })
-    .attrTween("cy", function(d) {
-      var i = d3.interpolate(d.cy, 0); 
-      return function(t) { return d.cy = i(t); };
-    });
-    setTimeout(function() {  
-     simulation
-     .force("x", forceXCombine).alpha(0.4)
-     .force("y", forceYCombine).alpha(0.4)
-     .alphaTarget(0.2)
-     .restart()
-   }, 250);
+    smashTogether(0.3, 0.7);
   }
 })
 
@@ -827,23 +803,18 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 d3.select("#freeze").on('click', function(d) {
   simulation.stop();
 
-  d3.select("#freeze").style("visibility", "hidden");
-  d3.select("#unfreeze").style("visibility", "visible");
+  d3.select("#freeze").style("display", "none");
+  d3.select("#unfreeze").style("display", "inline");
 
 });
 ////////////////// unFreeze! (unPause) ////////////////////////
 d3.select("#unfreeze").on('click', function(d) {
   simulation.alpha(0.7).alphaTarget(0.001).restart();
 
-  d3.select("#freeze").style("visibility", "visible");
-  d3.select("#unfreeze").style("visibility", "hidden");
+  d3.select("#freeze").style("display", "inline");
+  d3.select("#unfreeze").style("display", "none");
 
 });
-
-
-
-
-
 
 
 
@@ -867,27 +838,25 @@ d3.select("#graph").on('click', function(d) {
 
   ////////////// GRAPH MODE ON! ////////////////
   if (graphMode == 1) {
-    // d3.select("#graphModeDropdown").style("visibility", "visible")
-
+    if (futureMode == 1) {
+      // transition smoothly from future mode
+      graphModeOn(4);
+      createFutureLegend();
+    } else if (futureMode == 0) {
     // legend.transition().duration(500).style("opacity", 0).remove();
-    graphModeOn(0);
+      graphModeOn(0);
+    }
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
-    // d3.select("#graphModeDropdown").style("visibility", "hidden")
-    // d3.select("#slider_1").style("visibility", "visible")
-
-    createLegend(0);
     // if future mode is on, return to future mode
-    if (futureMode == 1) { 
-      futureMode = 0;
-      futureModeOff(); 
-      createLegend(0);}
+    // if (futureMode == 1) { 
+      // futureMode = 0;
+      // futureModeOff(); 
+      // createLegend(0);}
     graphModeOff();
   }; // transition back to clusters
   
-  // TODO: modularize graph mode in js folder
-  // $.getScript("./js/graph-module.js");
 })
 
 function moveBottomDown() {
@@ -912,14 +881,20 @@ d3.select("#a2").on('click', function() {
 
 function graphModeOn(mode) {
 
-    moveBottomDown();
+  moveBottomDown();
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
   if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0).remove();
-  d3.select("#freeze").transition().duration(500).style("opacity", 0);
-  d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
+  if (typeof futureAxisG != "undefined") futureAxisG.transition().duration(500).style("opacity", 0).remove();
+  
+  if(futureMode == 0) {
+    hideLeftButtons();
+  }
+
+  d3.select("#graphToggle").attr("class","fas fa-toggle-on")
+  
   d3.select("#graphModesDiv").style("display", "inline");
     // cool to 0 degrees
     simulation.stop();
@@ -947,7 +922,7 @@ function graphModeOn(mode) {
             })
               // set y values
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (1-d.automationRisk)*height - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.y, (d.automationRisk)*height - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -991,13 +966,23 @@ function graphModeOn(mode) {
             })
               // set y values
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, (1-d.automationRisk)*height - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.cy, (d.automationRisk)*height - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
-            break;
         case 4:
-
+          circles.transition()
+          .duration(750)
+              // set x values
+            .attrTween("cx", function(d) { // transition x position to...
+              var i = d3.interpolate(futurePositions[d.id][0], d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              return function(t) { return d.cx = i(t); };
+            })
+              // set y values
+              .attrTween("cy", function(d) {
+                var i = d3.interpolate(futurePositions[d.id][1], (d.automationRisk)*height - height/2 + graphYtranslate);
+                return function(t) { return d.cy = i(t); };
+              });
             break;
         case 5:
 
@@ -1018,7 +1003,7 @@ function graphModeOn(mode) {
         case 0:
                // Scale the range of the data (using globally-stored nodes)
                 x.domain([0, maxWorkers]); //minmax workers
-                y.domain([0, 1]); //minmax risk d3.max(store, function(d) { return d.automationRisk; })
+                y.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
       // x = Years of Study
       // y = Wage
@@ -1033,12 +1018,16 @@ function graphModeOn(mode) {
                 y.domain([0, maxWage]);
             break;
       // x = Number of Jobs
-      // y = Automation Risk
+      // y = Automation Risk (when graph mode already on)
         case 3:
-
+                x.domain([0, maxWorkers]); //minmax workers
+                y.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
+      // x = Number of Jobs
+      // y = Automation Risk (when future mode already on)
         case 4:
-
+                x.domain([0, maxWorkers]); //minmax workers
+                y.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
         case 5:
 
@@ -1047,7 +1036,7 @@ function graphModeOn(mode) {
 
     }
 
-  var graphYtranslate = window.innerHeight*0.13;
+  var graphYtranslate = window.innerHeight*0.15;
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
@@ -1058,7 +1047,7 @@ function graphModeOn(mode) {
   axisX = axisG.append("g")
  .attr("class", "axis")
  .attr("transform", "translate("+ (-2+margin.left) +","
-  + (window.innerHeight/2.32+graphYtranslate) + ")")
+  + (window.innerHeight/2.6+graphYtranslate) + ")")
  .call(d3.axisBottom(x).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the x axis
@@ -1089,9 +1078,7 @@ function graphModeOn(mode) {
       // x = Number of Jobs
       // y = Automation Risk
         case 0:
-
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
-
             axisY.call(d3.axisLeft(y).ticks(5))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
@@ -1100,15 +1087,13 @@ function graphModeOn(mode) {
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
       // y = Wage
         case 1:
-            
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
-
             axisY.call(d3.axisLeft(y).ticks(5))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
@@ -1123,9 +1108,7 @@ function graphModeOn(mode) {
       // x = Number of Jobs
       // y = Wage
         case 2:
-
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
-
             axisY.call(d3.axisLeft(y).ticks(5))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisX.call(d3.axisBottom(x).ticks(5))
@@ -1137,23 +1120,68 @@ function graphModeOn(mode) {
             axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
+      // x = Number of Jobs
+      // y = Automation Risk (when graph mode already on)
+        case 3:
+            axisY.call(d3.axisLeft(y).ticks(5))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            axisX.call(d3.axisBottom(x).ticks(5))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            break;
+      // x = Number of Jobs
+        // y = Automation Risk (when future mode already on)
+        case 4:
+            axisY.call(d3.axisLeft(y).ticks(5))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            axisX.call(d3.axisBottom(x).ticks(5))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            d3.selectAll("text").text("");
+            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+            break;
   }
 
 
-d3.select("#industry").style("display","none");
-d3.select("#random").style("display","none");
-d3.select("#combine").style("display", "inline");
-d3.select(".btn-group").style("padding-left", "0px");
 
 }
 
 
 
+function hideLeftButtons() {
+    // hide industry split, shuffle, combine
+    d3.select("#industry").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){d3.select("#industry").style("display","none")}, 500);
+    d3.select("#random").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){d3.select("#random").style("display","none")}, 500);
+    d3.select("#combine").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){d3.select("#combine").style("display","none")}, 500);
+    d3.select(".btn-group").style("padding-left", "0px");
+    // hide play/pause as well
+    d3.select("#freeze").transition().duration(500).style("opacity", 0);
+    d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){
+      d3.select("#freeze").style("display", "none");
+      d3.select("#unfreeze").style("display", "none");
+    }, 500)
+}
+function showLeftButtons() {
 
+    d3.select("#industry").style("display","inline").transition().duration(500).style("opacity", 1);
+    d3.select("#random").style("display","inline").transition().duration(500).style("opacity", 1);
+    d3.select(".btn-group").style("padding-left", "0px")
 
-
-
-
+    d3.select("#freeze").style("display","inline").transition().duration(500).style("opacity", 1);
+    d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
+}
 
 
 
@@ -1161,21 +1189,24 @@ function graphModeOff() {
 
   // change available buttons
   d3.select("#combine").style("display", "none");
-  d3.select("#freeze").transition().duration(500).style("opacity", 1);
-  d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
-  d3.select("#industry").transition().duration(500).style("display","inline");
-  d3.select("#random").style("display","inline");
-  d3.select(".btn-group").style("padding-left", "0px")
+  d3.select("#graphToggle").attr("class","fas fa-toggle-off")
+
+  if(futureMode == 0){
+    showLeftButtons();
+  }
+
   // hide graph modes options
   d3.select("#graphModesDiv").style("display","none");
   
-  // move sliders back up
-  moveBottomUp();
+  // remove axes
+  axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
+  .remove();
 
-    // remove axes
-    axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
-    .remove();
-
+  if (futureMode == 0){
+    // move sliders back up
+    moveBottomUp();
+    // create the original legend
+    createLegend(0);
     // Transition back to original positions
     circles.transition()
     .duration(750)
@@ -1202,8 +1233,13 @@ function graphModeOff() {
     setTimeout(function() {
       simulation.alphaTarget(0.2).restart();
     }, 750);
-    
-    return;
+  } else if (futureMode == 1){
+    futureModeOn();
+    createFutureAxis();
+    futureLegend.transition().duration(500).style("opacity",0).remove();
+  }
+  
+  return;
 
 }
 
@@ -1222,13 +1258,11 @@ function graphModeOff() {
 
 ///////////////// Future View Mode ////////////////////
 
-
 futureMode = 0;
 var automationRadiusScale = d3.scaleSqrt()
   .domain([0,1]).range([maxRadius,0]);
 var automationColor = d3.scaleLinear()
   .domain([0,1]).range(['green','red']);
-
 
 // Transition node areas and colours to automationRisk
   var pastPosX = {};
@@ -1237,10 +1271,15 @@ var automationColor = d3.scaleLinear()
 d3.select("#futureView").on('click', function(d) {
   // Toggle mode on or off
   futureMode = 1-futureMode;
-  ////////////// FUTURE VIEW ON! ////////////////
+  ////////////// Future view on ////////////////
   if (futureMode == 1) {
     futureModeOn();
-  }  //////////////// Future mode off. ///////////////////
+    if (graphMode == 0) {
+      createFutureAxis();
+    } else if (graphMode == 1) {
+      createFutureLegend();
+    }
+  }  //////////////// Future view off ///////////////////
 
   // If turning off:
   if (futureMode == 0) {
@@ -1253,18 +1292,36 @@ d3.select("#futureView").on('click', function(d) {
 })
 //store the positions in future mode for un-filtering
 var futurePositions = [];
-var futureLegendHeight = window.innerHeight/4 -20;
+var futureLegendHeight = window.innerHeight/6.5;
 
-function futureModeOn() {
-    legend.transition().duration(500).style("opacity", 0);
- 
+function createFutureAxis() {
+  // Determine the axis range
+  var fty = d3.scaleLinear().domain([100, 0]).range([height, 0]);
+  // Add an axis-holder group
+  futureAxisG = svg.append("g").attr("transform", "translate("+window.innerWidth/1.6+margin.left+"," + 15 + ")");
+  // Add the Y Axis
+  futureAxisY = futureAxisG.append("g")
+ .attr("class", "axis")
+ .call(d3.axisRight(fty).ticks(5))
+ .style("opacity", 0).transition().duration(500).style("opacity",1);
+   // text label for the y axis
+  futureAxisLabelY = futureAxisG.append("text")
+  .attr("transform", "rotate(90)")
+  .attr("x", window.innerHeight/3)
+  .attr("y", -window.innerWidth/22)
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
 
+}
+
+function createFutureLegend() {
     //legend
     futureLegend = svg.selectAll("#futureLegend") // switch to axis
                   .data(d3.range(5))
                   .enter().append("g")
                   .attr("class", "futureLegend")
-                  .attr("transform", function(d, i) { return "translate("+window.innerWidth/6+"," + ((i * 22) + futureLegendHeight) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+window.innerWidth/3.1+"," + ((i * 22) + futureLegendHeight) + ")"; })
                   .style("fill", function(d, i) { return automationColor(i*0.2) });
 
               futureLegend.append("rect")
@@ -1294,132 +1351,147 @@ function futureModeOn() {
                     .style("font-family", "Raleway")
                     .style("word-wrap", "break-word")
                     // .style("overflow-wrap", "normal")
-                    .text("Risk of Machine Automation")
+                    .text("Risk (%)")
                     .style("font-size", 18)
                     .style("text-decoration", "underline")
-                    .attr("transform", "translate(-200,-20)")
+                    .attr("transform", "translate(-32,-20)")
 
       futureLegendTitle.style("opacity",0).transition().duration(500).style("opacity", 1);
+}
 
 
-    // cool to 0 degrees
-    simulation.stop();
-    // store previous positions
-    nodes.forEach(function(d) {
-      pastPosX[d.id] = d.x;
+function futureModeOn() {
+  if(graphMode == 0) {
+    hideLeftButtons();
+  }
+
+  legend.transition().duration(500).style("opacity", 0).remove();
+  d3.selectAll(".legendRect").transition().duration(500).style("opacity", 0).remove();
+  d3.selectAll(".legendText").transition().duration(500).style("opacity", 0).remove();
+  d3.select("#futureToggle").attr("class","fas fa-toggle-on");
+
+  // cool to 0 degrees
+  simulation.stop();
+  // store previous positions
+  nodes.forEach(function(d) {
+    pastPosX[d.id] = d.x;
+  });
+  nodes.forEach(function(d) {
+    pastPosY[d.id] = d.y;
+  });
+
+  // if graph mode off
+  if (graphMode == 0) {
+
+      //move sliders down
+  moveBottomDown();
+
+  // create random positions & store for un-filtering
+  nodes.forEach(function(d) {
+    futurePositions[d.id] = [
+      // x positions
+      d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
+      // y positions
+      d.automationRisk*height - window.innerHeight/5 + margin.top
+    ];
+  });
+  // transition circles' areas, colours, positions
+  circles.transition()
+  .duration(750)
+    .attr("cx", function(d) { return futurePositions[d.id][0] })
+    .attr("cy", function(d) { return futurePositions[d.id][1] })
+    // .attrTween("r", function(d) { // transition x position to...
+    //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+    //   return function(t) { return d.radius = i(t); };
+    // })
+    .styleTween("fill", function(d) {
+      var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
+      return function(t) { return d.color = i(t); };
     });
-    nodes.forEach(function(d) {
-      pastPosY[d.id] = d.y;
+  }
+
+
+  // if graph mode on
+  if (graphMode == 1) {
+  // transition circles' areas & colours
+  circles.transition()
+  .duration(750)
+    // .attrTween("r", function(d) { 
+    //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
+    //   return function(t) { return d.radius = i(t); };
+    // })
+    .styleTween("fill", function(d) {
+      var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
+      return function(t) { return d.color = i(t); };
     });
- 
-    // if graph mode off
-    if (graphMode == 0) {
+  }
 
-        //move sliders down
-    moveBottomDown();
-        //hide pause/play
-    d3.select("#freeze").transition().duration(500).style("opacity", 0);
-    d3.select("#unfreeze").transition().duration(500).style("opacity", 0);
-
-    // create random positions & store for un-filtering
-    nodes.forEach(function(d) {
-      futurePositions[d.id] = [
-        // x positions
-        d.x + Math.random()*width/2 + Math.random()*(1-d.automationRisk)*50 -25 -width/4,
-        // y positions
-        d.automationRisk*height*0.95 - height/2.5 + margin.top + 20 + Math.random()*(1-d.automationRisk)*100
-      ];
-    });
-    // transition circles' areas, colours, positions
-    circles.transition()
-    .duration(750)
-      .attr("cx", function(d) { return futurePositions[d.id][0] })
-      .attr("cy", function(d) { return futurePositions[d.id][1] })
-      // .attrTween("r", function(d) { // transition x position to...
-      //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
-      //   return function(t) { return d.radius = i(t); };
-      // })
-      .styleTween("fill", function(d) {
-        var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
-        return function(t) { return d.color = i(t); };
-      });
-    }
-
-
-    // if graph mode on
-    if (graphMode == 1) {
-    // transition circles' areas & colours
-    circles.transition()
-    .duration(750)
-      // .attrTween("r", function(d) { 
-      //   var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk));
-      //   return function(t) { return d.radius = i(t); };
-      // })
-      .styleTween("fill", function(d) {
-        var i = d3.interpolate(color(d.cluster), automationColor(d.automationRisk));
-        return function(t) { return d.color = i(t); };
-      });
-    }
-
-    setTimeout(function() {
-      circles.style("stroke", "black");
-    }, 500);
+  setTimeout(function() {
+    circles.style("stroke", "black");
+  }, 500);
 
 }
 
 function futureModeOff() {
-    
 
+    d3.select("#futureToggle").attr("class","fas fa-toggle-off")
+
+    if(typeof futureAxisG != "undefined"){
+      futureAxisG.transition().duration(500).style("opacity",0).remove();
+    }
     // if graph mode off
     if (graphMode == 0) {
 
-    // move sliders back up
-    moveBottomUp();
-        //show pause/play
-    d3.select("#freeze").transition().duration(500).style("opacity", 1);
-    d3.select("#unfreeze").transition().duration(500).style("opacity", 1);
+      // move sliders back up
+      moveBottomUp();
+      
+      //show industry split, shuffle, pause/play
+      showLeftButtons();
 
-    futureLegend.transition().duration(500).style("opacity",0);
-    futureLegendTitle.transition().duration(500).style("opacity",0);
+      if (typeof futureLegend != "undefined"){
+        futureLegend.transition().duration(500).style("opacity",0).remove();
+        futureLegendTitle.transition().duration(500).style("opacity",0).remove();
+      }
+      // Transition back to original attributes, styles, positions
+      circles.transition()
+      .duration(750)
+        // set x, y values
+      .attr("cx", function(d) { return pastPosX[d.id] })
+      .attr("cy", function(d) { return pastPosY[d.id] })
+      // .attrTween("r", function(d) {
+      //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+      //   return function(t) { return d.radius = i(t); };
+      // })
+      .styleTween("fill", function(d) {
+        var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
+        return function(t) { return d.color = i(t); };
+      });
 
-    // Transition back to original attributes, styles, positions
-    circles.transition()
-    .duration(750)
-      // set x, y values
-    .attr("cx", function(d) { return pastPosX[d.id] })
-    .attr("cy", function(d) { return pastPosY[d.id] })
-    // .attrTween("r", function(d) {
-    //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
-    //   return function(t) { return d.radius = i(t); };
-    // })
-    .styleTween("fill", function(d) {
-      var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
-      return function(t) { return d.color = i(t); };
-    });
+      setTimeout(function() {
+        simulation.alphaTarget(0.2).restart();
+      }, 750);
+    }
+    // if graph mode on
+    if (graphMode == 1) {
 
-    setTimeout(function() {
-      simulation.alphaTarget(0.2).restart();
-    }, 750);
-  }
-  // if graph mode on
-  if (graphMode == 1) {
+      if (typeof futureLegend != "undefined"){
+        futureLegend.transition().duration(500).style("opacity",0).remove();
+        futureLegendTitle.transition().duration(500).style("opacity",0).remove();
+      }
 
-    futureLegend.transition().duration(500).style("opacity",0);
-    futureLegendTitle.transition().duration(500).style("opacity",0);
+      // Transition back to original attributes & styles
+      circles.transition()
+      .duration(750)
+      // .attrTween("r", function(d) {
+      //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
+      //   return function(t) { return d.radius = i(t); };
+      // })
+      .styleTween("fill", function(d) {
+        var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
+        return function(t) { return d.color = i(t); };
+      });
 
-  // Transition back to original attributes & styles
-    circles.transition()
-    .duration(750)
-    // .attrTween("r", function(d) {
-    //   var i = d3.interpolate(automationRadiusScale(d.automationRisk), originalRadius[d.id])
-    //   return function(t) { return d.radius = i(t); };
-    // })
-    .styleTween("fill", function(d) {
-      var i = d3.interpolate(automationColor(d.automationRisk), color(d.cluster));
-      return function(t) { return d.color = i(t); };
-    });
-
-  }
+    }
 
     setTimeout(function() {
       circles.style("stroke", "none");
@@ -1627,14 +1699,14 @@ function createLegend(mode) {
                                       ((i * 20) + window.innerHeight*0.25)+")"} }) //y
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
-              legend.append("rect")
+              legend.append("rect").attr("class","legendRect")
                   .attr("x", width/2 - margin.right - 10)
                   .attr("width", 16)
                   .attr("height", 16)
                   .attr("transform", "translate(10," + legendHeight + ")")
                   .style("opacity",0).transition().duration(500).style("opacity", 1)
 
-              legend.append("text")
+              legend.append("text").attr("class","legendText")
                   .attr("x", width/2 - margin.right - 0 )
                   .attr("y", 9)
                   .attr("dy", ".35em")

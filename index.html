@@ -161,7 +161,7 @@
 		
 		<!-- Buttons -->
 
-		<div align="center" style="font-size: 10px; position: relative; margin-top: 5%; z-index: 99;" id="buttons">
+		<div align="center" style="font-size: 10px; position: relative; margin-top: 8.5%; z-index: 99;" id="buttons">
 
 				<span style='padding-left: 0px'></span>
 				<!-- Button group 1 -->
@@ -184,14 +184,15 @@
 
 				<button id="graph" data-toggle="button" type="button" class="btn btn-grey" aria-pre autocomplete="off">
 					<span style="color: white; font-weight: 560; font-family: Raleway">
-					Graph View</span>
+					Graph View&nbsp&nbsp</span><i id="graphToggle" class="fas fa-toggle-off"></i>
 				</button>
 
 				<span style='padding-left: 10px'></span>
 
 				<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
-				<span style="color: white; font-weight: 560; font-family: Raleway">
-				Future View</span></i></button>
+					<span style="color: white; font-weight: 560; font-family: Raleway">
+					Future View&nbsp&nbsp</span><i id="futureToggle" class="fas fa-toggle-off"></i>
+				</button>
 
 		</div> <!-- end of buttons -->
 
@@ -266,7 +267,7 @@
 			<span>
 			</span> <i  class="fa fa-pause"></i></button>
 
-			<button id="unfreeze" style="display: none;" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
+			<button id="unfreeze" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey btn-btm">
 			<span>
 			</span> <i  class="fa fa-play"></i></button>
 
@@ -293,7 +294,7 @@
 		document.getElementById("sizeDropdownButton").innerHTML = "Size = Wage";
 		}
 		function clickAuto() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = (-Automation Risk)";
+		document.getElementById("sizeDropdownButton").innerHTML = "Size = ( -Automation Risk )";
 		}
 		function clickYear() {
 		document.getElementById("sizeDropdownButton").innerHTML = "Size = Years of study";
@@ -313,7 +314,7 @@
 	
 		<!-- slider array 3 -->
 
-		<div id="sliderArray3" type="text" class="slider"></div>
+		<div id="sliderArray3" style="margin-left: -15px" type="text" class="slider"></div>
 
 	</div>	<!-- end of bottomDiv -->	
 
