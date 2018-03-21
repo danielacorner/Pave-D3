@@ -34,6 +34,17 @@ button.btn-grey {
   box-shadow: 3px 3px 17px grey; 
   background: #A6B0A8;
 }
+button#minimizeViews {
+  width: 20px;
+  height: 20px;
+  background: #A6B0A8;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 3px 3px 8px grey; 
+}
+button#minimizeViews:hover {
+  background: #888;
+}
 button.btn-grey:hover {
   background: #888;
 }
