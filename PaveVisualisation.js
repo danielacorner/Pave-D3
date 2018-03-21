@@ -866,15 +866,15 @@ function moveBottomUp() {
   d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
 }
 
-d3.select("#a0").on('click', function() {
+d3.select("#a0").on('click', function() { // Automation vs Workers
   // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   graphModeOn(3);
   // createLegend(0);
 });
-d3.select("#a1").on('click', function() {
+d3.select("#a1").on('click', function() { // Wage vs Years
   graphModeOn(1);
 });
-d3.select("#a2").on('click', function() {
+d3.select("#a2").on('click', function() { // Wage vs Workers
   graphModeOn(2);
 });
 
@@ -936,7 +936,7 @@ function graphModeOn(mode) {
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -950,7 +950,7 @@ function graphModeOn(mode) {
               return function(t) { return d.cx = i(t); };
             })
               .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height*0.9 - height/2 + graphYtranslate);
+                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate);
                 return function(t) { return d.cy = i(t); };
               });
             break;
@@ -1053,7 +1053,7 @@ function graphModeOn(mode) {
    // text label for the x axis
   axisLabelX = axisG.append("text")
   .attr("transform", "translate("+ (window.innerWidth/3.5+margin.left) +","
-  + (window.innerHeight/2.1+graphYtranslate) + ")")
+  + (window.innerHeight/2.3+graphYtranslate) + ")")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
@@ -1069,7 +1069,7 @@ function graphModeOn(mode) {
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", -7)
+  .attr("y", -6)
   .attr("x", -window.innerHeight/4)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
@@ -1131,7 +1131,7 @@ function graphModeOn(mode) {
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -1145,7 +1145,7 @@ function graphModeOn(mode) {
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
   }
@@ -1153,7 +1153,6 @@ function graphModeOn(mode) {
 
 
 }
-
 
 
 function hideLeftButtons() {
@@ -2110,6 +2109,25 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
 
 
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
+//////////////////////// Create Sub Sliders ///////////////////////////////
 //////////////////////// Create Sub Sliders ///////////////////////////////
 
 // for each slider_1-4,                           (1: Language 2: Logic 3: Math 4: Computer)

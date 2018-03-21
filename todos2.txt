@@ -1,5 +1,7 @@
 todos
 
+- tooltip div side always on-screen (based on mouse location)
+
 - subskill dropdowns
 
 - smooth hide "combine" on graph and future modes
