@@ -1,6 +1,6 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend;
 
 // sliders to create
 // var sliderArray = [
@@ -1617,7 +1617,6 @@ enterUpdateCircles = function() {
 
 var legendHeight = 10;
 
-var legend;
 var bottomLegend;
 
 // function createBottomLegend() {}
@@ -2137,60 +2136,55 @@ function createSliders(createSliderArray, sliderTitlesArray){
 // TODO: append divs to appropriate parents
 
 // y-translate map
-// map slider name to y position
+// map slider name to x,y position
 var sliderYTranslateMap = new Map();
-// Lang Y
-for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i+110)
-}
-// Logi Y
-for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i+180)
-}
-// Math Y
-for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2)
-}
-// Comp Y
-for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2)
-}
-
 var sliderXTranslateMap = new Map();
+var sliderLeftRightMap = new Map();
 var fontSizeMap = new Map();
 
 for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
   fontSizeMap.set(sliderTitlesArray[i], 115)
 }
-// Lang X
+// Lang X, Y
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayLang[i], 10)
+  sliderXTranslateMap.set(sliderTitlesArrayLang[i], 7) // X
+  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i+110) // Y
+  sliderLeftRightMap.set(sliderTitlesArrayLang[i], "left")
+  // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLang[i])){
       fontSizeMap.set(sliderTitlesArrayLang[i], 90)
   }
 }
-// Logi X
+// Logi X, Y
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 5)
+  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 10) // X
+  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i+120) // Y
+  sliderLeftRightMap.set(sliderTitlesArrayLogi[i], "right")
+  // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLogi[i])){
       fontSizeMap.set(sliderTitlesArrayLogi[i], 90)
   }
 }
-// Math X
+// Math X, Y
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayMath[i], 5)
+  sliderXTranslateMap.set(sliderTitlesArrayMath[i], 10) // X
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2) // Y
+  sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
+  // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
       fontSizeMap.set(sliderTitlesArrayMath[i], 90)
-  }
-  if(["Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayMath[i])){
+  } else if(["Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayMath[i])){
       fontSizeMap.set(sliderTitlesArrayMath[i], 70)
   }
 }
-// Comp X
+// Comp X, Y
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 10)
+  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 7) // X
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2) // Y
+  sliderLeftRightMap.set(sliderTitlesArrayComp[i], "left")
+  // resize larger titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayComp[i])){
       fontSizeMap.set(sliderTitlesArrayComp[i], 90)
@@ -2222,42 +2216,39 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     // --> increment i by j
     var j = indexIn_sliderArray;
 
-    var xtranslate = 13,
-        ytranslate = 0,
+    var xtranslate, ytranslate;
     // Left column
 
     ytranslate = sliderYTranslateMap.get(subSliderTitlesArray[i])
     xtranslate = sliderXTranslateMap.get(subSliderTitlesArray[i])
+    var leftOrRight = sliderLeftRightMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
     sliderSVGArray[i+j] = d3.select("#sliderArray1")
       .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
+        .style(leftOrRight, xtranslate+"px")
         .style("top", ytranslate+160+"px")
         // lg and xl
-        .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='margin-left: "+(xtranslate)+"%;"
+        .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
+          "position: absolute; margin-left: "+(xtranslate)+"%;"
           +"font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
-          +subSliderTitlesArray[i] // "Language skills"
-          // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-          // +"alt='help' height='21' width = '24'>"
+          +subSliderTitlesArray[i] // Skill title
           +"</div>"
         // md sm and xs
       // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 115%; font-weight: bold;"
       //     +" color:  #579E38; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
-      //     // +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-      //     // +"alt='help' height='21' width = '24'>"
       //     +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 100%; font-weight: bold;"
       //     +" color:  #579E38; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Language skills"
-      //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-      //     +"alt='help' height='21' width = '24'>"
+
       //     +"</div>"
           )
       .append("div").attr("id", "sliderDiv2_"+subSliderArray[i])
@@ -2798,7 +2789,7 @@ var subSliderDivComp;
 var slidersExpanded = [0,0,0,0];
 
 function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Computer)
-
+  // toggle
   slidersExpanded[sliderGroup] = 1-slidersExpanded[sliderGroup];
 
   switch (sliderGroup) {
@@ -2810,10 +2801,16 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         //if any others are on, turn them off
         if(slidersExpanded[1] == 1){
           slidersExpanded[1] = 0;
-          hideLogi() }
+          hideLogi() 
+          // if there is already a legend, unhide the legend
+          unhideLegend()
+        }
         if(slidersExpanded[2] == 1){ 
           slidersExpanded[2] = 0;
-          hideMath() }
+          hideMath() 
+          // if there is already a legend, unhide the legend
+          unhideLegend()
+        }
         if(slidersExpanded[3] == 1){ 
           slidersExpanded[3] = 0;
           hideComp() }
@@ -2841,13 +2838,16 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 
       if(slidersExpanded[1] == 1){ // on
 
+        // if there is already a legend, hide the legend
+        hideLegend()
         //if any others are on, turn them off
         if(slidersExpanded[0] == 1){
           slidersExpanded[0] = 0;
           hideLang() }
         if(slidersExpanded[2] == 1){ 
           slidersExpanded[2] = 0;
-          hideMath() }
+          hideMath() // but keep legend hidden
+        }
         if(slidersExpanded[3] == 1){ 
           slidersExpanded[3] = 0;
           hideComp() }
@@ -2867,13 +2867,19 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           }
         }, 500);
       }
-      if(slidersExpanded[1] == 0){ // off
+
+      else if(slidersExpanded[1] == 0){ // off
         hideLogi()
+        // if there is already a legend, unhide the legend
+        unhideLegend()
       }
       
     case 2: // showMath
 
       if(slidersExpanded[2] == 1){ // on
+
+        // if there is already a legend, hide the legend
+        hideLegend()
 
         //if any others are on, turn them off
         if(slidersExpanded[0] == 1){
@@ -2881,7 +2887,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideLang() }
         if(slidersExpanded[1] == 1){ 
           slidersExpanded[1] = 0;
-          hideLogi() }
+          hideLogi() // but keep legend hidden
+        }
         if(slidersExpanded[3] == 1){ 
           slidersExpanded[3] = 0;
           hideComp() }
@@ -2901,8 +2908,11 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           }
         }, 500);
       }
-      if(slidersExpanded[2] == 0){ // off
+
+      else if(slidersExpanded[2] == 0){ // off
         hideMath()
+        // if there is already a legend, unhide the legend
+        unhideLegend()
       }
       
     case 3: // showComputers
@@ -2915,10 +2925,16 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideLang() }
         if(slidersExpanded[2] == 1){ 
           slidersExpanded[2] = 0;
-          hideMath() }
+          hideMath() 
+          // if there is already a legend, unhide the legend
+          unhideLegend()
+        }
         if(slidersExpanded[1] == 1){ 
           slidersExpanded[1] = 0;
-          hideLogi() }
+          hideLogi() 
+          // if there is already a legend, unhide the legend
+          unhideLegend()
+        }
 
         subSliderDivComp.style("visibility", "visible")
           .transition().duration(500).style("height", window.innerHeight*0.35+"px")
@@ -2961,6 +2977,7 @@ function hideLang() {
 }
 
 function hideLogi() {
+
   subSliderDivLogi.transition().duration(500).style("height", "0px")
     .style("top", window.innerHeight*0.20+"px");
 
@@ -3020,7 +3037,12 @@ function hideAll() {
   hideMath()
   hideComp()
 }
-// add onclick buttons
 
-// onclick, append? 4 subskill sliders, or remove subskill sliders
-// easier? to show/hide them, append on creation (bit more latency)
+function hideLegend() {
+  if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0);
+  if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0);
+}
+function unhideLegend() {
+  if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 1);
+  if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 1);
+}

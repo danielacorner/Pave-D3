@@ -1,5 +1,7 @@
 todos
 
+- bug: showlogic not hidelegend-ing
+
 - subskill dropdowns -- math & logic (switch position: absolute; right: some%)
 
 - mobile: stretch distance between sliders based on window width
