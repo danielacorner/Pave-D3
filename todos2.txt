@@ -1,5 +1,7 @@
 todos
 
+- set circles height based on height/width ratio
+
 - bug: showlogic not hidelegend-ing
 
 - subskill dropdowns -- math & logic (switch position: absolute; right: some%)

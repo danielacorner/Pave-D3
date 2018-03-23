@@ -765,7 +765,7 @@ function smashTogether(force, temp) {
   simulation
   .force("x", d3.forceX().strength(force)).alpha(temp)
   .force("y", d3.forceY().strength(force)).alpha(temp)
-  .alphaTarget(0.001)
+  .alphaTarget(0.1)
   .restart()
 }
 
@@ -779,7 +779,7 @@ d3.select("#combine").on('click', function(d) {
   d3.select("#combine").style("display", "none");
 
   if (graphMode == 0 && futureMode == 0) {
-    smashTogether(0.3, 0.7);
+    smashTogether(0.3, 0.4);
   }
 })
 
