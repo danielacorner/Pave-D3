@@ -2,6 +2,8 @@ var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend;
 
+var legendCreated = 0;
+
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -209,11 +211,11 @@ if(window.innerWidth<576){
 if(window.innerWidth<768){
   // d3.select("#sliderArray1").style("margin-right", "-500%")
   // d3.select("#sliderArray3").style("margin-left", "-500%")
-  d3.select("#industry").style("display","none")
+  d3.select("#split").style("display","none")
 
-  d3.select("#random").style("visibility", "visible")
+  d3.select("#shuffle").style("visibility", "visible")
   if(window.innerWidth<750) {
-    d3.select("#random").style("visibility", "hidden")
+    d3.select("#shuffle").style("visibility", "hidden")
     if(window.innerWidth<684) {
       // d3.select("#sliderArray1").style("margin-right", "-600%")
       // d3.select("#sliderArray3").style("margin-left", "-600%")
@@ -223,7 +225,7 @@ if(window.innerWidth<768){
 if(window.innerWidth>=768){
   // d3.select("#sliderArray1").style("margin-right", "-300%")
   // d3.select("#sliderArray3").style("margin-left", "-300%")
-  d3.select("#industry").style("display","inline")
+  d3.select("#split").style("display","inline")
 
 }
   // width = d3.select("#chart").attr("width"), // set chart dimensions
@@ -247,8 +249,23 @@ var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.wor
 
 // Scales
     // Color scale for 10 categories
-var color = d3.scaleOrdinal(d3.schemeCategory10)
-.domain(d3.range(m));
+// var color = d3.scaleOrdinal(d3.schemeCategory10)
+//     .domain(d3.range(m))
+
+var color = d3.scaleOrdinal()
+    .domain(d3.range(m))
+    .range([
+          "#4B40DD",
+          "#D42A2F",
+          "#329E33",
+          "#BCBC35",
+          "#2678B2",
+          "#AA3DAA",
+          "#8B564C",
+          "#7F7F7F",
+          "#29BECE",
+          "#FD7F27",
+      ]);
 
 var colorTooltip = d3.scaleOrdinal()
     .domain([0,1,2,3,4,5,6,7,8,9])
@@ -262,9 +279,22 @@ var colorTooltip = d3.scaleOrdinal()
             "#E8F1F2", // grey
             "#ECFCF5", // yellow-green
             "#D7F9E9" ]) // teal
-// .domain(d3.range(m));
-    // Scale Circle Area = Number of Workers
-    // Sqrt scale because radius of a cicrle
+
+// var colorTooltip = d3.scaleOrdinal()
+//     .domain([0,1,2,3,4,5,6,7,8,9])
+//     .range(["#E1F8F9", // blue
+//             "#FFF3E1", // orange
+//             "#CFF0BE", // green
+//             "#F5DFDF", // red
+//             "#E9EBF8", // purple
+//             "white", // brown
+//             "#FCF5F7", // pink
+//             "#E8F1F2", // grey
+//             "#ECFCF5", // yellow-green
+//             "#D7F9E9" ]) // teal
+
+// Scale Circle Area = Number of Workers
+// Sqrt scale because radius of a cicrle
 var radiusScale = d3.scaleSqrt()
 .domain([10, maxWorkers])
 .range([1,maxRadius]);
@@ -725,7 +755,7 @@ d3.select("#yearLink").on('click', function() {
 
 //////////// Industry Split ////////////////
 
-d3.select("#industry").on('click', function() {
+d3.select("#split").on('click', function() {
   if (graphMode == 1 || futureMode == 1) return;
   simulation
   .force("x", forceXSeparate).alpha(0.4)
@@ -733,17 +763,17 @@ d3.select("#industry").on('click', function() {
     .alphaTarget(0) // after click, cool down to minimal temperature
     .restart()
 
-  d3.select("#industry").style("display","none");
-  d3.select("#random").style("display","none");
+  // d3.select("#split").style("display","none");
+  // d3.select("#shuffle").style("display","none");
 
-  d3.select("#combine").style("display", "inline");
+  // d3.select("#combine").style("display", "inline");
 
-  legend.transition().duration(500).style("opacity", 0).remove();
-  createLegend(1); // create Industry split legend
+  // legend.transition().duration(500).style("opacity", 0).remove();
+  // createLegend(1); // create Industry split legend
   })
 
-d3.select("#random").on('click', function() {
-  legend.transition().duration(500).style("opacity", 0).remove();
+d3.select("#shuffle").on('click', function() {
+  // legend.transition().duration(500).style("opacity", 0).remove();
   // createBottomLegend();
   if (graphMode == 1) {
     graphMode = 0;
@@ -770,19 +800,29 @@ function smashTogether(force, temp) {
 }
 
 d3.select("#combine").on('click', function(d) {
-  legend.transition().duration(500).style("opacity", 0).remove();
-  createLegend(0);
+  // legend.transition().duration(500).style("opacity", 0).remove();
+  // createLegend(0);
 
-  d3.select("#industry").style("display", "inline");
-  d3.select("#random").style("display", "inline");
+  // d3.select("#split").style("display", "inline");
+  // d3.select("#shuffle").style("display", "inline");
 
-  d3.select("#combine").style("display", "none");
+  // d3.select("#combine").style("display", "none");
 
   if (graphMode == 0 && futureMode == 0) {
     smashTogether(0.3, 0.4);
   }
 })
 
+d3.select("#colours").on('click', function(){
+  // toggle
+  legendCreated = 1-legendCreated;
+  console.log("legendCreated", legendCreated)
+  if(legendCreated == 1) { // on
+    createLegend(0);
+  }else if(legendCreated == 0){ console.log("removing!")
+    legend.transition().duration(500).style("opacity", 0).remove();
+  }
+})
 
 // TODO: maxWorkers, maxWage, skillsMath not working
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
@@ -889,11 +929,11 @@ function graphModeOn(mode) {
   if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0).remove();
   if (typeof futureAxisG != "undefined") futureAxisG.transition().duration(500).style("opacity", 0).remove();
   
-  if(futureMode == 0) {
-    hideLeftButtons();
-  }
+  // if(futureMode == 0) {
+  //   hideLeftButtons();
+  // }
 
-  d3.select("#graphToggle").attr("class","fas fa-toggle-on")
+  d3.select("#graphToggle").attr("src","img/toggle-on.png")
   
   d3.select("#graphModesDiv").style("display", "inline");
     // cool to 0 degrees
@@ -1157,10 +1197,10 @@ function graphModeOn(mode) {
 
 function hideLeftButtons() {
     // hide industry split, shuffle, combine
-    d3.select("#industry").transition().duration(500).style("opacity", 0);
-    setTimeout(function(){d3.select("#industry").style("display","none")}, 500);
-    d3.select("#random").transition().duration(500).style("opacity", 0);
-    setTimeout(function(){d3.select("#random").style("display","none")}, 500);
+    d3.select("#split").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){d3.select("#split").style("display","none")}, 500);
+    d3.select("#shuffle").transition().duration(500).style("opacity", 0);
+    setTimeout(function(){d3.select("#shuffle").style("display","none")}, 500);
     d3.select("#combine").transition().duration(500).style("opacity", 0);
     setTimeout(function(){d3.select("#combine").style("display","none")}, 500);
     d3.select(".btn-group").style("padding-left", "0px");
@@ -1174,8 +1214,8 @@ function hideLeftButtons() {
 }
 function showLeftButtons() {
 
-    d3.select("#industry").style("display","inline").transition().duration(500).style("opacity", 1);
-    d3.select("#random").style("display","inline").transition().duration(500).style("opacity", 1);
+    d3.select("#split").style("display","inline").transition().duration(500).style("opacity", 1);
+    d3.select("#shuffle").style("display","inline").transition().duration(500).style("opacity", 1);
     d3.select(".btn-group").style("padding-left", "0px")
 
     d3.select("#freeze").style("display","inline").transition().duration(500).style("opacity", 1);
@@ -1187,8 +1227,8 @@ function showLeftButtons() {
 function graphModeOff() {
 
   // change available buttons
-  d3.select("#combine").style("display", "none");
-  d3.select("#graphToggle").attr("class","fas fa-toggle-off")
+  // d3.select("#combine").style("display", "none");
+  d3.select("#graphToggle").attr("src","img/toggle-off.png")
 
   if(futureMode == 0){
     showLeftButtons();
@@ -1360,14 +1400,14 @@ function createFutureLegend() {
 
 
 function futureModeOn() {
-  if(graphMode == 0) {
-    hideLeftButtons();
-  }
+  // if(graphMode == 0) {
+  //   hideLeftButtons();
+  // }
 
   legend.transition().duration(500).style("opacity", 0).remove();
   d3.selectAll(".legendRect").transition().duration(500).style("opacity", 0).remove();
   d3.selectAll(".legendText").transition().duration(500).style("opacity", 0).remove();
-  d3.select("#futureToggle").attr("class","fas fa-toggle-on");
+  d3.select("#futureToggle").attr("src","img/toggle-on.png");
 
   // cool to 0 degrees
   simulation.stop();
@@ -1433,7 +1473,7 @@ function futureModeOn() {
 
 function futureModeOff() {
 
-    d3.select("#futureToggle").attr("class","fas fa-toggle-off")
+    d3.select("#futureToggle").attr("src","img/toggle-off.png")
 
     if(typeof futureAxisG != "undefined"){
       futureAxisG.transition().duration(500).style("opacity",0).remove();
@@ -1726,7 +1766,9 @@ function createLegend(mode) {
 
 }
 
-createLegend(0);
+d3.select("#colours").on("click", function() {
+  createLegend(0);
+})
 
 
 
@@ -1977,7 +2019,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("margin-left", xtranslate+"px")
     .style("margin-top", mgn_top+"%")
     // lg and xl
-    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
+    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
     	+"font-size: 150%; font-weight: bold;"
     	+" color:  #579E38; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
@@ -2004,17 +2046,18 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .append("div")
     .attr("align", "left")
     .style("position", "relative")
-    .style("margin-top", "19%")
+    .style("margin-top", "15.5%")
     .style("margin-left", (sub_xtranslate)+"%")
     .style("color", "#579E38")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline'>Not&nbspmuch"
-      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
+    .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px'>"
+      +"Not&nbspmuch"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.098+"px'></span>"
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
-        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.205+"px;' "+
+        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.19+"px; margin-top: 10px; margin-left: 1px' "+
         "onclick='expandSliders("+i+")' type='button'>"+
           "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
@@ -2147,9 +2190,9 @@ for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
 }
 // Lang X, Y
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayLang[i], 7) // X
-  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i+110) // Y
-  sliderLeftRightMap.set(sliderTitlesArrayLang[i], "left")
+  sliderXTranslateMap.set(sliderTitlesArrayLang[i], 1.5) // X
+  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i-150) // Y
+  // sliderLeftRightMap.set(sliderTitlesArrayLang[i], "left")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLang[i])){
@@ -2158,9 +2201,9 @@ for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
 }
 // Logi X, Y
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 10) // X
-  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i+120) // Y
-  sliderLeftRightMap.set(sliderTitlesArrayLogi[i], "right")
+  sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 1.5) // X
+  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i-150) // Y
+  // sliderLeftRightMap.set(sliderTitlesArrayLogi[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLogi[i])){
@@ -2169,9 +2212,9 @@ for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
 }
 // Math X, Y
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayMath[i], 10) // X
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2) // Y
-  sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
+  sliderXTranslateMap.set(sliderTitlesArrayMath[i], 1.5) // X
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i-350+window.innerHeight*0.2) // Y
+  // sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
       fontSizeMap.set(sliderTitlesArrayMath[i], 90)
@@ -2181,9 +2224,9 @@ for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
 }
 // Comp X, Y
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
-  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 7) // X
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i+110+window.innerHeight*0.2) // Y
-  sliderLeftRightMap.set(sliderTitlesArrayComp[i], "left")
+  sliderXTranslateMap.set(sliderTitlesArrayComp[i], 1.5) // X
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i-350+window.innerHeight*0.2) // Y
+  // sliderLeftRightMap.set(sliderTitlesArrayComp[i], "left")
   // resize larger titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayComp[i])){
@@ -2193,18 +2236,18 @@ for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
 
 
 
-createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 4);
+createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 4, 0);
 
-createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 7);
+createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 7, 1);
 
-createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 11);
+createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 11, 3);
 
-createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 15);
-
-
+createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 15, 2);
 
 
-function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderArray){
+
+
+function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderArray, appendToDiv){
   
   // For Each Slider create the slider
   for(var i=0; i<subSliderArray.length; i++) {
@@ -2221,14 +2264,14 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
     ytranslate = sliderYTranslateMap.get(subSliderTitlesArray[i])
     xtranslate = sliderXTranslateMap.get(subSliderTitlesArray[i])
-    var leftOrRight = sliderLeftRightMap.get(subSliderTitlesArray[i])
+    // var leftOrRight = sliderLeftRightMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
-    sliderSVGArray[i+j] = d3.select("#sliderArray1")
+    sliderSVGArray[i+j] = d3.select("#subSliderWindow_"+appendToDiv)
       .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
-        .style(leftOrRight, xtranslate+"px")
+        .style("left", xtranslate+"px")
         .style("top", ytranslate+160+"px")
         // lg and xl
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
@@ -2740,6 +2783,7 @@ var subSliderDivComp;
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
+      .style("background", "white")
 
   subSliderDivLogi = d3.select("body")
     .append("div")
@@ -2752,6 +2796,7 @@ var subSliderDivComp;
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
+      .style("background", "white")
 
   subSliderDivComp = d3.select("body")
     .append("div")
@@ -2764,6 +2809,7 @@ var subSliderDivComp;
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
+      .style("background", "white")
 
   subSliderDivMath = d3.select("body")
     .append("div")
@@ -2776,6 +2822,7 @@ var subSliderDivComp;
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
+      .style("background", "white")
 
 // createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
 

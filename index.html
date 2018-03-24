@@ -160,41 +160,42 @@
 	<div id="centerDiv">
 		
 		<!-- Buttons -->
+		<div id="topButtons">
+			<!-- Split, shuffle -->
+			<div id="splitShuffle" align="center" style="z-index: 0">
+				<div class="btn-group" align="center" role="group" aria-label="...">
 
-		<div align="center" style="font-size: 10px; position: relative; margin-top: 8.5%; z-index: 99;" id="buttons">
+					<button id="split" type="button" class="btn btn-grey" style="width: 88px">
+					<span style="color: white; font-weight: 560;">
+					Split</span> </button>
 
-				<span style='padding-left: 0px'></span>
-				<!-- Button group 1 -->
-				<div class="btn-group" role="group" aria-label="...">
-
-					<button id="industry" type="button" class="btn btn-grey">
-					<span style="color: white; font-weight: 560; font-family: Raleway">
-					Industry Split</span> </button>
-
-					<button id="combine" type="button" class="btn btn-grey" style="display: none; width: 182px;">
-					<span style="color: white; font-weight: 560; font-family: Raleway">
-					Combine</span> </i></button>
-
-					<button id="random" type="button" class="btn btn-grey" style="font-size: 14px;">
+					<button id="shuffle" type="button" class="btn btn-grey" style="width: 88px">
 					<span style="color: white; font-weight: 560;">
 					Shuffle</span> </button>
+
+					<button id="combine" type="button" class="btn btn-grey" style="width: 88px;">
+					<span style="color: white; font-weight: 560;">
+					Combine</span> </i></button>
+
 				</div>
+			</div>
 
-				<span style='padding-left: 10px'></span>
+			<div id="viewButtons" align="center" style="position: relative; margin-top: 15px; z-index: 0;">
 
-				<button id="graph" data-toggle="button" type="button" class="btn btn-grey" aria-pre autocomplete="off">
-					<span style="color: white; font-weight: 560; font-family: Raleway">
-					Graph View&nbsp&nbsp</span><i id="graphToggle" class="fas fa-toggle-off"></i>
-				</button>
+					<button id="graph" data-toggle="button" type="button" class="btn btn-grey" aria-pre autocomplete="off">
+						<span style="color: white; font-weight: 560; font-family: Raleway">
+						Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" src="img/toggle-off.png"></img>
+					</button>
 
-				<span style='padding-left: 10px'></span>
+					<span style='padding-left: 10px'></span>
 
-				<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
-					<span style="color: white; font-weight: 560; font-family: Raleway">
-					Future View&nbsp&nbsp</span><i id="futureToggle" class="fas fa-toggle-off"></i>
-				</button>
+					<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
+						<span style="color: white; font-weight: 560; font-family: Raleway">
+						Future View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="futureToggle" src="img/toggle-off.png"></img>
+					</button>
 
-		</div> <!-- end of buttons -->
+			</div> <!-- end of viewButtons -->
+		</div> <!-- end of topButtons -->
 
 		<!-- the graphing canvas -->
 		<svg viewBox="0 0 300 300" id="chart" style="display:block; width: 100%; height: auto;" class="chart">	</svg>
@@ -256,48 +257,51 @@
 		<!-- The data visualization -->
 		<script src="PaveVisualisation.js"></script>
 
-		<!-- Reset, pause, play buttons -->
-		<div id="playPauseDiv" align="center">
-			
-			<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm">
-			<span style="color: white; padding-right: 7px">
-			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
+		<div id="bottomButtons" style="margin-top: 15px">
+			<!-- Reset, pause, play buttons -->
+			<div id="playPauseDiv" align="center">
+				
+				<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm">
+				<span style="color: white; padding-right: 6px;">
+				Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
 
-			<button id="freeze" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
-			<span>
-			</span> <i  class="fa fa-pause"></i></button>
+				<button id="freeze" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
+				<span style="color: white; padding-right: 6px;">
+				Pause</span> <i class="fa fa-pause"></i></button>
 
-			<button id="unfreeze" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey btn-btm">
-			<span>
-			</span> <i  class="fa fa-play"></i></button>
+				<button id="unfreeze" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey btn-btm">
+				<span>
+				</span> <i class="fa fa-play"></i></button>
 
-		<!-- Size dropdown -->
+			</div>
 
-			<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
-		  <button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle btn-btm" type="button" data-toggle="dropdown" style="border-width: 0px;">Size = Workers<span class="caret"></span></button>
-		  <ul class="dropdown-menu" style="padding-left: 5px;">
-		    <li><a id="workLink" href="#" onclick="clickWork()">Workers</a></li>
-		    <li><a id="wageLink" href="#" onclick="clickWage()">Wage</a></li>
-		    <li><a id="autoLink" href="#" onclick="clickAuto()">Automation risk</a></li>
-		    <li><a id="yearLink" href="#" onclick="clickYear()">Years of study</a></li>
-		  </ul>
+			<div id="sizeColoursDiv" align="center" style="margin-top: 20px">
+				<!-- Size dropdown -->
+				<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
+			  <button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle btn-btm" type="button" data-toggle="dropdown" style="border-width: 0px; margin-right: 10px">Size by Number of Jobs<span class="caret"></span></button>
+			  <ul class="dropdown-menu" style="padding-left: 5px;">
+			    <li><a id="workLink" href="#" onclick="clickWork()">Number of Jobs</a></li>
+			    <li><a id="wageLink" href="#" onclick="clickWage()">Wage ($ per hr)</a></li>
+			    <li><a id="yearLink" href="#" onclick="clickYear()">Years of study</a></li>
+			  </ul>
+				</div>
+				<!-- Colors button -->
+				<button id="colours" class="btn btn-grey btn-btm">
+					<span style="color: white;">Colours</span></button>
 			</div>
 		</div>
-		<!-- end of centerDiv -->
+			<!-- end of centerDiv -->
 	</div>
 
 	<script type="text/javascript">
 		function clickWork() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Workers";
+		document.getElementById("sizeDropdownButton").innerHTML = "Size by Number of Jobs";
 		}
 		function clickWage() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Wage";
-		}
-		function clickAuto() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = ( -Automation Risk )";
+		document.getElementById("sizeDropdownButton").innerHTML = "Size by Wage";
 		}
 		function clickYear() {
-		document.getElementById("sizeDropdownButton").innerHTML = "Size = Years of study";
+		document.getElementById("sizeDropdownButton").innerHTML = "Size by Years of study";
 		}
 	</script>
 

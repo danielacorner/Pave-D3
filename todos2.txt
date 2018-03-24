@@ -1,6 +1,36 @@
 todos
 
-- set circles height based on height/width ratio
+- colour current suggested view background & disable click
+
+- hover info button tooltip
+
+- widen the subskill divs
+
+- Notmuchlots has to move up closer to the slider & end of Not & Lots should match end of slider
+
+- Pave title = refresh button
+
+- graph view off = back to industry split, legend needs to be reset to industry split legend
+
+- combine button disappeared when coming out of graph view (on industry split)
+
+- combine / split / shuffle in a box of four with views
+& combine Size & Colour buttons in a row
+
+- colour button which pops up the legend
+
+- Pause button says "Pause" onhover = (for slow connections)"
+	- switch to "stop" so the simulation never starts again
+
+- make combine buttons unclickable but translucent in graph/future view
+
+- circles not un-highlighting on graph view
+
+- filtered, then turned off graph view: force simulation needs reset
+
+- append subsliders to the div instead of the chart
+
+- set viewbox / circles height based on height/width ratio
 
 - bug: showlogic not hidelegend-ing
 
