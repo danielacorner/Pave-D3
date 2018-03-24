@@ -1,12 +1,12 @@
 todos
 
-- colour current suggested view background & disable click
+- colour current suggested view button background & disable click
+
+- filtering on graph view + future view needs to keep future colours on
+
+- future view circles don't un-highlight
 
 - hover info button tooltip
-
-- widen the subskill divs
-
-- Notmuchlots has to move up closer to the slider & end of Not & Lots should match end of slider
 
 - Pave title = refresh button
 
@@ -23,8 +23,6 @@ todos
 	- switch to "stop" so the simulation never starts again
 
 - make combine buttons unclickable but translucent in graph/future view
-
-- circles not un-highlighting on graph view
 
 - filtered, then turned off graph view: force simulation needs reset
 

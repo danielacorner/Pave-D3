@@ -1,6 +1,6 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
 
 var legendCreated = 0;
 
@@ -58,7 +58,7 @@ var sliderArrayLogi = ["s2DecisionMaking","s4JobTaskPlanningandOrganizing","s9Pr
 var sliderTitlesArrayLogi = ["Decision-Making","Job Task Planning and Organizing","Problem Solving","Critical Thinking"];
 
 var sliderArrayMath = ["s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting"];
-var sliderTitlesArrayMath = ["Measurement and Calculation","Money Math","Numerical Estimation","Scheduling or Budgeting and Accounting"];
+var sliderTitlesArrayMath = ["Measurement and Calculation","Money Math","Numerical Estimation","Scheduling, Budgeting, Accounting"];
 
 var sliderArrayComp = ["s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
 var sliderTitlesArrayComp = ["Data Analysis","Finding Information","Digital Technology","Document Use"];
@@ -261,10 +261,10 @@ var color = d3.scaleOrdinal()
           "#BCBC35",
           "#2678B2",
           "#AA3DAA",
-          "#8B564C",
+          "#FD7F27",
           "#7F7F7F",
           "#29BECE",
-          "#FD7F27",
+          "#8B564C",
       ]);
 
 var colorTooltip = d3.scaleOrdinal()
@@ -880,10 +880,12 @@ d3.select("#graph").on('click', function(d) {
   if (graphMode == 1) {
     if (futureMode == 1) {
       // transition smoothly from future mode
+      currentMode = 4;
       graphModeOn(4);
       createFutureLegend();
     } else if (futureMode == 0) {
     // legend.transition().duration(500).style("opacity", 0).remove();
+      currentMode = 0;
       graphModeOn(0);
     }
   }
@@ -908,13 +910,16 @@ function moveBottomUp() {
 
 d3.select("#a0").on('click', function() { // Automation vs Workers
   // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
+  currentMode = 3;
   graphModeOn(3);
   // createLegend(0);
 });
 d3.select("#a1").on('click', function() { // Wage vs Years
+  currentMode = 1;
   graphModeOn(1);
 });
 d3.select("#a2").on('click', function() { // Wage vs Workers
+  currentMode = 2;
   graphModeOn(2);
 });
 
@@ -1076,7 +1081,7 @@ function graphModeOn(mode) {
 
     }
 
-  var graphYtranslate = window.innerHeight*0.15;
+  graphYtranslate = window.innerHeight*0.15;
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
@@ -1404,9 +1409,9 @@ function futureModeOn() {
   //   hideLeftButtons();
   // }
 
-  legend.transition().duration(500).style("opacity", 0).remove();
-  d3.selectAll(".legendRect").transition().duration(500).style("opacity", 0).remove();
-  d3.selectAll(".legendText").transition().duration(500).style("opacity", 0).remove();
+  // // legend.transition().duration(500).style("opacity", 0).remove();
+  // d3.selectAll(".legendRect").transition().duration(500).style("opacity", 0).remove();
+  // d3.selectAll(".legendText").transition().duration(500).style("opacity", 0).remove();
   d3.select("#futureToggle").attr("src","img/toggle-on.png");
 
   // cool to 0 degrees
@@ -1562,10 +1567,10 @@ d3.select("#resetFilters").on('click', function(d) {
 
   //   graphModeOff();
   // }c
-  resetFilters();
+  resetFilters(currentMode);
 });
 
-function resetFilters() {
+function resetFilters(mode) {
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
     handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
@@ -1585,10 +1590,52 @@ function resetFilters() {
     } else if (futureMode == 0) {
       resetSimulation();
     } 
-  } else if (graphMode == 1) { // TODO: not working
-    circles
-    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
+  } else if (graphMode == 1) {
+      
+      switch (mode) {
+        // x = Number of Jobs
+        // y = Automation Risk
+        case 0:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+        // x = Years of Study
+        // y = Wage
+        case 1:
+          circles
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+          break;
+        // x = Number of Jobs
+        // y = Wage
+        case 2:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+          break;
+          // x = Number of Jobs
+          // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
+        case 3:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+
+        case 4:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+
+        case 5: // graph mode off
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+
+        }
+
   };
 };
 
@@ -2127,7 +2174,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       sliderMulti[event.target.id].interrupt();
     }) // drag update function
     .on("start drag", function() {
-      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x)); // pass the current line id to update function
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
     }));
 
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
@@ -2146,30 +2193,6 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
 
 
-
-
-
-
-
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
-//////////////////////// Create Sub Sliders ///////////////////////////////
 //////////////////////// Create Sub Sliders ///////////////////////////////
 
 // for each slider_1-4,                           (1: Language 2: Logic 3: Math 4: Computer)
@@ -2186,7 +2209,7 @@ var sliderLeftRightMap = new Map();
 var fontSizeMap = new Map();
 
 for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
-  fontSizeMap.set(sliderTitlesArray[i], 115)
+  fontSizeMap.set(sliderTitlesArray[i], 100)
 }
 // Lang X, Y
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
@@ -2196,7 +2219,7 @@ for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLang[i])){
-      fontSizeMap.set(sliderTitlesArrayLang[i], 90)
+      fontSizeMap.set(sliderTitlesArrayLang[i], 100)
   }
 }
 // Logi X, Y
@@ -2207,7 +2230,7 @@ for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayLogi[i])){
-      fontSizeMap.set(sliderTitlesArrayLogi[i], 90)
+      fontSizeMap.set(sliderTitlesArrayLogi[i], 100)
   }
 }
 // Math X, Y
@@ -2217,9 +2240,9 @@ for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
   // sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
-      fontSizeMap.set(sliderTitlesArrayMath[i], 90)
+      fontSizeMap.set(sliderTitlesArrayMath[i], 100)
   } else if(["Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayMath[i])){
-      fontSizeMap.set(sliderTitlesArrayMath[i], 70)
+      fontSizeMap.set(sliderTitlesArrayMath[i], 100)
   }
 }
 // Comp X, Y
@@ -2230,7 +2253,7 @@ for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
   // resize larger titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
     "Scheduling or Budgeting and Accounting", ].includes(sliderTitlesArrayComp[i])){
-      fontSizeMap.set(sliderTitlesArrayComp[i], 90)
+      fontSizeMap.set(sliderTitlesArrayComp[i], 100)
   }
 }
 
@@ -2275,8 +2298,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("top", ytranslate+160+"px")
         // lg and xl
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
-          "position: absolute; margin-left: "+(xtranslate)+"%;"
-          +"font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
+          "position: absolute; margin-left: "+(xtranslate)+"%; width: 400px;"
+          +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #579E38; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
           +"</div>"
@@ -2457,7 +2480,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           sliderMulti[event.target.id].interrupt();
         }) // drag update function
         .on("start drag", function() {
-          updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x)); // pass the current line id to update function
+          updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         }));
 
     handleArray[i+j] = sliderMulti[i+j].insert("circle", ".track-overlay")
@@ -2482,7 +2505,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
 // Update function which detects current slider
 //  general update pattern for updating the graph
-function updateMulti(h) {
+function updateMulti(h, mode) {
  
   // using the slider handle
   var sliderID = event.target.id;
@@ -2518,9 +2541,50 @@ function updateMulti(h) {
     .on("tick", tick);
     simulation.alphaTarget(0.2).restart();
   } else if (graphMode == 1) { // else reposition nodes on graph
-    circles
-    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
+      
+      switch (mode) {
+        // x = Number of Jobs
+        // y = Automation Risk
+        case 0:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+        // x = Years of Study
+        // y = Wage
+        case 1:
+          circles
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+          break;
+        // x = Number of Jobs
+        // y = Wage
+        case 2:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+          break;
+          // x = Number of Jobs
+          // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
+        case 3:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+
+        case 4:
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+
+        case 5: // graph mode off
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+        }
+
   } else if (futureMode == 1) {
     circles
     .attr("cx", function(d){ return futurePositions[d.id][0] })
@@ -2682,7 +2746,7 @@ var query = document.getElementById("jobTitle").value;
   } else if (graphMode == 1) { // else reposition nodes on graph
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-    .attr("cy", function(d){ return (1-d.automationRisk)*height*0.9 - height/2 + 100})
+    .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
   } else if (futureMode == 1) {
     circles
     .attr("cx", function(d){ return futurePositions[d.id][0] })
@@ -2734,44 +2798,19 @@ var query = document.getElementById("jobTitle").value;
 
 
 
-
-
-
-
-
-
 // subskill slider expansion
 
-
-
-
-
-
-
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
-/////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
 /////////////////////////////////// Expand Subskill Sliders buttons /////////////////////////////////////
 
 // (1: Language 2: Logic 3: Math 4: Computer)
 
-// create 4 none subslider divs 
+// create 4 empty subslider divs 
 var subSliderDivLang;
 var subSliderDivLogi;
 var subSliderDivMath;
 var subSliderDivComp;
 
+  // Lang
   subSliderDivLang = d3.select("body")
     .append("div")
       .attr("id", "subSliderWindow_0")
@@ -2785,10 +2824,11 @@ var subSliderDivComp;
       .style("visibility", "hidden")
       .style("background", "white")
 
+  // Logi
   subSliderDivLogi = d3.select("body")
     .append("div")
       .attr("id", "subSliderWindow_1")
-      .style("width", "250px")
+      .style("width", "265px")
       .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.20+"px")
@@ -2798,6 +2838,7 @@ var subSliderDivComp;
       .style("visibility", "hidden")
       .style("background", "white")
 
+  // Comp
   subSliderDivComp = d3.select("body")
     .append("div")
       .attr("id", "subSliderWindow_2")
@@ -2811,10 +2852,11 @@ var subSliderDivComp;
       .style("visibility", "hidden")
       .style("background", "white")
 
+  // Math
   subSliderDivMath = d3.select("body")
     .append("div")
       .attr("id", "subSliderWindow_3")
-      .style("width", "250px")
+      .style("width", "275px")
       .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.95+"px")
@@ -2832,6 +2874,11 @@ var subSliderDivComp;
 
 // createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 16);
 
+// div heights
+var heightLang = 250,
+    heightLogi = 335,
+    heightComp = 340,
+    heightMath = 340;
 
 var slidersExpanded = [0,0,0,0];
 
@@ -2863,7 +2910,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivLang.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.25+"px")
+          .transition().duration(500).style("height", heightLang+"px")
                 .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
@@ -2900,7 +2947,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivLogi.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+          .transition().duration(500).style("height", heightLogi+"px")
           .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
@@ -2941,7 +2988,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivMath.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+          .transition().duration(500).style("height", heightMath+"px")
             .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
@@ -2984,7 +3031,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         }
 
         subSliderDivComp.style("visibility", "visible")
-          .transition().duration(500).style("height", window.innerHeight*0.35+"px")
+          .transition().duration(500).style("height", heightComp+"px")
           .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
