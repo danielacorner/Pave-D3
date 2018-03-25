@@ -1,6 +1,14 @@
 todos
 
+- subslider divs expand from width&height = expand button dimensions
+
+- colour legend button
+
+- dropdown x and y selectors
+
 - move notmuchlots
+
+- move industry split circles up a bit
 
 - maybe move the sliders in from the sides? start by putting them all together for mobile
 
@@ -10,6 +18,7 @@ put language, buttons, logic into 3 4-inlines in a row 12-grid
 - colour current suggested view button background & disable click
 
 - pause-play in graph mode needs to stay in graph mode;
+
 pause then reset needs to stay paused
 (simulation restart if play mode on)
 

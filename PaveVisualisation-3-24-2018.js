@@ -812,20 +812,15 @@ d3.select("#combine").on('click', function(d) {
     smashTogether(0.3, 0.4);
   }
 })
+
 d3.select("#colours").on('click', function(){
   // toggle
   legendCreated = 1-legendCreated;
-
+  console.log("legendCreated", legendCreated)
   if(legendCreated == 1) { // on
-    
-    createLegendDiv();
     createLegend(0);
-
   }else if(legendCreated == 0){ console.log("removing!")
-    
     legend.transition().duration(500).style("opacity", 0).remove();
-    legendDiv.transition().duration(500).style("opacity", 0).remove();
-
   }
 })
 
@@ -1744,15 +1739,6 @@ enterUpdateCircles = function() {
 
 
   /////////// Legend /////////////////
-
-function createLegendDiv() {
-  d3.select("#pause").append("div")
-    .attr("class", "suggested-views-btn")
-    .style("height", "0px")
-    .style("width", "0px")
-    .transition().duration(500)
-}
-
 // legendG = d3.select("#legend").append("");
 // legendG = d3.select("#legend").append("");
 
@@ -1866,6 +1852,10 @@ function createLegend(mode) {
 
 
 }
+
+d3.select("#colours").on("click", function() {
+  createLegend(0);
+})
 
 
 
@@ -2867,7 +2857,7 @@ var subSliderDivComp;
       .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.20+"px")
-      .style("left", window.innerWidth*0.025+"px")
+      .style("left", window.innerWidth*0.014+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2881,7 +2871,7 @@ var subSliderDivComp;
       .style("height", "0px")
       .style("position", "absolute")
       .style("top", window.innerHeight*0.20+"px")
-      .style("right", window.innerWidth*0.025+"px")
+      .style("right", window.innerWidth*0.010+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2894,8 +2884,8 @@ var subSliderDivComp;
       .style("width", "250px")
       .style("height", "0px")
       .style("position", "absolute")
-      .style("top", window.innerHeight*0.85+"px")
-      .style("left", window.innerWidth*0.025+"px")
+      .style("top", window.innerHeight*0.95+"px")
+      .style("left", window.innerWidth*0.014+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2908,8 +2898,8 @@ var subSliderDivComp;
       .style("width", "275px")
       .style("height", "0px")
       .style("position", "absolute")
-      .style("top", window.innerHeight*0.85+"px")
-      .style("right", window.innerWidth*0.020+"px")
+      .style("top", window.innerHeight*0.95+"px")
+      .style("right", window.innerWidth*0.010+"px")
       .style("border", "2px solid green")
       .style("border-radius", "16px")
       .style("visibility", "hidden")
@@ -2959,7 +2949,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivLang.style("visibility", "visible")
-          .transition().duration(350).style("height", heightLang+"px")
+          .transition().duration(500).style("height", heightLang+"px")
                 .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
@@ -2971,7 +2961,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
-        }, 250);
+        }, 500);
       }
       if(slidersExpanded[0] == 0){ // off
         hideLang()
@@ -2996,7 +2986,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivLogi.style("visibility", "visible")
-          .transition().duration(350).style("height", heightLogi+"px")
+          .transition().duration(500).style("height", heightLogi+"px")
           .style("top", window.innerHeight*0.26+"px");
 
         setTimeout(function() {
@@ -3008,7 +2998,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
-        }, 250);
+        }, 500);
       }
 
       else if(slidersExpanded[1] == 0){ // off
@@ -3037,8 +3027,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         subSliderDivMath.style("visibility", "visible")
-          .transition().duration(350).style("height", heightMath+"px")
-            .style("top", window.innerHeight*0.37+"px");
+          .transition().duration(500).style("height", heightMath+"px")
+            .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
           for(var i=11; i<15; i++){ // unhide the sliders
@@ -3049,7 +3039,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
-        }, 250);
+        }, 500);
       }
 
       else if(slidersExpanded[2] == 0){ // off
@@ -3080,8 +3070,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         }
 
         subSliderDivComp.style("visibility", "visible")
-          .transition().duration(350).style("height", heightComp+"px")
-          .style("top", window.innerHeight*0.37+"px");
+          .transition().duration(500).style("height", heightComp+"px")
+          .style("top", window.innerHeight*0.45+"px");
 
         setTimeout(function() {
           for(var i=15; i<19; i++){ // unhide the sliders
@@ -3092,7 +3082,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
             // d3.select("#notmuchlots_"+i+4).style("visibility", "visible");
             d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "visible");
           }
-        }, 250);
+        }, 500);
       }
       if(slidersExpanded[3] == 0){ // off
         hideComp()
@@ -3140,7 +3130,7 @@ function hideLogi() {
 
 function hideMath() {
   subSliderDivMath.transition().duration(500).style("height", "0px")
-  .style("top", window.innerHeight*0.85+"px");
+  .style("top", window.innerHeight*0.95+"px");
 
   setTimeout(function() {
       subSliderDivMath.style("visibility", "hidden");
@@ -3158,7 +3148,7 @@ function hideMath() {
 
 function hideComp() {
   subSliderDivComp.transition().duration(500).style("height", "0px")
-  .style("top", window.innerHeight*0.85+"px");
+  .style("top", window.innerHeight*0.95+"px");
 
   setTimeout(function() {
       subSliderDivComp.style("visibility", "hidden");
