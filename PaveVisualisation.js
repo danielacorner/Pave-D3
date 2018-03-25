@@ -825,6 +825,7 @@ d3.select("#colours").on('click', function(){
     
     legend.transition().duration(500).style("opacity", 0).remove();
     legendDiv.transition().duration(500).style("opacity", 0).remove();
+    d3.selectAll("circle").transition().duration(500).style("opacity", 1)
 
   }
 })
@@ -1746,17 +1747,30 @@ enterUpdateCircles = function() {
   /////////// Legend /////////////////
 
 function createLegendDiv() {
-  d3.select("#pause").append("div")
-    .attr("class", "suggested-views-btn")
-    .style("height", "0px")
-    .style("width", "0px")
-    .transition().duration(500)
+  
+  legendDiv = d3.select("body").append("div")
+    .style("border", "3px solid #579E38")
+    .style("border-radius", "7px")
+    .style("position","absolute")
+    .style("bottom", window.innerHeight*0.4+"px")
+    .style("right", window.innerWidth*0.4+"px")
+    .style("height", "10px")
+    .style("width", "10px")
+
+    legendDiv.transition().duration(500)
+      .style("width","700px")
+      .style("height","463px")
+      .style("right", window.innerWidth*0.05+"px")
+      .style("bottom", window.innerHeight*0.454+"px")
+
+  d3.selectAll("circle").transition().duration(500).style("opacity", 0.1)
 }
 
+
 // legendG = d3.select("#legend").append("");
 // legendG = d3.select("#legend").append("");
 
-var legendHeight = 10;
+var legendHeight = -9;
 
 var bottomLegend;
 
@@ -1785,7 +1799,7 @@ function createLegend(mode) {
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13 +","+ ((i * 10) + window.innerHeight/24) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13 +","+ ((i * 13) + window.innerHeight/24) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -1797,13 +1811,14 @@ function createLegend(mode) {
 
               legend.append("text")
                   .attr("x", width/2 - margin.right - 0 )
-                  .attr("y", 9)
+                  .attr("y", 3)
                   .attr("dy", ".1em")
                   .style("font-size","5px")
                   .attr("transform", "translate(0," + legendHeight + ")")
                   .style("text-anchor", "end")
-                  .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
-                                          else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
+                  .text(function(d, i) { return industriesArray[i] + String.fromCharCode(160) })
+                  // .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
+                  //                         else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
 
               svg.select(".legend")
