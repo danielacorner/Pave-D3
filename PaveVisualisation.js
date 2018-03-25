@@ -2159,9 +2159,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("color", "#579E38")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px'>"
+    .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
-      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.098+"px'></span>"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.097+"px'></span>"
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
@@ -2175,12 +2175,12 @@ function createSliders(createSliderArray, sliderTitlesArray){
   	})
   .append("svg")
   	.style("z-index", 99)
-  	.attr("viewBox", "0 0 "+250+" "+50)
+  	.attr("viewBox", "0 3 "+230+" "+50)
     .style("position", "absolute")
     .style("top", window.innerHeight*0.0335+"px") // y position
     // .style("margin-left", -sub_xtranslate+"%") // x position
     .attr("id", "slider_"+i)
-    .attr("width", 250)
+    .attr("width", 230)
     .attr("height", 50);
 
 

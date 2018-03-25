@@ -1,5 +1,7 @@
 todos
 
+- create github readme.md
+
 - fix future graph view legend
 
 - tooltip div side always on-screen (based on mouse location)
