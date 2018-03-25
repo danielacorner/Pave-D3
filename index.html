@@ -137,7 +137,7 @@
 
 	<div id="topDiv">			
 		<!-- logic, math -->
-		<div id="sliderArray1" type="text" class="slider"></div>
+		<div id="sliderArray1" type="text" class="slider" style="margin-top: 25px;"></div>
 		
 		<!-- removed: slider with dropdown selection -->
 		<!-- <div style="visibility: hidden; position: relative; bottom: 600px; left: 270px" align="left" id="dropdownSliderDiv"> -->
@@ -150,19 +150,10 @@
 		<!-- <div type="text" class="slider" id="slider2"> -->
 		<!-- </div> -->
 		<!-- slider array 1: Filter by Stats-->
-	</div>
-
-
-
-
-	<!-- Column 2: Buttons & Viz -->
-
-	<div id="centerDiv">
-		
 		<!-- Buttons -->
-		<div id="topButtons">
+		<div id="topButtons" style="padding-top: 40px;">
 			<!-- Split, shuffle -->
-			<div id="splitShuffle" align="center" style="z-index: 0">
+			<div id="splitShuffle" align="center" style="z-index: 0;">
 				<div class="btn-group" align="center" role="group" aria-label="...">
 
 					<button id="split" type="button" class="btn btn-grey" style="width: 88px">
@@ -197,20 +188,29 @@
 			</div> <!-- end of viewButtons -->
 		</div> <!-- end of topButtons -->
 
+	</div>
+
+
+
+
+	<!-- Column 2: Buttons & Viz -->
+
+	<div id="centerDiv">
+		
 		<!-- the graphing canvas -->
-		<svg viewBox="0 0 300 300" id="chart" style="display:block; width: 100%; height: auto;" class="chart">	</svg>
+		<svg viewBox="0 0 300 300" id="chart" style="display: block; width: 100%; height: auto; margin-top: -40px" class="chart">	</svg>
 
 		<!-- suggested views buttons -->
-		<div id="graphModesDiv" style="position: absolute; bottom: 40%; right: 5%; display: none;">
+		<div id="suggestedViewsDiv" style="position: absolute; bottom: 39%; right: 3%; display: none;">
 
 			<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px; padding-right: 5px;">
-			Suggested Views</span><button class="btn-xs" id="minimizeViews" onclick="minimizeViews()"><i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i></button>
+			Suggested Views</span><button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()"><i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i></button>
 			 	
-		 	<li class="list-graphModes" style="padding-top: 10px;"><button class="btn-graphModes" id="a0" href="#">
+		 	<li class="list-graphModes" style="margin-top: 10px"><button id="a0" class="suggested-views-btn" style="background: #eaeaea" href="#">
 		 	Machine Automation   vs.  Number of Jobs</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a1" href="#">
+		 	<li class="list-graphModes"><button id="a1" class="suggested-views-btn" href="#">
 		 	Wage   vs.  Years of Study</button></li>
-		 	<li class="list-graphModes"><button class="btn-graphModes" id="a2"  href="#">
+		 	<li class="list-graphModes"><button id="a2" class="suggested-views-btn"  href="#">
 		 	Wage  vs.  Number of Jobs</button></li>
 				 
 		</div>
@@ -221,19 +221,21 @@
 				viewsMinimized = 1-viewsMinimized;
 				if(viewsMinimized == 1){
 					// transition opacity and height
-					d3.selectAll(".btn-graphModes").transition().duration(500).style("opacity","0")
-					d3.select("#btn-graphModes").transition().duration(500).style("opacity","0")
+					d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","0")
+					d3.select("#suggested-views-btn").transition().duration(500).style("opacity","0")
 					setTimeout(function(){
-						d3.selectAll(".btn-graphModes").style("display", "none")
+						d3.selectAll(".suggested-views-btn").style("display", "none")
+						d3.selectAll(".list-graphModes").style("height", "0px")
 					}, 500);
-					d3.select("#graphModesDiv").transition().duration(500).style("height", "0px")
+					d3.select("#suggestedViewsDiv").transition().duration(500).style("height", "0px")
 					// switch icon from - to +
 					d3.select("#minimizeIcon").attr("class", "fas fa-plus").style("padding-bottom", "2px").style("padding-right","6px")
 				}
 				else if(viewsMinimized == 0){
-					d3.select("#graphModesDiv").transition().duration(500).style("height", "250px")
-					d3.selectAll(".btn-graphModes").style("display", "inline")
-					d3.selectAll(".btn-graphModes").transition().duration(500).style("opacity","1")	
+					d3.select("#suggestedViewsDiv").transition().duration(500).style("height", "250px")
+					d3.selectAll(".suggested-views-btn").style("display", "inline")
+					d3.selectAll(".list-graphModes").style("height", "67px")
+					d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","1")	
 					d3.select("#minimizeIcon").attr("class", "fas fa-window-minimize").style("padding-bottom", "4px").style("padding-right","6px")
 				}
 			}
@@ -257,7 +259,7 @@
 		<!-- The data visualization -->
 		<script src="PaveVisualisation.js"></script>
 
-		<div id="bottomButtons" style="margin-top: 15px">
+		<div id="bottomButtons" style="margin-top: -65px">
 			<!-- Reset, pause, play buttons -->
 			<div id="playPauseDiv" align="center">
 				
@@ -270,8 +272,8 @@
 				Pause</span> <i class="fa fa-pause"></i></button>
 
 				<button id="unfreeze" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey btn-btm">
-				<span>
-				</span> <i class="fa fa-play"></i></button>
+				<span style="color: white; padding-right: 6px;">
+				Play</span> <i class="fa fa-play"></i></button>
 
 			</div>
 

@@ -1,6 +1,17 @@
 todos
 
+- move notmuchlots
+
+- maybe move the sliders in from the sides? start by putting them all together for mobile
+
+put language, buttons, logic into 3 4-inlines in a row 12-grid
+
+
 - colour current suggested view button background & disable click
+
+- pause-play in graph mode needs to stay in graph mode;
+pause then reset needs to stay paused
+(simulation restart if play mode on)
 
 - filtering on graph view + future view needs to keep future colours on
 

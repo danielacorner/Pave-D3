@@ -3,7 +3,18 @@
 			font-family: "Raleway";
       /*color: #579E38;*/
 		}
-
+/*{
+  #D42A2F
+  #FD7F27
+  #BCBC35
+  #329E33
+  #7F7F7F
+  #2678B2
+  #29BECE
+  #4B40DD
+  #AA3DAA
+  #8B564C
+}*/
 .link-top {
  font-size: 16px;
  padding-left: 30px; 
@@ -51,7 +62,7 @@ button.btn-grey:hover {
 button.btn-group:hover {
   background: #888;
 }
-button.btn-graphModes {
+button.suggested-views-btn {
   height: 60px;
   width: 200px;
   background: white;
@@ -63,9 +74,22 @@ button.btn-graphModes {
   font-family: Raleway;
   color:  #579E38;
 }
+button.suggested-views-btn:hover {
+  height: 60px;
+  width: 200px;
+  background: #eaeaea;
+  border-width: 3px;
+  border-color: #579E38;
+  border-radius: 7px;
+  box-shadow: 0px;
+  font-weight: bold;
+  font-family: Raleway;
+  color:  #579E38;
+}
 li.list-graphModes {
   list-style: none; 
   padding-bottom: 10px;
+  height: 67px;
 }
 button.search-btn {
   border: none;

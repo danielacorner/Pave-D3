@@ -902,25 +902,65 @@ d3.select("#graph").on('click', function(d) {
 })
 
 function moveBottomDown() {
-  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.7)+"px");
+  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.2)+"px");
 }
 function moveBottomUp() {
   d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
 }
 
-d3.select("#a0").on('click', function() { // Automation vs Workers
+/////////////////////////////// Suggested Views buttons /////////////////////////
+
+d3.select("#a0").on('click', function() { // Automation vs Number of Jobs
   // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   currentMode = 3;
   graphModeOn(3);
+
+  d3.select("#a0").style("background", "#eaeaea")
+  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+
+  d3.select("#a1").style("background", "white")
+  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#a2").style("background", "white")
+  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
   // createLegend(0);
 });
+
 d3.select("#a1").on('click', function() { // Wage vs Years
   currentMode = 1;
   graphModeOn(1);
+
+  d3.select("#a0").style("background", "white")
+  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#a1").style("background", "#eaeaea")
+  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+
+  d3.select("#a2").style("background", "white")
+  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
+
 d3.select("#a2").on('click', function() { // Wage vs Workers
   currentMode = 2;
   graphModeOn(2);
+
+  d3.select("#a0").style("background", "white")
+  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  
+  d3.select("#a1").style("background", "white")
+  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#a2").style("background", "#eaeaea")
+  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 });
 
 
@@ -940,7 +980,7 @@ function graphModeOn(mode) {
 
   d3.select("#graphToggle").attr("src","img/toggle-on.png")
   
-  d3.select("#graphModesDiv").style("display", "inline");
+  d3.select("#suggestedViewsDiv").style("display", "inline");
     // cool to 0 degrees
     simulation.stop();
 
@@ -1240,7 +1280,7 @@ function graphModeOff() {
   }
 
   // hide graph modes options
-  d3.select("#graphModesDiv").style("display","none");
+  d3.select("#suggestedViewsDiv").style("display","none");
   
   // remove axes
   axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
@@ -2032,13 +2072,12 @@ createSliders(sliderArrayMain, sliderTitlesArrayMain);
 // createSliders(sliderArrayLang, sliderTitlesArrayLang);
 
 
-
 function createSliders(createSliderArray, sliderTitlesArray){
 // For Each Slider create the slider
   for(var i=0; i<createSliderArray.length; i++) {
     var column = 3, 
         sub_xtranslate = 3,
-        xtranslate = 0,
+        xtranslate = window.innerWidth/25,
         mgn_top = 0;
   // Top row
 	if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
@@ -2047,11 +2086,11 @@ function createSliders(createSliderArray, sliderTitlesArray){
  	 // Bottom row
 	if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
  		column = 3;
-    mgn_top = -400;
+    mgn_top = -440;
 	}
 	// Right column
 	if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
-		xtranslate = window.innerWidth/1.32;
+		xtranslate = window.innerWidth/1.35;
     // posn = "fixed";
 	}
 
