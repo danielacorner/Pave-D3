@@ -769,7 +769,6 @@ d3.select("#split").on('click', function() {
   // d3.select("#combine").style("display", "inline");
 
   // legend.transition().duration(500).style("opacity", 0).remove();
-  // createLegend(1); // create Industry split legend
   })
 
 d3.select("#shuffle").on('click', function() {
@@ -1296,7 +1295,6 @@ function graphModeOff() {
     // move sliders back up
     moveBottomUp();
     // create the original legend
-    createLegend(0);
     // Transition back to original positions
     circles.transition()
     .duration(750)
@@ -1373,7 +1371,6 @@ d3.select("#futureView").on('click', function(d) {
 
   // If turning off:
   if (futureMode == 0) {
-    if (graphMode == 0) { createLegend(0) }
     futureModeOff();
   }; 
   
@@ -1433,7 +1430,7 @@ function createFutureLegend() {
 
       futureLegendTitle = futureLegend.filter(function(d,i){ return i==0 }).append("text")
                     .attr("x", width/2 - margin.right - 5 )
-                    .attr("y", 12)
+                    .attr("y", -6)
                     .attr("dy", ".35em")
                     // .attr("transform", "translate(20," + (legendHeight-25) + ")")
                     .style("width", "70px")
