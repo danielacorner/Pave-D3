@@ -1796,7 +1796,7 @@ function createLegend(mode) {
                   .data(d3.range(10))
                   .enter().append("g")
                   .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13 +","+ ((i * 13) + window.innerHeight/24) + ")"; })
+                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13.4 +","+ ((i * 13) + window.innerHeight/24) + ")"; })
                   .style("fill", function(d, i) { return d3.schemeCategory10[i] });
 
               legend.append("rect")
@@ -1813,7 +1813,7 @@ function createLegend(mode) {
                   .style("font-size","5px")
                   .attr("transform", "translate(0," + legendHeight + ")")
                   .style("text-anchor", "end")
-                  .text(function(d, i) { return industriesArray[i] + String.fromCharCode(160) })
+                  .text(function(d, i) { return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160) })
                   // .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
                   //                         else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
                   .style("opacity",0).transition().duration(500).style("opacity", 1);
