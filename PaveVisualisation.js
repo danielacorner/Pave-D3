@@ -2165,7 +2165,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
-        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.19+"px; margin-top: 10px; margin-left: 1px' "+
+        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.19+"px; margin-top: 10px; margin-left: 1px; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
           "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+

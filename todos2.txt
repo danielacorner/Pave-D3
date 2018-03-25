@@ -1,5 +1,7 @@
 todos
 
+- mobile setup & other sizes
+
 - create github readme.md
 
 - tooltip div side always on-screen (based on mouse location)
