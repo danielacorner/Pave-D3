@@ -51,8 +51,9 @@
 		</br><span style="font-size: 2.5vw;">How much math skill do 
 		</br>you have or wish to have?</span>
 
-		<div id="nextDiv" style="position: fixed; left: 21vw; top: 42vw;">
-			<button class="intro-tour-button" style="width: 80px; opacity: 0" id="nextButton"><a style="color: inherit" href="Tutorial2.html">NEXT</a></button>
+		<div id="nextDiv" style="position: fixed; left: 14vw; top: 48vw;">
+			<button class="intro-tour-button" style="display: inline; width: 80px; opacity: 1" id="prevButton"><a id="prevLink" style="color: inherit" href="Tutorial1.html">PREV</a></button>
+			<button class="intro-tour-button" style="display: inline; width: 80px; opacity: 0.3" id="nextButton"><a id="nextLink" style="color: inherit">NEXT</a></button>
 		</div>
 
 	<div id="rightSide">
@@ -193,6 +194,11 @@ listToDeleteMulti = []; // filtered IDs
   // }
 
 };
+
+        setTimeout(function(){
+        	d3.select("#nextButton").transition().duration(700).style("opacity", 1)
+        	d3.select("#nextLink").attr("href","Tutorial3.html")
+        }, 500)
 
 </script>
 
