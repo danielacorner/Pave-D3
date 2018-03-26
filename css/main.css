@@ -46,8 +46,9 @@ img.img-question {
   padding-bottom: 2px;
 }
 .search-div {
-  position: absolute; 
+  position: fixed; 
   right: 30px;
+  top: 30px;
 }
 button.expand-sliders-btn:hover {
   background: #eaeaea;
@@ -113,9 +114,6 @@ li.list-graphModes {
 button.search-btn {
   border: none;
   background: none;
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
 }
 img.search-img:hover {
   border: none;

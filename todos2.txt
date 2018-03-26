@@ -2,6 +2,8 @@ todos
 
 Tutorial on HOME PAGE and different tutorial pages WOW
 
+graph mode = move all sliders out to sides
+
 bug: compress graph vertically and movebottomdown/up less
 bug: top right div not aligned?
 bug: colour legend not aligned?

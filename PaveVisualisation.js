@@ -377,7 +377,7 @@ var forceGravity = d3.forceManyBody()
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 // var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
-  return ((d3.select("#chart").attr("width") / m) * d.cluster - d3.select("#chart").attr("width")/2 - 10) //try window.innerWidth??
+  return ((width / m) * d.cluster - width/2 - 10) //try window.innerWidth??
 }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
   return ((height / 2) * d.cluster/40 - 70)
@@ -436,7 +436,7 @@ var div = d3.select("body").append("div")
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
 .append('svg')    
-.attr("viewBox", "-"+0+" -"+0+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
+.attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 

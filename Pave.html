@@ -48,7 +48,7 @@
   	<div class="container-fluid">
  
      <!-- Brand and toggle get grouped for better mobile display -->
-    	<div class="navbar-header">
+    	<div class="navbar-header" style="position: fixed">
   	
 
 			  	<span style="padding-left: 5px;">
@@ -97,7 +97,7 @@
 
 <!-- title bar (hidden for xs displays like mobile) -->
 
-<div style="height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
+<div style="position: fixed; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
 	<div class="title" align="left">
 		<h1 style="font-weight: bold; color: #579E38; text-align: left;">
 			
@@ -127,12 +127,12 @@
 	</div>
 </div> <!-- end of title -->
 
+<svg  id="chart" style="position: fixed; z-index: 99; width: 100vw; height: 70vh; top: 20vh" class="chart">	</svg>
 <!-- end of headers -->
 
 
 <!-- One column, visualisation & buttons in the middle, filters on top -->
 <!-- Change to filters on sides (negative margins) on bigger screens -->
-<svg  id="chart" style="position: absolute; z-index: 99; width: 100vw; height: 100vh; top: 20vh" class="chart">	</svg>
 
 	<!-- Column 1: slider 1 & 2 (Logic, Math) -->
 
