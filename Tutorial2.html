@@ -297,22 +297,22 @@ listToDeleteMulti = []; // filtered IDs
     .attr("align", "left")
     .style("position", "fixed")
     .style("top", "43.5vw")
-    .style("left", "7vw")
-    .style("color", "#49AC52")
-    .style("font-weight", "bold")
-    .style("font-size", "1.5vw")
-    .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
-      +"Not&nbspmuch"
-      +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
-      +"Lots</div>")
+	  .style("left", "7vw")
+	  .style("color", "#49AC52")
+	  .style("font-weight", "bold")
+	  .style("font-size", "1.5vw")
+	  .style("font-family", "Raleway")
+	  .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
+	    +"Not&nbspmuch"
+	    +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
+	    +"Lots</div>")
     .select(function() {
-    return this.parentNode;
-  	})
+    	return this.parentNode;
+    })
   .append("svg")
-  	.style("z-index", 99)
+    .style("z-index", 99)
   	// .attr("viewBox", "0 0 "+230+" "+150)
-    .style("position", "fixed")
+  	.style("position", "fixed")
     .style("top", "38vw") // y position
     .style("left", "5.7vw") // y position
     // .style("margin-left", -sub_xtranslate+"%") // x position
@@ -325,7 +325,7 @@ listToDeleteMulti = []; // filtered IDs
 
   // Scale
   sliderScaleArray[0] = d3.scaleLinear()
-    .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
+	  .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
     .range(["1.9vw", "29vw"]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
