@@ -14,6 +14,8 @@ var legendCreated = 0;
 //     "s13DocumentUse","s14Writing","s15CriticalThinking"
 // ];
 
+////////////////////// Hover divs for question marks //////////////////////////////
+
 var sliderArray = [
 "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
     // subskills
@@ -269,29 +271,29 @@ var color = d3.scaleOrdinal()
 
 var colorTooltip = d3.scaleOrdinal()
     .domain([0,1,2,3,4,5,6,7,8,9])
-    .range(["#E1F8F9", // blue
-            "#FFF3E1", // orange
-            "#CFF0BE", // green
-            "#F5DFDF", // red
-            "#E9EBF8", // purple
+    .range(["white", // blue
+            "white", // orange
+            "white", // green
+            "white", // red
+            "white", // purple
             "white", // brown
-            "#FCF5F7", // pink
-            "#E8F1F2", // grey
-            "#ECFCF5", // yellow-green
-            "#D7F9E9" ]) // teal
+            "white", // pink
+            "white", // grey
+            "white", // yellow-green
+            "white" ]) // teal
 
 // var colorTooltip = d3.scaleOrdinal()
 //     .domain([0,1,2,3,4,5,6,7,8,9])
-//     .range(["#E1F8F9", // blue
-//             "#FFF3E1", // orange
-//             "#CFF0BE", // green
-//             "#F5DFDF", // red
-//             "#E9EBF8", // purple
-//             "white", // brown
-//             "#FCF5F7", // pink
-//             "#E8F1F2", // grey
-//             "#ECFCF5", // yellow-green
-//             "#D7F9E9" ]) // teal
+//     .range(["#FBFFF1", // blue
+//             "#FFECCC", // orange
+//             "#FDFFFC", // green
+//             "#EAFFDA", // red
+//             "#F7F7FF", // purple
+//             "#CCDBDC", // brown
+//             "#F6F7EB", // pink
+//             "#F3F7F0", // grey
+//             "#EAEBED", // yellow-green
+//             "#EDDDD4" ]) // teal
 
 // Scale Circle Area = Number of Workers
 // Sqrt scale because radius of a cicrle
@@ -575,7 +577,7 @@ function tooltipSmall(d) {
   // create the hover tooltip
       div.transition()
       .duration(300)
-      .style("opacity", .96)
+      .style("opacity", 1)
       .style("height", "auto")
       .style("width", "350px")
       .style("z-index", 99)
@@ -799,13 +801,6 @@ function smashTogether(force, temp) {
 }
 
 d3.select("#combine").on('click', function(d) {
-  // legend.transition().duration(500).style("opacity", 0).remove();
-  // createLegend(0);
-
-  // d3.select("#split").style("display", "inline");
-  // d3.select("#shuffle").style("display", "inline");
-
-  // d3.select("#combine").style("display", "none");
 
   if (graphMode == 0 && futureMode == 0) {
     smashTogether(0.3, 0.4);
@@ -832,7 +827,6 @@ d3.select("#colours").on('click', function(){
 // TODO: maxWorkers, maxWage, skillsMath not working
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
 minWage = d3.min(nodes, function(d) {return d.wage});
-// maxWage = d3.max(nodes, function(d) {return d.wage});//d3.max(datapoints, function(d) {return d.wage});
 
 var maxWage = 116.18; //busted
 
@@ -889,18 +883,13 @@ d3.select("#graph").on('click', function(d) {
       graphModeOn(4);
       createFutureLegend();
     } else if (futureMode == 0) {
-    // legend.transition().duration(500).style("opacity", 0).remove();
       currentMode = 0;
       graphModeOn(0);
     }
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
-    // if future mode is on, return to future mode
-    // if (futureMode == 1) { 
-      // futureMode = 0;
-      // futureModeOff(); 
-      // createLegend(0);}
+
     graphModeOff();
   }; // transition back to clusters
   
@@ -916,7 +905,6 @@ function moveBottomUp() {
 /////////////////////////////// Suggested Views buttons /////////////////////////
 
 d3.select("#a0").on('click', function() { // Automation vs Number of Jobs
-  // if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0).remove();
   currentMode = 3;
   graphModeOn(3);
 

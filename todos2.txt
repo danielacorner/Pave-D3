@@ -1,10 +1,22 @@
 todos
 
+Tutorial on HOME PAGE and different tutorial pages WOW
+
+bug: compress graph vertically and movebottomdown/up less
+bug: top right div not aligned?
+bug: colour legend not aligned?
+	- use position: absolute
+
+- append skill bars inside tooltip div with position bottom
+ - multiply tooltip padding x 1.5
+
 - hover div on question marks
 
 - mobile setup & other sizes
 
 - create github readme.md
+
+- think about slider-subslider interactions
 
 - tooltip div side always on-screen (based on mouse location)
 
@@ -21,7 +33,6 @@ todos
 - maybe move the sliders in from the sides? start by putting them all together for mobile
 
 put language, buttons, logic into 3 4-inlines in a row 12-grid
-
 
 - colour current suggested view button background & disable click
 

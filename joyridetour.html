@@ -1,0 +1,65 @@
+
+
+<!-- /* Launching joyride when page is loaded */ -->
+<script>
+$(window).load(function() {
+  $("#joyrideTour").joyride({
+    'autoStart': true,
+    'nextButton': false,
+    'tipAnimation': 'fade',
+    // 'nubPosition': 'auto',
+    /* Options will go here */
+  });
+});
+</script>
+
+ <!-- joyride site tour -->
+<ol style="display: none;" id="joyrideTour">
+  <!-- /* data-id needs to be the same as the parent it will attach to */ -->
+  <li class="intro-tour-tooltip" data-button="VIEW tutorial" data-options="tipLocation: bottom; nextButton: false">
+
+  		<div class="d-inline">
+		  	<span style="font-size: 50px;">Pave</span>
+		  	</br>is a Canadian 
+		    </br>Job Explorer.
+  		</div>
+
+  		<div class="d-inline" style="position: absolute; right: 25%; bottom: 40%">
+	  		<div class="d-inline">
+	  			<button class="btn btn-intro" onclick="$(document).joyride('next');">VIEW tutorial</button></br>
+	  		</div>
+	  		<div class="d-inline">
+	  			<button class="btn btn-intro" onclick="$(document).joyride('end');">SKIP tutorial</button>
+	  		</div>
+  		</div>
+
+
+  </li>
+
+  <!-- /* This tip will be display as a modal */ -->
+		<li>Pave is a Canadian job explorer.
+		</br>
+		</br>Each circle is a job group -- hover with your cursor to see the details.
+		</br>
+		</br>Bigger job groups have more jobs;
+		<!-- </br> -->
+		</br>colour indicates different industries.
+	  </br>
+		</br><!-- Next button --></li>
+
+  <!-- /* using 'data-button' lets you have custom button text */ -->
+  <li data-id="slider_0" class="tour-tooltip" data-options="tipLocation:left;">You can change the skill sliders to see which jobs suit your present and future self. 
+  </br>How much language skill do you have or wish to have?<span style="padding-left: 10px;"/></li>
+
+  <li data-id="subSliderDiv_0" class="tour-tooltip" data-options="tipLocation:right;">Each skillset is a category of 3-5 skills. You can filter by these skills here.<span style="padding-left: 10px;"/></li>
+
+  <!-- /* you can put a class for custom styling */ -->
+  <li data-id="industry" class="tour-tooltip">Click here to separate the jobs into their industries, or shuffle them all together if you like.</br></br></li>
+
+  <li data-id="graph" class="tour-tooltip">Not all jobs are equal! Use this button to compare jobs by wage, years of study, and job security.</br></br></li>
+
+  <li data-id="futureView" class="tour-tooltip" data-options="">Machines are getting better at performing new tasks every day -- this button shows how soon each job may be replaced by machine work.</br></br></li>
+
+  <li data-id="pause" class="tour-tooltip" data-options="tipLocation:right;" data-button="Ok, got it!">If your connection is slow, click here to pause the simulation.</br></br></li>
+</ol>
+
