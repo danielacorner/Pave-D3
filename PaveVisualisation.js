@@ -377,17 +377,17 @@ var forceGravity = d3.forceManyBody()
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 // var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
-  return ((width / m) * d.cluster - width/2 - 10) //try window.innerWidth??
+  return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
 }).strength(0.3)
 var forceYSeparate = d3.forceY(function(d) {
-  return ((height / 2) * d.cluster/40 - 70)
+  return ((height / 2) * d.cluster/40 - 50)
 }).strength(0.3)
 var forceXSeparateRandom = d3.forceX(function(d) {
   Math.random();
   return ( (width / m) * 10 * Math.random() - width/2 + 0)
 }).strength(0.4)
 var forceYSeparateRandom = d3.forceY(function(d) {
-  return ( Math.random() * (height/2) - 200 )
+  return ( Math.random() * (height/2) - 150 )
 }).strength(0.3)
 // var forceX5By2 = d3.forceX(function(d) { // 10-grid force example
 //     if (d.cluster/5<1) return d.cluster/5;
@@ -485,7 +485,7 @@ div
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
 
-                +"<svg height='80px' style='margin: 5 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -500,8 +500,8 @@ div
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"<br/>Some job titles from this group are ...</br>"
-                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
+                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
 
                 +"Top skills are...</br>"
                 +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
@@ -553,7 +553,7 @@ function tooltipSmall(d) {
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='80px' style='margin: 5 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -568,8 +568,8 @@ function tooltipSmall(d) {
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"<br/>Some job titles from this group are ...</br>"
-                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)
+                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)
 }
 
   function tooltipMouseover(d) {
@@ -593,7 +593,7 @@ function tooltipSmall(d) {
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='80px' style='margin: 5 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -608,8 +608,8 @@ function tooltipSmall(d) {
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"<br/>Some job titles from this group are ...</br>"
-                +"<ul style='padding-top: 5px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
+                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )

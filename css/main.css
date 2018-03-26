@@ -33,6 +33,7 @@ height: 4vw;
 width: 15vw;
 display: block;
 border-radius: 8px;
+border-width: 0px;
 }
 .link-top {
  font-size: 16px;
