@@ -140,102 +140,101 @@ var width = window.innerWidth/1.5, // set chart dimensions
     height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
-resize();
-d3.select(window).on("resize", resize);
-// resize the window
-function resize() {
-  d3.select("#chart").attr("width", window.innerWidth/1.5);
-  d3.select("#chart").attr("height", window.innerHeight/1.5);
-  width = window.innerWidth/1.5, // set chart dimensions
-    height = window.innerHeight/1.5;
+// resize();
+// d3.select(window).on("resize", resize);
+// // resize the window
+// function resize() {
+//   d3.select("#chart").attr("height", window.innerHeight/1.2);
+//   width = window.innerWidth/1.5, // set chart dimensions
+//     height = window.innerHeight/1.5;
 
-// if(window.innerWidth>1024){
-  for(var i=0; i<4; i++){
-    d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
-      +"Lots")  
-  }  
-// }
-// if(window.innerWidth<=1024){
-//   for(var i=0; i<4; i++){
-//     d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-//       +"<span id='notmuchSpan_"+i+"' style='margin-left: 50%'></span>"
-//       +"Lots")  
-//   }  
-  if(window.innerWidth<=954){
-    for(var i=0; i<4; i++){
-      d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-        +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
-        +"Lots")  
-    }
-    if(window.innerWidth<768){
-      for(var i=0; i<4; i++){
-        d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-          +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
-          +"Lots")
-      } 
-      if(window.innerWidth<684){
-        for(var i=0; i<4; i++){
-          d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-            +"<span id='notmuchSpan_"+i+"' style='margin-left: 30%'></span>"
-            +"Lots")
-        }
+// // // if(window.innerWidth>1024){
+// //   for(var i=0; i<4; i++){
+// //     d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// //       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
+// //       +"Lots")  
+// //   }  
+// // // }
+// // // if(window.innerWidth<=1024){
+// // //   for(var i=0; i<4; i++){
+// // //     d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// // //       +"<span id='notmuchSpan_"+i+"' style='margin-left: 50%'></span>"
+// // //       +"Lots")  
+// // //   }  
+// //   if(window.innerWidth<=954){
+// //     for(var i=0; i<4; i++){
+// //       d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// //         +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
+// //         +"Lots")  
+// //     }
+// //     if(window.innerWidth<768){
+// //       for(var i=0; i<4; i++){
+// //         d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// //           +"<span id='notmuchSpan_"+i+"' style='margin-left: 40%'></span>"
+// //           +"Lots")
+// //       } 
+// //       if(window.innerWidth<684){
+// //         for(var i=0; i<4; i++){
+// //           d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// //             +"<span id='notmuchSpan_"+i+"' style='margin-left: 30%'></span>"
+// //             +"Lots")
+// //         }
         
-        for(var i=0; i<4; i++){
-          d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
-            +"<span id='notmuchSpan_"+i+"' style='margin-left: 20%'></span>"
-            +"Lots")
-        }
+// //         for(var i=0; i<4; i++){
+// //           d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
+// //             +"<span id='notmuchSpan_"+i+"' style='margin-left: 20%'></span>"
+// //             +"Lots")
+// //         }
 
-        if(window.innerWidth<576){
-          for(var i=0; i<4; i++){
-            d3.select("#notmuchlots_"+i).html("<span style='font-size: 24px;'>-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp+</span>")
-            // d3.select("#sliderArray1").style("margin-right", "-700%")
-            // d3.select("#sliderArray3").style("margin-left", "-700%")
-          }        
-          if(window.innerWidth<512){
-            for(var i=0; i<4; i++){
-              // d3.select("#sliderArray1").style("margin-right", "-700%")
-              // d3.select("#sliderArray3").style("margin-left", "-700%")
-            }
-          }
-        }
-      }
-    }  
-  }
-// }
+// //         if(window.innerWidth<576){
+// //           for(var i=0; i<4; i++){
+// //             d3.select("#notmuchlots_"+i).html("<span style='font-size: 24px;'>-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp+</span>")
+// //             // d3.select("#sliderArray1").style("margin-right", "-700%")
+// //             // d3.select("#sliderArray3").style("margin-left", "-700%")
+// //           }        
+// //           if(window.innerWidth<512){
+// //             for(var i=0; i<4; i++){
+// //               // d3.select("#sliderArray1").style("margin-right", "-700%")
+// //               // d3.select("#sliderArray3").style("margin-left", "-700%")
+// //             }
+// //           }
+// //         }
+// //       }
+// //     }  
+// //   }
+// // // }
   
-d3.select("#futureView").style("margin-top", "0px")
-if(window.innerWidth<576){
-  d3.select("#futureView").style("margin-top", "10px")
-}
+// // d3.select("#futureView").style("margin-top", "0px")
+// // if(window.innerWidth<576){
+// //   d3.select("#futureView").style("margin-top", "10px")
+// // }
 
-if(window.innerWidth<768){
-  // d3.select("#sliderArray1").style("margin-right", "-500%")
-  // d3.select("#sliderArray3").style("margin-left", "-500%")
-  d3.select("#split").style("display","none")
+// // if(window.innerWidth<768){
+// //   // d3.select("#sliderArray1").style("margin-right", "-500%")
+// //   // d3.select("#sliderArray3").style("margin-left", "-500%")
+// //   d3.select("#split").style("display","none")
 
-  d3.select("#shuffle").style("visibility", "visible")
-  if(window.innerWidth<750) {
-    d3.select("#shuffle").style("visibility", "hidden")
-    if(window.innerWidth<684) {
-      // d3.select("#sliderArray1").style("margin-right", "-600%")
-      // d3.select("#sliderArray3").style("margin-left", "-600%")
-    }
-  }
-}
-if(window.innerWidth>=768){
-  // d3.select("#sliderArray1").style("margin-right", "-300%")
-  // d3.select("#sliderArray3").style("margin-left", "-300%")
-  d3.select("#split").style("display","inline")
+// //   d3.select("#shuffle").style("visibility", "visible")
+// //   if(window.innerWidth<750) {
+// //     d3.select("#shuffle").style("visibility", "hidden")
+// //     if(window.innerWidth<684) {
+// //       // d3.select("#sliderArray1").style("margin-right", "-600%")
+// //       // d3.select("#sliderArray3").style("margin-left", "-600%")
+// //     }
+// //   }
+// // }
+// // if(window.innerWidth>=768){
+// //   // d3.select("#sliderArray1").style("margin-right", "-300%")
+// //   // d3.select("#sliderArray3").style("margin-left", "-300%")
+// //   d3.select("#split").style("display","inline")
 
-}
-  // width = d3.select("#chart").attr("width"), // set chart dimensions
-  // height = d3.select("#chart").attr("height");
+// // }
+// //   // width = d3.select("#chart").attr("width"), // set chart dimensions
+// //   // height = d3.select("#chart").attr("height");
 
-  // svg.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
-  // svg.attr("width", width).attr("height", height);
-}
+// //   // svg.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
+//   // svg.attr("width", width).attr("height", height);
+// }
 
 
 // number of distinct clusters
@@ -265,8 +264,8 @@ var color = d3.scaleOrdinal()
           "#AA3DAA",
           "#FD7F27",
           "#7F7F7F",
-          "#29BECE",
           "#8B564C",
+          "#29BECE",
       ]);
 
 var colorTooltip = d3.scaleOrdinal()
@@ -2078,42 +2077,51 @@ function createLegend(mode) {
 createSliders(sliderArrayMain, sliderTitlesArrayMain);
 
 
-
 // createSliders(sliderArrayLang, sliderTitlesArrayLang);
 
 
 function createSliders(createSliderArray, sliderTitlesArray){
 // For Each Slider create the slider
   for(var i=0; i<createSliderArray.length; i++) {
-    var column = 3, 
-        sub_xtranslate = 3,
-        xtranslate = window.innerWidth/25,
-        mgn_top = 0;
+    
+    var sub_xtranslate = 3,
+        xtrans,
+        ytrans;
+    var leftOrRight, topOrBottom;
+
   // Top row
-	if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
- 		column = 1;
- 	}
- 	 // Bottom row
-	if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
- 		column = 3;
-    mgn_top = -440;
-	}
+  if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
+    xtrans = 9;
+    ytrans = 9;
+    topOrBottom = "top";
+  }
 	// Right column
 	if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
-		xtranslate = window.innerWidth/1.35;
+		// xtrans = 9;
+    leftOrRight = "right";
     // posn = "fixed";
 	}
+   // Bottom row
+  if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
+    xtrans = 9;
+    ytrans = 9;
+    topOrBottom = "bottom";
+  }
+  // Left column
+  if(["Language skills", "Computer skills"].includes(sliderTitlesArray[i])){
+    leftOrRight = "left";
+  }
 
   // Title & SVG
   var sliderButtonArrows = ["&#9660", "&#9660", "&#9650", "&#9650"];
   var sliderButtonPositions = [];
 
-  sliderSVGArray[i] = d3.select("#sliderArray"+column)
+  sliderSVGArray[i] = d3.select("body")
   .append("div")
     .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
-    .style("position", "absolute")
-    .style("margin-left", xtranslate+"px")
-    .style("margin-top", mgn_top+"%")
+    .style("position", "fixed")
+    .style(leftOrRight, xtrans+"vw")
+    .style(topOrBottom, ytrans+"vw")
     // lg and xl
     .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
     	+"font-size: 150%; font-weight: bold;"
@@ -2153,7 +2161,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
-        "<button class='expand-sliders-btn' style='width: "+window.innerWidth*0.19+"px; margin-top: 10px; margin-left: 1px; z-index: 99;' "+
+        "<button class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
           "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
