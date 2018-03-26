@@ -1162,9 +1162,9 @@ function graphModeOn(mode) {
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
@@ -1177,9 +1177,9 @@ function graphModeOn(mode) {
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Years of Study").style("fill","#579E38").style("font-size", "20px")
+            axisLabelX.text("Years of Study").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -1192,9 +1192,9 @@ function graphModeOn(mode) {
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Wage ($ per hr)").style("fill","#579E38").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -1206,9 +1206,9 @@ function graphModeOn(mode) {
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -1220,9 +1220,9 @@ function graphModeOn(mode) {
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#579E38").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
+            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
   }
@@ -1385,7 +1385,7 @@ function createFutureAxis() {
   .attr("y", -window.innerWidth/22)
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .text("Risk of Machine Automation (%)").style("fill","#579E38").style("font-size", "20px")
+  .text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
 
 }
 
@@ -1733,7 +1733,7 @@ enterUpdateCircles = function() {
 function createLegendDiv() {
   
   legendDiv = d3.select("body").append("div")
-    .style("border", "3px solid #579E38")
+    .style("border", "3px solid #49AC52")
     .style("border-radius", "7px")
     .style("position","absolute")
     .style("bottom", window.innerHeight*0.4+"px")
@@ -2125,7 +2125,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     // lg and xl
     .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
     	+"font-size: 150%; font-weight: bold;"
-    	+" color:  #579E38; font-family: Raleway'>"
+    	+" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
       +"<img class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
@@ -2133,7 +2133,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     // md sm and xs
   +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
       +"font-size: 150%; font-weight: bold;"
-      +" color:  #579E38; font-family: Raleway'>"
+      +" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
       +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
@@ -2141,7 +2141,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     // sm and xs
   // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
   //     +"font-size: 100%; font-weight: bold;"
-  //     +" color:  #579E38; font-family: Raleway'>"
+  //     +" color:  #49AC52; font-family: Raleway'>"
   //     +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
   //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
   //     +"alt='help' height='21' width = '24'>"
@@ -2152,7 +2152,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("position", "relative")
     .style("margin-top", "15.5%")
     .style("margin-left", (sub_xtranslate)+"%")
-    .style("color", "#579E38")
+    .style("color", "#49AC52")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
     .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
@@ -2163,7 +2163,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       "<span>"+
         "<button class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
-          "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #579E38;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+          "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
       "</span></div>")
     .select(function() {
@@ -2357,19 +2357,19 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
           "position: absolute; margin-left: "+(xtranslate)+"%; width: 400px;"
           +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
-          +" color:  #579E38; font-family: Raleway'>"
+          +" color:  #49AC52; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
           +"</div>"
         // md sm and xs
       // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 115%; font-weight: bold;"
-      //     +" color:  #579E38; font-family: Raleway'>"
+      //     +" color:  #49AC52; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
       //     +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 100%; font-weight: bold;"
-      //     +" color:  #579E38; font-family: Raleway'>"
+      //     +" color:  #49AC52; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Language skills"
 
       //     +"</div>"
@@ -2379,7 +2379,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("position", "relative")
         .style("margin-top", "19%")
         .style("margin-left", 13+"%")
-        .style("color", "#579E38")
+        .style("color", "#49AC52")
         .style("font-weight", "bold")
         .style("font-family", "Raleway")
         .html("<div id='notmuchlots_"+i+j+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"

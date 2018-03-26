@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
+	<!-- Bootstrap sources -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Jquery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- Joyride CSS file -->
+	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
+	<!-- Joyride plugin -->
+	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
+	<!-- Font Awesome icons -->
+	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<!-- Page icon -->
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<!-- Page title (name on the tab) -->
+	<title>Pave: the Canadian Job Explorer</title>
+	<!-- stylesheet -->
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Google fonts -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
+</head>
+
+
+<body>
+
+<div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
+	<div class="title" align="left">
+		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
+			
+			<a href="index.html" style="color: inherit">
+			Pave</a>
+		</h1>
+	</div>
+</div>
+
+<div class="d-inline" style="position: fixed; left: 8vw; top: 19vw; font-size: 1.7vw; font-weight: 600; color: #49AC52">
+		You can change the skill sliders
+		</br>to see which jobs suit your present 
+		</br>and future self.
+		</br>
+		</br><span style="font-size: 2.5vw;">How much math skill do 
+		</br>you have or wish to have?</span>
+
+		<div id="nextDiv" style="position: fixed; left: 21vw; top: 42vw;">
+			<button class="intro-tour-button" style="width: 80px; opacity: 0" id="nextButton"><a style="color: inherit" href="Tutorial2.html">NEXT</a></button>
+		</div>
+
+	<div id="rightSide">
+		
+		<img style="opacity: 1; width: 47vw; position: fixed; right: 8vw; top: 6vw" id="background" src="img/logo.png">
+
+	</div>
+
+</div>
+
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+
+var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+
+var sliderTitlesArrayMain = [
+"Language skills", "Logic skills", "Math skills", "Computer skills",
+];
+
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = [];
+var handleArray = []; // array of slider handles
+listToDeleteMulti = []; // filtered IDs
+
+
+
+  sliderSVGArray[0] = d3.select("body")
+  .append("div")
+    .attr("id", "sliderDiv_skillsMath") // sliderDiv_skillsLang
+    .style("position", "fixed")
+    .style("left", "8vw")
+    .style("top", "20vw")
+    // lg and xl
+    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(7)+"%;"
+    	+"font-size: 150%; font-weight: bold;"
+    	+" color:  #49AC52; font-family: Raleway'>"
+      +"</div>"
+      )
+  .append("div")
+    .attr("align", "left")
+    .style("position", "relative")
+    .style("margin-top", "15.5%")
+    .style("margin-left", (7)+"%")
+    .style("color", "#49AC52")
+    .style("font-weight", "bold")
+    .style("font-family", "Raleway")
+    .html("<div id='notmuchlots_"+0+"' style='margin-left: 5px; margin-top: -4px'>"
+      +"Not&nbspmuch"
+      +"<span id='notmuchSpan_"+0+"' style='margin-left: "+window.innerWidth*0.097+"px'></span>"
+      +"Lots</div>")
+    .select(function() {
+    return this.parentNode;
+  	})
+  .append("svg")
+  	.style("z-index", 99)
+  	.attr("viewBox", "0 3 "+230+" "+50)
+    .style("position", "absolute")
+    .style("top", window.innerHeight*0.0335+"px") // y position
+    // .style("margin-left", -sub_xtranslate+"%") // x position
+    .attr("id", "slider_"+0)
+    .attr("width", 230)
+    .attr("height", 50);
+
+
+  sliderSVGArray[0].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
+
+
+  // Scale
+  sliderScaleArray[0] = d3.scaleLinear()
+    .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
+    .range([0, 200]) // Width of slider is 200 px
+    .clamp(true);
+  // Bugfix: math max not working
+  if(["Math skills"].includes("Math skills")) {
+  sliderScaleArray[0] = d3.scaleLinear()
+    .domain([0, 59])
+    .range([0, 200]) // Width of slider is 200 px
+    .clamp(true);
+  }
+
+  // Move Wage, Number of Jobs down
+    // Slider
+  sliderMulti[0] = sliderSVGArray[0].append("g") // switch to SVG with viewBox?
+  .attr("class", "slider")
+  // .style("z-index", 99)
+  .attr("transform", "translate(" + 25 + "," + 25 + ")");
+
+  // track
+  sliderMulti[0].append("line")
+  .attr("class", "track")
+  // .style("z-index", 98)
+  .attr("x1", sliderScaleArray[0].range()[0])
+  .attr("x2", sliderScaleArray[0].range()[1])
+  .select(function() {
+    return this.parentNode;
+  }) // inset
+  .append("line")
+  // .style("z-index", 98)
+  .attr("x1", sliderScaleArray[0].range()[0])
+  .attr("x2", sliderScaleArray[0].range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  }) // overlay
+  .append("line")
+  // .style("z-index", 99)
+  .attr("x1", sliderScaleArray[0].range()[0])
+  .attr("x2", sliderScaleArray[0].range()[1])
+  .attr("class", "track-overlay")
+  .attr("id", 0)
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      sliderMulti[event.target.id].interrupt();
+    }) // drag update function
+    .on("start drag", function() {
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+    }));
+
+  handleArray[0] = sliderMulti[0].insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .style("z-index", 99)
+    .attr("r", 9);
+
+    // Bugfix: lang slider not on top
+  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
+  //   d3.select("#"+i).style("z-index", 99);
+  // }
+
+};
+
+</script>
+
+</body>
+
+</html>  		
+
