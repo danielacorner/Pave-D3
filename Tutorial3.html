@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
+	<!-- Bootstrap sources -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Jquery -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- Joyride CSS file -->
+	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
+	<!-- Joyride plugin -->
+	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
+	<!-- Font Awesome icons -->
+	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<!-- Page icon -->
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<!-- Page title (name on the tab) -->
+	<title>Pave: the Canadian Job Explorer</title>
+	<!-- stylesheet -->
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Google fonts -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
+</head>
+
+
+<body>
+
+<div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
+	<div class="title" align="left">
+		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
+			
+			<a href="index.html" style="color: inherit">
+			Pave</a>
+		</h1>
+	</div>
+</div>
+
+<div class="d-inline" style="position: fixed; left: 7vw; top: 19vw; font-size: 1.7vw; font-weight: 600; color: #49AC52">
+		You can change the skill sliders
+		</br>to see which jobs suit your present 
+		</br>and future self.
+		</br>
+
+		<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
+  	<a class="intro-tour-button" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
+    <a class="intro-tour-button" style="display: inline-block; width: 8vw; opacity: 0.3; color: white" id="nextLink" href="">START</a>
+		</div>
+
+	<div id="rightSide">
+		
+	<!-- 	<img style="opacity: 0.1; width: 47vw; position: fixed; right: 8vw; top: 6vw" id="background" src="img/logo.png"> -->
+    <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
+
+	</div>
+
+</div>
+
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+
+
+
+
+
+<script>
+var graph, store;
+var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
+forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
+
+// load the data
+createViz();
+
+function createViz() {
+d3.csv("NOC_403.csv", function(error, datapoints) {
+  if (error) throw error;
+
+// Viz dimensions & margins
+var margin = {top: 20, right: 20, bottom: 50, left: 50};
+var width = window.innerWidth/1.5, // set chart dimensions
+    height = window.innerHeight/1.5,
+    maxRadius = 30; // Max circle radius
+
+// number of distinct clusters
+var industries = [];
+datapoints.forEach(function(row){
+if(!industries.includes(row.industry)) industries.push(row.industry)
+}); 
+var m = industries.length;
+
+
+// Actual max workers... need to re-order?
+var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.workers })
+
+// Scale Circle Area = Number of Workers
+// Sqrt scale because radius of a cicrle
+var radiusScale = d3.scaleSqrt()
+.domain([10, maxWorkers])
+.range([1,maxRadius]);
+
+var color = d3.scaleOrdinal()
+    .domain(d3.range(m))
+    .range([
+          "#4B40DD",
+          "#D42A2F",
+          "#329E33",
+          "#BCBC35",
+          "#2678B2",
+          "#AA3DAA",
+          "#FD7F27",
+          "#7F7F7F",
+          "#8B564C",
+          "#29BECE",
+      ]);
+
+var colorTooltip = d3.scaleOrdinal()
+    .domain([0,1,2,3,4,5,6,7,8,9])
+    .range(["white", // blue
+            "white", // orange
+            "white", // green
+            "white", // red
+            "white", // purple
+            "white", // brown
+            "white", // pink
+            "white", // grey
+            "white", // yellow-green
+            "white" ]) // teal
+// The largest node for each cluster
+var clusters = new Array(m);
+
+// Nodes: the data you want to display & filter by
+var nodes = datapoints.map(function(el) {
+  var i = el.cluster,
+  r = radiusScale(el.workers),
+  d = {
+    id: +el.id,
+    favourite: 0,
+    cluster: i, 
+    radius: r, 
+    job: el.job,
+    topSkill1: el.topSkill1,
+    topSkill2: el.topSkill2,
+    topSkill3: el.topSkill3,
+    title1: el.title1,
+    title2: el.title2,
+    title3: el.title3,
+    industry: el.industry, 
+    noc: el.noc, 
+    workers: +el.workers,
+    wage: el.wage,
+    automationRisk: el.automationRisk,
+    yearsStudy: el.yearsStudy,
+    job: el.job,
+    skillsComp: el.skillsComp,
+    skillsLogi: el.skillsLogi,
+    skillsMath: el.skillsMath,
+    skillsLang: el.skillsLang,
+    s1DataAnalysis: el.s1DataAnalysis,
+    s2DecisionMaking: el.s2DecisionMaking,
+    s3FindingInformation: el.s3FindingInformation,
+    s4JobTaskPlanningandOrganizing: el.s4JobTaskPlanningandOrganizing,
+    s5MeasurementandCalculation: el.s5MeasurementandCalculation,
+    s6MoneyMath: el.s6MoneyMath,
+    s7NumericalEstimation: el.s7NumericalEstimation,
+    s8OralCommunication: el.s8OralCommunication,
+    s9ProblemSolving: el.s9ProblemSolving,
+    s10Reading: el.s10Reading,
+    s11SchedulingorBudgetingandAccounting: el.s11SchedulingorBudgetingandAccounting,
+    s12DigitalTechnology: el.s12DigitalTechnology,
+    s13DocumentUse: el.s13DocumentUse,
+    s14Writing: el.s14Writing,
+    s15CriticalThinking: el.s15CriticalThinking,
+
+};
+  // if there's no cluster i OR if biggest radius yet, set cluster
+  if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
+  return d;
+});
+
+// Maximum values
+var maxWorkers = d3.max(nodes, function(d){ return d.workers});
+var circles;
+
+// Graph mode
+    // Toggle for graph mode = off initially
+graphMode = 0;
+    // store nodes for drawing axes in graph mode
+graph = nodes;
+store = nodes;
+
+var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+
+var sliderTitlesArrayMain = [
+"Language skills", "Logic skills", "Math skills", "Computer skills",
+];
+
+
+// Simulation, forces, & tick function
+    // Forces for the simulation
+var forceCollide = d3.forceCollide(function(d) { return d.radius + 1 })
+var forceXCombine = d3.forceX().strength(.3)
+var forceYCombine = d3.forceY().strength(.3)
+// default strength = -30, negative strength = repel, positive = attract
+var forceGravity = d3.forceManyBody()
+.strength(function(d) { return -7 * d.radius })
+// var forceFutureMode = d3.forceManyBody()
+// .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
+// var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
+var forceXSeparate = d3.forceX(function(d) {
+  return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
+}).strength(0.3)
+var forceYSeparate = d3.forceY(function(d) {
+  return ((height / 2) * d.cluster/40 - 50)
+}).strength(0.3)
+var forceXSeparateRandom = d3.forceX(function(d) {
+  Math.random();
+  return ( (width / m) * 10 * Math.random() - width/2 + 0)
+}).strength(0.4)
+var forceYSeparateRandom = d3.forceY(function(d) {
+  return ( Math.random() * (height/2) - 150 )
+}).strength(0.3)
+// var forceX5By2 = d3.forceX(function(d) { // 10-grid force example
+//     if (d.cluster/5<1) return d.cluster/5;
+//     if (d.cluster/5>1) return d.cluster/5+1;
+// })
+    // force the circles toward their cluster nodes
+function forceCluster(alpha) {
+  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+    node = nodes[i];
+    cluster = clusters[node.cluster];
+    node.vx -= (3*node.x - cluster.x) * k;
+    node.vy -= (3*node.y - cluster.y) * k;
+  }
+  }
+    // Update the positions each tick
+tick = function() {
+  circles
+  .attr("cx", function(d) { return d.x; })
+  .attr("cy", function(d) { return d.y; });
+}
+
+
+    // The force simulation
+simulation = d3.forceSimulation()
+.nodes(store)
+    // .force("center", d3.forceCenter())
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+
+var svg = d3.select("#chart")
+.append('svg')    
+.attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
+
+var stretch_y = 1.7;
+
+circles = svg.selectAll("circle")
+.data(nodes)
+.enter().append("circle")
+    .attr("r", 0) // start at 0 radius and transition in
+    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
+    .style("z-index", 100)
+    .style("fill", function(d) { return color(d.cluster); })
+
+
+
+// on start, transition in radii from 0
+circles.transition()
+.duration(1000)
+.delay(function(d, i) { return i * 2})
+.attrTween("r", function(d) {
+  var i = d3.interpolate(0, d.radius);
+  return function(t) { return d.radius = i(t); };
+});
+
+
+// TODO: maxWorkers, maxWage, skillsMath not working
+var minWorkers = d3.min(nodes, function(d) {return d.workers}),
+minWage = d3.min(nodes, function(d) {return d.wage});
+
+var maxWage = 116.18; //busted
+
+maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
+
+
+
+
+
+
+
+
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = [];
+var handleArray = []; // array of slider handles
+listToDeleteMulti = []; // filtered IDs
+
+
+
+
+  sliderSVGArray[0] = d3.select("body")
+  .append("div")
+    .attr("id", "sliderDiv_skillsMath") // sliderDiv_skillsLang
+    .style("position", "fixed")
+    .style("left", "7vw")
+    .style("top", "29vw")
+    // lg and xl
+    .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"
+    	+"font-size: 2.5vw; font-weight: bold;"
+    	+" color:  #49AC52; font-family: Raleway'>How much math skill do "
+			+"</br>you have or wish to have?"
+      +"</div>"
+      )
+  .append("div")
+    .attr("align", "left")
+    .style("position", "fixed")
+    .style("top", "43.5vw")
+	  .style("left", "7vw")
+	  .style("color", "#49AC52")
+	  .style("font-weight", "bold")
+	  .style("font-size", "1.5vw")
+	  .style("font-family", "Raleway")
+	  .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
+	    +"Not&nbspmuch"
+	    +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
+	    +"Lots</div>")
+    .select(function() {
+    	return this.parentNode;
+    })
+  .append("svg")
+    .style("z-index", 1)
+  	// .attr("viewBox", "0 0 "+230+" "+150)
+  	.style("position", "fixed")
+    .style("top", "38vw") // y position
+    .style("left", "5.7vw") // y position
+    // .style("margin-left", -sub_xtranslate+"%") // x position
+    .attr("id", "slider_"+0)
+    .style("width","35vw")
+    .style("height", "80px")
+    // .style("height", "3vw")
+    // .attr("width", "10vw")
+    // .attr("height", "5vw");
+
+
+
+  // Scale
+  sliderScaleArray[0] = d3.scaleLinear()
+	  .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
+    .range([2.4, 30.7]) // Width of slider is 200 px
+    .clamp(true);
+  // Bugfix: math max not working
+  if(["Math skills"].includes("Math skills")) {
+  sliderScaleArray[0] = d3.scaleLinear()
+    .domain([0, 59])
+    .range([18, 250]) // Width of slider is 200 px
+    .clamp(true);
+  }
+
+  // Move Wage, Number of Jobs down
+    // Slider
+  sliderMulti[0] = sliderSVGArray[0].append("g") // switch to SVG with viewBox?
+  .attr("class", "slider")
+  // .style("z-index", 99)
+  
+  var sliderY = "4vw"
+
+  // track
+  sliderMulti[0].append("line")
+  .attr("class", "track")
+  // .style("z-index", 98)
+  .attr("x1", "2.4vw")
+  .attr("x2", "30.7vw")
+  .attr("y1", sliderY)
+  .attr("y2", sliderY)
+  .select(function() {
+    return this.parentNode;
+  }) // inset
+  .append("line")
+  // .style("z-index", 98)
+  .attr("x1", "2.4vw")
+  .attr("x2", "30.7vw")
+  .attr("y1", sliderY)
+  .attr("y2", sliderY)
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  }) // overlay
+  .append("line")
+  .attr("x1", "2.4vw")
+  .attr("x2", "30.7vw")
+  .attr("y1", sliderY)
+  .attr("y2", sliderY)
+  .attr("class", "track-overlay")
+  // .attr("stroke-width", "100")
+  .attr("id", 0)
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      sliderMulti[0].interrupt();
+    }) // drag update function
+    .on("start drag", function() {
+      updateMulti(sliderScaleArray[0].invert(d3.event.x)); // pass the current line id to update function
+    }));
+
+  handleArray[0] = sliderMulti[0].insert("circle", ".track-overlay")
+    .attr("cx", "2.4vw")
+    .attr("cy", "4vw")
+    .attr("class", "handle")
+    .style("z-index", 99)
+    .attr("r", "1vw");
+
+    // Bugfix: lang slider not on top
+  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
+  //   d3.select("#"+i).style("z-index", 99);
+  // }
+
+
+// Update function which detects current slider
+//  general update pattern for updating the graph
+function updateMulti(h) {
+ 
+  // using the slider handle
+  // var sliderID = event.target.id;
+  handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
+  // Update the slider positions array
+  sliderPositionsArray[0] = sliderScaleArray[0].invert(d3.event.x);
+
+  //  UPDATE
+  circles = circles.data(filterAll(), function(d) { return d.id });
+  
+  // EXIT
+  circles.exit().transition().duration(300)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attrTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return d.opacity = i(t); };
+  })
+  .remove();
+
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+
+  // reset simulation if graph mode = off
+    simulation.nodes(filterAll())
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+    simulation.alphaTarget(0.2).restart();
+};//end updateMulti
+
+
+
+
+//////////////// Filter Functions 3: filter on all variables at once //////////////////////
+
+filterAll = function() {
+  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
+  // START by filtering out nodes under the minimums
+  store.forEach(function(d) {
+    // INEFFICIENT -- TODO: fewer loops
+      // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
+      if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
+      // then loop through the sliders array and put you on the list
+      for(var s=0; s<sliderPositionsArray.length; s++){
+        // if the slider position is above your value, put you on the list
+        var checkMin = sliderPositionsArray[s];
+        if(d["skillsMath"] < checkMin && !listToDeleteMulti.includes(d["skillsMath"])) {
+          listToDeleteMulti.push(d.id);
+        }
+
+      }
+      
+    })
+    // reset the graph
+  graph = [];
+  // THEN update the graph based on the filter list
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!listToDeleteMulti.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    // if you're on the list
+    } else if (listToDeleteMulti.includes(n.id)) {
+      graph.forEach(function(d, p) {
+        if (n.id === d.id) {
+          graph.splice(p, 1); // get you off of there!
+        }
+      })
+    };
+  });
+  return graph;
+}
+
+
+enterUpdateCircles = function() {
+    var newCircles = circles.enter().append("circle")
+    .attr("r", function(d) { return d.radius }) // start at full radius
+    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
+    .style("fill", function(d) { return color(d.cluster); })
+
+  circles = circles.merge(newCircles);
+
+  setTimeout(function(){
+    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
+    d3.select("#nextLink").attr("href","Pave.html")
+  }, 500)
+
+}
+
+
+}) // end of d3.csv
+
+function resetSimulation() {
+  simulation.nodes(store)
+  .force("collide", forceCollide)
+  .force("cluster", forceCluster)
+  .force("gravity", forceGravity)
+  .force("x", forceXCombine)
+  .force("y", forceYCombine)
+  .on("tick", tick);
+  simulation.alphaTarget(0.2).restart();
+}
+
+} // end of createVis()
+
+
+</script>
+
+</body>
+
+</html>  		
+

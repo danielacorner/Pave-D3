@@ -43,8 +43,8 @@
 	</div>
 </div>
 
-<div id="jobExample" style="position: fixed; left: 7.5vw; top: 14vw;">
-		<svg height="50" width="50">
+<div id="jobExample" width="100" height="100" style="position: fixed; left: 7.5vw; top: 14vw;">
+		<svg height="100" width="100">
 				<circle id="jobExampleCircle" cx="25" cy="25" r="1.8vw" fill="#FD7F27" />
 		</svg>
 </div>
@@ -53,8 +53,8 @@
 		<span style="font-size: 3.05vw;">This is a job group</span>
 		</br>Hover with your cursor to see the details
 
-		<div id="nextDiv" style="position: fixed; left: 21vw; top: 42vw;">
-			<button class="intro-tour-button" style="width: 80px; opacity: 0.3" id="nextButton"><a id="nextLink" style="color: inherit">NEXT</a></button>
+		<div id="nextDiv" style="position: fixed; left: 22.05vw; top: 48vw;">
+			<a class="intro-tour-button" style="width: 8vw; opacity: 0.3; color: white" id="nextLink">NEXT</a>
 		</div>
 
 	<div id="rightSide">
@@ -97,14 +97,58 @@
             "white", // yellow-green
             "white" ]) // teal
 
-  var jobCluster = 6;
+  var maxWage = 116.18;
+  var clicked = 0;
+  var d = {
+  	job: "Chemical plant machine operators",
+  	wage: 18,
+  	automationRisk: 0.76,
+  	yearsStudy: 2.4,
+  	cluster: 6,
+  	title1: "Chemical research technician",
+  	title2: "Mass spectrometer technician",
+  	title3: "Chemical technologist", 
+  	topSkill1: "Document Use", 	
+  	topSkill2: "Reading", 	
+  	topSkill3: "Writing", 	
+  	skillsLang: 44,
+  	skillsLogi: 28,
+  	skillsMath: 5,
+  	skillsComp: 29,
+  };
 
   var div = d3.select("body").append("div")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
 
-	d3.select("#jobExampleCircle").on("mouseover", function(){
-		div.transition()
+	d3.select("#jobExampleCircle")
+	.on("mouseover", function(d) {
+      if (clicked == 1) return;
+      // highlight the current circle
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      tooltipMouseover(d);
+      })
+    .on("mouseout", function(d) {
+      if (clicked == 1) return;
+
+      // clicked = 0;
+      d3.select(this).attr("stroke", "none");
+      div.transition()
+      .duration(500)
+      .style("opacity", 0);
+    })
+    .on("click", function(d) {
+      // click-on, click-off
+      clicked = 1-clicked;
+    if (clicked == 1) {
+      tooltipLarge(d);
+     } else if (clicked == 0) {tooltipSmall(d);}
+      })
+
+
+function tooltipMouseover(){
+
+	div.transition()
       .duration(300)
       .style("opacity", 1)
       .style("height", "auto")
@@ -119,40 +163,53 @@
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 9px; padding-left: 12px; font-family: Raleway; color: " + colorTooltip(jobCluster)
-        +"; font-weight: bold'>" + "Chemical plant machine operators" + "</div>"
-                +"<div id='tooltipContentPre' style='color: " + colorTooltip(jobCluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+      div.transition()
+      .duration(300)
+      .style("opacity", 1)
+      .style("height", "auto")
+      .style("width", "350px")
+      .style("z-index", 99)
+      .style("position", "absolute")
+      // .style("border",   "1px solid black;");
+
+      // d3.select("#tooltip")
+      // .append("image")
+      //   .attr("src", "img/logo.png")
+      //   .attr("class", "img-rounded");
+
+      // Display Hover Tooltip
+      div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
+                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='50px' style='margin: 10 4;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(150*3.4/5)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(jobCluster) +"; font-family: Raleway' x='"+(150*3.4/5+5)+"' y='9.5' dy='.35em'>"+Math.round(3.4*10)/10+" years of study</text>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
                   "</g>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(350*25/116.18)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(jobCluster) +"; font-family: Raleway' x='"+(Math.round((350*25/116.18+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(25*100)/100+" per hr</text>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(150*0.57)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(jobCluster) +"; font-family: Raleway' x='"+(150*0.57+5)+"' y='48' dy='.35em'>"+(Math.round(0.57*100))+"% risk of machine automation</text>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"
-                +"Chemical research technician"+"</li><li>"
-                +"Mass spectrometer technician"+"</li><li>"
-                +"Chemical technologist"+"</li></ul></div>")
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 10 + "px")
-        .style("background", color(jobCluster) )
-        .style("top", (d3.event.pageY - 80) + 80 + "px");
+        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("background", color(d.cluster) )
+        .style("top", (d3.event.pageY - 80) - d.radius + "px");
 
         setTimeout(function(){
-        	d3.select("#nextButton").transition().duration(700).style("opacity", 1)
+        	d3.select("#nextLink").transition().duration(700).style("opacity", 1)
         	d3.select("#nextLink").attr("href","Tutorial2.html")
         }, 500)
-	})
+	}
+
 </script>
 
 </body>

@@ -94,11 +94,11 @@ $( "body" ).click(function( event ) {
 // init foundation (used for joyride) (redundant?)
 // $(document).foundation()
 
-d3.selection.prototype.moveToFront = function() {  
-      return this.each(function(){
-        this.parentNode.appendChild(this);
-      });
-    };
+// d3.selection.prototype.moveToFront = function() {  
+//       return this.each(function(){
+//         this.parentNode.appendChild(this);
+//       });
+//     };
 
 
 var graph, store; // displayed, stored data
@@ -485,7 +485,7 @@ div
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
 
-                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -553,7 +553,7 @@ function tooltipSmall(d) {
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -593,7 +593,7 @@ function tooltipSmall(d) {
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+

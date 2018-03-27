@@ -23,10 +23,15 @@ a:hover{
 .joyride-close-tip{
   display: none;
 }
+a.intro-tour-button {
+  color: white;
+}
 .intro-tour-button {
 box-shadow: 7px 7px 42px grey;
 background: #49AC52;
 color: white;
+text-align: center;
+line-height: 4vw;
 font-size: 1.75vw;
 font-weight: bold;
 height: 4vw;
