@@ -60,6 +60,11 @@
     <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
 
 	</div>
+<div style="position: fixed; left: 62vw; top: 54vw; z-index: 99">
+<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0.4">
+  <span style="color: white; padding-right: 6px;">
+  Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
+</div>
 
 </div>
 
@@ -75,6 +80,13 @@ var graph, store;
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
+
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = [];
+var handleArray = []; // array of slider handles
+listToDeleteMulti = []; // filtered IDs
 
 // load the data
 createViz();
@@ -297,19 +309,6 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
 
 
-
-
-
-var sliderPositionsArray = []; // array to track all sliders
-var sliderSVGArray = []; // array of slider SVGs
-var sliderScaleArray = []; // array of slider scale functions
-var sliderMulti = [];
-var handleArray = []; // array of slider handles
-listToDeleteMulti = []; // filtered IDs
-
-
-
-
   sliderSVGArray[0] = d3.select("body")
   .append("div")
     .attr("id", "sliderDiv_skillsMath") // sliderDiv_skillsLang
@@ -515,6 +514,7 @@ enterUpdateCircles = function() {
 
   circles = circles.merge(newCircles);
 
+    d3.select("#resetFilters").transition().duration(250).style("opacity", 1)
   setTimeout(function(){
     d3.select("#nextLink").transition().duration(700).style("opacity", 1)
     d3.select("#nextLink").attr("href","Pave.html")
@@ -523,7 +523,33 @@ enterUpdateCircles = function() {
 }
 
 
-}) // end of d3.csv
+
+///////////// Reset Filters /////////////
+
+d3.select("#resetFilters").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
+
+  //   graphModeOff();
+  // }c
+  resetFilters(0);
+});
+
+function resetFilters(mode) {
+  // reset the slider positions
+    handleArray[0].attr("cx", sliderScaleArray[0](0)); // move the slider handle
+    sliderPositionsArray[0] = 0; // Update the slider positions array
+
+  // reset all circles
+  circles = circles.data(store, function(d) { return d.id });
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+  // restart simulation only if graph mode off
+
+      resetSimulation();
+
+};
+
 
 function resetSimulation() {
   simulation.nodes(store)
@@ -535,6 +561,7 @@ function resetSimulation() {
   .on("tick", tick);
   simulation.alphaTarget(0.2).restart();
 }
+}) // end of d3.csv
 
 } // end of createVis()
 

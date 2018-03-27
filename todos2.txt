@@ -3,6 +3,8 @@ todos
 - search not working
 - buttons not on top
 
+- reset filters on tutorial 3?
+
 mobile version = vh instead of vw
 
 Tutorial on HOME PAGE and different tutorial pages WOW
