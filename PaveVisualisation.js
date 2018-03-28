@@ -897,10 +897,24 @@ d3.select("#graph").on('click', function(d) {
 })
 
 function moveBottomDown() {
-  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", (window.innerHeight/2.2)+"px");
+  // Move top up
+  d3.select("#topButtons").transition().duration(500).style("top", "10vh");
+  d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "7vh");
+  d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "7vh");
+  
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "4vh");
+  d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "3vh");
+  d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "3vh");
 }
 function moveBottomUp() {
-  d3.select("#playPauseDiv").transition().duration(500).style("margin-top", 0+"px");
+  // Move top up
+  d3.select("#topButtons").transition().duration(500).style("top", "12vh");
+  d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "9vh");
+  d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "9vh");
+
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "10vh");
+  d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "9vh");
+  d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "9vh");
 }
 
 /////////////////////////////// Suggested Views buttons /////////////////////////
@@ -988,81 +1002,93 @@ function graphModeOn(mode) {
 
     // CHOOSE / SWITCH for graph-mode dropdown
     switch (mode) {
-      // x = Number of Jobs
-      // y = Automation Risk
+
         case 0:
           // transition circles to graph positions
           circles.transition()
           .duration(750)
-              // set x values
             .attrTween("cx", function(d) { // transition x position to...
-              var i = d3.interpolate(d.x, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.x, 
+                // x = Number of Jobs
+                d.workers/maxWorkers*width*0.95 - width*0.57);
               return function(t) { return d.cx = i(t); };
             })
-              // set y values
-              .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.y, (d.automationRisk)*height - height/2 + graphYtranslate);
-                return function(t) { return d.cy = i(t); };
-              });
+            .attrTween("cy", function(d) {
+              var i = d3.interpolate(d.y, 
+                // y = Automation Risk
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+              return function(t) { return d.cy = i(t); };
+            });
             break;
-      // x = Years of Study
-      // y = Wage
+
         case 1:
           circles.transition()
           .duration(750)
             .attrTween("cx", function(d) {
-              var i = d3.interpolate(d.cx, d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.cx, 
+                // x = Years of Study
+                d.yearsStudy/maxYearsStudy*width*0.9 - width/2);
               return function(t) { return d.cx = i(t); };
             })
-              .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate);
-                return function(t) { return d.cy = i(t); };
-              });
+            .attrTween("cy", function(d) {
+              var i = d3.interpolate(d.cy, 
+                // y = Wage
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+              return function(t) { return d.cy = i(t); };
+            });
             break;
-      // x = Number of Jobs
-      // y = Wage
+
         case 2:
           circles.transition()
           .duration(750)
             .attrTween("cx", function(d) {
-              var i = d3.interpolate(d.cx, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.cx, 
+                // x = Number of Jobs
+                d.workers/maxWorkers*width*0.95 - width*0.57);
               return function(t) { return d.cx = i(t); };
             })
-              .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate);
-                return function(t) { return d.cy = i(t); };
-              });
+            .attrTween("cy", function(d) {
+              var i = d3.interpolate(d.cy, 
+                // y = Wage
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+              return function(t) { return d.cy = i(t); };
+            });
             break;
-      // x = Number of Jobs
-      // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
+
         case 3:
           circles.transition()
           .duration(750)
-              // set x values
             .attrTween("cx", function(d) { // transition x position to...
-              var i = d3.interpolate(d.cx, d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(d.cx, 
+                // x = Number of Jobs
+                d.workers/maxWorkers*width*0.95 - width*0.57);
               return function(t) { return d.cx = i(t); };
             })
-              // set y values
-              .attrTween("cy", function(d) {
-                var i = d3.interpolate(d.cy, (d.automationRisk)*height - height/2 + graphYtranslate);
-                return function(t) { return d.cy = i(t); };
-              });
+            .attrTween("cy", function(d) {
+              var i = d3.interpolate(d.cy, 
+                // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+              return function(t) { return d.cy = i(t); };
+            });
             break;
+
         case 4:
           circles.transition()
           .duration(750)
-              // set x values
             .attrTween("cx", function(d) { // transition x position to...
-              var i = d3.interpolate(futurePositions[d.id][0], d.workers/maxWorkers*width*0.9 - width/2 + margin.left); // here: create a dropdown
+              var i = d3.interpolate(futurePositions[d.id][0], 
+                // x = Number of Jobs
+                d.workers/maxWorkers*width*0.95 - width*0.57);
               return function(t) { return d.cx = i(t); };
             })
-              // set y values
-              .attrTween("cy", function(d) {
-                var i = d3.interpolate(futurePositions[d.id][1], (d.automationRisk)*height - height/2 + graphYtranslate);
-                return function(t) { return d.cy = i(t); };
-              });
+            .attrTween("cy", function(d) {
+              var i = d3.interpolate(futurePositions[d.id][1], 
+                // y = Automation Risk
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+              return function(t) { return d.cy = i(t); };
+            });
             break;
+
         case 5:
 
             break;
@@ -1071,10 +1097,10 @@ function graphModeOn(mode) {
     }
 
   //////////////////////// Axes ////////////////////////////
-
+var compressY = 0.65;
   // Set the ranges
   var x = d3.scaleLinear().range([0, width]);
-  var y = d3.scaleLinear().range([height, 0]);
+  var y = d3.scaleLinear().range([height*compressY, 0]);
 
    switch (mode) {
       // x = Number of Jobs
@@ -1115,7 +1141,7 @@ function graphModeOn(mode) {
 
     }
 
-  graphYtranslate = window.innerHeight*0.15;
+  graphYtranslate = window.innerHeight*0.12;
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
@@ -1125,14 +1151,12 @@ function graphModeOn(mode) {
   // Add the X Axis
   axisX = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+ (-2+margin.left) +","
-  + (window.innerHeight/2.6+graphYtranslate) + ")")
+ .attr("transform", "translate("+window.innerWidth*-0.05+","+window.innerHeight*0.31+")")
  .call(d3.axisBottom(x).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the x axis
   axisLabelX = axisG.append("text")
-  .attr("transform", "translate("+ (window.innerWidth/3.5+margin.left) +","
-  + (window.innerHeight/2.3+graphYtranslate) + ")")
+  .attr("transform", "translate("+window.innerWidth*0.33+","+window.innerHeight*0.36+")")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
@@ -1141,15 +1165,14 @@ function graphModeOn(mode) {
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+ (-4+margin.left) +"," 
-  + (-graphYtranslate*0.6-margin.bottom ) + ")")
+ .attr("transform", "translate("+window.innerWidth*-0.05+","+window.innerHeight*-0.14+")")
  .call(d3.axisLeft(y).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", -6)
-  .attr("x", -window.innerHeight/4)
+  .attr("y", "-10vw")
+  .attr("x", "-10vh")
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
@@ -1158,9 +1181,9 @@ function graphModeOn(mode) {
       // y = Automation Risk
         case 0:
             // axisY.call(d3.axisLeft(y)).style("fill", "none").style("stroke", "none");
-            axisY.call(d3.axisLeft(y).ticks(5))
+            axisY.call(d3.axisLeft(y).ticks(4))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisX.call(d3.axisBottom(x).ticks(5))
+            axisX.call(d3.axisBottom(x).ticks(4))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
@@ -1629,40 +1652,40 @@ function resetFilters(mode) {
         // y = Automation Risk
         case 0:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
         // x = Years of Study
         // y = Wage
         case 1:
           circles
-          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 })
           .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
           break;
         // x = Number of Jobs
         // y = Wage
         case 2:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
           .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
 
         case 4:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
 
         case 5: // graph mode off
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
 

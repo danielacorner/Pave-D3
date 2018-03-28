@@ -1,6 +1,13 @@
 todos
 
+- graph view:
+		-resize axis, cx, cy
+		-same for future view
+
 - mobile version
+
+- collapse navbar at the lg breakpoint
+- collapse search bar to search icon
 
 - search not working
 - buttons not on top

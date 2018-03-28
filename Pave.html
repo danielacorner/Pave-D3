@@ -187,17 +187,21 @@
 
 
 							<!-- suggested views buttons -->
-							<div id="suggestedViewsDiv" style="position: absolute; bottom: 39%; right: 3%; display: none;">
+							<div id="suggestedViewsDiv" style="position: fixed; bottom: 25vh; right: 3%; display: none;">
 
 								<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px; padding-right: 5px;">
-								Suggested Views</span><button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()"><i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i></button>
+								Suggested Views</span>
+								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()"><i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i></button>
 
-								<li class="list-graphModes" style="margin-top: 10px"><button id="a0" class="suggested-views-btn" style="background: #eaeaea" href="#">
-								Machine Automation   vs.  Number of Jobs</button></li>
-								<li class="list-graphModes"><button id="a1" class="suggested-views-btn" href="#">
-								Wage   vs.  Years of Study</button></li>
-								<li class="list-graphModes"><button id="a2" class="suggested-views-btn"  href="#">
-								Wage  vs.  Number of Jobs</button></li>
+								<li class="list-graphModes" style="margin-top: 10px">
+									<button id="a0" class="suggested-views-btn" style="background: #eaeaea" href="#">
+									What's the risk my job will be automated?</button></li>
+								<li class="list-graphModes">
+									<button id="a1" class="suggested-views-btn" href="#">
+									How much study for how much pay?</button></li>
+								<li class="list-graphModes">
+									<button id="a2" class="suggested-views-btn"  href="#">
+									How many jobs exist?</button></li>
 
 							</div>
 
@@ -245,19 +249,19 @@ else if(viewsMinimized == 0){
 <!-- The data visualization -->
 <script src="PaveVisualisation.js"></script>
 
-<div id="bottomButtons" class="col-4" align="center" style="position: fixed; bottom: 5vh; left: 33vw; z-index: 99">
+<div id="bottomButtons" class="col-4" align="center" style="position: fixed; bottom: 10vh; left: 33vw; z-index: 99">
 	<!-- Reset, pause, play buttons -->
 	<div id="playPauseDiv" align="center">
 
-		<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm">
+		<button id="resetFilters" type="button" class="btn btn-md btn-grey">
 			<span style="color: white; padding-right: 6px;">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
 
-			<button id="pause" type="button" class="btn btn-grey btn-btm" style="margin-left: 1%;">
+			<button id="pause" type="button" class="btn btn-grey" style="margin-left: 1%;">
 				<span style="color: white; padding-right: 6px;">
 				Pause</span> <i class="fa fa-pause"></i></button>
 
-				<button id="unpause" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey btn-btm">
+				<button id="unpause" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey">
 					<span style="color: white; padding-right: 6px;">
 					Play</span> <i class="fa fa-play"></i></button>
 
@@ -266,7 +270,7 @@ else if(viewsMinimized == 0){
 				<div id="sizeColoursDiv" align="center" style="margin-top: 20px">
 					<!-- Size dropdown -->
 					<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
-						<button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle btn-btm" type="button" data-toggle="dropdown" style="border-width: 0px; margin-right: 10px">Size by Number of Jobs<span class="caret"></span></button>
+						<button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px; margin-right: 10px">Size by Number of Jobs<span class="caret"></span></button>
 						<ul class="dropdown-menu" style="padding-left: 5px;">
 							<li><a id="workLink" href="#" onclick="clickWork()">Number of Jobs</a></li>
 							<li><a id="wageLink" href="#" onclick="clickWage()">Wage ($ per hr)</a></li>
@@ -274,7 +278,7 @@ else if(viewsMinimized == 0){
 						</ul>
 					</div>
 					<!-- Colors button -->
-					<button id="colours" class="btn btn-grey btn-btm">
+					<button id="colours" class="btn btn-grey">
 						<span style="color: white;">Colours</span></button>
 					</div>
 				</div>
