@@ -1,5 +1,7 @@
 todos
 
+- mobile version
+
 - search not working
 - buttons not on top
 

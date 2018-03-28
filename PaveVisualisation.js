@@ -140,15 +140,17 @@ var width = window.innerWidth/1.5, // set chart dimensions
     height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
-// resize();
-// d3.select(window).on("resize", resize);
-// // resize the window
-// function resize() {
-//   d3.select("#chart").attr("height", window.innerHeight/1.2);
-//   width = window.innerWidth/1.5, // set chart dimensions
-//     height = window.innerHeight/1.5;
+resize();
+d3.select(window).on("resize", resize);
+// resize the window
+function resize() {
+  width = window.innerWidth/1.5, // set chart dimensions
+  height = window.innerHeight/1.5;
 
-// // // if(window.innerWidth>1024){
+  if(window.innerWidth<641){ // Phones
+    margin = {top: 20, right: 12, bottom: 20, left: 12}
+  }
+}
 // //   for(var i=0; i<4; i++){
 // //     d3.select("#notmuchlots_"+i).html("Not&nbspmuch"
 // //       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
@@ -1930,7 +1932,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
     .style("position", "fixed")
     .style(leftOrRight, xtrans+"vw")
-    .style(topOrBottom, ytrans+"vw")
+    .style(topOrBottom, ytrans+"vh")
     // lg and xl
     .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
     	+"font-size: 150%; font-weight: bold;"

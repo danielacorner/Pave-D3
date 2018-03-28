@@ -23,6 +23,7 @@
   "dependencies": {
     "foundation-joyride": "^3.0.0",
     "jquery.joyride": "^2.2.0",
+    "npm": "^5.8.0",
     "what-input": "git+https://github.com/ten1seven/what-input.git"
   }
 }

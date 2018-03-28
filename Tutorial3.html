@@ -363,7 +363,7 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
   if(["Math skills"].includes("Math skills")) {
   sliderScaleArray[0] = d3.scaleLinear()
     .domain([0, 59])
-    .range([18, 250]) // Width of slider is 200 px
+    .range([window.innerWidth*0.03, window.innerWidth*0.3]) // Width of slider is 200 px
     .clamp(true);
   }
 
@@ -373,7 +373,7 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
   .attr("class", "slider")
   // .style("z-index", 99)
   
-  var sliderY = "4vw"
+  var sliderY = "3.5vw"
 
   // track
   sliderMulti[0].append("line")
@@ -414,7 +414,7 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
   handleArray[0] = sliderMulti[0].insert("circle", ".track-overlay")
     .attr("cx", "2.4vw")
-    .attr("cy", "4vw")
+    .attr("cy", sliderY)
     .attr("class", "handle")
     .style("z-index", 99)
     .attr("r", "1vw");
