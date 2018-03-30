@@ -557,7 +557,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
                 "</svg>"                                
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
                 +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
-     +"<div style='height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
+     +"<div style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
         +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
           "<title id='title'>A bar chart showing information</title>"+
@@ -642,14 +642,14 @@ setTimeout(function(){
         "<span style='margin-left: 231px'></span>"+
 
         "<button id='btnSave' class='btn btn-lg' "+
-        "style='position: absolute; right: 2.8vw; bottom: 7.5vh; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "style='position: absolute; right: 17px; bottom: 75px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "' onclick='function(){ d3.select('#circle_"+d.id+"').attr('stroke','#EFCA2EFF').attr('stroke-width','3px')}'>"+
         
         "Save</button><br/>"+
 
         "<span style='margin-top: 10px; margin-left: 220px'></span>"+
         "<a id='viewMoreBtn' class='btn btn-lg' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank'"+
-        "style='position: absolute; right: 2.8vw; bottom: 2.1vh; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "style='position: absolute; right: 17px; bottom: 20px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
         "View more</a>"+"</div>")
 }, 275);
 
@@ -695,7 +695,7 @@ function tooltipSmall(d) {
                 "</svg>"                                
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
                 +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
-     +"<div style='height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
+     +"<div style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
         +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
           "<title id='title'>A bar chart showing information</title>"+
