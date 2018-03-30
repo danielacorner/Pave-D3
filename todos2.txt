@@ -2,7 +2,10 @@ todos
 
 top5:
 - colour legend
-- remove tooltip on mouseout
+- button hover divs explaining modes
+- tooltip bottomdiv height too big
+- tutorial tooltip
+- tooltip off in graph mode (switch sides to further outside)
 
 - graph view:
 		-resize axis, cx, cy
