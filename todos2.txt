@@ -1,8 +1,7 @@
 todos
 
 top5:
-
--bug: tooltip stops working after several off-target click-offs (fix: change click-off to anywhere else on chart?)
+- remove tooltip on mouseout
 
 - graph view:
 		-resize axis, cx, cy

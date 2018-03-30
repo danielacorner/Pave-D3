@@ -437,7 +437,7 @@ simulation = d3.forceSimulation()
 
 
 // Tooltip div (on hover)
-var div = d3.select("body").append("div").style("width", "350px").style("border-radius", "6px")
+var div = d3.select("body").append("div").style("width", "350px").style("border-radius", "6px").attr("id","tooltip")
 var div2;
 // .style("z-index", 99)
 // .style("position", "absolute")
@@ -482,6 +482,8 @@ circles = svg.selectAll("circle")
 
       // clicked = 0;
       d3.select(this).attr("stroke", "none");
+      // div.transition().duration(500).style("opacity", 0)
+
       // div
       // .style("opacity", 0);
       // setTimeout(function(){
@@ -506,6 +508,30 @@ circles = svg.selectAll("circle")
       tooltipSmall(d);}
       })
 
+
+
+
+d3.select("#chart").on("click", function(d){
+  // if clicked outside of left or right 1/4 page,
+  if(d3.event.pageX < window.innerWidth*0.25 || d3.event.pageX > window.innerWidth*0.75){
+    d3.select("#tooltip").transition().duration(500).style("opacity",0)
+    d3.select("#tooltip0").transition().duration(500).style("opacity",0)
+    d3.select("#tooltip1").transition().duration(500).style("opacity",0)
+    d3.select("#tooltip2").transition().duration(500).style("opacity",0)
+    d3.select("#tooltip3").transition().duration(500).style("opacity",0)
+  } else {
+      d3.select("#tooltip").style("opacity",1)
+      d3.select("#tooltip0").style("opacity",1)
+      d3.select("#tooltip1").style("opacity",1)
+      d3.select("#tooltip2").style("opacity",1)
+      d3.select("#tooltip3").style("opacity",1)
+  }
+})
+
+
+
+
+
 function pad(num, size) { // add leading 0s to nocs like 0011
     var s = num+"";
     while (s.length < size) s = "0" + s;
@@ -514,7 +540,12 @@ function pad(num, size) { // add leading 0s to nocs like 0011
 
   function tooltipMouseover(d) {
   // create the hover tooltip
-      div.append("div").attr("class", "tooltip")
+      d3.select("#tooltip").style("opacity",1)
+      d3.select("#tooltip0").style("opacity",1)
+      d3.select("#tooltip1").style("opacity",1)
+      d3.select("#tooltip2").style("opacity",1)
+      d3.select("#tooltip3").style("opacity",1)
+      div.append("div").attr("class", "tooltip").attr("id","tooltip0")
       .style("position","absolute").style("z-index","99")
       // .style("left", (d3.event.pageX) + 20 + "px")
       // .style("top", (d3.event.pageY - 80) - d.radius + "px")
@@ -541,9 +572,9 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         divLeft = (d3.event.pageX) - 395;
       }
       // Display Hover Tooltip
-      div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+      div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+                +"<div id='tooltip2' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
@@ -562,7 +593,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
                 "</svg>"                                
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
                 +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
-     +"<div style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
+     +"<div id='tooltip3' style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
         +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
           "<title id='title'>A bar chart showing information</title>"+
@@ -681,7 +712,7 @@ function tooltipSmall(d) {
       setTimeout(function() {
               div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+                +"<div id='tooltip2' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
@@ -1838,9 +1869,6 @@ enterUpdateCircles = function() {
 
       // clicked = 0;
       d3.select(this).attr("stroke", "none");
-      div.transition()
-      .duration(500)
-      .style("opacity", 0);
     })
     .on("click", function(d) {
       // click-on, click-off
