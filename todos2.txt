@@ -1,6 +1,7 @@
 todos
 
 top5:
+- colour legend
 - remove tooltip on mouseout
 
 - graph view:

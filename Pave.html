@@ -275,6 +275,7 @@ else if(viewsMinimized == 0){
 							<li><a id="workLink" href="#" onclick="clickWork()">Number of Jobs</a></li>
 							<li><a id="wageLink" href="#" onclick="clickWage()">Wage ($ per hr)</a></li>
 							<li><a id="yearLink" href="#" onclick="clickYear()">Years of study</a></li>
+							<li><a id="EqualLink" href="#" onclick="clickEqual()">Equal sizes</a></li>
 						</ul>
 					</div>
 					<!-- Colors button -->
@@ -293,6 +294,9 @@ else if(viewsMinimized == 0){
 					}
 					function clickYear() {
 						document.getElementById("sizeDropdownButton").innerHTML = "Size by Years of study";
+					}					
+					function clickEqual() {
+						document.getElementById("sizeDropdownButton").innerHTML = "Size by nothing";
 					}
 				</script>
 

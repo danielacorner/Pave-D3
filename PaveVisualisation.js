@@ -828,7 +828,7 @@ var yearRadiusScale = d3.scaleSqrt()
 
 
 d3.select("#workLink").on('click', function() {
-  document.getElementById("sizeDropdownButton").innerHtml = "Size = Workers";
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Workers";
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
@@ -845,7 +845,7 @@ d3.select("#workLink").on('click', function() {
   }
 });
 d3.select("#wageLink").on('click', function() {
-  document.getElementById("sizeDropdownButton").innerHtml = "Size = Wage ($ per hr)";
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Wage ($ per hr)";
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
@@ -862,7 +862,7 @@ d3.select("#wageLink").on('click', function() {
   }
 });
 d3.select("#autoLink").on('click', function() {
-  document.getElementById("sizeDropdownButton").innerHtml = "Size = Automation risk";
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Automation risk";
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
@@ -878,11 +878,27 @@ d3.select("#autoLink").on('click', function() {
   }
 });
 d3.select("#yearLink").on('click', function() {
-  document.getElementById("sizeDropdownButton").innerHtml = "Size = Years of study";
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Years of study";
   circles.transition().duration(100)
     .delay(function(d, i) { return i * 1})
     .attrTween("r", function(d) {
       var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
+
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+  }
+});
+d3.select("#EqualLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Years of study";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, 10);
       return function(t) { return d.radius = i(t); };
     });
   if(graphMode == 0 && futureMode == 0) {
