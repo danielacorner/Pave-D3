@@ -361,7 +361,6 @@ var nodes = datapoints.map(function(el) {
     s13DocumentUse: el.s13DocumentUse,
     s14Writing: el.s14Writing,
     s15CriticalThinking: el.s15CriticalThinking,
-
 };
   // if there's no cluster i OR if biggest radius yet, set cluster
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
@@ -438,11 +437,11 @@ simulation = d3.forceSimulation()
 
 
 // Tooltip div (on hover)
-var div = d3.select("body").append("div")
-.attr("class", "tooltip").style("z-index","99")
+var div = d3.select("body").append("div").style("width", "350px").style("border-radius", "6px")
+var div2;
 // .style("z-index", 99)
 // .style("position", "absolute")
-.style("opacity", 0);
+// .style("opacity", 0);
 
 // var div2 = d3.select("body").append("div")
 // .style("opacity", 0)
@@ -450,7 +449,7 @@ var div = d3.select("body").append("div")
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
-.append('svg').style("z-index", "-1")   
+.append('svg').style("position","absolute").style("z-index", "-1")   
 .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
@@ -458,7 +457,8 @@ var svg = d3.select("#chart")
 
 var stretch_y = 1.7;
 var compress_y = 0.7;
-var skillsBarsYtranslate = -15;
+var skillsBarsXtranslate = -15;
+var skillsBarsYtranslate = 80;
 // TODO: merge pre, post-filtering
 ///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
 // Add the circles with tooltips
@@ -467,6 +467,7 @@ circles = svg.selectAll("circle")
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
+    .attr("id",function(d) { return "circle_"+d.id })
     .style("z-index", -1)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -481,9 +482,12 @@ circles = svg.selectAll("circle")
 
       // clicked = 0;
       d3.select(this).attr("stroke", "none");
-      div.transition()
-      .duration(500)
-      .style("opacity", 0);
+      // div
+      // .style("opacity", 0);
+      // setTimeout(function(){
+      // //   if(typeof div2 != "undefined") div2.remove();
+      //   if(typeof div != "undefined") div.remove();
+      // },250)
     })
     .on("click", function(d) {
       // click-on, click-off
@@ -492,20 +496,38 @@ circles = svg.selectAll("circle")
       d3.select("#clickSpan").transition().duration(250).style("opacity",0)
       tooltipLarge(d);
      } else if (clicked == 0) {
+
+      d3.selectAll("circle").attr("stroke", "none");
+
+      if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+        // if(typeof div != "undefined") div.remove();
+
       d3.select("#clickSpan").transition().duration(250).style("opacity",1)
       tooltipSmall(d);}
       })
 
+function pad(num, size) { // add leading 0s to nocs like 0011
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
 
   function tooltipMouseover(d) {
   // create the hover tooltip
+      div.append("div").attr("class", "tooltip")
+      .style("position","absolute").style("z-index","99")
+      .style("left", (d3.event.pageX) + 20 + "px")
+      .style("top", (d3.event.pageY - 80) - d.radius + "px")
+      .style("opacity",1).style("width","350px")
+      
+      // d3.select("#tooltipBottomDiv2").remove();
+      
       div.transition()
-      .duration(300)
-      .style("opacity", 1)
+      .duration(100)
+      .style("box-shadow", "4px 4px 17px #404040FF")
       .style("height", "auto")
-      .style("width", "350px")
-      .style("z-index", 99)
       .style("position", "absolute")
+      .style("z-index", 99)
       // .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
@@ -539,24 +561,24 @@ circles = svg.selectAll("circle")
         +"<svg height='10px' style='margin-top: "+10+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
         "<title id='title'>A bar chart showing information</title>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
-        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsXtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate*0.25-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
-        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsXtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate*0.25-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
-        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
-        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate*0.25-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
         "</g>"+
         "</svg>"+"<span id='clickSpan' style='position: absolute; right: 20px; bottom: 10px; color: white; font-size: 16px;'>&#9660&nbspclick&nbsp&#9660</span>")
         // Move div above mouse by "top" + radius and right by "left"
@@ -574,52 +596,63 @@ circles = svg.selectAll("circle")
   }
 
 function tooltipLarge(d) {
-div.append("div").attr("id","tooltipBottomDiv");
+
+ div2 = div.append("div")
+.attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
+.style("height","0px").style("width","350px")
+.style("border-bottom-left-radius","6px")
+.style("border-bottom-right-radius","6px");
 
 setTimeout(function(){
-  d3.select("#tooltipBottomDiv").html("<div style='height: 0px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; position: absolute; z-index: 99; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+  d3.select("#tooltipBottomDiv")
+  .html("<div id='tooltipBottomDiv2' style=' border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
   +"; background: "+ colorTooltip2(d.cluster) +";'>"
   +"Top skills are...</br>"
                 +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
         // Skill levels
-        +"<svg height='80px' style='margin-top: "+30+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+        +"<svg height='80px' style='position: absolute; margin-top: "+(60)+"px; margin-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
         "<title id='title'>A bar chart showing information</title>"+
-        "<g class='bar'>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
-        "<rect id='rect1' height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+
+        "<g class='bar'>"+                                                                       // y = x if rotated 90deg
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsXtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
-        "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsXtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
-        "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
-        "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
         "</g>"+
         "</svg>"+
         // +"<br/>" 
         "<span style='margin-left: 231px'></span>"+
-        "<button id='btnSave' onclick='function() {console.log('saved')}' class='btn btn-lg' "+
-        "style='position: absolute; right: 1.8vw; top: 12.4vh; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+
+        "<button id='btnSave' class='btn btn-lg' "+
+        "style='position: absolute; right: 2.8vw; bottom: 7.5vh; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' onclick='function(){ d3.select('#circle_"+d.id+"').attr('stroke','#EFCA2EFF').attr('stroke-width','3px')}'>"+
+        
         "Save</button><br/>"+
+
         "<span style='margin-top: 10px; margin-left: 220px'></span>"+
-        "<a id='viewMoreBtn' class='btn btn-lg' href='http://www.google.com' target='_blank'"+
-        "style='position: absolute; right: 1.8vw; top: 16.4vh; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "<a id='viewMoreBtn' class='btn btn-lg' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank'"+
+        "style='position: absolute; right: 2.8vw; bottom: 2.1vh; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
         "View more</a>"+"</div>")
 }, 275);
 
-  d3.select("#tooltipContentPre").style("border-bottom-left-radius","0px")
-      .style("border-bottom-right-radius","0px")
                 
-  d3.select("#tooltipBottomDiv").style("background",colorTooltip2(d.cluster)).transition().duration(250).style("height", "250px");
+  // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
+  // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");
+  div2.transition().duration(250).style("height","293px");
 
         // Unfurl downward
         // .style("height", 200)
@@ -628,11 +661,12 @@ setTimeout(function(){
         // .style("height", "auto")
        // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
 
-  d3.select("#btnSave").attr("href","Tutorial2.html")
+
   
 };
 
 function tooltipSmall(d) {
+  d3.select("#tooltipBottomDiv2").transition().duration(250).style("height","0px");
   d3.select("#tooltipBottomDiv").transition().duration(250).style("height","0px");
   d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
       setTimeout(function() {
@@ -661,24 +695,24 @@ function tooltipSmall(d) {
         +"<svg height='10px' style='margin-top: "+10+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
         "<title id='title'>A bar chart showing information</title>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
-        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsXtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
-        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsXtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
-        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
-        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
         "</g>"+
         "</svg>"+"<span id='clickSpan' style='position: absolute; right: 20px; bottom: 10px; color: white; font-size: 16px;'>&#9660&nbspclick&nbsp&#9660</span>")
         // Move div above mouse by "top" + radius and right by "left"

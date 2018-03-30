@@ -2,8 +2,11 @@ todos
 
 top5:
 -tooltip links new tab
--tooltip mini-skill-bars
+-tooltip mini-skill-bars, transition
+-filtered graph mode repositioning
+-instead addition to buttons, add event listeners for keystrokes?
 
+-bug: tooltip stops working after several off-target click-offs (fix: change click-off to anywhere else on chart?)
 
 - graph view:
 		-resize axis, cx, cy
