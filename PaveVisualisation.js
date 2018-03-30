@@ -283,6 +283,19 @@ var colorTooltip = d3.scaleOrdinal()
             "white", // yellow-green
             "white" ]) // teal
 
+var colorTooltip2 = d3.scaleOrdinal()
+    .domain([0,1,2,3,4,5,6,7,8,9])
+    .range(["#3E35B5", // blue
+            "#AE2327", // 
+            "#29822A", // green
+            "#9A9A2C", // red
+            "#206392", // purple
+            "#8C328C", // pink
+            "#D06820", // orange
+            "686868", // grey
+            "#72473F", // brown
+            "#229CA9" ]) // teal
+
 // var colorTooltip = d3.scaleOrdinal()
 //     .domain([0,1,2,3,4,5,6,7,8,9])
 //     .range(["#FBFFF1", // blue
@@ -426,7 +439,7 @@ simulation = d3.forceSimulation()
 
 // Tooltip div (on hover)
 var div = d3.select("body").append("div")
-.attr("class", "tooltip")
+.attr("class", "tooltip").style("z-index","99")
 // .style("z-index", 99)
 // .style("position", "absolute")
 .style("opacity", 0);
@@ -437,13 +450,14 @@ var div = d3.select("body").append("div")
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
-.append('svg')    
+.append('svg').style("z-index", "-1")   
 .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 
 
 var stretch_y = 1.7;
+var compress_y = 0.7;
 var skillsBarsYtranslate = -15;
 // TODO: merge pre, post-filtering
 ///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
@@ -453,7 +467,7 @@ circles = svg.selectAll("circle")
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
-    .style("z-index", 100)
+    .style("z-index", -1)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseover", function(d) {
@@ -475,104 +489,13 @@ circles = svg.selectAll("circle")
       // click-on, click-off
       clicked = 1-clicked;
     if (clicked == 1) {
+      d3.select("#clickSpan").transition().duration(250).style("opacity",0)
       tooltipLarge(d);
      } else if (clicked == 0) {
+      d3.select("#clickSpan").transition().duration(250).style("opacity",1)
       tooltipSmall(d);}
       })
 
-
-function tooltipLarge(d) {
-div
-      .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
-
-                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
-                  "<title id='title'>A bar chart showing information</title>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
-                  "</g>"+
-                "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
-
-                +"Top skills are...</br>"
-                +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
-        // Skill levels
-                 +"<svg height='160px' style='margin-top: "+30+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
-                  "<title id='title'>A bar chart showing information</title>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
-                    "<rect height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
-                    "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
-                    "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
-                    "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
-                  "</g>"+
-                "</svg>"+
-        // +"<br/>" 
-                "</div>"+
-                "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('favourited') }' class='btn btn-lg' "+
-         "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
-         +"Favourite</button><br/>"+
-         "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a id='viewMoreBtn' class='btn btn-lg' href='http://.google.com' target='_blank'"+
-         "style='position: absolute; bottom: 13px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
-         +"View more</a><br/><br/> ").transition().duration(300).style("width", "350px")
-        // Unfurl downward
-        // .style("height", 200)
-        // .transition()
-        // .duration(200)
-        // .style("height", "auto")
-       d3.select("#tooltipContent").transition().duration(250).style("height", "350px");
-
-};
-
-function tooltipSmall(d) {
-  d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
-      setTimeout(function() {
-              div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
-        
-                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
-                  "<title id='title'>A bar chart showing information</title>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
-                  "</g>"+
-                "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")}, 150)
-}
 
   function tooltipMouseover(d) {
   // create the hover tooltip
@@ -591,11 +514,11 @@ function tooltipSmall(d) {
       //   .attr("class", "img-rounded");
 
       // Display Hover Tooltip
-      div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+      div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
-                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -611,7 +534,31 @@ function tooltipSmall(d) {
                   "</g>"+
                 "</svg>"                                
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
+                     // Skill minibars
+        +"<svg height='10px' style='margin-top: "+10+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+        "<title id='title'>A bar chart showing information</title>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        "</g>"+
+        "</svg>"+"<span id='clickSpan' style='position: absolute; right: 20px; bottom: 10px; color: white; font-size: 16px;'>&#9660&nbspclick&nbsp&#9660</span>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", (d3.event.pageX) + 20 + "px")
         .style("background", color(d.cluster) )
@@ -625,6 +572,122 @@ function tooltipSmall(d) {
 
       // div2.html("test")
   }
+
+function tooltipLarge(d) {
+div.append("div").attr("id","tooltipBottomDiv");
+
+setTimeout(function(){
+  d3.select("#tooltipBottomDiv").html("<div style='height: 0px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; position: absolute; z-index: 99; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+  +"; background: "+ colorTooltip2(d.cluster) +";'>"
+  +"Top skills are...</br>"
+                +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+        // Skill levels
+        +"<svg height='80px' style='margin-top: "+30+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+        "<title id='title'>A bar chart showing information</title>"+
+        "<g class='bar'>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
+        "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        "</g>"+
+        "</svg>"+
+        // +"<br/>" 
+        "<span style='margin-left: 231px'></span>"+
+        "<button id='btnSave' onclick='function() {console.log('saved')}' class='btn btn-lg' "+
+        "style='position: absolute; right: 1.8vw; top: 12.4vh; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "Save</button><br/>"+
+        "<span style='margin-top: 10px; margin-left: 220px'></span>"+
+        "<a id='viewMoreBtn' class='btn btn-lg' href='http://www.google.com' target='_blank'"+
+        "style='position: absolute; right: 1.8vw; top: 16.4vh; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "View more</a>"+"</div>")
+}, 275);
+
+  d3.select("#tooltipContentPre").style("border-bottom-left-radius","0px")
+      .style("border-bottom-right-radius","0px")
+                
+  d3.select("#tooltipBottomDiv").style("background",colorTooltip2(d.cluster)).transition().duration(250).style("height", "250px");
+
+        // Unfurl downward
+        // .style("height", 200)
+        // .transition()
+        // .duration(200)
+        // .style("height", "auto")
+       // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
+
+  d3.select("#btnSave").attr("href","Tutorial2.html")
+  
+};
+
+function tooltipSmall(d) {
+  d3.select("#tooltipBottomDiv").transition().duration(250).style("height","0px");
+  d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
+      setTimeout(function() {
+              div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+        +"; font-weight: bold'>" + d.job + "</div>"
+                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+        
+                +"<svg height='50px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                  "<title id='title'>A bar chart showing information</title>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
+                  "</g>"+
+                  "<g class='bar'>"+
+                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                  "</g>"+
+                "</svg>"                                
+                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
+                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
+                     // Skill minibars
+        +"<svg height='10px' style='margin-top: "+10+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+        "<title id='title'>A bar chart showing information</title>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
+        "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
+        "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
+        "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsMath*compress_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
+        "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(20-(d.skillsComp*compress_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
+        // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        "</g>"+
+        "</svg>"+"<span id='clickSpan' style='position: absolute; right: 20px; bottom: 10px; color: white; font-size: 16px;'>&#9660&nbspclick&nbsp&#9660</span>")
+        // Move div above mouse by "top" + radius and right by "left"
+        // .style("left", (d3.event.pageX) + 20 + "px")
+        // .style("background", color(d.cluster) )
+        // .style("top", (d3.event.pageY - 80) - d.radius + "px")
+
+            }, 225);
+}
 
 // on start, transition in radii from 0
 circles.transition()

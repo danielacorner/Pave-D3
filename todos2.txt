@@ -1,5 +1,10 @@
 todos
 
+top5:
+-tooltip links new tab
+-tooltip mini-skill-bars
+
+
 - graph view:
 		-resize axis, cx, cy
 		-same for future view
