@@ -2,8 +2,6 @@ todos
 
 top5:
 
--bug: post-filtered graph mode needs repositioning
-
 -bug: tooltip stops working after several off-target click-offs (fix: change click-off to anywhere else on chart?)
 
 - graph view:

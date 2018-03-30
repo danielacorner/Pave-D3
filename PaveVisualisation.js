@@ -292,7 +292,7 @@ var colorTooltip2 = d3.scaleOrdinal()
             "#206392", // purple
             "#8C328C", // pink
             "#D06820", // orange
-            "686868", // grey
+            "#686868", // grey
             "#72473F", // brown
             "#229CA9" ]) // teal
 
@@ -1754,52 +1754,56 @@ function resetFilters(mode) {
       resetSimulation();
     } 
   } else if (graphMode == 1) {
-      
       switch (mode) {
-        // x = Number of Jobs
-        // y = Automation Risk
+
         case 0:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57 })
+            // y = Automation Risk
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
-        // x = Years of Study
-        // y = Wage
+
         case 1:
           circles
-          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 })
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+            // x = Years of Study
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
-        // x = Number of Jobs
-        // y = Wage
+
         case 2:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 4:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Automation Risk
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 5: // graph mode off
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
-
         }
-
-  };
+   };
 };
 
 
@@ -2540,41 +2544,48 @@ function updateMulti(h, mode) {
     .on("tick", tick);
     simulation.alphaTarget(0.2).restart();
   } else if (graphMode == 1) { // else reposition nodes on graph
-      
+  
       switch (mode) {
-        // x = Number of Jobs
-        // y = Automation Risk
+
         case 0:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57 })
+            // y = Automation Risk
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
-        // x = Years of Study
-        // y = Wage
+
         case 1:
           circles
-          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2 + margin.left })
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+            // x = Years of Study
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
-        // x = Number of Jobs
-        // y = Wage
+
         case 2:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 4:
           circles
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
-          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+            // y = Automation Risk
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 5: // graph mode off
