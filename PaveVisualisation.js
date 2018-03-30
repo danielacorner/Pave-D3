@@ -516,8 +516,8 @@ function pad(num, size) { // add leading 0s to nocs like 0011
   // create the hover tooltip
       div.append("div").attr("class", "tooltip")
       .style("position","absolute").style("z-index","99")
-      .style("left", (d3.event.pageX) + 20 + "px")
-      .style("top", (d3.event.pageY - 80) - d.radius + "px")
+      // .style("left", (d3.event.pageX) + 20 + "px")
+      // .style("top", (d3.event.pageY - 80) - d.radius + "px")
       .style("opacity",1).style("width","350px")
       
       // d3.select("#tooltipBottomDiv2").remove();
@@ -534,7 +534,12 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       // .append("image")
       //   .attr("src", "img/logo.png")
       //   .attr("class", "img-rounded");
-
+      var divLeft;
+      if(d3.event.pageX < window.innerWidth/2) { // left side
+        divLeft = (d3.event.pageX) + 50;
+      } else if (d3.event.pageX >= window.innerWidth/2) { // right side
+        divLeft = (d3.event.pageX) - 395;
+      }
       // Display Hover Tooltip
       div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
@@ -584,7 +589,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         "</svg>"+"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
         // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("left", divLeft + "px")
         .style("background", color(d.cluster) )
         .style("top", (d3.event.pageY - 80) - d.radius + "px");
 
