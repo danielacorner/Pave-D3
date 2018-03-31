@@ -12,6 +12,7 @@ top5:
 - a more fun colour legend
 - save button
 - tooltip bottomdiv height too big
+- tooltip divs don't fade-out on mouseout
 
 -bug: clickspan not disappearing
 
