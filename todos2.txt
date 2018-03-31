@@ -4,10 +4,13 @@ top5:
 - button hover divs explaining modes
 - mobile version
 	-ontouch instead of onclick
+		-buttons: on first touch, open explainer div
+			on second touch, activate
 	-stack filters below break point
 - graphmodeoff post-filtering reset simulation
 - tooltip off in graph mode (switch sides to further outside)
-- colour legend
+- a more fun colour legend
+- save button
 - tooltip bottomdiv height too big
 
 - resize future view? y/n
@@ -17,6 +20,8 @@ top5:
 
 - search not working
 - buttons not on top
+
+-bug: tooltip doesn't re-furl after clicking in out-zone to remove it
 
 - reset filters on tutorial 3?
 
