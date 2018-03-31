@@ -1,6 +1,9 @@
 todos
 #256D1B
 top5:
+
+- explainer divs glitchy
+
 - mobile version
 	-ontouch instead of onclick
 		-buttons: on first touch, open explainer div

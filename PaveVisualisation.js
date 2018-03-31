@@ -1154,12 +1154,18 @@ d3.select("#graph").on('mouseenter', function(d) {
     .style("border-bottom-right-radius","6px")
 
   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
-    .html("Not all jobs are equal! This view shows you how jobs differ in terms of wage, years of study, and number of jobs.")
+    .html("Not all jobs are equal! This view shows you how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
 
 })
 
 d3.select("#graph").on('mouseleave', function(d) {
 
+    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
+    //move button up and keep other button down
+    d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+    // fade out
+    d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
+    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
   //move button up and keep other button down
   // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
   d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
@@ -1173,6 +1179,14 @@ d3.select("#graph").on('mouseleave', function(d) {
 
 
 d3.select("#futureView").on('mouseenter', function(d) {
+  //move button up and keep other button down
+  // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
+  d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+  
+  // fade out
+  // d3.select("#graph").transition().duration(250).style("height","32px")
+  d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
+  d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
 
   // append and transition the explainer div
   d3.select("#futureView").select(function(){return this.parentNode})
@@ -1194,7 +1208,7 @@ d3.select("#futureView").on('mouseenter', function(d) {
     .style("border-bottom-right-radius","6px")
 
   d3.select("#futureExplainer").append("div").attr("id","futureExplanation").style("color","white").style("padding","25px 18px")
-    .html("Machines are getting better at performing new tasks every day. \"Automation Risk\" tells us how likely a job will soon become unavailable.")
+    .html("Machines are getting better at performing new tasks every day. <em>Automation Risk</em> tells us how likely a job will soon become unavailable.")
 
 })
 
@@ -1204,7 +1218,6 @@ d3.select("#futureView").on('mouseleave', function(d) {
     d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
     // fade out
     d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
-    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
 
 })
 
