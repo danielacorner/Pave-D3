@@ -1,17 +1,15 @@
 todos
 
 top5:
-- colour legend
 - button hover divs explaining modes
-- tooltip bottomdiv height too big
-- tutorial tooltip
-- tooltip off in graph mode (switch sides to further outside)
-
-- graph view:
-		-resize axis, cx, cy
-		-same for future view
-
 - mobile version
+	-ontouch instead of onclick
+	-stack filters below break point
+- tooltip off in graph mode (switch sides to further outside)
+- colour legend
+- tooltip bottomdiv height too big
+
+- resize future view? y/n
 
 - collapse navbar at the lg breakpoint
 - collapse search bar to search icon

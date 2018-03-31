@@ -140,6 +140,11 @@ var width = window.innerWidth/1.5, // set chart dimensions
     height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
+
+///////////////// TODO: Mobile version /////////////////
+// ontouch instead of onclick
+// stack filters below break poin
+
 resize();
 d3.select(window).on("resize", resize);
 // resize the window
@@ -474,6 +479,7 @@ circles = svg.selectAll("circle")
     .on("mouseover", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
+      d3.selectAll("circle").attr("stroke", "none");
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       tooltipMouseover(d);
       })
@@ -499,7 +505,6 @@ circles = svg.selectAll("circle")
       tooltipLarge(d);
      } else if (clicked == 0) {
 
-      d3.selectAll("circle").attr("stroke", "none");
 
       if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
         // if(typeof div != "undefined") div.remove();
@@ -571,6 +576,11 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       } else if (d3.event.pageX >= window.innerWidth/2) { // right side
         divLeft = (d3.event.pageX) - 395;
       }
+      // pageY increases downward
+      // at small pageY, approach d3.event.pageY
+      // at large pageY, approach constant window.innerHeight-400
+      var divTop = -80 + ((window.innerHeight-300)*(d3.event.pageY/window.innerHeight));
+
       // Display Hover Tooltip
       div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
@@ -622,7 +632,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", divLeft + "px")
         .style("background", color(d.cluster) )
-        .style("top", (d3.event.pageY - 80) - d.radius + "px");
+        .style("top", (divTop) - d.radius + "px");
 
       // div2.transition()
       // .duration(200)
@@ -1479,11 +1489,6 @@ function graphModeOff() {
       return function(t) { return d.cy = i(t); };
     });
 
-    setTimeout(function() {
-      circles
-      .style("stroke", "none");
-    }, 500);
-
     // start the simulation after the transition delay
     setTimeout(function() {
       simulation.alphaTarget(0.2).restart();
@@ -1877,6 +1882,7 @@ enterUpdateCircles = function() {
     .on("mouseover", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
+      d3.selectAll("circle").attr("stroke", "none");
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       tooltipMouseover(d);
       })
