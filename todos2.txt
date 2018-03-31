@@ -1,7 +1,9 @@
 todos
-
+#256D1B
 top5:
 - button hover divs explaining modes
+- tooltip not closing
+	- expand click-off zone, and shrink during graph mode
 - mobile version
 	-ontouch instead of onclick
 		-buttons: on first touch, open explainer div
@@ -13,7 +15,11 @@ top5:
 - save button
 - tooltip bottomdiv height too big
 - tooltip divs don't fade-out on mouseout
+- future mode axis & positions
 
+-normalize skill bars & minibars
+
+- change minibar colours to visible (grey-green? for invisible ones only)
 -bug: clickspan not disappearing
 
 - resize future view? y/n
