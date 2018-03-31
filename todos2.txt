@@ -1,9 +1,6 @@
 todos
 #256D1B
 top5:
-- button hover divs explaining modes
-- tooltip not closing
-	- expand click-off zone, and shrink during graph mode
 - mobile version
 	-ontouch instead of onclick
 		-buttons: on first touch, open explainer div
@@ -16,6 +13,10 @@ top5:
 - tooltip bottomdiv height too big
 - tooltip divs don't fade-out on mouseout
 - future mode axis & positions
+
+explainer divs need to come in from the top right, transition their bottoms
+
+mouseenter / mouseleave vs mouveover mouseout
 
 -normalize skill bars & minibars
 

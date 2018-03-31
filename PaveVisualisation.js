@@ -488,17 +488,19 @@ circles = svg.selectAll("circle")
     .style("z-index", -1)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
-    .on("mouseover", function(d) {
+    .on("mouseenter", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      showToolTip(0);
       tooltipMouseover(d);
       })
-    .on("mouseout", function(d) {
+    .on("mouseleave", function(d) {
       if (clicked == 1) return;
 
       // clicked = 0;
+      hideToolTip(500)
       d3.select(this).attr("stroke", "none");
       // div.transition().duration(500).style("opacity", 0)
 
@@ -525,34 +527,30 @@ circles = svg.selectAll("circle")
 
 
 
-d3.select("body").on("mouseover", function(d){
-  // if clicked outside of left or right 1/5 page,
-  if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
-     d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
-    hideToolTip(500);
-  } else {
-    showToolTip();
-  }
-})
+// d3.select("body").on("mouseover", function(d){
+//   // if clicked outside of left or right 1/5 page,
+//   if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
+//      d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
+//     hideToolTip(500);
+//   }
+// })
 
 d3.select("#chart").on("click", function(d){
   // if clicked outside of left or right 1/5 page,
   if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
      d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
     hideToolTip(500);
-  } else {
-    showToolTip();
   }
 })
 
 
 
-function showToolTip() {
-      d3.select("#tooltip").style("opacity",1)
-      d3.select("#tooltip0").style("opacity",1)
-      d3.select("#tooltip1").style("opacity",1)
-      d3.select("#tooltip2").style("opacity",1)
-      d3.select("#tooltip3").style("opacity",1)
+function showToolTip(duration) {
+      d3.select("#tooltip").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltip0").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltip1").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltip2").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltip3").transition().duration(duration).style("opacity",1)
 }
 
 function hideToolTip(duration) {
@@ -572,8 +570,6 @@ function pad(num, size) { // add leading 0s to nocs like 0011
   function tooltipMouseover(d) {
   // create the hover tooltip
 
-    showToolTip();
-
       div.append("div").attr("class", "tooltip").attr("id","tooltip0")
       .style("position","absolute").style("z-index","99")
       // .style("left", (d3.event.pageX) + 20 + "px")
@@ -583,7 +579,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       // d3.select("#tooltipBottomDiv2").remove();
       
       div.transition()
-      .duration(100)
+      .duration(0)
       .style("box-shadow", "4px 4px 17px #404040FF")
       .style("height", "auto")
       .style("position", "absolute")
@@ -685,7 +681,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
     .html("<div id='tooltipBottomDiv2' style=' border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
       +"Top skills are...</br>"
-                +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+                +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
         // Skill levels
         +"<svg height='80px' style='position: absolute; margin-top: "+(15)+"px; margin-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
         "<title id='title'>A bar chart showing information</title>"+
@@ -1135,13 +1131,84 @@ var originalRadius = {};
   });
 
 ///////////////////// BOOKMARK ///////////////////
-d3.select("#graph").on('mouseover', function(d) {
+// mouseover explainer divs
+d3.select("#graph").on('mouseenter', function(d) {
+
+  // append a large div, transition its height and width
+  d3.select("#graph").select(function(){return this.parentNode})
+  .append("div").style("width","10px").style("height","0px")
+    .attr("id","graphExplainer").style("opacity",0)
+    .style("position","absolute").style("top","40px").style("left","0px")
+ 
+  //move button down and keep other button up
+  d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
+  d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
+  
+  // explainer transition
+  d3.select("#graphExplainer").transition().duration(250)
+    .style("width","30vw")
+    .style("height","auto")
+    .style("background","#A6B0A8")
+    .style("opacity",1)
+    .style("border-bottom-left-radius","6px")
+    .style("border-bottom-right-radius","6px")
+
+  d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
+    .html("Not all jobs are equal! This view shows you how jobs differ in terms of wage, years of study, and number of jobs.")
+
 })
-d3.select("#graph").on('mouseout', function(d) {
+
+d3.select("#graph").on('mouseleave', function(d) {
+
+  //move button up and keep other button down
+  // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
+  d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+  
+  // fade out
+  // d3.select("#graph").transition().duration(250).style("height","32px")
+  d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
+  d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
+
 })
-d3.select("#graph").on('click', function(d) {
 
 
+d3.select("#futureView").on('mouseenter', function(d) {
+
+  // append and transition the explainer div
+  d3.select("#futureView").select(function(){return this.parentNode})
+  .append("div").style("width","10px").style("height","0px")
+    .attr("id","futureExplainer").style("opacity",0)
+    .style("position","absolute").style("top","40px").style("right","0px")
+
+  //move button down and keep other button up
+  d3.select("#graph").transition().duration(250).style("margin-bottom","20px")
+  d3.select("#futureView").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
+  
+  // explainer transition
+  d3.select("#futureExplainer").transition().duration(250)
+    .style("width","30vw")
+    .style("height","auto")
+    .style("background","#A6B0A8")
+    .style("opacity",1)
+    .style("border-bottom-left-radius","6px")
+    .style("border-bottom-right-radius","6px")
+
+  d3.select("#futureExplainer").append("div").attr("id","futureExplanation").style("color","white").style("padding","25px 18px")
+    .html("Machines are getting better at performing new tasks every day. \"Automation Risk\" tells us how likely a job will soon become unavailable.")
+
+})
+
+d3.select("#futureView").on('mouseleave', function(d) {
+
+    //move button up and keep other button down
+    d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+    // fade out
+    d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
+    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
+
+})
+
+d3.select("#graph").on('click', function(d){
   // Toggle mode on or off
   graphMode = 1-graphMode;
   //cool to 0 degrees
@@ -1989,14 +2056,14 @@ enterUpdateCircles = function() {
     .style("fill", function(d) { return color(d.cluster); })
 
     // Tooltips
-    .on("mouseover", function(d) {
+    .on("mouseenter", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       tooltipMouseover(d);
       })
-    .on("mouseout", function(d) {
+    .on("mouseleave", function(d) {
       if (clicked == 1) return;
 
       // clicked = 0;
