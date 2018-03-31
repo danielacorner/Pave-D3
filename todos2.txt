@@ -13,6 +13,8 @@ top5:
 - save button
 - tooltip bottomdiv height too big
 
+-bug: clickspan not disappearing
+
 - resize future view? y/n
 
 - collapse navbar at the lg breakpoint
