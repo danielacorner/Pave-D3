@@ -504,11 +504,8 @@ circles = svg.selectAll("circle")
       d3.select("#clickSpan").transition().duration(250).style("opacity",0)
       tooltipLarge(d);
      } else if (clicked == 0) {
-
-
+      hideToolTip(0);
       if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-        // if(typeof div != "undefined") div.remove();
-
       d3.select("#clickSpan").transition().duration(250).style("opacity",1)
       tooltipSmall(d);}
       })
@@ -520,23 +517,29 @@ d3.select("body").on("click", function(d){
   // if clicked outside of left or right 1/4 page,
   if(d3.event.pageX < window.innerWidth*0.1 || d3.event.pageX > window.innerWidth*0.9 ||
      d3.event.pageY < window.innerHeight*0.1 || d3.event.pageY > window.innerHeight*0.9){
-    d3.select("#tooltip").transition().duration(500).style("opacity",0)
-    d3.select("#tooltip0").transition().duration(500).style("opacity",0)
-    d3.select("#tooltip1").transition().duration(500).style("opacity",0)
-    d3.select("#tooltip2").transition().duration(500).style("opacity",0)
-    d3.select("#tooltip3").transition().duration(500).style("opacity",0)
+    hideToolTip(500);
   } else {
-      d3.select("#tooltip").style("opacity",1)
-      d3.select("#tooltip0").style("opacity",1)
-      d3.select("#tooltip1").style("opacity",1)
-      d3.select("#tooltip2").style("opacity",1)
-      d3.select("#tooltip3").style("opacity",1)
+    showToolTip();
   }
 })
 
 
 
+function showToolTip() {
+      d3.select("#tooltip").style("opacity",1)
+      d3.select("#tooltip0").style("opacity",1)
+      d3.select("#tooltip1").style("opacity",1)
+      d3.select("#tooltip2").style("opacity",1)
+      d3.select("#tooltip3").style("opacity",1)
+}
 
+function hideToolTip(duration) {
+      d3.select("#tooltip").transition().duration(duration).style("opacity",0)
+      d3.select("#tooltip0").transition().duration(duration).style("opacity",0)
+      d3.select("#tooltip1").transition().duration(duration).style("opacity",0)
+      d3.select("#tooltip2").transition().duration(duration).style("opacity",0)
+      d3.select("#tooltip3").transition().duration(duration).style("opacity",0)
+}
 
 function pad(num, size) { // add leading 0s to nocs like 0011
     var s = num+"";
@@ -546,11 +549,9 @@ function pad(num, size) { // add leading 0s to nocs like 0011
 
   function tooltipMouseover(d) {
   // create the hover tooltip
-      d3.select("#tooltip").style("opacity",1)
-      d3.select("#tooltip0").style("opacity",1)
-      d3.select("#tooltip1").style("opacity",1)
-      d3.select("#tooltip2").style("opacity",1)
-      d3.select("#tooltip3").style("opacity",1)
+
+    showToolTip();
+
       div.append("div").attr("class", "tooltip").attr("id","tooltip0")
       .style("position","absolute").style("z-index","99")
       // .style("left", (d3.event.pageX) + 20 + "px")
@@ -1035,11 +1036,13 @@ var originalRadius = {};
     originalRadius[d.id] = d.radius;
   });
 
+///////////////////// BOOKMARK ///////////////////
 d3.select("#graph").on('mouseover', function(d) {
 })
 d3.select("#graph").on('mouseout', function(d) {
 })
 d3.select("#graph").on('click', function(d) {
+
 
   // Toggle mode on or off
   graphMode = 1-graphMode;
@@ -1145,6 +1148,7 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 function graphModeOn(mode) {
 
   moveBottomDown();
+  hideToolTip(500);
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -1625,6 +1629,9 @@ function createFutureLegend() {
 
 
 function futureModeOn() {
+
+    hideToolTip(500);
+
   // if(graphMode == 0) {
   //   hideLeftButtons();
   // }
