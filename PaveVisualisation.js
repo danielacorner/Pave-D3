@@ -516,9 +516,10 @@ circles = svg.selectAll("circle")
 
 
 
-d3.select("#chart").on("click", function(d){
+d3.select("body").on("click", function(d){
   // if clicked outside of left or right 1/4 page,
-  if(d3.event.pageX < window.innerWidth*0.25 || d3.event.pageX > window.innerWidth*0.75){
+  if(d3.event.pageX < window.innerWidth*0.1 || d3.event.pageX > window.innerWidth*0.9 ||
+     d3.event.pageY < window.innerHeight*0.1 || d3.event.pageY > window.innerHeight*0.9){
     d3.select("#tooltip").transition().duration(500).style("opacity",0)
     d3.select("#tooltip0").transition().duration(500).style("opacity",0)
     d3.select("#tooltip1").transition().duration(500).style("opacity",0)
@@ -772,7 +773,7 @@ function tooltipSmall(d) {
         // .style("background", color(d.cluster) )
         // .style("top", (d3.event.pageY - 80) - d.radius + "px")
 
-            }, 225);
+            }, 200);
 }
 
 // on start, transition in radii from 0
@@ -1034,6 +1035,10 @@ var originalRadius = {};
     originalRadius[d.id] = d.radius;
   });
 
+d3.select("#graph").on('mouseover', function(d) {
+}
+d3.select("#graph").on('mouseout', function(d) {
+}
 d3.select("#graph").on('click', function(d) {
 
   // Toggle mode on or off

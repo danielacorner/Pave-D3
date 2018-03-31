@@ -5,6 +5,7 @@ top5:
 - mobile version
 	-ontouch instead of onclick
 	-stack filters below break point
+- graphmodeoff post-filtering reset simulation
 - tooltip off in graph mode (switch sides to further outside)
 - colour legend
 - tooltip bottomdiv height too big
