@@ -1036,9 +1036,9 @@ var originalRadius = {};
   });
 
 d3.select("#graph").on('mouseover', function(d) {
-}
+})
 d3.select("#graph").on('mouseout', function(d) {
-}
+})
 d3.select("#graph").on('click', function(d) {
 
   // Toggle mode on or off
