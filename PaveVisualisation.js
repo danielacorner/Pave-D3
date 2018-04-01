@@ -495,10 +495,14 @@ circles = svg.selectAll("circle")
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       showToolTip(0);
       tooltipMouseover(d);
+      hoverTimeout = setTimeout(function(){
+        tooltipLarge(d)
+        clicked = 1-clicked
+      }, 1750)
       })
     .on("mouseleave", function(d) {
       if (clicked == 1) return;
-
+      clearTimeout(hoverTimeout)
       // clicked = 0;
       hideToolTip(500)
       d3.select(this).attr("stroke", "none");
@@ -512,15 +516,16 @@ circles = svg.selectAll("circle")
       // },250)
     })
     .on("click", function(d) {
+      clearTimeout(hoverTimeout)
       // click-on, click-off
       clicked = 1-clicked;
     if (clicked == 1) {
-      d3.select("#clickSpan").transition().duration(250).style("opacity",0)
+      // d3.select("#clickSpan").transition().duration(250).style("opacity",0)
       tooltipLarge(d);
      } else if (clicked == 0) {
       // hideToolTip(0);
       if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      d3.select("#clickSpan").transition().duration(250).style("opacity",1)
+      // d3.select("#clickSpan").transition().duration(250).style("opacity",1)
       tooltipSmall(d);}
       })
 
@@ -649,7 +654,8 @@ function pad(num, size) { // add leading 0s to nocs like 0011
           "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
           // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
           "</g>"+
-        "</svg>"+"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
+        "</svg>"
+        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", divLeft + "px")
@@ -825,7 +831,8 @@ function tooltipSmall(d) {
           "<rect id='rect4' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: #256D1B;' y='"+(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
           // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
           "</g>"+
-        "</svg>"+"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
+        "</svg>"
+        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
         // Move div above mouse by "top" + radius and right by "left"
         // .style("left", (d3.event.pageX) + 20 + "px")
