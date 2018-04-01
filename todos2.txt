@@ -2,7 +2,9 @@ todos
 #256D1B
 top5:
 
-- explainer divs glitchy
+- explainer divs glitchy switching between each other
+
+-bug: tooltip blocks top buttons
 
 - mobile version
 	-ontouch instead of onclick

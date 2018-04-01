@@ -584,6 +584,8 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       .style("height", "auto")
       .style("position", "absolute")
       .style("z-index", 99)
+      .style("pointer-events","none")
+
       // .style("border",   "1px solid black;");
 
       // d3.select("#tooltip")
@@ -592,14 +594,14 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       //   .attr("class", "img-rounded");
       var divLeft;
       if(d3.event.pageX < window.innerWidth/2) { // left side
-        divLeft = (d3.event.pageX) + 50;
+        divLeft = window.innerWidth*0.5 + (d.x) + 5;
       } else if (d3.event.pageX >= window.innerWidth/2) { // right side
-        divLeft = (d3.event.pageX) - 395;
+        divLeft = window.innerWidth*0.5 + (d.x) - 355;
       }
       // pageY increases downward
       // at small pageY, approach d3.event.pageY
       // at large pageY, approach constant window.innerHeight-400
-      var divTop = -80 + ((window.innerHeight-300)*(d3.event.pageY/window.innerHeight));
+      var divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
 
       // Display Hover Tooltip
       div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
@@ -652,7 +654,7 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", divLeft + "px")
         .style("background", color(d.cluster) )
-        .style("top", (divTop) - d.radius + "px");
+        .style("top", (divTop) + "px");
 
       // div2.transition()
       // .duration(200)
@@ -669,7 +671,9 @@ function pad(num, size) { // add leading 0s to nocs like 0011
   .attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
   .style("height","0px").style("width","350px")
   .style("border-bottom-left-radius","6px")
-  .style("border-bottom-right-radius","6px");
+  .style("border-bottom-right-radius","6px")
+  .style("pointer-events","auto");
+
  
   d3.select("#miniBars").transition().duration(275)
   // .style("margin-top",250+"px")
