@@ -2,9 +2,25 @@ todos
 #256D1B
 top5:
 
-- explainer divs glitchy switching between each other
+- search not working
 
--bug: tooltip blocks top buttons
+- hover for longer than 2 seconds = expand dropdown
+
+- Mute Split/Shuffle/Combine features when Graph view is enabled
+
+- add pause hover explainer div
+- add suggested views explainer divs
+
+- Explain why “lots” of skill = fewer job suggestions in tutorial
+
+
+- graph view suggested view walkthroughs, zones on graph
+
+- place tooltip touching circle:
+	-position buttons on top,
+	-allow mouseovers through tooltip divs
+
+- explainer divs glitchy switching between each other
 
 - mobile version
 	-ontouch instead of onclick
