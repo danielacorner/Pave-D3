@@ -544,8 +544,6 @@ circles = svg.selectAll("circle")
 d3.select("#chart").on("click", function(d){
   // if clicked outside of left or right 1/5 page,
   if (clicked == 1) { 
-    console.log("clicked" + clicked)
-    console.log(d3.event.target.nodeName)
     if (d3.event.target.nodeName == "circle") {
       return
     } else if (d3.event.target.nodeName == "svg") { clicked = 0
@@ -577,6 +575,11 @@ function hideToolTip(duration) {
         d3.select("#rect"+i).transition().duration(duration).style("opacity",0).remove()
         d3.select("#rect"+i+"shadow").transition().duration(duration).style("opacity",0).remove()
       }
+
+      d3.select("#moreBtnsContainerDiv").transition().duration(400).style("width","0px")
+      d3.select("#moreBtnsDiv").transition().duration(300).style("opacity",0)
+
+      d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0)
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -740,19 +743,62 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         "</svg>"+
         // +"<br/>" 
         "<span style='margin-left: 231px'></span>"+
+        "<span style='margin-top: 10px; margin-left: 220px'></span>"+
+        "<button id='viewMoreBtn' class='btn btn-lg'"+
+        "style='position: absolute; right: 17px; bottom: 20px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "View more</button>"+"</div>")
+
+    d3.select("#viewMoreBtn").on("click", function() {
+        d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0).remove()
+
+        // d3.select("#tooltipBottomDiv").style("border-radius", "6px")
+        // .transition().duration(500).style("width","550px")
+        // .style("box-shadow","7px 7px 17px #404040FF")
+        
+        div3 = d3.select("#tooltipBottomDiv").append("div").attr("id","moreBtnsContainerDiv")
+          .style("height","auto")
+          .style("box-shadow","6px 4px 12px #404040FF")
+          .style("border-top-right-radius","6px")
+          .style("border-bottom-right-radius","6px")
+          .style("background", colorTooltip2(d.cluster))
+          .style("position","absolute")
+          .style("left","350px")
+          .style("bottom","0px")
+          .html("<div id='moreBtnsDiv' style='margin-top: 10px; margin-left: 10px;'>"+
+
+        "<a id='btnJobBank' class='btn btn-lg' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
+        "JobBank Info Page</a><br>"+
 
         "<a id='btnVolunteer' class='btn btn-lg' "+
-        "style='position: absolute; right: 17px; bottom: 75px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.volunteerottawa.ca/Search_Volunteer_Opportunities.html"+"'>"+
-        
-        "Volunteer</a><br/>"+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
+        "Volunteer Canada</a><br>"+
 
-        "<span style='margin-top: 10px; margin-left: 220px'></span>"+
-        "<a id='viewMoreBtn' class='btn btn-lg' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank'"+
-        "style='position: absolute; right: 17px; bottom: 20px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
-        "View more</a>"+"</div>")
+        "<a id='btnIndeed' class='btn btn-lg' "+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
+        "Indeed.ca listings</a><br>"+
+
+        "<a id='btnGlassdoor' class='btn btn-lg' "+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
+        "Glassdoor.ca listings</a><br>"+
+
+        "<a id='btnMonster' class='btn btn-lg' "+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
+        "Monster.ca listings</a><br>"+
+
+        "</div>")
+          
+        div3.style("width","0px").transition().duration(500).style("width","200px")
+
+        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(500).style("opacity",1)
+    })
 
    }, 275);
+
   
   d3.select("#tooltipBottomDiv").append("svg")
   .attr("height","280px").style("position","absolute").style("margin-left","25px")
