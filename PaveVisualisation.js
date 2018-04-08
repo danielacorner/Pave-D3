@@ -1099,6 +1099,11 @@ mouseEnterOn()
 function mouseEnterOn() {
 
   d3.select("#btnSizes").on("mouseenter", function() {
+    mouseEnterFn()
+  })
+}
+
+function mouseEnterFn() {
 
     // shrink Colour Legend button and Sizes dropdown
     d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
@@ -1173,7 +1178,8 @@ function mouseEnterOn() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       mouseEnterOff() // turn off until mouseleave
       setSizes("workers")
-      mouseLeaveFn()
+      mouseEnterFn()
+      // mouseLeaveFn()
     })
 
     d3.select("#wageLink").on("click", function() {
@@ -1197,7 +1203,8 @@ function mouseEnterOn() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       mouseEnterOff()
       setSizes("wage")
-      mouseLeaveFn()
+      mouseEnterFn()
+      // mouseLeaveFn()
     })
 
     d3.select("#yearLink").on("click", function() {
@@ -1220,7 +1227,8 @@ function mouseEnterOn() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       mouseEnterOff()
       setSizes("yearsStudy")
-      mouseLeaveFn()
+      mouseEnterFn()
+      // mouseLeaveFn()
     })
 
     d3.select("#equaLink").on("click", function() {
@@ -1243,14 +1251,14 @@ function mouseEnterOn() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       mouseEnterOff()
       setSizes("none")
-      mouseLeaveFn()
+      mouseEnterFn()
+      // mouseLeaveFn()
     })
 
     // fade in dropdown
     d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(700).style("opacity",1)
+}
 
-  })
-} // mouseEnterOn()
 
 function mouseEnterOff() {
   d3.select("#btnSizes").on("mouseenter", "")
