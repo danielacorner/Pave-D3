@@ -496,13 +496,13 @@ circles = svg.selectAll("circle")
       tooltipMouseover(d);
       hoverTimeout = setTimeout(function(){
         tooltipLarge(d)
-        clicked = 1-clicked
+        clicked = 1
       }, 1750)
       })
     .on("mouseout", function(d) {
-      if (clicked == 1) return;
       clearTimeout(hoverTimeout)
-      // clicked = 0;
+      if (clicked == 1) return;
+      clicked = 0;
       hideToolTip(500)
       d3.select(this).attr("stroke", "none");
       // div.transition().duration(500).style("opacity", 0)
@@ -516,16 +516,18 @@ circles = svg.selectAll("circle")
     })
     .on("click", function(d) {
       clearTimeout(hoverTimeout)
-      // click-on, click-off
-      clicked = 1-clicked;
-    if (clicked == 1) {
-      // d3.select("#clickSpan").transition().duration(250).style("opacity",0)
-      tooltipLarge(d);
-     } else if (clicked == 0) {
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+       }
       // hideToolTip(0);
-      if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      // d3.select("#clickSpan").transition().duration(250).style("opacity",1)
-      tooltipSmall(d);}
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
       })
 
 
@@ -541,28 +543,40 @@ circles = svg.selectAll("circle")
 
 d3.select("#chart").on("click", function(d){
   // if clicked outside of left or right 1/5 page,
-  if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
-     d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
-    hideToolTip(500);
+  if (clicked == 1) { 
+    console.log("clicked" + clicked)
+    console.log(d3.event.target.nodeName)
+    if (d3.event.target.nodeName == "circle") {
+      return
+    } else if (d3.event.target.nodeName == "svg") { clicked = 0
+    hideToolTip(500) }
   }
 })
 
 
 
 function showToolTip(duration) {
-      d3.select("#tooltip").transition().duration(duration).style("opacity",1)
+      // d3.select("#tooltip").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip0").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip1").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip2").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip3").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltipBottomDiv").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltipBottomDiv2").transition().duration(duration).style("opacity",1)
 }
 
 function hideToolTip(duration) {
-      d3.select("#tooltip").transition().duration(duration).style("opacity",0)
-      d3.select("#tooltip0").transition().duration(duration).style("opacity",0)
-      d3.select("#tooltip1").transition().duration(duration).style("opacity",0)
-      d3.select("#tooltip2").transition().duration(duration).style("opacity",0)
-      d3.select("#tooltip3").transition().duration(duration).style("opacity",0)
+      // d3.select("#tooltip").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip1").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip2").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip3").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltipBottomDiv").transition().duration(duration).style("height","0px").remove()
+      d3.select("#tooltipBottomDiv2").transition().duration(duration).style("height","0px").remove()
+      for (var i = 5; i < 9; i++) {
+        d3.select("#rect"+i).transition().duration(duration).style("opacity",0).remove()
+        d3.select("#rect"+i+"shadow").transition().duration(duration).style("opacity",0).remove()
+      }
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -700,28 +714,28 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         "<rect id='rect5' height='"+(d.skillsLang*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
         "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-5-skillsBarsXtranslate)+"' dy='.35em'>"+
           "Language</text>"+
-        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(17-skillsBarsXtranslate)+"'>"+
-          Math.round(10*d.skillsLang)/10+"</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(17-skillsBarsXtranslate)+"'>"+
+        //   Math.round(10*d.skillsLang)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
         "<rect id='rect6shadow' class='shadow' height='"+(d.skillsLogi*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
         "<rect id='rect6' height='"+(d.skillsLogi*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
         "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(32-skillsBarsXtranslate)+"' dy='.35em'>"+
         "Logic</text>"+
-        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(52-skillsBarsXtranslate)+"'>"+
-          Math.round(10*d.skillsLogi)/10+"</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(52-skillsBarsXtranslate)+"'>"+
+        //   Math.round(10*d.skillsLogi)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
         "<rect id='rect7shadow' class='shadow' height='"+(d.skillsComp*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsComp*stretch_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
         "<rect id='rect7' height='"+(d.skillsComp*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsComp*stretch_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
         "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(67-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
-        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(87-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(87-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
         "</g>"+
         "<g class='bar'>"+
         "<rect id='rect8shadow' class='shadow' height='"+(d.skillsMath*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsMath*stretch_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
         "<rect id='rect8' height='"+(d.skillsMath*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsMath*stretch_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
         "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(102-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
-        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(122-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(122-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
         "</g>"+
         "</svg>"+
         // +"<br/>" 
@@ -740,29 +754,41 @@ function pad(num, size) { // add leading 0s to nocs like 0011
 
    }, 275);
   
-  d3.select("#tooltipBottomDiv").append("svg").attr("height","280px").style("position","absolute").style("margin-left","25px")
-  .append("rect").attr("height",(d.skillsLang*compress_y)).attr("width","18").style("fill",colorSkillbar(d.cluster)).attr("y",(skillsBarsYtranslate*0.25-(d.skillsLang*compress_y))).attr("x",(5-skillsBarsXtranslate))
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsLang*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsLang*compress_y))).attr("x",(5-skillsBarsXtranslate))
   .transition().duration(275)
     .attr("height", (d.skillsLang*stretch_y))
-    .attr("y",175)
+    .attr("y",150)
 
-  d3.select("#tooltipBottomDiv").append("svg").attr("height","280px").style("position","absolute").style("margin-left","25px")
-  .append("rect").attr("height",(d.skillsLogi*compress_y)).attr("width","18").style("fill",colorSkillbar(d.cluster)).attr("y",(skillsBarsYtranslate*0.25-(d.skillsLogi*compress_y))).attr("x",(40-skillsBarsXtranslate))
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsLogi*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsLogi*compress_y))).attr("x",(40-skillsBarsXtranslate))
   .transition().duration(275)
     .attr("height", (d.skillsLogi*stretch_y))
-    .attr("y",175)  
+    .attr("y",150)  
 
-  d3.select("#tooltipBottomDiv").append("svg").attr("height","280px").style("position","absolute").style("margin-left","25px")
-  .append("rect").attr("height",(d.skillsComp*compress_y)).attr("width","18").style("fill",colorSkillbar(d.cluster)).attr("y",(skillsBarsYtranslate*0.25-(d.skillsComp*compress_y))).attr("x",(75-skillsBarsXtranslate))
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsComp*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsComp*compress_y))).attr("x",(75-skillsBarsXtranslate))
   .transition().duration(275)
     .attr("height", (d.skillsComp*stretch_y))
-    .attr("y",175)  
+    .attr("y",150)  
 
-  d3.select("#tooltipBottomDiv").append("svg").attr("height","280px").style("position","absolute").style("margin-left","25px")
-  .append("rect").attr("height",(d.skillsMath*compress_y)).attr("width","18").style("fill",colorSkillbar(d.cluster)).attr("y",(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))).attr("x",(110-skillsBarsXtranslate))
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsMath*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))).attr("x",(110-skillsBarsXtranslate))
   .transition().duration(275)
     .attr("height", (d.skillsMath*stretch_y))
-    .attr("y",175)
+    .attr("y",150)
 
   // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
   // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");

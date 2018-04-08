@@ -5,14 +5,12 @@ ideas:
 todos
 top5:
 
-- legend button style & function (make it visible)
-
-- size legend
-
-- remove "future view" and enlarge "graph view" button
-- give a warning and stop filters working when jobs get filtered down to 7
 - bugfix the tooltip not being removed
+
+- give a warning and stop filters working when jobs get filtered down to 7
+
 - expand to level 3 tooltip on "View More"
+
 - fix the search: include "list of job titles" in search
 - toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries
@@ -28,6 +26,8 @@ top5:
 - slow down or emphasize "pop" animation
 
 - start tutorial with equal sizes & change size to Number of Jobs (how easy is it to get each job?)
+
+- dropup fix double-click to single-click
 
 - "language skills" is ambiguous
 
