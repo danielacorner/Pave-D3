@@ -951,7 +951,7 @@ industriesArray = [
 
 d3.select("#btnLegend").on("mouseenter", function() {
 
-  // shrink Size Legend button 
+  // shrink Size Legend button
   d3.select("#btnSizes").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
 
   d3.select("#btnLegend").transition().duration(500)
@@ -1017,9 +1017,110 @@ d3.select("#btnLegend").on("mouseleave", function() {
 
 
 
+
+
+
 ////////////////// SIZE LEGEND button
 
-// size scales
+// radii of size legend circles
+sizesArray = []
+
+// add minimum
+sizesArray.push(radiusScale(d3.min(nodes, function(d) { return d.workers })))
+
+for (var i = 1; i < 5; i++) {
+  // initially size = number of jobs
+  // must change this array when size dropdown activated
+  sizesArray.push(
+    // split scale into 5 radius pieces
+    (i/5) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
+    )
+}
+
+sizesValuesArray = []
+
+// add minimum
+sizesValuesArray.push(d3.min(nodes, function(d) { return d.workers }))
+
+for (var i = 1; i < 5; i++) {
+  // initially size = number of jobs
+  // must change this array when size dropdown activated
+  sizesValuesArray.push(
+    // split scale into 5 radius pieces
+    (i/5) * d3.max(nodes, function(d) { return d.workers })
+    )
+}
+
+btnSizesDims = ["250px","300px"] // width, height
+
+d3.select("#btnSizes").on("mouseenter", function() {
+
+  // shrink Colour Legend button
+  d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
+
+  d3.select("#btnSizes").transition().duration(500)
+  .style("width", btnSizesDims[0])
+  .style("height", btnSizesDims[1])
+  // .text("")
+
+  svgLegend = d3.select("#btnSizes")
+    .html("")
+    .append("svg").attr("id","svgLegend")
+      .attr("width",btnSizesDims[0])
+      .attr("height",btnSizesDims[1])
+      .style("margin-top","5px")
+      // .style("background","#eaeaea")
+    
+  sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+      .attr("r", 0) // start at 0 radius and transition in
+      .transition().duration(500).attr("r",  function(d,i) { return sizesArray[i] })
+      .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+      .style("fill", "#B5ADAD")
+
+  legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+      .attr("text-anchor","left")
+      .attr("transform", function(d,i) { return "translate("+"55"+","+(49 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+      .text(function(d) { return d })
+      .style("opacity",0).transition().duration(600).style("opacity",1)
+  
+  legendTitle = d3.select("#svgLegend").append("text")
+    .attr("transform","translate(32,17)")
+    .text("Number of Jobs") // must change this when size dropdown activated
+    .style("font-size","22px").style("fill","#49AC52")
+
+  //     .attr("r","20px").style("fill", function(d,i) { return color(i) })
+  //     .attr("cx", "80vw")
+  //     .attr("cy", function(d,i) { return i*20 + "px" })
+  // .transition().duration(500)
+  // .style("width", "300px")
+  // .style("height", "400px")
+
+})
+
+d3.select("#btnSizes").on("mouseleave", function() {
+
+  // reset Colour Legend button
+  d3.select("#btnLegend").transition().duration(500).style("opacity",1).style("height","70px").style("width","100px")
+
+  d3.select("#btnSizes").transition().duration(500)
+  .style("width", "100px")
+  .style("height", "70px")
+
+  svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
+
+  d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
+  // legendTexts.selectAll("text").style("opacity",0).remove()
+
+  setTimeout(function() {
+    d3.select("#btnSizes")
+    .html("Size<br>Legend")
+    }, 400);
+
+})
+
+
+// Size dropdown
+
 var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
 .domain([d3.min(nodes, function(d) { return d.wage }), d3.max(nodes, function(d) { return d.wage })]) // input
 .range([1,maxRadius/1.2]); // output -- need to think about relative scales for each set of sizes
@@ -1031,265 +1132,90 @@ var automationRadiusScale = d3.scaleSqrt()
 var yearRadiusScale = d3.scaleSqrt()
 .domain([d3.min(nodes, function(d) { return d.yearsStudy }), d3.max(nodes, function(d) { return d.yearsStudy })])
 .range([0.01,maxRadius/2]);
-var sizesArray = []
-var sizesValuesArray = []
 
-setSizes("workers")
 
-function setSizes(mode){
+d3.select("#workLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Workers";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, radiusScale(d.workers));
+      return function(t) { return d.radius = i(t); };
+    });
 
-  // radii of size legend circles
-  sizesArray = []
-  sizesValuesArray = []
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
 
-  switch (mode) {
-    case "workers":
-    // add minima
-    sizesArray.push(radiusScale(d3.min(nodes, function(d) { return d.workers })))
-    sizesValuesArray.push(d3.min(nodes, function(d) { return d.workers }))
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
-        )
-      sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.workers })
-        )
-    }
-    break;
-    case "wage":
-    // add minima
-    sizesArray.push(wageRadiusScale(d3.min(nodes, function(d) { return d.wage })))
-    sizesValuesArray.push("$ "+String(d3.min(nodes, function(d) { return d.wage })).substring(0,2)+" per hr")
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * wageRadiusScale(d3.max(nodes, function(d) { return d.wage }))
-        )
-      sizesValuesArray.push("$ "+String(
-        (i/5) * d3.max(nodes, function(d) { return d.wage })
-        ).substring(0,2)+" per hr")
-    }
-    break;
-    case "yearsStudy":
-    // add minima
-    sizesArray.push(yearRadiusScale(d3.min(nodes, function(d) { return d.yearsStudy })))
-    sizesValuesArray.push(d3.min(nodes, function(d) { return d.yearsStudy }))
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * yearRadiusScale(d3.max(nodes, function(d) { return d.yearsStudy }))
-        )
-      sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.yearsStudy })
-        )
-    }
-    break;
-    case "none":
-    break;
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
   }
+});
+d3.select("#wageLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Wage ($ per hr)";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, wageRadiusScale(d.wage)/1.2);
+      return function(t) { return d.radius = i(t); };
+    });
 
-}
-
-var currentSize = "Number of Jobs"
-var btnSizesDims = ["275px","300px"] // width, height
-
-mouseEnterOn()
-
-function mouseEnterOn() {
-
-  d3.select("#btnSizes").on("mouseenter", function() {
-
-    // shrink Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
-
-    d3.select("#btnSizes").transition().duration(500)
-    .style("width", btnSizesDims[0])
-    .style("height", btnSizesDims[1])
-    // .text("")
-
-    svgLegend = d3.select("#btnSizes")
-      .html("")
-      .append("svg").attr("id","svgLegend")
-        .attr("width",btnSizesDims[0])
-        .attr("height",btnSizesDims[1])
-        .style("margin-top","5px")
-        // .style("background","#eaeaea")
-      
-    sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
-        .attr("r", 0) // start at 0 radius and transition in
-        .transition().duration(500).attr("r",  function(d,i) { return sizesArray[i] })
-        .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
-        .style("fill", "#B5ADAD")
-
-    legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
-        .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+"55"+","+(49 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
-        .text(function(d) { return d })
-        .style("opacity",0).transition().duration(600).style("opacity",1)
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
     
-    legendTitle = d3.select("#svgLegend").append("text")
-      .attr("transform","translate(32,17)")
-      .text(currentSize) // must change this when size dropdown activated
-      .style("font-size","22px").style("fill","#49AC52")
-
-    sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
-        .attr("class","dropup")
-        .style("position","absolute")
-        .style("right","5%")
-        .style("bottom","5%")
-        .append("button")
-          .attr("id","sizeDropdownButton")
-          .attr("class","btn btn-grey btn-primary dropdown-toggle")
-          .attr("type","button")
-          .attr("data-toggle","dropdown")
-          .style("height","50px")
-          .style("border-width","0px")
-          .html("Size by<br>"+currentSize+"<span class='caret'></span>")
-          .append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
-          .html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
-                "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
-                "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-                "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
-
-    d3.select("#workLink").on("click", function() {
-
-      circles.transition().duration(100)
-        .delay(function(d, i) { return i * 1})
-        .attrTween("r", function(d) {
-          var i = d3.interpolate(d.radius, radiusScale(d.workers));
-          return function(t) { return d.radius = i(t); };
-        });
-
-      if(graphMode == 0 && futureMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
-        setTimeout(function() { resetSimulation() }, 700);
-
-        setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
-      }
-
-      currentSize = "Number of Jobs"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff() // turn off until mouseleave
-      setSizes("workers")
-      mouseLeaveFn()
-    })
-
-    d3.select("#wageLink").on("click", function() {
-
-      circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
-      .attrTween("r", function(d) {
-        var i = d3.interpolate(d.radius, wageRadiusScale(d.wage)/1.2);
-        return function(t) { return d.radius = i(t); };
-      });
-
-      if(graphMode == 0 && futureMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
-        setTimeout(function() { resetSimulation() }, 700);
-        
-        setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
-      }
-
-      currentSize = "Wage"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
-      setSizes("wage")
-      mouseLeaveFn()
-    })
-
-    d3.select("#yearLink").on("click", function() {
-
-      circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
-      .attrTween("r", function(d) {
-        var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
-        return function(t) { return d.radius = i(t); };
-      });
-      if(graphMode == 0 && futureMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
-        setTimeout(function() { resetSimulation() }, 700);
-
-        setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
-      }
-
-      currentSize = "Years of Study"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
-      setSizes("yearsStudy")
-      mouseLeaveFn()
-    })
-
-    d3.select("#equaLink").on("click", function() {
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+  }
+});
+d3.select("#autoLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Automation risk";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, automationRadiusScale(d.automationRisk)/2);
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
     
-      circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
-      .attrTween("r", function(d) {
-        var i = d3.interpolate(d.radius, 10);
-        return function(t) { return d.radius = i(t); };
-      });
-      if(graphMode == 0 && futureMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
-        setTimeout(function() { resetSimulation() }, 700);
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+  }
+});
+d3.select("#yearLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Years of study";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
 
-        setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
-      }
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+  }
+});
+d3.select("#EqualLink").on('click', function() {
+  // document.getElementById("sizeDropdownButton").innerHtml = "Size = Years of study";
+  circles.transition().duration(100)
+    .delay(function(d, i) { return i * 1})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(d.radius, 10);
+      return function(t) { return d.radius = i(t); };
+    });
+  if(graphMode == 0 && futureMode == 0) {
+    setTimeout(function() { resetSimulation() }, 600);
+    setTimeout(function() { resetSimulation() }, 700);
 
-      currentSize = "nothing"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
-      setSizes("none")
-      mouseLeaveFn()
-    })
-
-    // fade in dropdown
-    d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(700).style("opacity",1)
-
-  })
-} // mouseEnterOn()
-
-function mouseEnterOff() {
-  d3.select("#btnSizes").on("mouseenter", "")
-}
-
-mouseLeaveOn();
-
-function mouseLeaveOn() {
-  d3.select("#btnSizes").on("mouseleave", function() {
-    mouseEnterOn()
-    mouseLeaveFn()
-  })
-}
-
-function mouseLeaveFn() {
-    // reset Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(500).style("opacity",1).style("height","70px").style("width","100px")
-    d3.select("#sizeDropdownDiv").style("opacity",1).transition().duration(400).style("opacity",0).remove()
-
-    d3.select("#btnSizes").transition().duration(500)
-    .style("width", "100px")
-    .style("height", "70px")
-
-    svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
-
-    d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
-    // legendTexts.selectAll("text").style("opacity",0).remove()
-
-    setTimeout(function() {
-      d3.select("#btnSizes")
-      .html("Size<br>Legend")
-      }, 400);
-    mouseEnterOn()
-}
-
-function mouseLeaveOff() {
-    d3.select("#btnSizes").on("mouseleave", "")
-}
-
+    setTimeout(function() { enterUpdateCircles();
+      simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+  }
+});
 
 
 //////////// Industry Split ////////////////

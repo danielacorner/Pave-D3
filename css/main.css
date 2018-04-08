@@ -85,6 +85,30 @@ button.btn-grey {
   box-shadow: 3px 3px 17px grey; 
   background: #A6B0A8;
 }
+button.btn-graph {
+  font-size: 18px; 
+  height: 40px; 
+  box-shadow: 3px 3px 17px grey; 
+  background: #A6B0A8;
+}
+.legend {
+  position: fixed;
+  left: 70%;
+  bottom: 30%;
+}
+button.btn-legend {
+  height: 70px;
+  width: 100px;
+  line-height: 1.2;
+  background: white;
+  border-width: 1px;
+  border-color: #49AC52;
+  border-radius: 14px;
+  box-shadow: 0px;
+  font-weight: bold;
+  font-family: Raleway;
+  color:  #49AC52;
+}
 button#minimizeViews {
   width: 20px;
   height: 20px;

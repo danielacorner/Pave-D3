@@ -7,7 +7,7 @@
 	<!-- Bootstrap sources -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
 	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
@@ -162,19 +162,19 @@
 									</div>
 								</div>
 
-								<div id="viewButtons" align="center" style="position: relative; margin-top: 15px; z-index: 0;">
+								<div id="viewButtons" align="center" style="position: relative; margin-top: 25px; z-index: 0;">
 
-									<button id="graph" data-toggle="button" type="button" class="btn btn-grey" aria-pre autocomplete="off">
+									<button id="graph" data-toggle="button" type="button" class="btn btn-graph" aria-pre autocomplete="off">
 										<span style="color: white; font-weight: 560; font-family: Raleway">
 										Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" src="img/toggle-off.png"></img>
 									</button>
 
 									<span style='padding-left: 10px'></span>
 
-									<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
+<!-- 									<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
 										<span style="color: white; font-weight: 560; font-family: Raleway">
 										Future View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="futureToggle" src="img/toggle-off.png"></img>
-									</button>
+									</button> -->
 
 								</div> <!-- end of viewButtons -->
 							</div> <!-- end of topButtons -->
@@ -239,7 +239,15 @@ else if(viewsMinimized == 0){
 <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script> -->
 
 <!-- legend container -->
-<g class="legend" id="legend"></g>		
+<g class="legend" id="legend">
+
+						<!-- legend buttons -->
+					<button id="btnLegend" class="btn btn-legend">
+						Colour<br>Legend</button>						<!-- legend button -->
+					<button id="btnSizes" class="btn btn-legend" style="margin-left: 7px">
+						Size<br>Legend</button>
+
+</g>		
 
 <!-- The data visualization -->
 <script src="PaveVisualisation.js"></script>
@@ -262,38 +270,8 @@ else if(viewsMinimized == 0){
 
 				</div>
 
-				<div id="sizeColoursDiv" align="center" style="margin-top: 20px">
-					<!-- Size dropdown -->
-					<div class="dropdown" id="sizeDropdown" style="display: inline; padding-left: 1%;">
-						<button id="sizeDropdownButton" class="btn btn-grey btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border-width: 0px; margin-right: 10px">Size by Number of Jobs<span class="caret"></span></button>
-						<ul class="dropdown-menu" style="padding-left: 5px;">
-							<li><a id="workLink" href="#" onclick="clickWork()">Number of Jobs</a></li>
-							<li><a id="wageLink" href="#" onclick="clickWage()">Wage ($ per hr)</a></li>
-							<li><a id="yearLink" href="#" onclick="clickYear()">Years of study</a></li>
-							<li><a id="EqualLink" href="#" onclick="clickEqual()">Equal sizes</a></li>
-						</ul>
-					</div>
-					<!-- Colors button -->
-					<button id="colours" class="btn btn-grey">
-						<span style="color: white;">Legend</span></button>
-					</div>
-				</div>
-				<!-- end of centerDiv -->
-
-				<script type="text/javascript">
-					function clickWork() {
-						document.getElementById("sizeDropdownButton").innerHTML = "Size by Number of Jobs";
-					}
-					function clickWage() {
-						document.getElementById("sizeDropdownButton").innerHTML = "Size by Wage";
-					}
-					function clickYear() {
-						document.getElementById("sizeDropdownButton").innerHTML = "Size by Years of study";
-					}					
-					function clickEqual() {
-						document.getElementById("sizeDropdownButton").innerHTML = "Size by nothing";
-					}
-				</script>
+</div>
+<!-- end of centerDiv -->
 
 				<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
 

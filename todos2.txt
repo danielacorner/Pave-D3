@@ -1,18 +1,43 @@
+ideas:
+- save filter states with mini screenshots? like collectibles in a "backpack" or inventory
+- "guild hall" where users post/upvote insightful views
+
 todos
-#256D1B
 top5:
 
-- search not working
+- legend button style & function (make it visible)
 
-- hover for longer than 2 seconds = expand dropdown
+- size legend
+
+- remove "future view" and enlarge "graph view" button
+- give a warning and stop filters working when jobs get filtered down to 7
+- bugfix the tooltip not being removed
+- expand to level 3 tooltip on "View More"
+- fix the search: include "list of job titles" in search
+- toggle sliders: general skill OR subskills, not both
+- split button summary statistics for industries
+- hover on legend = show legend & split into industries, encircle & show summary statistics
+- speed up sliders: look into filter algorithm
+- increase slider responsive area
+- create slider inset shadow
+
+- enclosure diagram containing split view? like on http://charts.vismio.com/9lqjn/
 
 - Mute Split/Shuffle/Combine features when Graph view is enabled
+
+- slow down or emphasize "pop" animation
+
+- start tutorial with equal sizes & change size to Number of Jobs (how easy is it to get each job?)
+
+- "language skills" is ambiguous
 
 - add pause hover explainer div
 - add suggested views explainer divs
 
 - Explain why “lots” of skill = fewer job suggestions in tutorial
 
+- "job type" instead of "job group"
+- enable minimal (title-only) tooltips on tutorial3
 
 - graph view suggested view walkthroughs, zones on graph
 
