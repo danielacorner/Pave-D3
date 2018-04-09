@@ -1492,7 +1492,7 @@ d3.select("#graph").on('mouseenter', function(d) {
     .style("border-bottom-right-radius","6px")
 
   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
-    .html("Not all jobs are equal! This view shows you how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
+    .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
 
 })
 
@@ -1665,6 +1665,9 @@ function graphModeOn(mode) {
 
   moveBottomDown();
   hideToolTip(500);
+  d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("pointer-events","none")
+  d3.select("#btnSizes").transition().duration(500).style("opacity",0).style("pointer-events","none")
+  d3.select("#splitShuffle").transition().duration(500).style("opacity", 0);
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -1979,7 +1982,10 @@ function showLeftButtons() {
 function graphModeOff() {
 
   // change available buttons
-  // d3.select("#combine").style("display", "none");
+  d3.select("#btnLegend").transition().duration(500).style("opacity",1).style("pointer-events","auto")
+  d3.select("#btnSizes").transition().duration(500).style("opacity",1).style("pointer-events","auto")
+
+  d3.select("#splitShuffle").transition().duration(500).style("opacity", 1);
   d3.select("#graphToggle").attr("src","img/toggle-off.png")
 
   if(futureMode == 0){
