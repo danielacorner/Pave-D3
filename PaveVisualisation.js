@@ -2828,7 +2828,7 @@ for (var i = sliderTitlesArray.length - 1; i >= 0; i--) {
 // Lang X, Y
 for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayLang[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i-150) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayLang[i], window.innerHeight*0.08*i-170) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayLang[i], "left")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
@@ -2839,7 +2839,7 @@ for (var i = sliderTitlesArrayLang.length - 1; i >= 0; i--) {
 // Logi X, Y
 for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayLogi[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i-150) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayLogi[i], window.innerHeight*0.08*i-170) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayLogi[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
@@ -3247,7 +3247,6 @@ var minimumSet = 10;
 function calloutCheck() {
   // find the current size of the filtered set
   filteredSet = graph.length
-  console.log(graph.length)
 
   if(graphMode == 0){
     if (filteredSet <= minimumSet) {
@@ -3588,7 +3587,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_0")
-          .transition().duration(350).style("height", heightLang+50+"px").style("width",270+"px")
+          .transition().duration(350).style("height", heightLang+20+"px").style("width",280+"px")
         d3.select("#spanSubsliders_0")
           .transition().duration(350).style("opacity", 0)
 
@@ -3626,7 +3625,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_1")
-          .transition().duration(350).style("height", heightLogi+50+"px").style("width", 275+"px")
+          .transition().duration(350).style("height", heightLogi+20+"px").style("width", 280+"px")
 
         d3.select("#spanSubsliders_1")
           .transition().duration(350).style("opacity", 0)
@@ -3670,7 +3669,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 
         d3.select("#btnSubsliders_2")
           .transition().duration(350).style("height", heightMath+50+"px")
-          .style("width", 285+"px")
+          .style("width", 290+"px")
         d3.select("#spanSubsliders_2")
           .transition().duration(350).style("opacity", 0)
 
@@ -3714,7 +3713,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         }
 
         d3.select("#btnSubsliders_3")
-          .transition().duration(350).style("height", heightComp+50+"px").style("width","275px")
+          .transition().duration(350).style("height", heightComp+50+"px").style("width","280px")
         d3.select("#spanSubsliders_3")
           .transition().duration(350).style("opacity", 0)
 

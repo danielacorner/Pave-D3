@@ -5,11 +5,7 @@ ideas:
 todos
 top5:
 
-- pause filters at n = 7 and warn user
-	- create warning (callout to graph mode)
-	- blink across screen
-
-- fix graph view hover positions
+- pause filters at n = 7 
 
 - speed up all? transitions
 
