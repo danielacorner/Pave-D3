@@ -50,8 +50,8 @@
 		</br>
 
 		<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
-  	<a class="intro-tour-button" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
-    <a class="intro-tour-button" style="display: inline-block; width: 8vw; opacity: 0.3; color: white" id="nextLink" href="">START</a>
+  	<a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
+    <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0.3; color: white; z-index: 100" id="nextLink" href="">START</a>
 		</div>
 
 	<div id="rightSide">
@@ -60,10 +60,11 @@
     <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
 
 	</div>
-<div style="position: fixed; left: 62vw; top: 54vw; z-index: 99">
-<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0.4">
-  <span style="color: white; padding-right: 6px;">
-  Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
+<div style="position: fixed; left: 63vw; top: 53vw; z-index: 99">
+  <span id="resetFiltersSpan" style="position: fixed; top: 49vw; left: 56vw; opacity: 0">Click "Reset Filters" to start over<br></span>
+<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0.4; width: 11vw; height: 3vw;">
+  <span style="color: white; font-size: 1.12vw;">
+  Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> </button> 
 </div>
 
 </div>
@@ -514,11 +515,8 @@ enterUpdateCircles = function() {
 
   circles = circles.merge(newCircles);
 
-    d3.select("#resetFilters").transition().duration(250).style("opacity", 1)
-  setTimeout(function(){
-    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
-    d3.select("#nextLink").attr("href","Pave.html")
-  }, 500)
+  d3.select("#resetFilters").transition().duration(500).style("opacity", 1)
+  d3.select("#resetFiltersSpan").transition().duration(250).style("opacity", 1)
 
 }
 
@@ -533,6 +531,10 @@ d3.select("#resetFilters").on('click', function(d) {
   //   graphModeOff();
   // }c
   resetFilters(0);
+  setTimeout(function(){
+    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
+    d3.select("#nextLink").attr("href","Pave.html")
+  }, 500)
 });
 
 function resetFilters(mode) {

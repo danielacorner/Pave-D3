@@ -10,6 +10,7 @@ top5:
 
 - add tutorial 4 to include sizes
 
+
 - fix the search (doesn't click-off)
 	- dowsn't work
 	- warn if no results
@@ -29,6 +30,8 @@ top5:
 - turn mini skillbars into tooltiplarge skillbars
 
 - Mute Split/Shuffle/Combine features when Graph view is enabled
+
+- switch skill bars to relative scale?
 
 - slow down or emphasize "pop" animation
 
