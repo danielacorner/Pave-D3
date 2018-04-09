@@ -5,6 +5,8 @@ ideas:
 todos
 top5:
 
+- fix tooltip skill bar heights
+
 - pause filters at n = 7 
 
 - speed up all? transitions

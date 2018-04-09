@@ -654,9 +654,9 @@ var graphMode;
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
-     +"<div id='tooltip3' style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
+                +"Top skills are...</br>"
+                +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+     +"<div id='tooltip3' style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; margin-left: -10px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
         +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
           "<title id='title'>A bar chart showing information</title>"+
@@ -714,11 +714,13 @@ var graphMode;
   setTimeout(function(){
 
     d3.select("#tooltipBottomDiv")
-    .html("<div id='tooltipBottomDiv2' style=' border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+    .html("<div id='tooltipBottomDiv2' style=' margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
-      +"Top skills are...</br>"
-                +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
-        // Skill levels
+
+        +"<span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
+        +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
+
+      // Skill levels
         +"<svg height='80px' style='position: absolute; margin-top: "+(15)+"px; margin-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
         "<title id='title'>A bar chart showing information</title>"+
 
@@ -889,9 +891,10 @@ function tooltipSmall(d) {
                     "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
-                "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
+                "</svg>"             
+                +"Top skills are...</br>"
+                +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+                     
      +"<div style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
         +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
