@@ -9,7 +9,7 @@ top5:
 	- create warning (callout to graph mode)
 	- blink across screen
 
-- fix graph view hover
+- fix graph view hover positions
 
 - speed up all? transitions
 

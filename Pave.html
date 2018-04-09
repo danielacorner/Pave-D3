@@ -134,35 +134,35 @@
 				<!-- </div> -->
 				<!-- slider array 1: Filter by Stats-->
 				<!-- Buttons -->
-				<div id="topButtons" style="position: fixed; z-index: 0; left: 33vw; top: 12vh;" class="col-4" align="center">
+				<div id="topButtons" style="pointer-events: none; position: fixed; z-index: 0; left: 33vw; top: 12vh;" class="col-4" align="center">
 					<!-- Split, shuffle -->
 					<div id="splitShuffle" align="center" style="z-index: 0;">
 						<div class="btn-group" align="center" role="group" aria-label="...">
 
-							<button id="split" type="button" class="btn btn-grey" style="width: 88px">
+							<button id="split" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
 								<span style="color: white; font-weight: 560;">
 								Split</span> </button>
 
-								<button id="shuffle" type="button" class="btn btn-grey" style="width: 88px">
+								<button id="shuffle" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
 									<span style="color: white; font-weight: 560;">
 									Shuffle</span> </button>
 
-									<button id="combine" type="button" class="btn btn-grey" style="width: 88px;">
+									<button id="combine" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
 										<span style="color: white; font-weight: 560;">
 										Combine</span> </i></button>
 
 									</div>
 								</div>
 
-								<div id="viewButtons" align="center" style="position: relative; margin-top: 25px; z-index: 0;">
+								<div id="viewButtons" align="center" style="pointer-events: none; position: relative; margin-top: 25px; z-index: 0;">
 
-									<button id="graph" data-toggle="button" type="button" class="btn btn-graph" aria-pre autocomplete="off">
+									<button id="graph" data-toggle="button" type="button" class="btn btn-graph" style="pointer-events: auto;" aria-pre autocomplete="off">
 										<span style="color: white; font-weight: 560; font-family: Raleway">
 										Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" src="img/toggle-off.png"></img>
 									</button>
 									
-									<div align="left" id="graphCallout" style="font-size: 18px; padding: 10px 0px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-left: 10vw; margin-top: 30px; height: 75px; width: 300px; background: #eaeaea;">Not many jobs are left &mdash;<br> click here to compare these jobs.
-										<div id="graphCalloutArrow" style="transform: rotate(45deg); position: relative; margin-top: -70px; height: 68px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
+									<div align="left" id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-left: 10vw; margin-top: 30px; height: 75px; width: 300px; background: #eaeaea;">Not many jobs are left &mdash;<br> click here to compare these jobs.
+										<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -70px; height: 68px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
 									</div>
 									<!-- <span style='padding-left: 10px'></span> -->
 
@@ -170,7 +170,7 @@
 										<span style="color: white; font-weight: 560; font-family: Raleway">
 										Future View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="futureToggle" src="img/toggle-off.png"></img>
 									</button> -->
-
+									</div>
 								</div> <!-- end of viewButtons -->
 							</div> <!-- end of topButtons -->
 

@@ -588,6 +588,8 @@ function pad(num, size) { // add leading 0s to nocs like 0011
     return s;
 }
 
+var graphMode;
+
   function tooltipMouseover(d) {
   // create the hover tooltip
 
@@ -614,15 +616,23 @@ function pad(num, size) { // add leading 0s to nocs like 0011
       //   .attr("src", "img/logo.png")
       //   .attr("class", "img-rounded");
       var divLeft;
-      if(d3.event.pageX < window.innerWidth/2) { // left side
-        divLeft = window.innerWidth*0.5 + (d.x) + 5;
-      } else if (d3.event.pageX >= window.innerWidth/2) { // right side
-        divLeft = window.innerWidth*0.5 + (d.x) - 355;
+      var divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+      
+      if(graphMode == 0) {
+        if(d3.event.pageX < window.innerWidth/2) { // left side
+          divLeft = window.innerWidth*0.5 + (d.x) + 5;
+        } else if (d3.event.pageX >= window.innerWidth/2) { // right side
+          divLeft = window.innerWidth*0.5 + (d.x) - 355;
+          divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+        }
+      }else if(graphMode == 1) {
+        divLeft = d.cx + window.innerWidth/2;
+        divTop = d.cy + window.innerHeight*0.4;
       }
+
       // pageY increases downward
       // at small pageY, approach d3.event.pageY
       // at large pageY, approach constant window.innerHeight-400
-      var divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
 
       // Display Hover Tooltip
       div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
@@ -1657,6 +1667,7 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 function graphModeOn(mode) {
 
+  hideGraphViewCallout();
   moveBottomDown();
   hideToolTip(500);
   d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("pointer-events","none")
@@ -2406,25 +2417,48 @@ enterUpdateCircles = function() {
     .style("fill", function(d) { return color(d.cluster); })
 
     // Tooltips
+ // Tooltips
     .on("mouseenter", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      showToolTip(0);
       tooltipMouseover(d);
+      hoverTimeout = setTimeout(function(){
+        tooltipLarge(d)
+        clicked = 1
+      }, 1750)
       })
     .on("mouseout", function(d) {
+      clearTimeout(hoverTimeout)
       if (clicked == 1) return;
-
-      // clicked = 0;
+      clicked = 0;
+      hideToolTip(500)
       d3.select(this).attr("stroke", "none");
+      // div.transition().duration(500).style("opacity", 0)
+
+      // div
+      // .style("opacity", 0);
+      // setTimeout(function(){
+      // //   if(typeof div2 != "undefined") div2.remove();
+      //   if(typeof div != "undefined") div.remove();
+      // },250)
     })
     .on("click", function(d) {
-      // click-on, click-off
-      clicked = 1-clicked;
-    if (clicked == 1) {
-      tooltipLarge(d);
-     } else if (clicked == 0) {tooltipSmall(d);}
+      clearTimeout(hoverTimeout)
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+       }
+      // hideToolTip(0);
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
       })
   drag_handler(newCircles);
   //  ENTER + UPDATE
@@ -3189,7 +3223,7 @@ function updateMulti(h, mode) {
 // show
 graphViewCallout = function() {
   // d3.select("#graphCallout").transition().duration(400).style("width","300px")
-    
+  d3.select("#graph").style("box-shadow","0px 0px 17px 7px #E6E447")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",1)
   
   
@@ -3197,7 +3231,8 @@ graphViewCallout = function() {
 
 // hide
 hideGraphViewCallout = function() {
-  d3.select("#graphCallout").transition().duration(400).style("opacity",0)
+  d3.select("#graph").style("box-shadow","3px 3px 17px grey")
+  d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
 
 // the size of the current set
@@ -3214,14 +3249,15 @@ function calloutCheck() {
   filteredSet = graph.length
   console.log(graph.length)
 
-  if (filteredSet <= minimumSet) {
-    graphViewCallout()
-  // disable filter sliders
-  } else {
-    hideGraphViewCallout()
-  // enable filter sliders
+  if(graphMode == 0){
+    if (filteredSet <= minimumSet) {
+      graphViewCallout()
+    // disable filter sliders
+    } else {
+      hideGraphViewCallout()
+    // enable filter sliders
+    }
   }
-
 }
 
 //end graph view callout
