@@ -576,7 +576,7 @@ function hideToolTip(duration) {
         d3.select("#rect"+i+"shadow").transition().duration(duration).style("opacity",0).remove()
       }
 
-      d3.select("#moreBtnsContainerDiv").transition().duration(400).style("width","0px")
+      d3.select("#moreBtnsContainerDiv").transition().duration(275).style("width","0px")
       d3.select("#moreBtnsDiv").transition().duration(300).style("opacity",0)
 
       d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0)
@@ -775,8 +775,8 @@ function pad(num, size) { // add leading 0s to nocs like 0011
         "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
         "Volunteer Canada</a><br>"+
 
-        "<br><br><span style='margin-left: 5px; color: white;'>"+
-        "View current listings:</span>"+
+        "<br><br><span style='margin-left: -20px; color: white;'>"+
+        "View listings for this job:</span>"+
 
         "<div align='right' style='margin: 10px 0px 20px 0px'>"+
         "<a id='btnIndeed' class='btn btn-sm' "+
@@ -2888,7 +2888,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("top", ytranslate+220+"px")
         // lg and xl
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
-          "position: absolute; left: "+(xtranslate+2)+"%; width: 400px;"
+          "position: absolute; left: "+(xtranslate+3)+"%; width: 400px;"
           +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #49AC52; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
@@ -2923,7 +2923,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         })
       .append("svg").attr("id", "sliderSvg_"+subSliderArray[i])
         .style("z-index", 99)
-        .style("left", xtranslate+"px")
+        .style("left", xtranslate+"%")
         .attr("viewBox", "0 10 "+250+" "+50)
         .style("position", "absolute")
         .style("top", window.innerHeight*0.0335+"px") // y position
@@ -3289,15 +3289,15 @@ var searchDiv = d3.select("body")
     .style("width", "0px")
     .style("height", "39px")
     .style("position", "absolute")
-    .style("top", "33px")
-    .style("right", "-60px")
+    .style("top", "32px")
+    .style("right", "82px")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
     .style("border-radius", "7px")
     .style("opacity", 0)
     // .style("visibility", "visible")
     .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
-           "style='margin-right: -69px; padding-bottom: 8px; width: 75%; opacity: 1' type='text' "+
+           "style='margin-right: -69px; padding-bottom: 8px; width: 100%; opacity: 1' type='text' "+
            "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Submit</button>"
@@ -3519,7 +3519,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_0")
-          .transition().duration(350).style("height", heightLang+50+"px")
+          .transition().duration(350).style("height", heightLang+50+"px").style("width",270+"px")
         d3.select("#spanSubsliders_0")
           .transition().duration(350).style("opacity", 0)
 
@@ -3645,7 +3645,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         }
 
         d3.select("#btnSubsliders_3")
-          .transition().duration(350).style("height", heightComp+50+"px")
+          .transition().duration(350).style("height", heightComp+50+"px").style("width","275px")
         d3.select("#spanSubsliders_3")
           .transition().duration(350).style("opacity", 0)
 
@@ -3668,7 +3668,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 }
 
 function hideLang() {
-  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px")
+  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px").style("width", 250+"px")
   d3.select("#spanSubsliders_0")
           .transition().duration(350).style("opacity", 1)
     // .style("top", window.innerHeight*0.20+"px");
@@ -3729,7 +3729,7 @@ function hideMath() {
 
 function hideComp() {
 
-  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px")
+  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px").style("width","250px")
   d3.select("#spanSubsliders_3")
           .transition().duration(350).style("opacity", 1)
 

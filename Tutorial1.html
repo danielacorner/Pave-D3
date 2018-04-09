@@ -100,7 +100,7 @@
   var maxWage = 116.18;
   var clicked = 0;
   var d = {
-  	job: "Chemical plant machine operators",
+  	job: "Machine operator at chemical plant",
   	wage: 18,
   	automationRisk: 0.76,
   	yearsStudy: 2.4,
@@ -200,9 +200,9 @@ function tooltipMouseover(){
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
                 +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("left", "10vw")
         .style("background", color(d.cluster) )
-        .style("top", (d3.event.pageY - 80) - d.radius + "px");
+        .style("top", (50) + "px");
 
         setTimeout(function(){
         	d3.select("#nextLink").transition().duration(700).style("opacity", 1)

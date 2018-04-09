@@ -50,8 +50,8 @@
 </div>
 
 <div class="d-inline" style="position: fixed; left: 15vw; top: 13vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
-		<span style="font-size: 3.05vw; opacity: 0.5">This is a job group</span>
-		</br><span style="opacity: 0.5;">Hover with your cursor to see the details</span>
+		<span style="font-size: 3.05vw; opacity: 0.2">This is a job group</span>
+		</br><span style="opacity: 0.2;">Hover with your cursor to see the details</span>
 		</br><span style="margin-left: -0.8vw">Click the circle to see skills used on the job</span>
 
 		<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
@@ -168,16 +168,6 @@ function tooltipMouseover(){
       //   .attr("src", "img/logo.png")
       //   .attr("class", "img-rounded");
 
-      // Display Hover Tooltip
-      div.transition()
-      .duration(300)
-      .style("opacity", 1)
-      .style("height", "auto")
-      .style("width", "350px")
-      .style("z-index", 99)
-      .style("position", "absolute")
-      // .style("border",   "1px solid black;");
-
       // d3.select("#tooltip")
       // .append("image")
       //   .attr("src", "img/logo.png")
@@ -206,9 +196,9 @@ function tooltipMouseover(){
                 +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
                 +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
         // Move div above mouse by "top" + radius and right by "left"
-        .style("left", (d3.event.pageX) + 20 + "px")
+        .style("left","10vw")
         .style("background", color(d.cluster) )
-        .style("top", (d3.event.pageY - 80) - d.radius + "px");
+        .style("top", "50px");
 	}
 
 function tooltipLarge() {
@@ -243,29 +233,25 @@ div
                   "<g class='bar'>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
                     "<rect height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
                     "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
                     "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
                     "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsYtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
                   "</g>"+
                 "</svg>"+
         // +"<br/>" 
                 "</div>"+
-                "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('favourited') }' class='btn btn-lg' "+
-         "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
-         +"Favourite</button><br/>"+
+                // "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('favourited') }' class='btn btn-lg' "+
+         // "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
+         // +"Favourite</button><br/>"+
          "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a id='viewMoreBtn' class='btn btn-lg' href='http://.google.com' target='_blank'"+
          "style='position: absolute; bottom: 13px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
          +"View more</a><br/><br/> ").transition().duration(300).style("width", "350px")

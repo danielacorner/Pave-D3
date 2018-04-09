@@ -6,12 +6,15 @@ todos
 top5:
 
 - pause filters at n = 7 and warn user
-
 - give a warning and stop filters working when jobs get filtered down to 7
 
-- expand to level 3 tooltip on "View More"
+- add tutorial 4 to include sizes
 
-- fix the search: include "list of job titles" in search
+- fix the search (doesn't click-off)
+	- dowsn't work
+	- warn if no results
+  - include "list of job titles" in search
+
 - toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries
 - hover on legend = show legend & split into industries, encircle & show summary statistics

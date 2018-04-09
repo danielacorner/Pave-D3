@@ -216,7 +216,8 @@ div.tooltip:hover {
 .track,
 .track-inset,
 .track-overlay {
-  /*stroke-linecap: round;*/
+  stroke-linecap: round;
+  stroke-width: 40px;
 }
 
 .track {
