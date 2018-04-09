@@ -6,19 +6,20 @@ todos
 top5:
 
 - pause filters at n = 7 and warn user
-- give a warning and stop filters working when jobs get filtered down to 7
+	- create warning (callout to graph mode)
+	- blink across screen
 
-- add tutorial 4 to include sizes
+- fix graph view hover
 
-- speed up all transitions
+- speed up all? transitions
 
 - fix the search (doesn't click-off)
 	- dowsn't work
 	- warn if no results
   - include "list of job titles" in search
 
-- bug: tooltips not disappearing on mouseout
-- bug: reset filters not working
+- bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
+- bug: reset filters not working (when?)
 
 - toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries

@@ -998,17 +998,7 @@ drag_handler(circles);
 
 
 
-
-
-
-
 ///////////////////////////////// Buttons ////////////////////////////////////
-
-
-
-
-
-
 
 /////////////// COLOUR LEGEND button
 
@@ -3194,10 +3184,53 @@ function updateMulti(h, mode) {
 
 
 
+// Graph View Callout
+
+// show
+graphViewCallout = function() {
+  // d3.select("#graphCallout").transition().duration(400).style("width","300px")
+    
+  d3.select("#graphCallout").transition().duration(400).style("opacity",1)
+  
+  
+}
+
+// hide
+hideGraphViewCallout = function() {
+  d3.select("#graphCallout").transition().duration(400).style("opacity",0)
+}
+
+// the size of the current set
+var filteredSet = nodes.length;
+
+// the minimum set size to trigger the graph view callout
+var minimumSet = 10;
+
+// on each filter,
+// calloutCheck()
+
+function calloutCheck() {
+  // find the current size of the filtered set
+  filteredSet = graph.length
+  console.log(graph.length)
+
+  if (filteredSet <= minimumSet) {
+    graphViewCallout()
+  // disable filter sliders
+  } else {
+    hideGraphViewCallout()
+  // enable filter sliders
+  }
+
+}
+
+//end graph view callout
+
 
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
 filterAll = function() {
+  calloutCheck()
   // h = sliderScaleArray[event.target.id].invert(d3.event.x)
   // START by filtering out nodes under the minimums
   store.forEach(function(d) {
