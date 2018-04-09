@@ -21,6 +21,10 @@ top5:
 
 - enclosure diagram containing split view? like on http://charts.vismio.com/9lqjn/
 
+- improve "job titles" and link top titles to search results
+
+- turn mini skillbars into tooltiplarge skillbars
+
 - Mute Split/Shuffle/Combine features when Graph view is enabled
 
 - slow down or emphasize "pop" animation

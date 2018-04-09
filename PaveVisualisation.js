@@ -3263,23 +3263,44 @@ filterAll = function() {
       ///////////////////// Search ///////////////////////
 var searchExpanded = 0;
 
-searchDiv = d3.select("body")
-  .append("div")
+          // <!-- search button -->
+          // <div class="search-div">
+          //   <span class="input-group-btn">
+          //     <!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
+          //     <button id="searchbuttonPC" class="search-btn">
+          //       <img id="searchImg" class="search-img" src="img/search.png" onclick="expandSearch()" alt='help' height='40' width = '40'>
+          //     </button>
+          //   </span>
+          // </div>
+
+d3.select("body").append("div")
+  .attr("class", "search-div")
+  .append("span")
+    .append("button").attr("id","searchButtonPC").attr("class","search-btn")
+      .append("img").attr("id","searchImg").attr("class","search-img")
+        .attr("src","img/search.png")
+        .attr("height","40")
+        .attr("width","40")
+        .on("mouseenter", function(){expandSearch()})
+        .on("click", function(){d3.select("#searchDiv").transition().duration(500).style("opacity",0)})
+
+var searchDiv = d3.select("body")
+  .append("div").attr("id","searchDiv")
     .style("width", "0px")
-    .style("height", "40px")
+    .style("height", "39px")
     .style("position", "absolute")
     .style("top", "33px")
-    .style("right", "55px")
+    .style("right", "-60px")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
     .style("border-radius", "7px")
-    .style("display", "none")
+    .style("opacity", 0)
     // .style("visibility", "visible")
-    .html("<input id='jobTitle' placeholder='Search job titles' class='d-inline form-control' "+
-           "style='padding-bottom: 8px; width: 80%; opacity: 0' type='text' "+
+    .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
+           "style='margin-right: -69px; padding-bottom: 8px; width: 75%; opacity: 1' type='text' "+
            "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-          "<button id='searchSubmitBtn' class='submit-btn btn btn-default' "+
-          "style='opacity: 0' onclick='searchJobTitles()'>Submit</button>"
+          "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
+          "onclick='searchJobTitles()'>Submit</button>"
           )
 
 
@@ -3288,30 +3309,21 @@ searchDiv = d3.select("body")
 var searchExpanded = 0;
 
 
-
 function expandSearch() {
 
-  searchExpanded = 1-searchExpanded;
+  searchExpanded = 1;
   if(searchExpanded == 1){
-    searchDiv.style("display", "inline")
-      .transition().duration(500).style("width", window.innerWidth/2 - 40 + "px")
+    d3.select("#searchDiv")
+      .transition().duration(500).style("width", window.innerWidth/2 - 60 + "px").style("opacity", 1)
     d3.select("#jobTitle").transition().duration(500).style("opacity","1")
-    setTimeout(function() {
-      d3.select("#searchSubmitBtn").transition().duration(300).style("opacity", "1")
-    }, 200);
-  }
-  if(searchExpanded == 0){
-    d3.select("#searchSubmitBtn").transition().duration(300).style("opacity", "0")
-    searchDiv.transition().duration(500).style("width", "0px");
-    d3.select("#jobTitle").transition().duration(500).style("opacity","0")
-    setTimeout(function() {
-        searchDiv.style("display", "none");
-      }, 500);
+    // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
+
   }
 }
 
 function searchJobTitles() {
 
+// get the input's value
 var query = document.getElementById("jobTitle").value;
 
 //  UPDATE
