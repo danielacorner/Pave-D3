@@ -1028,9 +1028,9 @@ industriesArray = [
 d3.select("#btnLegend").on("mouseenter", function() {
 
   // shrink Size Legend button 
-  d3.select("#btnSizes").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
+  d3.select("#btnSizes").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
 
-  d3.select("#btnLegend").transition().duration(500)
+  d3.select("#btnLegend").transition().duration(300)
   .style("width", "325px")
   .style("height", "425px")
   // .text("")
@@ -1045,7 +1045,7 @@ d3.select("#btnLegend").on("mouseenter", function() {
     
   legendCircles = svgLegend.selectAll("circle").data(industriesArray).enter().append("circle")
       .attr("r", 0) // start at 0 radius and transition in
-      .transition().duration(500).attr("r", 10)
+      .transition().duration(450).attr("r", 10)
       .attr("transform", function(d,i) { return "translate("+"20"+","+(45+i*37)+")" } ) //flag! need to make equation for width/height ratio
       .style("fill", function(d,i) { return color(i); })
 
@@ -1072,9 +1072,9 @@ d3.select("#btnLegend").on("mouseenter", function() {
 d3.select("#btnLegend").on("mouseleave", function() {
 
   // reset Size Legend button
-  d3.select("#btnSizes").transition().duration(500).style("opacity",1).style("height","70px").style("width","100px")
+  d3.select("#btnSizes").transition().duration(300).style("opacity",1).style("height","70px").style("width","100px")
 
-  d3.select("#btnLegend").transition().duration(500)
+  d3.select("#btnLegend").transition().duration(300)
   .style("width", "100px")
   .style("height", "70px")
 
@@ -1182,9 +1182,9 @@ function mouseEnterOn() {
 function mouseEnterFn() {
 
     // shrink Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("height","0px").style("width","0px")
+    d3.select("#btnLegend").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
 
-    d3.select("#btnSizes").transition().duration(500)
+    d3.select("#btnSizes").transition().duration(300)
     .style("width", btnSizesDims[0])
     .style("height", btnSizesDims[1])
     // .text("")
@@ -1199,7 +1199,7 @@ function mouseEnterFn() {
       
     sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
         .attr("r", 0) // start at 0 radius and transition in
-        .transition().duration(500).attr("r",  function(d,i) { return sizesArray[i] })
+        .transition().duration(400).attr("r",  function(d,i) { return sizesArray[i] })
         .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
         .style("fill", "#B5ADAD")
 
@@ -1351,8 +1351,8 @@ function mouseLeaveOn() {
 
 function mouseLeaveFn() {
     // reset Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(500).style("opacity",1).style("height","70px").style("width","100px")
-    d3.select("#sizeDropdownDiv").style("opacity",1).transition().duration(400).style("opacity",0).remove()
+    d3.select("#btnLegend").transition().duration(400).style("opacity",1).style("height","70px").style("width","100px")
+    d3.select("#sizeDropdownDiv").style("opacity",1).transition().duration(200).style("opacity",0).remove()
 
     d3.select("#btnSizes").transition().duration(500)
     .style("width", "100px")
