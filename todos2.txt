@@ -5,7 +5,7 @@ ideas:
 todos
 top5:
 
-- bugfix the tooltip not being removed
+- append subskill slider divs to viewmore buttons
 
 - give a warning and stop filters working when jobs get filtered down to 7
 

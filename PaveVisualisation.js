@@ -2684,9 +2684,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
-        "<button class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; z-index: 99;' "+
+        "<button id='btnSubsliders_"+i+"' class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; fill: white; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
-          "<span style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
       "</span></div>")
     .select(function() {
@@ -2816,7 +2816,7 @@ for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
 // Math X, Y
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayMath[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i-350+window.innerHeight*0.2) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i-350+window.innerHeight*0.175) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
@@ -2828,7 +2828,7 @@ for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
 // Comp X, Y
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayComp[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i-350+window.innerHeight*0.2) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i-350+window.innerHeight*0.175) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayComp[i], "left")
   // resize larger titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
@@ -2843,9 +2843,9 @@ createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 4, 0);
 
 createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 7, 1);
 
-createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 11, 3);
+createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 11, 2);
 
-createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 15, 2);
+createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 15, 3);
 
 
 
@@ -2870,15 +2870,15 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     // var leftOrRight = sliderLeftRightMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
-    sliderSVGArray[i+j] = d3.select("#subSliderWindow_"+appendToDiv)
+    sliderSVGArray[i+j] = d3.select("#btnSubsliders_"+appendToDiv)
       .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
-        .style("left", xtranslate+"px")
-        .style("top", ytranslate+160+"px")
+        .style("left", xtranslate+"%")
+        .style("top", ytranslate+220+"px")
         // lg and xl
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
-          "position: absolute; margin-left: "+(xtranslate)+"%; width: 400px;"
+          "position: absolute; left: "+(xtranslate+2)+"%; width: 400px;"
           +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #49AC52; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
@@ -3464,8 +3464,8 @@ var subSliderDivComp;
 // div heights
 var heightLang = 250,
     heightLogi = 335,
-    heightComp = 340,
-    heightMath = 340;
+    heightComp = 300,
+    heightMath = 300;
 
 var slidersExpanded = [0,0,0,0];
 
@@ -3484,21 +3484,22 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[1] = 0;
           hideLogi() 
           // if there is already a legend, unhide the legend
-          unhideLegend()
+          // unhideLegend()
         }
         if(slidersExpanded[2] == 1){ 
           slidersExpanded[2] = 0;
           hideMath() 
           // if there is already a legend, unhide the legend
-          unhideLegend()
+          // unhideLegend()
         }
         if(slidersExpanded[3] == 1){ 
           slidersExpanded[3] = 0;
           hideComp() }
 
-        subSliderDivLang.style("visibility", "visible")
-          .transition().duration(350).style("height", heightLang+"px")
-                .style("top", window.innerHeight*0.26+"px");
+        d3.select("#btnSubsliders_0")
+          .transition().duration(350).style("height", heightLang+50+"px")
+        d3.select("#spanSubsliders_0")
+          .transition().duration(350).style("opacity", 0)
 
         setTimeout(function() {
           for(var i=4; i<7; i++){ // unhide the sliders
@@ -3520,7 +3521,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       if(slidersExpanded[1] == 1){ // on
 
         // if there is already a legend, hide the legend
-        hideLegend()
+        // hideLegend()
         //if any others are on, turn them off
         if(slidersExpanded[0] == 1){
           slidersExpanded[0] = 0;
@@ -3533,9 +3534,11 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[3] = 0;
           hideComp() }
 
-        subSliderDivLogi.style("visibility", "visible")
-          .transition().duration(350).style("height", heightLogi+"px")
-          .style("top", window.innerHeight*0.26+"px");
+        d3.select("#btnSubsliders_1")
+          .transition().duration(350).style("height", heightLogi+50+"px").style("width", 275+"px")
+
+        d3.select("#spanSubsliders_1")
+          .transition().duration(350).style("opacity", 0)
 
         setTimeout(function() {
           for(var i=7; i<11; i++){ // unhide the sliders
@@ -3552,7 +3555,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       else if(slidersExpanded[1] == 0){ // off
         hideLogi()
         // if there is already a legend, unhide the legend
-        unhideLegend()
+        // unhideLegend()
       }
       
     case 2: // showMath
@@ -3560,7 +3563,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       if(slidersExpanded[2] == 1){ // on
 
         // if there is already a legend, hide the legend
-        hideLegend()
+        // hideLegend()
 
         //if any others are on, turn them off
         if(slidersExpanded[0] == 1){
@@ -3574,9 +3577,11 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[3] = 0;
           hideComp() }
 
-        subSliderDivMath.style("visibility", "visible")
-          .transition().duration(350).style("height", heightMath+"px")
-            .style("top", window.innerHeight*0.37+"px");
+        d3.select("#btnSubsliders_2")
+          .transition().duration(350).style("height", heightMath+50+"px")
+          .style("width", 285+"px")
+        d3.select("#spanSubsliders_2")
+          .transition().duration(350).style("opacity", 0)
 
         setTimeout(function() {
           for(var i=11; i<15; i++){ // unhide the sliders
@@ -3593,7 +3598,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       else if(slidersExpanded[2] == 0){ // off
         hideMath()
         // if there is already a legend, unhide the legend
-        unhideLegend()
+        // unhideLegend()
       }
       
     case 3: // showComputers
@@ -3608,18 +3613,19 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[2] = 0;
           hideMath() 
           // if there is already a legend, unhide the legend
-          unhideLegend()
+          // unhideLegend()
         }
         if(slidersExpanded[1] == 1){ 
           slidersExpanded[1] = 0;
           hideLogi() 
           // if there is already a legend, unhide the legend
-          unhideLegend()
+          // unhideLegend()
         }
 
-        subSliderDivComp.style("visibility", "visible")
-          .transition().duration(350).style("height", heightComp+"px")
-          .style("top", window.innerHeight*0.37+"px");
+        d3.select("#btnSubsliders_3")
+          .transition().duration(350).style("height", heightComp+50+"px")
+        d3.select("#spanSubsliders_3")
+          .transition().duration(350).style("opacity", 0)
 
         setTimeout(function() {
           for(var i=15; i<19; i++){ // unhide the sliders
@@ -3640,12 +3646,14 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 }
 
 function hideLang() {
-  subSliderDivLang.transition().duration(500).style("height", "0px")
-    .style("top", window.innerHeight*0.20+"px");
+  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px")
+  d3.select("#spanSubsliders_0")
+          .transition().duration(350).style("opacity", 1)
+    // .style("top", window.innerHeight*0.20+"px");
 
-  setTimeout(function() {
-      subSliderDivLang.style("visibility", "hidden");
-    }, 500);
+  // setTimeout(function() {
+  //     subSliderDivLang.style("visibility", "hidden");
+  //   }, 500);
 
   for(var i=4; i<7; i++){
     sliderSVGArray[i].style("display", "none");
@@ -3659,8 +3667,9 @@ function hideLang() {
 
 function hideLogi() {
 
-  subSliderDivLogi.transition().duration(500).style("height", "0px")
-    .style("top", window.innerHeight*0.20+"px");
+  d3.select("#btnSubsliders_1").transition().duration(500).style("height", "30px").style("width","250px")
+  d3.select("#spanSubsliders_1")
+          .transition().duration(350).style("opacity", 1)
 
   setTimeout(function() {
       subSliderDivLogi.style("visibility", "hidden");
@@ -3677,8 +3686,10 @@ function hideLogi() {
 }
 
 function hideMath() {
-  subSliderDivMath.transition().duration(500).style("height", "0px")
-  .style("top", window.innerHeight*0.85+"px");
+
+  d3.select("#btnSubsliders_2").transition().duration(500).style("height", "30px").style("width", 250+"px")
+  d3.select("#spanSubsliders_2")
+          .transition().duration(350).style("opacity", 1)
 
   setTimeout(function() {
       subSliderDivMath.style("visibility", "hidden");
@@ -3695,8 +3706,10 @@ function hideMath() {
 }
 
 function hideComp() {
-  subSliderDivComp.transition().duration(500).style("height", "0px")
-  .style("top", window.innerHeight*0.85+"px");
+
+  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px")
+  d3.select("#spanSubsliders_3")
+          .transition().duration(350).style("opacity", 1)
 
   setTimeout(function() {
       subSliderDivComp.style("visibility", "hidden");
@@ -3710,20 +3723,4 @@ function hideComp() {
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
-}
-
-function hideAll() {
-  hideLang()
-  hideLogi()
-  hideMath()
-  hideComp()
-}
-
-function hideLegend() {
-  if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 0);
-  if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 0);
-}
-function unhideLegend() {
-  if (typeof legend != "undefined") legend.transition().duration(500).style("opacity", 1);
-  if (typeof futureLegend != "undefined") futureLegend.transition().duration(500).style("opacity", 1);
 }

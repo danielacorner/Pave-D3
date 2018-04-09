@@ -75,7 +75,7 @@ button.expand-sliders-btn:hover {
 }
 button.expand-sliders-btn{
   margin: 5px 0px 0px 10px; 
-  background: none; 
+  background: white; 
   border: 2px solid green; 
   border-radius: 16px;'
 }
