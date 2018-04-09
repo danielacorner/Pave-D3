@@ -764,33 +764,37 @@ function pad(num, size) { // add leading 0s to nocs like 0011
           .style("position","absolute")
           .style("left","350px")
           .style("bottom","0px")
-          .html("<div id='moreBtnsDiv' style='margin-top: 10px; margin-left: 10px;'>"+
+          .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
 
-        "<a id='btnJobBank' class='btn btn-lg' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
+        "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
+        "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
         "JobBank Info Page</a><br>"+
 
-        "<a id='btnVolunteer' class='btn btn-lg' "+
+        "<a id='btnVolunteer' class='btn btn-sm' "+
         "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
         "Volunteer Canada</a><br>"+
 
-        "<a id='btnIndeed' class='btn btn-lg' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "<br><br><span style='margin-left: 5px; color: white;'>"+
+        "View current listings:</span>"+
+
+        "<div align='right' style='margin: 10px 0px 20px 0px'>"+
+        "<a id='btnIndeed' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
-        "Indeed.ca listings</a><br>"+
+        "&nbspIndeed.ca&nbsp</a><br>"+
 
-        "<a id='btnGlassdoor' class='btn btn-lg' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "<a id='btnGlassdoor' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
-        "Glassdoor.ca listings</a><br>"+
+        "&nbspGlassdoor.ca&nbsp</a><br>"+
 
-        "<a id='btnMonster' class='btn btn-lg' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "<a id='btnMonster' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
-        "Monster.ca listings</a><br>"+
+        "&nbspMonster.ca&nbsp</a><br>"+
 
-        "</div>")
+        "</div></div>")
           
         div3.style("width","0px").transition().duration(500).style("width","200px")
 

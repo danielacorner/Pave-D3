@@ -5,7 +5,7 @@ ideas:
 todos
 top5:
 
-- append subskill slider divs to viewmore buttons
+- pause filters at n = 7 and warn user
 
 - give a warning and stop filters working when jobs get filtered down to 7
 
