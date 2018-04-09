@@ -6,7 +6,7 @@
 	<!-- Bootstrap sources -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
 	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
@@ -14,9 +14,9 @@
 	<!-- Jquery -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- Joyride CSS file -->
-	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
+	<!-- <link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css"> -->
 	<!-- Joyride plugin -->
-	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
+	<!-- <script src="node_modules/jquery.joyride/jquery.joyride.js"></script> -->
 	<!-- Font Awesome icons -->
 	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 	<!-- Page icon -->
@@ -33,54 +33,55 @@
 
 <body>
 
-<div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
-	<div class="title" align="left">
-		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
-			
-			<a href="index.html" style="color: inherit">
-			Pave</a>
-		</h1>
-	</div>
+  <div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
+   <div class="title" align="left">
+    <h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
+
+     <a href="index.html" style="color: inherit">
+     Pave</a>
+   </h1>
+ </div>
 </div>
 
 <div class="d-inline" style="position: fixed; left: 7vw; top: 19vw; font-size: 1.7vw; font-weight: 600; color: #49AC52">
-		You can change the skill sliders
-		</br>to see which jobs suit your present 
-		</br>and future self.
-		</br>
+  You can change the skill sliders
+</br>to see which jobs suit your present 
+</br>and future self.
+</br>
 
-		<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
-  	<a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
-    <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0.3; color: white; z-index: 100" id="nextLink" href="">START</a>
-		</div>
+<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
+ <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
+ <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0.3; color: white; z-index: 100" id="nextLink" href="">START</a>
+</div>
 
-	<div id="rightSide">
-		
+<div id="rightSide">
+
 	<!-- 	<img style="opacity: 0.1; width: 47vw; position: fixed; right: 8vw; top: 6vw" id="background" src="img/logo.png"> -->
-    <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
+  <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
 
-	</div>
+</div>
 <div style="position: fixed; left: 63vw; top: 53vw; z-index: 99">
   <span id="resetFiltersSpan" style="position: fixed; top: 49vw; left: 56vw; opacity: 0">Click "Reset Filters" to start over<br></span>
-<button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0.4; width: 11vw; height: 3vw;">
-  <span style="color: white; font-size: 1.12vw;">
-  Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> </button> 
-</div>
+  <span id="sizeDropdownSpan" style="text-align: right; position: fixed; top: 51.5vw; left: 76vw; opacity: 0">Use the size dropdown<br>to change what size means<br></span>
+  <button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0; width: 11vw; height: 3vw;">
+    <span style="color: white; font-size: 1.12vw;">
+      Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> </button> 
+    </div>
 
-</div>
+  </div>
 
-<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-
-
-
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 
 
-<script>
-var graph, store;
-var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
-forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
+
+
+
+  <script>
+    var graph, store;
+    var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
+    forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
+    forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
 
 var sliderPositionsArray = []; // array to track all sliders
 var sliderSVGArray = []; // array of slider SVGs
@@ -93,19 +94,19 @@ listToDeleteMulti = []; // filtered IDs
 createViz();
 
 function createViz() {
-d3.csv("NOC_403.csv", function(error, datapoints) {
-  if (error) throw error;
+  d3.csv("NOC_403.csv", function(error, datapoints) {
+    if (error) throw error;
 
 // Viz dimensions & margins
 var margin = {top: 20, right: 20, bottom: 50, left: 50};
 var width = window.innerWidth/1.5, // set chart dimensions
-    height = window.innerHeight/1.5,
+height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
 // number of distinct clusters
 var industries = [];
 datapoints.forEach(function(row){
-if(!industries.includes(row.industry)) industries.push(row.industry)
+  if(!industries.includes(row.industry)) industries.push(row.industry)
 }); 
 var m = industries.length;
 
@@ -120,22 +121,22 @@ var radiusScale = d3.scaleSqrt()
 .range([1,maxRadius]);
 
 var color = d3.scaleOrdinal()
-    .domain(d3.range(m))
-    .range([
-          "#4B40DD",
-          "#D42A2F",
-          "#329E33",
-          "#BCBC35",
-          "#2678B2",
-          "#AA3DAA",
-          "#FD7F27",
-          "#7F7F7F",
-          "#8B564C",
-          "#29BECE",
-      ]);
+.domain(d3.range(m))
+.range([
+  "#4B40DD",
+  "#D42A2F",
+  "#329E33",
+  "#BCBC35",
+  "#2678B2",
+  "#AA3DAA",
+  "#FD7F27",
+  "#7F7F7F",
+  "#8B564C",
+  "#29BECE",
+  ]);
 
 var colorTooltip = d3.scaleOrdinal()
-    .domain([0,1,2,3,4,5,6,7,8,9])
+.domain([0,1,2,3,4,5,6,7,8,9])
     .range(["white", // blue
             "white", // orange
             "white", // green
@@ -192,7 +193,7 @@ var nodes = datapoints.map(function(el) {
     s14Writing: el.s14Writing,
     s15CriticalThinking: el.s15CriticalThinking,
 
-};
+  };
   // if there's no cluster i OR if biggest radius yet, set cluster
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
@@ -204,23 +205,23 @@ var circles;
 
 // Graph mode
     // Toggle for graph mode = off initially
-graphMode = 0;
+    graphMode = 0;
     // store nodes for drawing axes in graph mode
-graph = nodes;
-store = nodes;
+    graph = nodes;
+    store = nodes;
 
-var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+    var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
 
-var sliderTitlesArrayMain = [
-"Language skills", "Logic skills", "Math skills", "Computer skills",
-];
+    var sliderTitlesArrayMain = [
+    "Language skills", "Logic skills", "Math skills", "Computer skills",
+    ];
 
 
 // Simulation, forces, & tick function
     // Forces for the simulation
-var forceCollide = d3.forceCollide(function(d) { return d.radius + 1 })
-var forceXCombine = d3.forceX().strength(.3)
-var forceYCombine = d3.forceY().strength(.3)
+    var forceCollide = d3.forceCollide(function(d) { return d.radius + 1 })
+    var forceXCombine = d3.forceX().strength(.3)
+    var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
 .strength(function(d) { return -7 * d.radius })
@@ -245,25 +246,25 @@ var forceYSeparateRandom = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
     // force the circles toward their cluster nodes
-function forceCluster(alpha) {
-  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
-    node = nodes[i];
-    cluster = clusters[node.cluster];
-    node.vx -= (3*node.x - cluster.x) * k;
-    node.vy -= (3*node.y - cluster.y) * k;
-  }
-  }
+    function forceCluster(alpha) {
+      for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+        node = nodes[i];
+        cluster = clusters[node.cluster];
+        node.vx -= (3*node.x - cluster.x) * k;
+        node.vy -= (3*node.y - cluster.y) * k;
+      }
+    }
     // Update the positions each tick
-tick = function() {
-  circles
-  .attr("cx", function(d) { return d.x; })
-  .attr("cy", function(d) { return d.y; });
-}
+    tick = function() {
+      circles
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+    }
 
 
     // The force simulation
-simulation = d3.forceSimulation()
-.nodes(store)
+    simulation = d3.forceSimulation()
+    .nodes(store)
     // .force("center", d3.forceCenter())
     .force("collide", forceCollide)
     .force("cluster", forceCluster)
@@ -272,15 +273,15 @@ simulation = d3.forceSimulation()
     .force("y", forceYCombine)
     .on("tick", tick);
 
-var svg = d3.select("#chart")
-.append('svg')    
-.attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
+    var svg = d3.select("#chart")
+    .append('svg')    
+    .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
-var stretch_y = 1.7;
+    var stretch_y = 1.7;
 
-circles = svg.selectAll("circle")
-.data(nodes)
-.enter().append("circle")
+    circles = svg.selectAll("circle")
+    .data(nodes)
+    .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("z-index", 100)
@@ -310,8 +311,188 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
 
 
-  sliderSVGArray[0] = d3.select("body")
-  .append("div")
+function setSizes(mode){
+
+  // radii of size legend circles
+  sizesArray = []
+  sizesValuesArray = []
+
+  switch (mode) {
+    case "workers":
+    // add minima
+    sizesArray.push(radiusScale(d3.min(nodes, function(d) { return d.workers })))
+    sizesValuesArray.push(d3.min(nodes, function(d) { return d.workers }))
+    // split scales into 4 intervals after minimum
+    for (var i = 1; i < 5; i++) {
+      sizesArray.push(
+        (i/5) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
+        )
+      sizesValuesArray.push(
+        (i/5) * d3.max(nodes, function(d) { return d.workers })
+        )
+    }
+    break;
+    case "wage":
+    // add minima
+    sizesArray.push(wageRadiusScale(d3.min(nodes, function(d) { return d.wage })))
+    sizesValuesArray.push("$ "+String(d3.min(nodes, function(d) { return d.wage })).substring(0,2)+" per hr")
+    // split scales into 4 intervals after minimum
+    for (var i = 1; i < 5; i++) {
+      sizesArray.push(
+        (i/5) * wageRadiusScale(d3.max(nodes, function(d) { return d.wage }))
+        )
+      sizesValuesArray.push("$ "+String(
+        (i/5) * d3.max(nodes, function(d) { return d.wage })
+        ).substring(0,2)+" per hr")
+    }
+    break;
+    case "yearsStudy":
+    // add minima
+    sizesArray.push(yearRadiusScale(d3.min(nodes, function(d) { return d.yearsStudy })))
+    sizesValuesArray.push(d3.min(nodes, function(d) { return d.yearsStudy }))
+    // split scales into 4 intervals after minimum
+    for (var i = 1; i < 5; i++) {
+      sizesArray.push(
+        (i/5) * yearRadiusScale(d3.max(nodes, function(d) { return d.yearsStudy }))
+        )
+      sizesValuesArray.push(
+        (i/5) * d3.max(nodes, function(d) { return d.yearsStudy })
+        )
+    }
+    break;
+    case "none":
+    break;
+  }
+
+}
+// size scales
+var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
+.domain([d3.min(nodes, function(d) { return d.wage }), d3.max(nodes, function(d) { return d.wage })]) // input
+.range([1,maxRadius/1.2]); // output -- need to think about relative scales for each set of sizes
+
+var automationRadiusScale = d3.scaleSqrt()
+.domain([0.01, d3.max(nodes, function(d) { return d.automationRisk })])
+.range([1,maxRadius/3]);
+
+var yearRadiusScale = d3.scaleSqrt()
+.domain([d3.min(nodes, function(d) { return d.yearsStudy }), d3.max(nodes, function(d) { return d.yearsStudy })])
+.range([0.01,maxRadius/2]);
+var sizesArray = []
+var sizesValuesArray = []
+
+var currentSize = "Number of Jobs";
+
+function resetSim2() {
+  setTimeout(function() { resetSimulation() }, 600);
+  setTimeout(function() { resetSimulation() }, 700);
+
+  setTimeout(function() { enterUpdateCircles();
+    simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+
+  setTimeout(function(){
+    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
+    d3.select("#nextLink").attr("href","Pave.html")
+  }, 500)
+}
+
+sizesDropdown = d3.select("body").append("div").attr("id","sizeDropdownDiv")
+.attr("class","dropup")
+.style("position","fixed")
+.style("opacity",0)
+.style("right","6vw")
+.style("top","46vw")
+.append("button")
+.attr("id","sizeDropdownButton")
+.attr("class","btn btn-grey btn-primary dropdown-toggle")
+.attr("type","button")
+.attr("data-toggle","dropdown")
+.style("height","50px")
+.style("border-width","0px")
+.html("Size by<br>"+currentSize+"<span class='caret'></span>")
+.append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
+.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
+  "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
+  "<li><a id='yearLink' href='#'>Years of study</a></li>" +
+  "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
+
+d3.select("#workLink").on("click", function() {
+
+  circles.transition().duration(100)
+  .delay(function(d, i) { return i * 1})
+  .attrTween("r", function(d) {
+    var i = d3.interpolate(d.radius, radiusScale(d.workers));
+    return function(t) { return d.radius = i(t); };
+  });
+
+  currentSize = "Number of Jobs"
+  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
+       // turn off until mouseleave
+       setSizes("workers")
+
+       resetSim2()
+     })
+
+d3.select("#wageLink").on("click", function() {
+
+  circles.transition().duration(100)
+  .delay(function(d, i) { return i * 1})
+  .attrTween("r", function(d) {
+    var i = d3.interpolate(d.radius, wageRadiusScale(d.wage)/1.2);
+    return function(t) { return d.radius = i(t); };
+  });
+
+  currentSize = "Wage"
+  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
+
+  setSizes("wage")
+
+  resetSim2()
+})
+
+d3.select("#yearLink").on("click", function() {
+
+  circles.transition().duration(100)
+  .delay(function(d, i) { return i * 1})
+  .attrTween("r", function(d) {
+    var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
+    return function(t) { return d.radius = i(t); };
+  });
+
+  currentSize = "Years of Study"
+  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
+
+  setSizes("yearsStudy")
+
+  resetSim2()
+})
+
+d3.select("#equaLink").on("click", function() {
+
+  circles.transition().duration(100)
+  .delay(function(d, i) { return i * 1})
+  .attrTween("r", function(d) {
+    var i = d3.interpolate(d.radius, 10);
+    return function(t) { return d.radius = i(t); };
+  });
+
+  currentSize = "nothing"
+  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
+
+  setSizes("none")
+
+  resetSim2()
+})
+
+
+
+
+
+
+
+
+
+sliderSVGArray[0] = d3.select("body")
+.append("div")
     .attr("id", "sliderDiv_skillsMath") // sliderDiv_skillsLang
     .style("position", "fixed")
     .style("left", "7vw")
@@ -320,26 +501,26 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
     .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"
     	+"font-size: 2.5vw; font-weight: bold;"
     	+" color:  #49AC52; font-family: Raleway'>How much math skill do "
-			+"</br>you have or wish to have?"
-      +"</div>"
-      )
-  .append("div")
+     +"</br>you have or wish to have?"
+     +"</div>"
+     )
+    .append("div")
     .attr("align", "left")
     .style("position", "fixed")
     .style("top", "43.5vw")
-	  .style("left", "7vw")
-	  .style("color", "#49AC52")
-	  .style("font-weight", "bold")
-	  .style("font-size", "1.5vw")
-	  .style("font-family", "Raleway")
-	  .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
-	    +"Not&nbspmuch"
-	    +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
-	    +"Lots</div>")
+    .style("left", "7vw")
+    .style("color", "#49AC52")
+    .style("font-weight", "bold")
+    .style("font-size", "1.5vw")
+    .style("font-family", "Raleway")
+    .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
+     +"Not&nbspmuch"
+     +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
+     +"Lots</div>")
     .select(function() {
     	return this.parentNode;
     })
-  .append("svg")
+    .append("svg")
     .style("z-index", 1)
   	// .attr("viewBox", "0 0 "+230+" "+150)
   	.style("position", "fixed")
@@ -357,12 +538,12 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
   // Scale
   sliderScaleArray[0] = d3.scaleLinear()
-	  .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
+  .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
     .range([2.4, 30.7]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
   if(["Math skills"].includes("Math skills")) {
-  sliderScaleArray[0] = d3.scaleLinear()
+    sliderScaleArray[0] = d3.scaleLinear()
     .domain([0, 59])
     .range([window.innerWidth*0.03, window.innerWidth*0.3]) // Width of slider is 200 px
     .clamp(true);
@@ -414,11 +595,11 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
     }));
 
   handleArray[0] = sliderMulti[0].insert("circle", ".track-overlay")
-    .attr("cx", "2.4vw")
-    .attr("cy", sliderY)
-    .attr("class", "handle")
-    .style("z-index", 99)
-    .attr("r", "1vw");
+  .attr("cx", "2.4vw")
+  .attr("cy", sliderY)
+  .attr("class", "handle")
+  .style("z-index", 99)
+  .attr("r", "1vw");
 
     // Bugfix: lang slider not on top
   // if(["Language Skills"].includes(sliderTitlesArray[i])) {
@@ -429,7 +610,7 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 // Update function which detects current slider
 //  general update pattern for updating the graph
 function updateMulti(h) {
- 
+
   // using the slider handle
   // var sliderID = event.target.id;
   handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
@@ -453,14 +634,14 @@ function updateMulti(h) {
   enterUpdateCircles();
 
   // reset simulation if graph mode = off
-    simulation.nodes(filterAll())
-    .force("collide", forceCollide)
-    .force("cluster", forceCluster)
-    .force("gravity", forceGravity)
-    .force("x", forceXCombine)
-    .force("y", forceYCombine)
-    .on("tick", tick);
-    simulation.alphaTarget(0.2).restart();
+  simulation.nodes(filterAll())
+  .force("collide", forceCollide)
+  .force("cluster", forceCluster)
+  .force("gravity", forceGravity)
+  .force("x", forceXCombine)
+  .force("y", forceYCombine)
+  .on("tick", tick);
+  simulation.alphaTarget(0.2).restart();
 };//end updateMulti
 
 
@@ -487,7 +668,7 @@ filterAll = function() {
       
     })
     // reset the graph
-  graph = [];
+    graph = [];
   // THEN update the graph based on the filter list
   store.forEach(function(n) {
     // if you're not on the filter list
@@ -495,30 +676,34 @@ filterAll = function() {
       // put you on the graph         (start graph empty? or check)
       graph.push(n);
     // if you're on the list
-    } else if (listToDeleteMulti.includes(n.id)) {
-      graph.forEach(function(d, p) {
-        if (n.id === d.id) {
+  } else if (listToDeleteMulti.includes(n.id)) {
+    graph.forEach(function(d, p) {
+      if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
       })
-    };
-  });
+  };
+});
   return graph;
 }
 
+var firstTime = true;
 
 enterUpdateCircles = function() {
-    var newCircles = circles.enter().append("circle")
+  var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
 
-  circles = circles.merge(newCircles);
+    circles = circles.merge(newCircles);
 
-  d3.select("#resetFilters").transition().duration(500).style("opacity", 1)
-  d3.select("#resetFiltersSpan").transition().duration(250).style("opacity", 1)
+    if (firstTime) {
+      d3.select("#resetFilters").transition().duration(750).style("opacity", 1)
+      d3.select("#resetFiltersSpan").transition().duration(750).style("opacity", 1)
+    }
+    firstTime = false;
 
-}
+  }
 
 
 
@@ -531,10 +716,14 @@ d3.select("#resetFilters").on('click', function(d) {
   //   graphModeOff();
   // }c
   resetFilters(0);
-  setTimeout(function(){
-    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
-    d3.select("#nextLink").attr("href","Pave.html")
-  }, 500)
+
+  // fade in dropdown
+  d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
+  d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
+  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0)
+  d3.select("#resetFilters").transition().duration(750).style("opacity", 0.3)
+
+
 });
 
 function resetFilters(mode) {
@@ -548,7 +737,7 @@ function resetFilters(mode) {
   enterUpdateCircles();
   // restart simulation only if graph mode off
 
-      resetSimulation();
+  resetSimulation();
 
 };
 
