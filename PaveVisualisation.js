@@ -610,12 +610,6 @@ var graphMode;
       .style("z-index", 99)
       .style("pointer-events","none")
 
-      // .style("border",   "1px solid black;");
-
-      // d3.select("#tooltip")
-      // .append("image")
-      //   .attr("src", "img/logo.png")
-      //   .attr("class", "img-rounded");
       var divLeft;
       var divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
       
@@ -2060,13 +2054,6 @@ function graphModeOff() {
 
 
 
-
-
-
-
-
-
-
 ///////////////// Future View Mode ////////////////////
 
 futureMode = 0;
@@ -2314,19 +2301,6 @@ function futureModeOff() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////////// Reset Filters /////////////
 
 d3.select("#resetFilters").on('click', function(d) {
@@ -2339,6 +2313,7 @@ d3.select("#resetFilters").on('click', function(d) {
 });
 
 resetFilters = function(mode) {
+  hideGraphViewCallout();
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
     handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
@@ -2420,7 +2395,7 @@ function resetSimulation() {
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
-  simulation.alphaTarget(0.2).restart();
+  simulation.alpha(0.2).alphaTarget(0.001).restart();
 }
 
 /////// Tooltips (post-filter)
@@ -2630,27 +2605,13 @@ function createLegend(mode) {
 }
 
 
-
-
-
 ///////////////////////////////// Filters ////////////////////////////////////
-
-
-
-
-
 
 //////////////// Filter Sliders 2: Multiple Sliders from an Array //////////////////////
 
-
-
-
-
 createSliders(sliderArrayMain, sliderTitlesArrayMain);
 
-
 // createSliders(sliderArrayLang, sliderTitlesArrayLang);
-
 
 function createSliders(createSliderArray, sliderTitlesArray){
 // For Each Slider create the slider
@@ -2699,7 +2660,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     	+"font-size: 150%; font-weight: bold;"
     	+" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
-      +"<img class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
+      +"<img id=question_"+i+" class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
       +"</div>"
     // md sm and xs
@@ -3322,6 +3283,48 @@ filterAll = function() {
 };// Update function which detects current slider
 
 
+
+
+
+/////////////////////////// Skillset Explainer Divs /////////////////////////////////
+
+var explainerDivs = [
+
+"This is what is meant by Language skills.",
+
+"This is what is meant by Logic skills.",
+
+"This is what is meant by Computer skills.",
+
+"This is what is meant by Math skills.",
+
+]
+
+for (var i = 0; i < explainerDivs.length; i++) {
+  
+  var question = d3.select("#question_"+i)
+
+  question.on("mouseenter", function(){
+    console.log("explainer pop-up!")
+    
+    d3.select("body").append("div")
+    .style("height","100px").style("width","100px")
+    .style("border","1px solid black")
+    .style("position","fixed")
+    .style("top",question.attr("x"))
+    .style("left","10%")
+    .attr("id","answer_"+i)
+    .text(explainerDivs[i])
+
+  })
+  question.on("mouseleave", function(){
+    d3.select("#answer_"+i).transition().duration(275).style("opacity",0).remove()
+  })
+
+}
+
+
+
 })
 } // end of d3.csv
 
@@ -3849,3 +3852,4 @@ function hideComp() {
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
 }
+

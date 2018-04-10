@@ -7,7 +7,8 @@ top5:
 
 - pause filters at n = 7 
 
-- search: include "list of job titles" in search
+- pop-up explainer divs for skills categories
+
 
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
