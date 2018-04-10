@@ -1,6 +1,6 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters;
 
 var legendCreated = 0;
 
@@ -453,7 +453,7 @@ simulation = d3.forceSimulation()
 
 
 // Tooltip div (on hover)
-var div = d3.select("body").append("div").style("width", "350px").style("border-radius", "6px").attr("id","tooltip")
+var div = d3.select("body").append("div").style("width", "360px").style("border-radius", "6px").attr("id","tooltip")
 var div2;
 // .style("z-index", 99)
 // .style("position", "absolute")
@@ -597,7 +597,7 @@ var graphMode;
       .style("position","absolute").style("z-index","99")
       // .style("left", (d3.event.pageX) + 20 + "px")
       // .style("top", (d3.event.pageY - 80) - d.radius + "px")
-      .style("opacity",1).style("width","350px")
+      .style("opacity",1).style("width","360px")
       
       // d3.select("#tooltipBottomDiv2").remove();
       
@@ -635,7 +635,7 @@ var graphMode;
       // at large pageY, approach constant window.innerHeight-400
 
       // Display Hover Tooltip
-      div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+      div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; padding-right: 2.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltip2' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
@@ -643,18 +643,18 @@ var graphMode;
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='28' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(150*d.yearsStudy/5+5)+"' y='28' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"Top skills are...</br>"
+                +"Top skills:</br>"
                 +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
      +"<div id='tooltip3' style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; margin-left: -10px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
                      // Skill minibars
@@ -701,7 +701,7 @@ var graphMode;
 
   div2 = div.append("div")
   .attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
-  .style("height","0px").style("width","350px")
+  .style("height","0px").style("width","360px")
   .style("border-bottom-left-radius","6px")
   .style("border-bottom-right-radius","6px")
   .style("pointer-events","auto");
@@ -711,14 +711,23 @@ var graphMode;
   // .style("margin-top",250+"px")
   .style("opacity",0);
  
+  var maxLength = 34
+  //Some job titles from this group are...
+  if(d.title1.length>maxLength){var title1 = d.title1.substring(0,maxLength) + "..."
+  }else{var title1 = d.title1}
+  if(d.title2.length>maxLength){var title2 = d.title2.substring(0,maxLength) + "..."
+  }else{var title2 = d.title2}
+  if(d.title3.length>maxLength){var title3 = d.title3.substring(0,maxLength) + "..."
+  }else{var title3 = d.title3}
+
   setTimeout(function(){
 
     d3.select("#tooltipBottomDiv")
     .html("<div id='tooltipBottomDiv2' style=' margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
 
-        +"<span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-        +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>"
+        +"<span style='padding-left: 3px;'>Some job titles from this group are:</span></br>"
+        +"<ul style='padding-top: 9px;'><li>"+title1+"</li><li>"+title2+"</li><li>"+title3+"</li></ul></div>"
 
       // Skill levels
         +"<svg height='80px' style='position: absolute; margin-top: "+(15)+"px; margin-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
@@ -774,7 +783,7 @@ var graphMode;
           .style("border-bottom-right-radius","6px")
           .style("background", colorTooltip2(d.cluster))
           .style("position","absolute")
-          .style("left","350px")
+          .style("left","360px")
           .style("bottom","0px")
           .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
 
@@ -892,7 +901,7 @@ function tooltipSmall(d) {
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"             
-                +"Top skills are...</br>"
+                +"Top skills:</br>"
                 +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
                      
      +"<div style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
@@ -2328,7 +2337,7 @@ d3.select("#resetFilters").on('click', function(d) {
   resetFilters(currentMode);
 });
 
-function resetFilters(mode) {
+resetFilters = function(mode) {
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
     handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
@@ -3396,10 +3405,7 @@ function expandSearch() {
 
 function searchJobTitles() {
 
-// get the input's value
-var query = document.getElementById("jobTitle").value;
-
-//  UPDATE
+  //  UPDATE
   circles = circles.data(filterBySearch(), function(d) { return d.id });
   
   // EXIT
@@ -3438,19 +3444,40 @@ var query = document.getElementById("jobTitle").value;
     .style("stroke", "black")
   }
 
+  // if no search results, display warning message
+  if (graph.length == 0) {
+    // display warning message
+    d3.select("body").append("div").attr("id","warningMsg")
+      .style("position","fixed").style("top","40%").style("left","41%")
+      .style("width","250px").style("height","115px")
+      .style("font-size","24px")
+      .attr("class","alert")
+      .html("No search results!<br>Resetting...")
+    
+    // reset and remove message
+    setTimeout(function() {
+      resetFilters(currentMode)
+      d3.select("#warningMsg").transition().duration(500).style("opacity",0).remove()
+    }, 1500)
+
+  }
+
 }
 
 
 function filterBySearch() {
-  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
+// get the search query
 var query = document.getElementById("jobTitle").value;
+
   // START by filtering out nodes under the minimums
   store.forEach(function(d) {
     // INEFFICIENT -- TODO: fewer loops
+
       // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
       if (listToDeleteMulti.includes(d.id)) {
         listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
       }
+
       // then if each job contains the query, add to the list
       //indexOf returns the position of the string in the other string. If not found, it will return -1.
       if(d.job.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {

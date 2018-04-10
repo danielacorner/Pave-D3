@@ -298,3 +298,12 @@ div.tooltip:hover {
 .btn-arrow-left:before { /* bring arrow pointers to front */
     z-index: 1;
 }
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #FFA800; /* Orange */
+    color: white;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
