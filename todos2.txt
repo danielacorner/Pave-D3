@@ -5,16 +5,9 @@ ideas:
 todos
 top5:
 
-- fix tooltip skill bar heights
-
 - pause filters at n = 7 
 
-- speed up all? transitions
-
-- fix the search (doesn't click-off)
-	- dowsn't work
-	- warn if no results
-  - include "list of job titles" in search
+- search: include "list of job titles" in search
 
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
@@ -25,8 +18,11 @@ top5:
 - speed up sliders: look into filter algorithm
 - increase slider responsive area
 - create slider inset shadow
+- speed up all? transitions
 
 - enclosure diagram containing split view? like on http://charts.vismio.com/9lqjn/
+
+- move div instead of shrinking on tooltipclose (to avoid contents floating out)
 
 - improve "job titles" and link top titles to search results
 

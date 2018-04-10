@@ -346,6 +346,7 @@ var nodes = datapoints.map(function(el) {
     cluster: i, 
     radius: r, 
     job: el.job,
+    allTitles: el.allTitles,
     topSkill1: el.topSkill1,
     topSkill2: el.topSkill2,
     topSkill3: el.topSkill3,
@@ -3405,6 +3406,8 @@ function expandSearch() {
 
 function searchJobTitles() {
 
+  resetFilters();
+
   //  UPDATE
   circles = circles.data(filterBySearch(), function(d) { return d.id });
   
@@ -3480,7 +3483,7 @@ var query = document.getElementById("jobTitle").value;
 
       // then if each job contains the query, add to the list
       //indexOf returns the position of the string in the other string. If not found, it will return -1.
-      if(d.job.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
+      if(d.allTitles.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
           listToDeleteMulti.push(d.id);
       }
     });
