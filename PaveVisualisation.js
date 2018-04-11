@@ -3290,35 +3290,57 @@ filterAll = function() {
 
 var explainerDivs = [
 
-"This is what is meant by Language skills.",
+"This text describes what is meant by Language skills.",
 
-"This is what is meant by Logic skills.",
+"This text describes what is meant by Logic skills.",
 
-"This is what is meant by Computer skills.",
+"This text describes what is meant by Math skills.",
 
-"This is what is meant by Math skills.",
+"This text describes what is meant by Computer skills.",
 
 ]
+
+// positions relative to question mark icons
+
+var offsetDown = 47
+var eTops = [document.getElementById("question_0").getBoundingClientRect().top + offsetDown,
+			 document.getElementById("question_1").getBoundingClientRect().top + offsetDown,
+			 document.getElementById("question_2").getBoundingClientRect().top + offsetDown,
+			 document.getElementById("question_3").getBoundingClientRect().top + offsetDown]
+
+var offsetRight = -155
+var eLefts = [document.getElementById("question_0").getBoundingClientRect().left + offsetRight,
+			  document.getElementById("question_1").getBoundingClientRect().left + offsetRight,
+			  document.getElementById("question_2").getBoundingClientRect().left + offsetRight,
+			  document.getElementById("question_3").getBoundingClientRect().left + offsetRight]
 
 for (var i = 0; i < explainerDivs.length; i++) {
   
   var question = d3.select("#question_"+i)
 
   question.on("mouseenter", function(){
-    console.log("explainer pop-up!")
-    
+
+  	var thisNum = event.target.id.substring(9,10)
+  	console.log(thisNum)
+
     d3.select("body").append("div")
-    .style("height","100px").style("width","100px")
-    .style("border","1px solid black")
+    .style("height","100px").style("width","250px")
     .style("position","fixed")
-    .style("top",question.attr("x"))
-    .style("left","10%")
-    .attr("id","answer_"+i)
-    .text(explainerDivs[i])
+    .style("padding","10px")
+    .style("font-family","Raleway")
+	.style("background","#A6B0A8")
+	.style("color","white")
+	.style("box-shadow","3px 3px 17px grey")
+    .style("top",eTops[thisNum]+"px")
+    .style("left",eLefts[thisNum]+"px")
+    .attr("id","answer_"+thisNum)
+    .text(explainerDivs[thisNum])
+    .style("opacity",0).transition().duration(200).style("opacity",1)
 
   })
   question.on("mouseleave", function(){
-    d3.select("#answer_"+i).transition().duration(275).style("opacity",0).remove()
+  	var thisNum = event.target.id.substring(9,10)
+    d3.select("#answer_"+thisNum).transition().duration(275).style("opacity",0).remove()
   })
 
 }
