@@ -591,21 +591,9 @@ function hideToolTip(duration) {
       d3.select("#moreBtnsContainerDiv").style("z-index","-1")
       d3.select("#moreBtnsDiv").style("z-index","-1")
       
-      d3.select("#tooltip").style("z-index","999")
-      d3.select("#tooltipBottomDiv2").style("z-index","999")
-
-      d3.select("#tooltip").style("z-index","999")
-      d3.select("#tooltip0").style("z-index","999")
-      d3.select("#tooltip1").style("z-index","999")
-      d3.select("#tooltip2").style("z-index","999")
-      d3.select("#tooltip4").style("z-index","999")
-
       // shrink the more buttons div
-      d3.select("#moreBtnsContainerDiv").transition().duration(275).style("left","250px").style("opacity",0).style("bottom","20px")
-      d3.select("#moreBtnsDiv").transition().duration(250).style("opacity",0)
-
-      // fade out view more button
-      d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0)
+      d3.select("#moreBtnsContainerDiv").transition().duration(300).style("width","20px").style("opacity",0).style("bottom","20px")
+      d3.select("#moreBtnsDiv").transition().duration(180).style("opacity",0)
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -620,7 +608,7 @@ var graphMode;
   // create the hover tooltip
 
       div.append("div").attr("class", "tooltip").attr("id","tooltip0")
-      .style("position","absolute").style("z-index","99")
+      .style("position","absolute").style("z-index","999")
       // .style("left", (d3.event.pageX) + 20 + "px")
       // .style("top", (d3.event.pageY - 80) - d.radius + "px")
       .style("opacity",1).style("width","360px")
@@ -630,7 +618,7 @@ var graphMode;
       .style("box-shadow", "4px 4px 17px #404040FF")
       .style("height", "auto")
       .style("position", "absolute")
-      .style("z-index", 99)
+      .style("z-index", 999)
       .style("pointer-events","none")
 
       var divLeft;
@@ -653,7 +641,7 @@ var graphMode;
       // at large pageY, approach constant window.innerHeight-400
 
       // Display Hover Tooltip
-      div.html("<div id='tooltip1' style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; padding-right: 2.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+      div.html("<div id='tooltip1' style='z-index: 999; font-weight: bold; font-size: 20px; padding-top: 7.5px; padding-left: 12.5px; padding-right: 2.5px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
                 +"<div id='tooltip2' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
         
@@ -704,7 +692,8 @@ var graphMode;
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", divLeft + "px")
         .style("background", color(d.cluster) )
-        .style("top", (divTop) + "px");
+        .style("top", (divTop) + "px")
+        .style("z-index",999);
 
       // div2.transition()
       // .duration(200)
@@ -720,6 +709,7 @@ var graphMode;
   div2 = div.append("div")
   .attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
   .style("height","0px").style("width","360px")
+  .style("z-index",-1)
   .style("border-bottom-left-radius","6px")
   .style("border-bottom-right-radius","6px")
   .style("pointer-events","auto");
@@ -803,6 +793,7 @@ var graphMode;
           .style("position","absolute")
           .style("left","160px")
           .style("bottom","0px")
+          .style("z-index","-1")
           .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
 
         "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
@@ -835,14 +826,14 @@ var graphMode;
 
         "</div></div>")
           
-        div3.transition().duration(500).style("left","360px").style("height","360px")
+        div3.transition().duration(350).style("left","360px").style("height","360px")
 
-        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(500).style("opacity",1).style("left","360px")
+        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(350).style("opacity",1).style("left","360px")
     })
 
    }, 275);
 
-  
+  // skill bars
   d3.select("#tooltipBottomDiv").append("svg")
   .attr("height","280px").style("position","absolute").style("margin-left","25px")
   .append("rect").attr("height",(d.skillsLang*compress_y)).attr("width","18")
