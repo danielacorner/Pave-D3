@@ -1481,7 +1481,6 @@ var originalRadius = {};
     originalRadius[d.id] = d.radius;
   });
 
-///////////////////// BOOKMARK ///////////////////
 // mouseover explainer divs
 d3.select("#graph").on('mouseenter', function(d) {
 
@@ -2826,7 +2825,7 @@ for (var i = sliderTitlesArrayLogi.length - 1; i >= 0; i--) {
 // Math X, Y
 for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayMath[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i-350+window.innerHeight*0.175) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayMath[i], window.innerHeight*0.08*i-170) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayMath[i], "right")
   // shrink longer titles
   if(["Job Task Planning and Organizing","Measurement and Calculation"].includes(sliderTitlesArrayMath[i])){
@@ -2838,7 +2837,7 @@ for (var i = sliderTitlesArrayMath.length - 1; i >= 0; i--) {
 // Comp X, Y
 for (var i = sliderTitlesArrayComp.length - 1; i >= 0; i--) {
   sliderXTranslateMap.set(sliderTitlesArrayComp[i], 1.5) // X
-  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i-350+window.innerHeight*0.175) // Y
+  sliderYTranslateMap.set(sliderTitlesArrayComp[i], window.innerHeight*0.08*i-170) // Y
   // sliderLeftRightMap.set(sliderTitlesArrayComp[i], "left")
   // resize larger titles
   if(["Job Task Planning and Organizing","Measurement and Calculation",
@@ -2907,6 +2906,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
       //     +"</div>"
           )
+
       .append("div").attr("id", "sliderDiv2_"+subSliderArray[i])
         .attr("align", "left")
         .style("position", "relative")
@@ -3290,13 +3290,13 @@ filterAll = function() {
 
 var explainerDivs = [
 
-"This text describes what is meant by Language skills.",
+"Language is used to read, write, and speak. If you like to communicate or learn new words, this one's for you.",
 
-"This text describes what is meant by Logic skills.",
+"Logic means critical thinking, planning, and deciding. Do you enjoy using these skills? It's a mystery...",
 
-"This text describes what is meant by Math skills.",
+"Math is about measurement, calculation, budgeting, and estimation... more or less.",
 
-"This text describes what is meant by Computer skills.",
+"Computers are super-useful! Use them to find information, create information, and automate repetitive tasks.",
 
 ]
 
@@ -3324,7 +3324,7 @@ for (var i = 0; i < explainerDivs.length; i++) {
   	console.log(thisNum)
 
     d3.select("body").append("div")
-    .style("height","100px").style("width","250px")
+    .style("height","auto").style("width","250px")
     .style("position","fixed")
     .style("padding","10px")
     .style("font-family","Raleway")
@@ -3612,10 +3612,10 @@ var subSliderDivComp;
 // createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 16);
 
 // div heights
-var heightLang = 250,
-    heightLogi = 335,
-    heightComp = 300,
-    heightMath = 300;
+var heightLang = window.innerHeight*0.24,
+    heightLogi = window.innerHeight*0.32,
+    heightComp = window.innerHeight*0.29,
+    heightMath = window.innerHeight*0.29;
 
 var slidersExpanded = [0,0,0,0];
 

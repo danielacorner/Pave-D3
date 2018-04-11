@@ -7,8 +7,8 @@ top5:
 
 - pause filters at n = 7 
 
-- pop-up explainer divs for skills categories
-
+- add "shrink" button to expanded subskill sliders
+- fix width of subskill slider windows at different screen sizes
 
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
