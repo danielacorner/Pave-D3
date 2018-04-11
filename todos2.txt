@@ -7,11 +7,12 @@ top5:
 
 - pause filters at n = 7 
 
-- add "shrink" button to expanded subskill sliders
-- fix width of subskill slider windows at different screen sizes
+- animate tooltip contents with the close animation
 
+- add "shrink" button to expanded subskill sliders?
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
+- bug: subskill sliders cut off at medium resolution
 
 - toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries

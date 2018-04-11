@@ -543,7 +543,9 @@ circles = svg.selectAll("circle")
 // })
 
 d3.select("#chart").on("click", function(d){
-  // if clicked outside of left or right 1/5 page,
+  // hide any subskill sliders
+  hideAll()
+  // if clicked off of a circle
   if (clicked == 1) { 
     if (d3.event.target.nodeName == "circle") {
       return
@@ -562,24 +564,47 @@ function showToolTip(duration) {
       d3.select("#tooltip3").transition().duration(duration).style("opacity",1)
       d3.select("#tooltipBottomDiv").transition().duration(duration).style("opacity",1)
       d3.select("#tooltipBottomDiv2").transition().duration(duration).style("opacity",1)
+
 }
 
 function hideToolTip(duration) {
-      // d3.select("#tooltip").transition().duration(duration).style("opacity",0).remove()
+      // fade out each tooltip contents object
       d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
       d3.select("#tooltip1").transition().duration(duration).style("opacity",0).remove()
       d3.select("#tooltip2").transition().duration(duration).style("opacity",0).remove()
       d3.select("#tooltip3").transition().duration(duration).style("opacity",0).remove()
-      d3.select("#tooltipBottomDiv").transition().duration(duration).style("height","0px").remove()
-      d3.select("#tooltipBottomDiv2").transition().duration(duration).style("height","0px").remove()
+
+      // shrink each tooltip div
+      // d3.select("#tooltipBottomDiv").transition().duration(duration).style("height","0px").remove()
+      // d3.select("#tooltipBottomDiv2").transition().duration(duration).style("height","0px").remove()
+      
+      d3.select("#tooltipBottomDiv2").transition().duration(duration).style("margin-top","-250px").style("opacity",0).remove()
+      d3.select("#tooltipBottomDiv").transition().duration(duration).style("margin-top","-250px").style("opacity",0).remove()
+      
+      // fade the skill bar rects
       for (var i = 5; i < 9; i++) {
         d3.select("#rect"+i).transition().duration(duration).style("opacity",0).remove()
         d3.select("#rect"+i+"shadow").transition().duration(duration).style("opacity",0).remove()
       }
 
-      d3.select("#moreBtnsContainerDiv").transition().duration(275).style("width","0px")
-      d3.select("#moreBtnsDiv").transition().duration(300).style("opacity",0)
+      // put the original tooltip on top
+      d3.select("#moreBtnsContainerDiv").style("z-index","-1")
+      d3.select("#moreBtnsDiv").style("z-index","-1")
+      
+      d3.select("#tooltip").style("z-index","999")
+      d3.select("#tooltipBottomDiv2").style("z-index","999")
 
+      d3.select("#tooltip").style("z-index","999")
+      d3.select("#tooltip0").style("z-index","999")
+      d3.select("#tooltip1").style("z-index","999")
+      d3.select("#tooltip2").style("z-index","999")
+      d3.select("#tooltip4").style("z-index","999")
+
+      // shrink the more buttons div
+      d3.select("#moreBtnsContainerDiv").transition().duration(275).style("left","250px").style("opacity",0).style("bottom","20px")
+      d3.select("#moreBtnsDiv").transition().duration(250).style("opacity",0)
+
+      // fade out view more button
       d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0)
 }
 
@@ -599,9 +624,7 @@ var graphMode;
       // .style("left", (d3.event.pageX) + 20 + "px")
       // .style("top", (d3.event.pageY - 80) - d.radius + "px")
       .style("opacity",1).style("width","360px")
-      
-      // d3.select("#tooltipBottomDiv2").remove();
-      
+       
       div.transition()
       .duration(0)
       .style("box-shadow", "4px 4px 17px #404040FF")
@@ -718,7 +741,7 @@ var graphMode;
   setTimeout(function(){
 
     d3.select("#tooltipBottomDiv")
-    .html("<div id='tooltipBottomDiv2' style=' margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+    .html("<div id='tooltipBottomDiv2' style=' z-index: -1; margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
 
         +"<span style='padding-left: 3px;'>Some job titles from this group are:</span></br>"
@@ -772,13 +795,13 @@ var graphMode;
         // .style("box-shadow","7px 7px 17px #404040FF")
         
         div3 = d3.select("#tooltipBottomDiv").append("div").attr("id","moreBtnsContainerDiv")
-          .style("height","auto")
+          .style("height","250px")
           .style("box-shadow","6px 4px 12px #404040FF")
           .style("border-top-right-radius","6px")
           .style("border-bottom-right-radius","6px")
           .style("background", colorTooltip2(d.cluster))
           .style("position","absolute")
-          .style("left","360px")
+          .style("left","160px")
           .style("bottom","0px")
           .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
 
@@ -812,9 +835,9 @@ var graphMode;
 
         "</div></div>")
           
-        div3.style("width","0px").transition().duration(500).style("width","200px")
+        div3.transition().duration(500).style("left","360px").style("height","360px")
 
-        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(500).style("opacity",1)
+        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(500).style("opacity",1).style("left","360px")
     })
 
    }, 275);
@@ -2679,6 +2702,8 @@ function createSliders(createSliderArray, sliderTitlesArray){
   //     +"alt='help' height='21' width = '24'>"
   //     +"</div>"
       )
+
+  // Not Much       Lots
   .append("div")
     .attr("align", "left")
     .style("position", "relative")
@@ -2689,7 +2714,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("font-family", "Raleway")
     .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
-      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+window.innerWidth*0.097+"px'></span>"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px'></span>"
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
@@ -2701,30 +2726,32 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .select(function() {
     return this.parentNode;
   	})
+  // Slider svg
   .append("svg")
   	.style("z-index", 99)
-  	.attr("viewBox", "0 3 "+230+" "+50)
+  	// .attr("viewBox", "0 3 "+230+" "+50)
     .style("position", "absolute")
-    .style("top", window.innerHeight*0.0335+"px") // y position
+    .style("top", 32+"px") // y position
     // .style("margin-left", -sub_xtranslate+"%") // x position
     .attr("id", "slider_"+i)
-    .attr("width", 230)
+    .attr("width", 250)
     .attr("height", 50);
 
 
   sliderSVGArray[i].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
+  var mainSlidersWidth = 223;
 
   // Scale
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, d3.max(nodes, function(d){ return d[sliderArrayMain[i]]})])
-    .range([0, 200]) // Width of slider is 200 px
+    .range([0, mainSlidersWidth]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
   if(["Math skills"].includes(sliderTitlesArray[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, 59])
-    .range([0, 200]) // Width of slider is 200 px
+    .range([0, mainSlidersWidth]) // Width of slider is 200 px
     .clamp(true);
   }
 
@@ -2921,15 +2948,16 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .select(function() {
         return this.parentNode;
         })
+
       .append("svg").attr("id", "sliderSvg_"+subSliderArray[i])
         .style("z-index", 99)
         .style("left", xtranslate+"%")
-        .attr("viewBox", "0 10 "+250+" "+50)
+        // .attr("viewBox", "0 10 "+250+" "+50)
         .style("position", "absolute")
-        .style("top", window.innerHeight*0.0335+"px") // y position
+        .style("top", window.innerHeight*0.0215+"px") // y position
         // .style("margin-left", -xtranslate+"%") // x position
         .attr("id", "slider_"+i+j)
-        .attr("width", 250)
+        .attr("width", 280)
         .attr("height", 50);
 
 
@@ -2942,90 +2970,90 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     d3.select("#notmuchlots_"+i+j).style("visibility", "hidden")
     d3.select("#sliderDiv_"+subSliderArray[i]).style("visibility", "hidden")
 
-
+    var slidersWidth = 230;
 
     // Scale
     sliderScaleArray[i+j] = d3.scaleLinear()
       .domain([0, d3.max(nodes, function(d){ return d[subSliderArray[i]]})])
-      .range([0, 200]) // Width of slider is 200 px
+      .range([0, slidersWidth]) // Width
       .clamp(true);
 
     if(["Oral Communication"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 43])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Reading"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 49])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Writing"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 55])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Job Task Planning and Organizing"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 23])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Critical Thinking"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 20])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Problem Solving"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 23])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Document Use"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 33])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Data Analysis"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 25])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Finding Information"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 20])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Digital Technology"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 58])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Measurement and Calculation"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 31])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Scheduling or Budgeting and Accounting"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 28])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Numerical Estimation"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
         .domain([0, 11])
-        .range([0, 200]) // Width of slider is 200 px
+        .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     // Bugfix: math max not working
@@ -3075,7 +3103,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
     handleArray[i+j] = sliderMulti[i+j].insert("circle", ".track-overlay")
       .attr("class", "handle")
-      .style("z-index", 99)
+      // .style("z-index", 99)
+      .style("box-shadow", "3px 3px 3px black")
       .attr("r", 9);
 
       // Bugfix: lang slider not on top
@@ -3290,7 +3319,7 @@ filterAll = function() {
 
 var explainerDivs = [
 
-"Language is used to read, write, and speak. If you like to communicate or learn new words, this one's for you.",
+"Language is used to read, write, and speak. If you like to communicate or to learn new words, this one's for you.",
 
 "Logic means critical thinking, planning, and deciding. Do you enjoy using these skills? It's a mystery...",
 
@@ -3617,6 +3646,8 @@ var heightLang = window.innerHeight*0.24,
     heightComp = window.innerHeight*0.29,
     heightMath = window.innerHeight*0.29;
 
+var widthAll = 300;
+
 var slidersExpanded = [0,0,0,0];
 
 function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Computer)
@@ -3647,7 +3678,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_0")
-          .transition().duration(350).style("height", heightLang+20+"px").style("width",280+"px")
+          .transition().duration(350).style("height", heightLang+20+"px").style("width",widthAll*0.95+"px")
         d3.select("#spanSubsliders_0")
           .transition().duration(350).style("opacity", 0)
 
@@ -3685,7 +3716,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_1")
-          .transition().duration(350).style("height", heightLogi+20+"px").style("width", 280+"px")
+          .transition().duration(350).style("height", heightLogi+20+"px").style("width", widthAll*0.95+"px")
 
         d3.select("#spanSubsliders_1")
           .transition().duration(350).style("opacity", 0)
@@ -3728,8 +3759,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           hideComp() }
 
         d3.select("#btnSubsliders_2")
-          .transition().duration(350).style("height", heightMath+50+"px")
-          .style("width", 290+"px")
+          .transition().duration(350).style("height", heightMath+50+"px").style("width", widthAll*0.97+"px")
         d3.select("#spanSubsliders_2")
           .transition().duration(350).style("opacity", 0)
 
@@ -3773,7 +3803,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         }
 
         d3.select("#btnSubsliders_3")
-          .transition().duration(350).style("height", heightComp+50+"px").style("width","280px")
+          .transition().duration(350).style("height", heightComp+50+"px").style("width",widthAll*0.95+"px")
         d3.select("#spanSubsliders_3")
           .transition().duration(350).style("opacity", 0)
 
@@ -3873,5 +3903,12 @@ function hideComp() {
     // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
+}
+
+function hideAll() {
+  hideLang()
+  hideLogi()
+  hideMath()
+  hideComp()
 }
 
