@@ -3221,14 +3221,15 @@ graphViewCallout = function() {
   // d3.select("#graphCallout").transition().duration(400).style("width","300px")
   d3.select("#graph").style("box-shadow","0px 0px 17px 7px #E6E447")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",1)
-  
-  
+  d3.select("#graphCallout2").transition().duration(400).style("opacity",1)
+    
 }
 
 // hide
 hideGraphViewCallout = function() {
   d3.select("#graph").style("box-shadow","3px 3px 17px grey")
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
+  d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
 
 // the size of the current set
@@ -3310,29 +3311,40 @@ filterAll = function() {
 
 var explainerDivs = [
 
-"Language is used to read, write, and speak. If you like to communicate or to learn new words, this one's for you.",
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Oral Communication</strong>: Verbally expressing ideas and information to others.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Reading</strong>: Understanding written materials.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Writing</strong>: Expressing ideas in writing.</p>",
 
-"Logic means critical thinking, planning, and deciding. Do you enjoy using these skills? It's a mystery...",
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Decision Making</strong>: Making a choice from different options by using information.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Job Task Planning and Organizing</strong>: Planning and organizing one’s own work.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Problem Solving</strong>: Identifying and solving problems.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Critical Thinking</strong>: Making judgments by using standards to evaluate ideas and information and the related results.</p>",
 
-"Math is about measurement, calculation, budgeting, and estimation... more or less.",
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Measurement and Calculation</strong>: Measuring and calculating amounts, areas, volumes, distances.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Money Math</strong>: Using math skills to deal with money, such as handling cash, preparing bills, and making payments.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Number Estimation</strong>: Quickly guessing answers to arithmetic questions (addition, subtraction, multiplication, and division)</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Scheduling, Budgeting, Accounting</strong>: Planning for the best use of time and money, and monitoring the use of time and money.</p>",
 
-"Computers are super-useful! Use them to find information, create information, and automate repetitive tasks.",
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Data Analysis</strong>: Gathering and analyzing numerical data.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Finding Information</strong>: Finding information from a variety of sources to complete a task.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Digital Technology</strong>: Using any type of digital technology.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Document Use</strong>: Using different types of material (labels, signs, lists, tables, graphs, forms, diagrams, blueprints, and other materials) to gather information.</p>",
 
 ]
 
 // positions relative to question mark icons
 
-var offsetDown = 47
+var offsetDown = 0
 var eTops = [document.getElementById("question_0").getBoundingClientRect().top + offsetDown,
-			 document.getElementById("question_1").getBoundingClientRect().top + offsetDown,
-			 document.getElementById("question_2").getBoundingClientRect().top + offsetDown,
-			 document.getElementById("question_3").getBoundingClientRect().top + offsetDown]
+			 document.getElementById("question_1").getBoundingClientRect().top + offsetDown, 
+			 document.getElementById("question_2").getBoundingClientRect().top - 80, // math
+			 document.getElementById("question_3").getBoundingClientRect().top - 80] // comp
 
-var offsetRight = -155
+var offsetRight = 55
 var eLefts = [document.getElementById("question_0").getBoundingClientRect().left + offsetRight,
-			  document.getElementById("question_1").getBoundingClientRect().left + offsetRight,
-			  document.getElementById("question_2").getBoundingClientRect().left + offsetRight,
-			  document.getElementById("question_3").getBoundingClientRect().left + offsetRight]
+			  document.getElementById("question_1").getBoundingClientRect().left - 7*offsetRight,
+			  document.getElementById("question_2").getBoundingClientRect().left - 7*offsetRight, // math
+			  document.getElementById("question_3").getBoundingClientRect().left + offsetRight] // comp
 
 for (var i = 0; i < explainerDivs.length; i++) {
   
@@ -3344,21 +3356,25 @@ for (var i = 0; i < explainerDivs.length; i++) {
   	console.log(thisNum)
 
     d3.select("body").append("div")
-    .style("height","auto").style("width","250px")
+    .style("height","auto").style("width","350px")
     .style("position","fixed")
     .style("padding","10px")
+    .style("border", "1px solid #49AC52")
+    .style("border-radius", "8px")
     .style("font-family","Raleway")
-	.style("background","#A6B0A8")
-	.style("color","white")
-	.style("box-shadow","3px 3px 17px grey")
+    .style("font-size","18px")
+  	.style("background","white")
+    .style("line-height", "19px")
+  	.style("color","#49AC52")
+  	.style("box-shadow","3px 3px 17px grey")
     .style("top",eTops[thisNum]+"px")
     .style("left",eLefts[thisNum]+"px")
     .attr("id","answer_"+thisNum)
-    .text(explainerDivs[thisNum])
+    .html(explainerDivs[thisNum])
     .style("opacity",0).transition().duration(200).style("opacity",1)
 
   })
-  question.on("mouseleave", function(){
+  question.on("mouseout", function(){
   	var thisNum = event.target.id.substring(9,10)
     d3.select("#answer_"+thisNum).transition().duration(275).style("opacity",0).remove()
   })
