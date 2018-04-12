@@ -7,8 +7,11 @@ top5:
 
 - pause filters at n = 7 
 
-- animate tooltip contents with the close animation
+- fix tooltip extra divs to animate closed behind original div
 
+- check filter algorithm for possible speed improvements using "continue" (next loop) and "break" (end loop)
+
+- bug: subskill sliders "i+j" concatenating not adding -- check if this causes problems
 - add "shrink" button to expanded subskill sliders?
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
