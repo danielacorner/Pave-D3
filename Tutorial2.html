@@ -12,11 +12,11 @@
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- Jquery -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 	<!-- Joyride CSS file -->
-	<link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css">
+	<!-- <link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css"> -->
 	<!-- Joyride plugin -->
-	<script src="node_modules/jquery.joyride/jquery.joyride.js"></script>
+	<!-- <script src="node_modules/jquery.joyride/jquery.joyride.js"></script> -->
 	<!-- Font Awesome icons -->
 	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 	<!-- Page icon -->
@@ -123,6 +123,85 @@
             "white", // yellow-green
             "white" ]) // teal
 
+var colorTooltip2 = d3.scaleOrdinal()
+    .domain([0,1,2,3,4,5,6,7,8,9])
+    .range(["#3E35B5", // blue
+            "#AE2327", // 
+            "#29822A", // green
+            "#9A9A2C", // red
+            "#206392", // purple
+            "#8C328C", // pink
+            "#D06820", // orange
+            "#686868", // grey
+            "#72473F", // brown
+            "#229CA9" ]) // teal
+
+var colorSkillbar = d3.scaleOrdinal()
+    .domain([0,1,2,3,4,5,6,7,8,9])
+    .range(["#256D1B", // purple
+            "#256D1B", // red
+            "#244F26", // green
+            "#256D1B", // red
+            "#244F26", // blue
+            "#256D1B", // pink
+            "#256D1B", // orange
+            "#256D1B", // grey
+            "#256D1B", // brown
+            "#256D1B" ]) // teal
+
+var stretch_y = 1.7;
+var compress_y = 0.7;
+var skillsBarsXtranslate = -15;
+var skillsBarsYtranslate = 80;
+
+function pad(num, size) { // add leading 0s to nocs like 0011
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+
+d3.select("body").on("click", function(d){
+console.log(d3.event.pageX)
+  // if (clicked == 1) { 
+    if (d3.event.pageX > window.innerWidth*0.5) { // if clicking the right half of the page
+  //     return
+  //   } else if (d3.event.target.nodeName == "svg") { clicked = 0
+    hideToolTip(500) }
+  // }
+})
+
+
+function hideToolTip(duration) {
+      // fade out each tooltip contents object
+      div.transition().duration(duration).style("opacity",0)
+      d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip1").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip2").transition().duration(duration).style("opacity",0).remove()
+      d3.select("#tooltip3").transition().duration(duration).style("opacity",0).remove()
+
+      // shrink each tooltip div
+      // d3.select("#tooltipBottomDiv").transition().duration(duration).style("height","0px").remove()
+      // d3.select("#tooltipBottomDiv2").transition().duration(duration).style("height","0px").remove()
+      
+      d3.select("#tooltipBottomDiv2").transition().duration(duration).style("margin-top","-250px").style("opacity",0).remove()
+      d3.select("#tooltipBottomDiv").transition().duration(duration).style("margin-top","-250px").style("opacity",0).remove()
+      
+      // fade the skill bar rects
+      for (var i = 5; i < 9; i++) {
+        d3.select("#rect"+i).transition().duration(duration).style("opacity",0).remove()
+        d3.select("#rect"+i+"shadow").transition().duration(duration).style("opacity",0).remove()
+      }
+
+      // put the original tooltip on top
+      d3.select("#moreBtnsContainerDiv").style("z-index","-1")
+      d3.select("#moreBtnsDiv").style("z-index","-1")
+      
+      // shrink the more buttons div
+      d3.select("#moreBtnsContainerDiv").transition().duration(300).style("width","20px").style("opacity",0).style("bottom","20px")
+      d3.select("#moreBtnsDiv").transition().duration(180).style("opacity",0)
+}
+
   var div = d3.select("body").append("div")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
@@ -148,6 +227,9 @@
       clicked = 1-clicked;
     if (clicked == 1) {
       tooltipLarge(d);
+      setTimeout(function() {
+        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial3.html")
+      }, 500)
      } else if (clicked == 0) {tooltipSmall(d);}
       })
 
@@ -158,7 +240,7 @@ function tooltipMouseover(){
       .duration(300)
       .style("opacity", 1)
       .style("height", "auto")
-      .style("width", "350px")
+      .style("width", "360px")
       .style("z-index", 99)
       .style("position", "absolute")
       // .style("border",   "1px solid black;");
@@ -176,9 +258,9 @@ function tooltipMouseover(){
       // Display Hover Tooltip
       div.html("<div style='z-index: 99; font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
         +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 15px; font-family: Raleway;'>"
+                +"<div id='tooltipContentPre' style='color: " + colorTooltip(d.cluster) +"; padding-left: 10px; font-size: 17px; font-family: Raleway;'>"
         
-                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
+                +"<svg height='53px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
@@ -193,8 +275,35 @@ function tooltipMouseover(){
                     "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
                   "</g>"+
                 "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul></div>")
+                +"Top skills:</br>"
+                +"<ul class='subtext' style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
+     +"<div id='tooltip3' style='border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; margin-left: -12px; margin-bottom: -2px; margin-right: -2px; height: 15px; background: "+ colorTooltip2(d.cluster) +";'>"
+                     // Skill minibars
+        +"<svg id='miniBars' height='10px' style='position: absolute; margin-top: "+5+"px; margin-left: 25px;' class='chart' aria-labelledby='title desc' role='img'>"+
+          "<title id='title'>A bar chart showing information</title>"+
+          "<g class='bar'>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsXtranslate)+"' dy='.35em'>Language</text>"+
+          "<rect id='rect1' height='"+(d.skillsLang*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsLang*compress_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(15-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLang)/10+"</text>"+
+          "</g>"+
+          "<g class='bar'>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsXtranslate)+"' dy='.35em'>Logic</text>"+
+          "<rect id='rect2' height='"+(d.skillsLogi*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsLogi*compress_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(50-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsLogi)/10+"</text>"+
+          "</g>"+
+          "<g class='bar'>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
+          "<rect id='rect4' height='"+(d.skillsComp*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsComp*compress_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(120-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+          "</g>"+
+          "<g class='bar'>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
+          "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+          // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+          "</g>"+
+        "</svg>"
+        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
+        +"</div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left","10vw")
         .style("background", color(d.cluster) )
@@ -202,71 +311,186 @@ function tooltipMouseover(){
 	}
 
 function tooltipLarge() {
-div
-      .html("<div style='font-weight: bold; font-size: 20px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
-        +"; font-weight: bold'>" + d.job + "</div>"
-                +"<div id='tooltipContent' style=' height: 100px; padding-left: 10px; font-family: Raleway; font-size: 15px; color: " + colorTooltip(d.cluster) +";'>"
+  div2 = div.append("div")
+  .attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
+  .style("height","0px").style("width","360px")
+  .style("z-index",-1)
+  .style("margin-left","-2px")
+  .style("margin-bottom","-2px")
+  .style("border-bottom-left-radius","6px")
+  .style("border-bottom-right-radius","6px")
+  .style("pointer-events","auto");
 
-                +"<svg height='82px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
-                  "<title id='title'>A bar chart showing information</title>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.yearsStudy/5+5)+"' y='9.5' dy='.35em'>"+Math.round(d.yearsStudy*10)/10+" years of study</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #244F26' height='15' y='20'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='28' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<rect width='"+(150*d.automationRisk)+"' height='15' style='fill: #550C18' y='40'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(150*d.automationRisk+5)+"' y='48' dy='.35em'>"+(Math.round(d.automationRisk*100))+"% risk of machine automation</text>"+
-                  "</g>"+
-                "</svg>"                                
-                +"<br/><span style='padding-left: 3px;'>Some job titles from this group are ...</span></br>"
-                +"<ul style='padding-top: 9px;'><li>"+d.title1+"</li><li>"+d.title2+"</li><li>"+d.title3+"</li></ul>"
+ 
+  d3.select("#miniBars").transition().duration(275)
+  // .style("margin-top",250+"px")
+  .style("opacity",0);
+ 
+  var maxLength = 34
+  //Some job titles from this group are...
+  if(d.title1.length>maxLength){var title1 = d.title1.substring(0,maxLength) + "..."
+  }else{var title1 = d.title1}
+  if(d.title2.length>maxLength){var title2 = d.title2.substring(0,maxLength) + "..."
+  }else{var title2 = d.title2}
+  if(d.title3.length>maxLength){var title3 = d.title3.substring(0,maxLength) + "..."
+  }else{var title3 = d.title3}
 
-                +"Top skills are...</br>"
-                +"<ul style='margin-top: 5px;'><li>" + d.topSkill1 + "</li><li>" + d.topSkill2 + "</li><li>" + d.topSkill3 + "</ul>"//TOP SKILLS
-        // Skill levels
-                 +"<svg height='160px' style='margin-top: "+-10+"px; margin-left: 20px;' class='chart' aria-labelledby='title desc' role='img'>"+
-                  "<title id='title'>A bar chart showing information</title>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-7-skillsBarsYtranslate)+"' dy='.35em'>Language</text>"+
-                    "<rect height='"+(d.skillsLang*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsYtranslate)+"'></rect>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(30-skillsBarsYtranslate)+"' dy='.35em'>Logic</text>"+
-                    "<rect height='"+(d.skillsLogi*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsYtranslate)+"'></rect>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(65-skillsBarsYtranslate)+"' dy='.35em'>Math</text>"+
-                    "<rect height='"+(d.skillsMath*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsMath*stretch_y))+"' x='"+(75-skillsBarsYtranslate)+"'></rect>"+
-                  "</g>"+
-                  "<g class='bar'>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(100-skillsBarsYtranslate)+"' dy='.35em'>Computer</text>"+
-                    "<rect height='"+(d.skillsComp*stretch_y)+"' width='18' style='fill: #256D1B;' y='"+(80-(d.skillsComp*stretch_y))+"' x='"+(110-skillsBarsYtranslate)+"'></rect>"+
-                  "</g>"+
-                "</svg>"+
+  setTimeout(function(){
+
+    d3.select("#tooltipBottomDiv")
+    .html("<div id='tooltipBottomDiv2' style=' z-index: -1; margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+      +"; background: "+ colorTooltip2(d.cluster) +";'>"
+
+        +"<span style='padding-left: 3px;'>Some job titles from this group are:</span></br>"
+        +"<ul style='padding-top: 9px;'><li>"+title1+"</li><li>"+title2+"</li><li>"+title3+"</li></ul></div>"
+
+      // Skill levels
+        +"<svg height='80px' style='position: absolute; margin-top: "+(37)+"px; margin-left: 15px;' class='chart' aria-labelledby='title desc' role='img'>"+
+        "<title id='title'>A bar chart showing information</title>"+
+
+        "<g class='bar'>"+                                                                       // y = x if rotated 90deg
+        "<rect id='rect5shadow' class='shadow' height='"+(d.skillsLang*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+        "<rect id='rect5' height='"+(d.skillsLang*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLang*stretch_y))+"' x='"+(5-skillsBarsXtranslate)+"'></rect>"+
+        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(-5-skillsBarsXtranslate)+"' dy='.35em'>"+
+          "Language</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(17-skillsBarsXtranslate)+"'>"+
+        //   Math.round(10*d.skillsLang)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<rect id='rect6shadow' class='shadow' height='"+(d.skillsLogi*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+        "<rect id='rect6' height='"+(d.skillsLogi*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsLogi*stretch_y))+"' x='"+(40-skillsBarsXtranslate)+"'></rect>"+
+        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(32-skillsBarsXtranslate)+"' dy='.35em'>"+
+        "Logic</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(52-skillsBarsXtranslate)+"'>"+
+        //   Math.round(10*d.skillsLogi)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<rect id='rect7shadow' class='shadow' height='"+(d.skillsComp*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsComp*stretch_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+        "<rect id='rect7' height='"+(d.skillsComp*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsComp*stretch_y))+"' x='"+(75-skillsBarsXtranslate)+"'></rect>"+
+        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(67-skillsBarsXtranslate)+"' dy='.35em'>Computer</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(87-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsComp)/10+"</text>"+
+        "</g>"+
+        "<g class='bar'>"+
+        "<rect id='rect8shadow' class='shadow' height='"+(d.skillsMath*stretch_y)+"' width='18' transform='translate(3,7)' style='box-shadow: 3px 3px 3px black; fill: #30352F;' y='"+(skillsBarsYtranslate-(d.skillsMath*stretch_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+        "<rect id='rect8' height='"+(d.skillsMath*stretch_y)+"' width='18' style='box-shadow: 3px 3px 3px black; fill: #256D1B;' y='"+(skillsBarsYtranslate-(d.skillsMath*stretch_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
+        "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-size: 16px; font-family: Raleway' x='-80' y='"+(102-skillsBarsXtranslate)+"' dy='.35em'>Math</text>"+
+        // "<text class='subtext' style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(122-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
+        "</g>"+
+        "</svg>"+
         // +"<br/>" 
-                "</div>"+
-                // "<span style='margin-left: 236px'></span>"+"<button id='favouriteBtn' onclick='function() { console.log('favourited') }' class='btn btn-lg' "+
-         // "style='position: absolute; bottom: 67px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
-         // +"Favourite</button><br/>"+
-         "<span style='margin-top: 10px; margin-left: 225px'></span>"+"<a id='viewMoreBtn' class='btn btn-lg' href='http://.google.com' target='_blank'"+
-         "style='position: absolute; bottom: 13px; z-index: 99; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"
-         +"View more</a><br/><br/> ").transition().duration(300).style("width", "350px")
+        "<span style='margin-left: 231px'></span>"+
+        "<span style='margin-top: 10px; margin-left: 220px'></span>"+
+        "<button id='viewMoreBtn' class='btn btn-lg'"+
+        "style='position: absolute; right: 17px; bottom: 20px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "View more</button>"+"</div>")
+
+    d3.select("#viewMoreBtn").on("click", function() {
+        d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0).remove()
+
+        // d3.select("#tooltipBottomDiv").style("border-radius", "6px")
+        // .transition().duration(500).style("width","550px")
+        // .style("box-shadow","7px 7px 17px #404040FF")
+        
+        div3 = d3.select("#tooltipBottomDiv").append("div").attr("id","moreBtnsContainerDiv")
+          .style("height","250px")
+          .style("box-shadow","6px 4px 12px #404040FF")
+          .style("border-top-right-radius","6px")
+          .style("border-bottom-right-radius","6px")
+          .style("background", colorTooltip2(d.cluster))
+          .style("position","absolute")
+          .style("left","160px")
+          .style("bottom","0px")
+          .style("z-index","-1")
+          .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
+
+        "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
+        "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
+        "JobBank Info Page</a><br>"+
+
+        "<a id='btnVolunteer' class='btn btn-sm' "+
+        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
+        "Volunteer Canada</a><br>"+
+
+        "<br><br><span style='margin-left: -20px; color: white;'>"+
+        "View listings for this job:</span>"+
+
+        "<div align='right' style='margin: 10px 0px 20px 0px'>"+
+        "<a id='btnIndeed' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
+        "&nbspIndeed.ca&nbsp</a><br>"+
+
+        "<a id='btnGlassdoor' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
+        "&nbspGlassdoor.ca&nbsp</a><br>"+
+
+        "<a id='btnMonster' class='btn btn-sm' "+
+        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
+        "&nbspMonster.ca&nbsp</a><br>"+
+
+        "</div></div>")
+          
+        div3.transition().duration(350).style("left","360px").style("height","360px")
+
+        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(350).style("opacity",1).style("left","360px")
+    })
+
+   }, 275);
+
+  // skill bars
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsLang*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsLang*compress_y))).attr("x",(5-skillsBarsXtranslate))
+  .transition().duration(275)
+    .attr("height", (d.skillsLang*stretch_y))
+    .attr("y",150)
+
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsLogi*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsLogi*compress_y))).attr("x",(40-skillsBarsXtranslate))
+  .transition().duration(275)
+    .attr("height", (d.skillsLogi*stretch_y))
+    .attr("y",150)  
+
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsComp*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsComp*compress_y))).attr("x",(75-skillsBarsXtranslate))
+  .transition().duration(275)
+    .attr("height", (d.skillsComp*stretch_y))
+    .attr("y",150)  
+
+  d3.select("#tooltipBottomDiv").append("svg")
+  .attr("height","280px").style("position","absolute").style("margin-left","25px")
+  .append("rect").attr("height",(d.skillsMath*compress_y)).attr("width","18")
+  .style("fill",colorSkillbar(d.cluster))
+  .attr("y",(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))).attr("x",(110-skillsBarsXtranslate))
+  .transition().duration(275)
+    .attr("height", (d.skillsMath*stretch_y))
+    .attr("y",150)
+
+  // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
+  // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");
+  div2.transition().duration(250).style("height","250px");
+
         // Unfurl downward
         // .style("height", 200)
         // .transition()
         // .duration(200)
         // .style("height", "auto")
-       d3.select("#tooltipContent").transition().duration(250).style("height", "350px");
+       // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
 
-        setTimeout(function(){
-        	d3.select("#nextLink").transition().duration(700).style("opacity", 1)
-        	d3.select("#nextLink").attr("href","Tutorial3.html")
-        }, 500)
-};
+
+
+     };
 
 function tooltipSmall() {
   d3.select("#tooltipContent").transition().duration(250).style("height", "100px");
