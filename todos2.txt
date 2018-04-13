@@ -8,6 +8,9 @@ current:
 - working on tutorial3
 	- remove "number of jobs" from options or highlight current option
 	- fade out last option before start button fades in
+	- don't make the reset necessary? provide a next button instead or in addition?
+	- remove "prev" buttons
+
 
 top5:
 
@@ -17,7 +20,7 @@ top5:
 
 - fix tooltip extra divs to animate closed behind original div
 
-- check filter algorithm for possible speed improvements using "continue" (next loop) and "break" (end loop)
+- check filter algorithm for possible speed improvements using "continue" (next loop) and "break" (end loop) -- should be able to run on a chromebook
 
 - bug: subskill sliders "i+j" concatenating not adding -- check if this causes problems
 - add "shrink" button to expanded subskill sliders?
