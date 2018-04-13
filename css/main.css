@@ -102,6 +102,9 @@ button.btn-grey {
   box-shadow: 3px 3px 17px grey; 
   background: #A6B0A8;
 }
+button.btn-graph:hover {
+  background: #888;
+}
 button.btn-graph {
   font-size: 18px; 
   height: 40px; 

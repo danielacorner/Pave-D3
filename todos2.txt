@@ -5,18 +5,14 @@ ideas:
 todos
 
 current:
-- working on tutorial3
-	- remove "number of jobs" from options or highlight current option
-	- fade out last option before start button fades in
-	- don't make the reset necessary? provide a next button instead or in addition?
-	- remove "prev" buttons
+- pause/jam filters at n = 10
+- or lower maximum slider positions to leave n = 10
 
 
 top5:
 
 - fix viz position at medium screen size
 
-- pause/jam filters at n = 7 
 
 - fix tooltip extra divs to animate closed behind original div
 
@@ -27,6 +23,7 @@ top5:
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
 - bug: subskill sliders cut off at medium resolution
+- tutorial3: remove "prev" buttons?
 
 - toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries

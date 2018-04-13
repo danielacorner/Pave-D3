@@ -485,6 +485,7 @@ circles = svg.selectAll("circle")
     .attr("r", 0) // start at 0 radius and transition in
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .attr("id",function(d) { return "circle_"+d.id })
+    .attr("class","jobCircle")
     .style("z-index", -1)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
@@ -1465,7 +1466,7 @@ maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
 
 
-////////////////// pause! (Pause) ////////////////////////
+////////////////// Pause the simulation ////////////////////////
 d3.select("#pause").on('click', function(d) {
   simulation.stop();
 
@@ -1473,7 +1474,7 @@ d3.select("#pause").on('click', function(d) {
   d3.select("#unpause").style("display", "inline");
 
 });
-////////////////// unpause! (unPause) ////////////////////////
+////////////////// unpause the simulation ////////////////////////
 d3.select("#unpause").on('click', function(d) {
   simulation.alpha(0.7).alphaTarget(0.001).restart();
 
@@ -1496,94 +1497,95 @@ var originalRadius = {};
   });
 
 // mouseover explainer divs
-d3.select("#graph").on('mouseenter', function(d) {
 
-  // append a large div, transition its height and width
-  d3.select("#graph").select(function(){return this.parentNode})
-  .append("div").style("width","10px").style("height","0px")
-    .attr("id","graphExplainer").style("opacity",0)
-    .style("position","absolute").style("top","40px").style("left","0px")
+// d3.select("#graph").on('mouseenter', function(d) {
+
+//   // append a large div, transition its height and width
+//   d3.select("#graph").select(function(){return this.parentNode})
+//   .append("div").style("width","10px").style("height","0px")
+//     .attr("id","graphExplainer").style("opacity",0)
+//     .style("position","absolute").style("top","40px").style("left","0px")
  
-  //move button down and keep other button up
-  d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
-  d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
+//   //move button down and keep other button up
+//   d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
+//   d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
   
-  // explainer transition
-  d3.select("#graphExplainer").transition().duration(250)
-    .style("width","30vw")
-    .style("height","auto")
-    .style("background","#A6B0A8")
-    .style("opacity",1)
-    .style("border-bottom-left-radius","6px")
-    .style("border-bottom-right-radius","6px")
+//   // explainer transition
+//   d3.select("#graphExplainer").transition().duration(250)
+//     .style("width","30vw")
+//     .style("height","auto")
+//     .style("background","#A6B0A8")
+//     .style("opacity",1)
+//     .style("border-bottom-left-radius","6px")
+//     .style("border-bottom-right-radius","6px")
 
-  d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
-    .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
+//   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
+//     .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
 
-})
+// })
 
-d3.select("#graph").on('mouseleave', function(d) {
+// d3.select("#graph").on('mouseleave', function(d) {
 
-    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
-    //move button up and keep other button down
-    d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-    // fade out
-    d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
-    d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
-  //move button up and keep other button down
-  // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
-  d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+//     d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
+//     //move button up and keep other button down
+//     d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+//     // fade out
+//     d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
+//     d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
+//   //move button up and keep other button down
+//   // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
+//   d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
   
-  // fade out
-  // d3.select("#graph").transition().duration(250).style("height","32px")
-  d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
-  d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
+//   // fade out
+//   // d3.select("#graph").transition().duration(250).style("height","32px")
+//   d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
+//   d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
 
-})
+// })
 
 
-d3.select("#futureView").on('mouseenter', function(d) {
-  //move button up and keep other button down
-  // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
-  d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+// d3.select("#futureView").on('mouseenter', function(d) {
+//   //move button up and keep other button down
+//   // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
+//   d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
   
-  // fade out
-  // d3.select("#graph").transition().duration(250).style("height","32px")
-  d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
-  d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
+//   // fade out
+//   // d3.select("#graph").transition().duration(250).style("height","32px")
+//   d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
+//   d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
 
-  // append and transition the explainer div
-  d3.select("#futureView").select(function(){return this.parentNode})
-  .append("div").style("width","10px").style("height","0px")
-    .attr("id","futureExplainer").style("opacity",0)
-    .style("position","absolute").style("top","40px").style("right","0px")
+//   // append and transition the explainer div
+//   d3.select("#futureView").select(function(){return this.parentNode})
+//   .append("div").style("width","10px").style("height","0px")
+//     .attr("id","futureExplainer").style("opacity",0)
+//     .style("position","absolute").style("top","40px").style("right","0px")
 
-  //move button down and keep other button up
-  d3.select("#graph").transition().duration(250).style("margin-bottom","20px")
-  d3.select("#futureView").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
+//   //move button down and keep other button up
+//   d3.select("#graph").transition().duration(250).style("margin-bottom","20px")
+//   d3.select("#futureView").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
   
-  // explainer transition
-  d3.select("#futureExplainer").transition().duration(250)
-    .style("width","30vw")
-    .style("height","auto")
-    .style("background","#A6B0A8")
-    .style("opacity",1)
-    .style("border-bottom-left-radius","6px")
-    .style("border-bottom-right-radius","6px")
+//   // explainer transition
+//   d3.select("#futureExplainer").transition().duration(250)
+//     .style("width","30vw")
+//     .style("height","auto")
+//     .style("background","#A6B0A8")
+//     .style("opacity",1)
+//     .style("border-bottom-left-radius","6px")
+//     .style("border-bottom-right-radius","6px")
 
-  d3.select("#futureExplainer").append("div").attr("id","futureExplanation").style("color","white").style("padding","25px 18px")
-    .html("Machines are getting better at performing new tasks every day. <em>Automation Risk</em> tells us how likely a job will soon become unavailable.")
+//   d3.select("#futureExplainer").append("div").attr("id","futureExplanation").style("color","white").style("padding","25px 18px")
+//     .html("Machines are getting better at performing new tasks every day. <em>Automation Risk</em> tells us how likely a job will soon become unavailable.")
 
-})
+// })
 
-d3.select("#futureView").on('mouseleave', function(d) {
+// d3.select("#futureView").on('mouseleave', function(d) {
 
-    //move button up and keep other button down
-    d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-    // fade out
-    d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
+//     //move button up and keep other button down
+//     d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
+//     // fade out
+//     d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
 
-})
+// })
 
 d3.select("#graph").on('click', function(d){
   // Toggle mode on or off
@@ -2418,6 +2420,7 @@ enterUpdateCircles = function() {
     .attr("r", function(d) { return d.radius }) // start at full radius
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
+    .attr("class","jobCircle")
 
     // Tooltips
  // Tooltips
@@ -2732,16 +2735,17 @@ function createSliders(createSliderArray, sliderTitlesArray){
   sliderSVGArray[i].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
   var mainSlidersWidth = 223;
+  var reductionFactor = 0.7;
 
   // Scale
   sliderScaleArray[i] = d3.scaleLinear()
-    .domain([0, d3.max(nodes, function(d){ return d[sliderArrayMain[i]]})])
+    .domain([0, d3.max(nodes, function(d){ return d[sliderArrayMain[i]]}) * reductionFactor ]) // lower the maximum for all skills by 20% to prevent filtering down to 0
     .range([0, mainSlidersWidth]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
   if(["Math skills"].includes(sliderTitlesArray[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
-    .domain([0, 59])
+    .domain([0, 59 * reductionFactor])
     .range([0, mainSlidersWidth]) // Width of slider is 200 px
     .clamp(true);
   }
@@ -2962,88 +2966,89 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     d3.select("#sliderDiv_"+subSliderArray[i]).style("visibility", "hidden")
 
     var slidersWidth = 230;
+    var reductionFactorSubskills = 0.6; // reduce the subskill slider ranges to 60% to avoid over-filtering
 
     // Scale
     sliderScaleArray[i+j] = d3.scaleLinear()
-      .domain([0, d3.max(nodes, function(d){ return d[subSliderArray[i]]})])
+      .domain([0, d3.max(nodes, function(d){ return d[subSliderArray[i]]}) * reductionFactorSubskills ])
       .range([0, slidersWidth]) // Width
       .clamp(true);
 
     if(["Oral Communication"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 43])
+        .domain([0, 43 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Reading"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 49])
+        .domain([0, 49 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Writing"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 55])
+        .domain([0, 55 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Job Task Planning and Organizing"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 23])
+        .domain([0, 23 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Critical Thinking"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 20])
+        .domain([0, 20 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Problem Solving"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 23])
+        .domain([0, 23 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Document Use"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 33])
+        .domain([0, 33 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Data Analysis"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 25])
+        .domain([0, 25 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Finding Information"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 20])
+        .domain([0, 20 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Digital Technology"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 58])
+        .domain([0, 58 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Measurement and Calculation"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 31])
+        .domain([0, 31 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Scheduling or Budgeting and Accounting"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 28])
+        .domain([0, 28 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Numerical Estimation"].includes(subSliderTitlesArray[i])){
       sliderScaleArray[i+j] = d3.scaleLinear()
-        .domain([0, 11])
+        .domain([0, 11 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
@@ -3259,30 +3264,44 @@ function calloutCheck() {
 //end graph view callout
 
 
+
+
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
+
+// bookmarklet
+
+// TODO:
+// - jam/disable the filters and callout at 10 jobs left
+
+// current structure:
+// each time a slider is moved, nodes(filterAll()) is called
+// 
 
 filterAll = function() {
   calloutCheck()
-  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
-  // START by filtering out nodes under the minimums
-  store.forEach(function(d) {
-    // INEFFICIENT -- TODO: fewer loops
-      // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
-      if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
-      // then loop through the sliders array and put you on the list
-      for(var s=0; s<sliderPositionsArray.length; s++){
-        // if the slider position is above your value, put you on the list
-        var checkMin = sliderPositionsArray[s];
-        if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
-          listToDeleteMulti.push(d.id);
-        }
-
-      }
-      
-    })
-    // reset the graph
+  
+  // first, clear the list
+  listToDeleteMulti = [];
+  
+  // reset the graph
   graph = [];
-  // THEN update the graph based on the filter list
+
+  store.forEach(function(d){ // for each circle
+
+    // put you on the list if the slider position is above your value:
+      
+    // for each slider
+    for(var s=0; s<sliderPositionsArray.length; s++){        
+      // if the slider position is above your value  &  if you're not already on the list
+      if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+        // put you on the list
+        listToDeleteMulti.push(d.id);
+      }
+    }
+
+  })
+  
+  // update the graph based on the filter list
   store.forEach(function(n) {
     // if you're not on the filter list
     if (!listToDeleteMulti.includes(n.id)) {
@@ -3290,15 +3309,60 @@ filterAll = function() {
       graph.push(n);
     // if you're on the list
     } else if (listToDeleteMulti.includes(n.id)) {
+      // for each graph item
       graph.forEach(function(d, p) {
         if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
+
       })
     };
   });
   return graph;
 }
+
+// old version
+
+// filterAll = function() {
+//   calloutCheck()
+//   // h = sliderScaleArray[event.target.id].invert(d3.event.x)
+//   // START by filtering out nodes under the minimums
+//   store.forEach(function(d) {
+//     // INEFFICIENT -- TODO: fewer loops
+
+//       // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
+//       if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
+
+//       // then loop through the sliders array and put you on the list
+//       for(var s=0; s<sliderPositionsArray.length; s++){
+//         // if the slider position is above your value, put you on the list
+//         var checkMin = sliderPositionsArray[s];
+//         if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+//           listToDeleteMulti.push(d.id);
+//         }
+
+//       }
+      
+//     })
+//     // reset the graph
+//   graph = [];
+//   // THEN update the graph based on the filter list
+//   store.forEach(function(n) {
+//     // if you're not on the filter list
+//     if (!listToDeleteMulti.includes(n.id)) {
+//       // put you on the graph         (start graph empty? or check)
+//       graph.push(n);
+//     // if you're on the list
+//     } else if (listToDeleteMulti.includes(n.id)) {
+//       graph.forEach(function(d, p) {
+//         if (n.id === d.id) {
+//           graph.splice(p, 1); // get you off of there!
+//         }
+//       })
+//     };
+//   });
+//   return graph;
+// }
 
 
 };// Update function which detects current slider
