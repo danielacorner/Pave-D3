@@ -1,11 +1,19 @@
 ideas:
 - save filter states with mini screenshots? like collectibles in a "backpack" or inventory
 - "guild hall" where users post/upvote insightful views
-
+------------------------------------------
 todos
+
+current:
+- working on tutorial3
+	- remove "number of jobs" from options or highlight current option
+	- fade out last option before start button fades in
+
 top5:
 
-- pause filters at n = 7 
+- fix viz position at medium screen size
+
+- pause/jam filters at n = 7 
 
 - fix tooltip extra divs to animate closed behind original div
 

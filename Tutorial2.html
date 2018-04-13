@@ -43,27 +43,29 @@
 	</div>
 </div>
 
-<div id="jobExample" width="100" height="100" style="position: fixed; left: 7.5vw; top: 14vw;">
-		<svg height="100" width="100">
-				<circle id="jobExampleCircle" cx="2.7vw" cy="2.4vw" r="1.8vw" fill="#FD7F27" />
-		</svg>
-</div>
-
-<div class="d-inline" style="position: fixed; left: 15vw; top: 13vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
-		<span style="font-size: 3.05vw; opacity: 0.2">This is a job group</span>
-		</br><span style="opacity: 0.2;">Hover with your cursor to see the details</span>
-		</br><span style="margin-left: -0.8vw">Click the circle to see skills used on the job</span>
-
-		<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
-		  	<a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a>
-		  	<a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0.2; color: white; z-index: 100" id="nextLink">NEXT</a>
-		</div>
-
 	<div id="rightSide">
 		
 		<img style="opacity: 0.3; width: 47vw; position: fixed; right: 8vw; top: 6vw" id="background" src="img/logo.png">
 
 	</div>
+
+<div id="jobExample" width="100" height="100" style="position: fixed; left: 54vw; top: 21.3vw;">
+    <svg height="100" width="100">
+        <circle id="jobExampleCircle" cx="2.7vw" cy="2.4vw" r="1.95vw" fill="#FD7F27" />
+    </svg>
+</div>
+
+<div class="d-inline" style="position: fixed; left: 12vw; top: 13vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
+    <span id="eachCircleSpan" style="font-size: 3.05vw;">Each circle is a job group</span>
+    <br>
+    <br><span id="bruceSpanner" style="margin-left: 0.2vw; opacity: 1;">Hover over the circle on the right to see the details</span>
+    <br>
+    <br><span id="davidSpanner" style="margin-left: 0.2vw; opacity: 0;">Click the circle to see skills used on the job</span>
+
+    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 35vw;">
+        <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a>
+        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
+    </div>
 
 </div>
 
@@ -161,15 +163,15 @@ function pad(num, size) { // add leading 0s to nocs like 0011
 }
 
 
-d3.select("body").on("click", function(d){
-console.log(d3.event.pageX)
-  // if (clicked == 1) { 
-    if (d3.event.pageX > window.innerWidth*0.5) { // if clicking the right half of the page
-  //     return
-  //   } else if (d3.event.target.nodeName == "svg") { clicked = 0
-    hideToolTip(500) }
-  // }
-})
+// d3.select("body").on("click", function(d){
+// console.log(d3.event.pageX)
+//   // if (clicked == 1) { 
+//     if (d3.event.pageX < window.innerWidth*0.5) { // if clicking the right half of the page
+//   //     return
+//   //   } else if (d3.event.target.nodeName == "svg") { clicked = 0
+//     hideToolTip(500) }
+//   // }
+// })
 
 
 function hideToolTip(duration) {
@@ -212,6 +214,13 @@ function hideToolTip(duration) {
       // highlight the current circle
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       tooltipMouseover(d);
+      setTimeout(function() {
+        d3.select("#davidSpanner").transition().duration(500).style("opacity",1)
+      }, 500)
+      setTimeout(function() {
+        d3.select("#bruceSpanner").transition().duration(500).style("opacity",0.2)
+        d3.select("#eachCircleSpan").transition().duration(500).style("opacity",0.2)
+      }, 500)
       })
     .on("mouseout", function(d) {
       if (clicked == 1) return;
@@ -305,9 +314,9 @@ function tooltipMouseover(){
         // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
         // Move div above mouse by "top" + radius and right by "left"
-        .style("left","10vw")
+        .style("left", "58vw")
         .style("background", color(d.cluster) )
-        .style("top", "50px");
+        .style("top", "10vw");
 	}
 
 function tooltipLarge() {

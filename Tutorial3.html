@@ -44,14 +44,14 @@
 </div>
 
 <div class="d-inline" style="position: fixed; left: 7vw; top: 19vw; font-size: 1.7vw; font-weight: 600; color: #49AC52">
-  You can change the skill sliders
-<br>to see which job groups suit your
-<br>present and future self.
-
+  <div id="div1">You can change the skill sliders
+  <br>to see which job groups suit your
+  <br>present and future self.</div>
+<!-- 
 <div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
  <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
- <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0.3; color: white; z-index: 100" id="nextLink" href="">START</a>
-</div>
+</div> -->
+ <a class="intro-start-button" style="position: fixed; left: 43vw; top: 48vw; opacity: 0; color: white; z-index: 100" id="nextLink">START</a>
 
 <div id="rightSide">
 
@@ -60,9 +60,10 @@
 
 </div>
 <div style="position: fixed; left: 63vw; top: 53vw; z-index: 99">
-  <span id="resetFiltersSpan" style="position: fixed; top: 49vw; left: 56vw; opacity: 0">Click "Reset Filters" to start over<br></span>
-  <span id="sizeDropdownSpan" style="text-align: right; position: fixed; top: 51.5vw; left: 76vw; opacity: 0">Use the size dropdown<br>to change what size means<br></span>
-  <button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0; width: 11vw; height: 3vw;">
+  <span id="resetFiltersSpan" style="position: fixed; top: 47vw; left: 53vw; opacity: 0">Click "Reset Filters" to reset the sliders.
+    <br><span style="font-size: 1.3vw">This button will help to speed up your exploration!</span></span>
+  <span id="sizeDropdownSpan" style="pointer-events: none; text-align: right; position: fixed; top: 51.5vw; left: 52.4vw; opacity: 0">Use the size drop-down to change&nbsp;&nbsp;&nbsp;<br>what the size of each circle represents</span>
+  <button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0; width: 11vw; height: 3vw; box-shadow: 0px 0px 17px 7px #E6E447">
     <span style="color: white; font-size: 1.12vw;">
       Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> </button> 
     </div>
@@ -398,12 +399,13 @@ sizesDropdown = d3.select("body").append("div").attr("id","sizeDropdownDiv")
 .attr("class","dropup")
 .style("position","fixed")
 .style("opacity",0)
-.style("right","6vw")
-.style("top","46vw")
+.style("right","27vw")
+.style("top","46.5vw")
 .append("button")
 .attr("id","sizeDropdownButton")
 .attr("class","btn btn-grey btn-primary dropdown-toggle")
 .attr("type","button")
+.style("box-shadow","0px 0px 17px 7px #E6E447")
 .attr("data-toggle","dropdown")
 .style("height","50px")
 .style("border-width","0px")
@@ -497,10 +499,10 @@ sliderSVGArray[0] = d3.select("body")
     .style("left", "7vw")
     .style("top", "29vw")
     // lg and xl
-    .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"
+    .html("<div id='div2' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"
     	+"font-size: 2.5vw; font-weight: bold;"
-    	+" color:  #49AC52; font-family: Raleway'>How much math skill do "
-     +"</br>you have or wish to have?"
+    	+" color:  #49AC52; font-family: Raleway'>How much math skill "
+     +"</br>do you wish to have?"
      +"</div>"
      )
     .append("div")
@@ -697,6 +699,9 @@ enterUpdateCircles = function() {
     circles = circles.merge(newCircles);
 
     if (firstTime) {
+      d3.select("#div1").transition().duration(750).style("opacity", 0.2)
+      d3.select("#div2").transition().duration(750).style("opacity", 0.2)
+      d3.select("#div3").transition().duration(750).style("opacity", 0.2)
       d3.select("#resetFilters").transition().duration(750).style("opacity", 1)
       d3.select("#resetFiltersSpan").transition().duration(750).style("opacity", 1)
     }
@@ -720,7 +725,7 @@ d3.select("#resetFilters").on('click', function(d) {
   d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
   d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
   d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0)
-  d3.select("#resetFilters").transition().duration(750).style("opacity", 0.3)
+  d3.select("#resetFilters").transition().duration(750).style("opacity", 0)
 
 
 });
