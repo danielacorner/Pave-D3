@@ -51,7 +51,7 @@
 <div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
  <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
 </div> -->
- <a class="intro-start-button" style="position: fixed; left: 43vw; top: 48vw; opacity: 0; color: white; z-index: 100" id="nextLink">START</a>
+ <a class="intro-start-button" style="position: fixed; right: 5vw; top: 50vw; opacity: 0; color: white; z-index: 100" id="nextLink">START</a>
 
 <div id="rightSide">
 
@@ -60,12 +60,14 @@
 
 </div>
 <div style="position: fixed; left: 63vw; top: 53vw; z-index: 99">
-  <span id="resetFiltersSpan" style="position: fixed; top: 47vw; left: 53vw; opacity: 0">Click "Reset Filters" to reset the sliders.
-    <br><span style="font-size: 1.3vw">This button will help to speed up your exploration!</span></span>
-  <span id="sizeDropdownSpan" style="pointer-events: none; text-align: right; position: fixed; top: 51.5vw; left: 52.4vw; opacity: 0">Use the size drop-down to change&nbsp;&nbsp;&nbsp;<br>what the size of each circle represents</span>
-  <button id="resetFilters" type="button" class="btn btn-md btn-grey btn-btm" style="opacity: 0; width: 11vw; height: 3vw; box-shadow: 0px 0px 17px 7px #E6E447">
+  <span id="resetFiltersSpan" style="position: fixed; top: 49vw; left: 50vw; opacity: 0">You can click "Reset Filters" to reset the sliders.</span>
+  <span id="sizeDropdownSpan" style="pointer-events: none; text-align: right; position: fixed; top: 51vw; left: 48.4vw; opacity: 0">Use the size drop-down to change&nbsp;&nbsp;&nbsp;<br>what the size of each circle represents</span>
+  <button id="resetFilters" type="button" class="btn btn-md btn-grey" style="opacity: 0; width: 11vw; height: 3vw; box-shadow: 0px 0px 17px 7px #E6E447">
     <span style="color: white; font-size: 1.12vw;">
-      Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> </button> 
+      Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> 
+  </button> 
+  <button id="nextBtn1" class="intro-tour-button btn-arrow-right" style="margin-left: 1.5vw; display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100">NEXT</button>
+
     </div>
 
   </div>
@@ -389,18 +391,22 @@ function resetSim2() {
   setTimeout(function() { enterUpdateCircles();
     simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
 
+  
   setTimeout(function(){
+    d3.select("#sizeDropdownButton").transition().duration(700).style("opacity", 0).remove()
+    d3.select("#sizeDropdownSpan").transition().duration(700).style("opacity", 0).remove()
     d3.select("#nextLink").transition().duration(700).style("opacity", 1)
     d3.select("#nextLink").attr("href","Pave.html")
   }, 500)
+
 }
 
 sizesDropdown = d3.select("body").append("div").attr("id","sizeDropdownDiv")
 .attr("class","dropup")
 .style("position","fixed")
 .style("opacity",0)
-.style("right","27vw")
-.style("top","46.5vw")
+.style("right","5vw")
+.style("top","51.5vw")
 .append("button")
 .attr("id","sizeDropdownButton")
 .attr("class","btn btn-grey btn-primary dropdown-toggle")
@@ -411,7 +417,7 @@ sizesDropdown = d3.select("body").append("div").attr("id","sizeDropdownDiv")
 .style("border-width","0px")
 .html("Size by<br>"+currentSize+"<span class='caret'></span>")
 .append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
-.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
+.html("<li><strong>Number of Jobs</strong></li>" +
   "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
   "<li><a id='yearLink' href='#'>Years of study</a></li>" +
   "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
@@ -704,6 +710,7 @@ enterUpdateCircles = function() {
       d3.select("#div3").transition().duration(750).style("opacity", 0.2)
       d3.select("#resetFilters").transition().duration(750).style("opacity", 1)
       d3.select("#resetFiltersSpan").transition().duration(750).style("opacity", 1)
+      d3.select("#nextBtn1").transition().duration(750).style("opacity", 1)
     }
     firstTime = false;
 
@@ -724,8 +731,27 @@ d3.select("#resetFilters").on('click', function(d) {
   // fade in dropdown
   d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
   d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
-  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0)
-  d3.select("#resetFilters").transition().duration(750).style("opacity", 0)
+  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0).remove()
+  d3.select("#resetFilters").transition().duration(750).style("opacity", 0).remove()
+  d3.select("#nextBtn1").transition().duration(750).style("opacity", 0).remove()
+
+
+});
+
+d3.select("#nextBtn1").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
+
+  //   graphModeOff();
+  // }c
+  resetFilters(0);
+
+  // fade in dropdown
+  d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
+  d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
+  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0).remove()
+  d3.select("#resetFilters").transition().duration(750).style("opacity", 0).remove()
+  d3.select("#nextBtn1").transition().duration(750).style("opacity", 0).remove()
 
 
 });

@@ -306,10 +306,10 @@ div.tooltip:hover {
     -ms-transform: rotate(225deg);
 }
 .btn-arrow-left:before { /* align the "before" square to the left */
-    left: -0.8vw;
+    left: -1vw;
 }
 .btn-arrow-right:after{ /* align the "after" square to the right */
-    right: -1vw;
+    right: -1.2vw;
 }
 .btn-arrow-right:after,
 .btn-arrow-left:before { /* bring arrow pointers to front */
