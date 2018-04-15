@@ -2328,6 +2328,8 @@ d3.select("#resetFilters").on('click', function(d) {
 });
 
 resetFilters = function(mode) {
+  graph = store;
+  hideAll();
   hideGraphViewCallout();
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
@@ -2782,10 +2784,19 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("id", i)
   .call(d3.drag()
     .on("start.interrupt", function() {
+
       sliderMulti[event.target.id].interrupt();
+    
     }) // drag update function
     .on("start drag", function() {
-      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      // jam sliders at n <= 10
+      // if(graph.length <= 10){
+        // jamSliders()
+      // } else { 
+        // unjamSliders() 
+        updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      // }
+    
     }));
 
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
@@ -3124,18 +3135,24 @@ function updateMulti(h, mode) {
  
   // using the slider handle
   var sliderID = event.target.id;
-  handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
+  console.log(graph.length)
+  // jam sliders at n <= 10
+  if(graph.length > 10){
+    // jamSliders()
+    handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
+  }
 
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
 
+  if(graph.length > 10){
   //  UPDATE
   circles = circles.data(filterAll(), function(d) { return d.id });
-  
+    
   // EXIT
-  circles.exit().transition().duration(300)
+  circles.exit().transition().duration(500)
   // exit transition: "pop" radius * 1.5 + 5 & fade out
-  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attr("r", function(d) { return d.radius * 2.1 + 5 })
   .attrTween("opacity", function(d) {
     var i = d3.interpolate(1, 0);
     return function(t) { return d.opacity = i(t); };
@@ -3207,14 +3224,15 @@ function updateMulti(h, mode) {
           break;
         }
 
-  } else if (futureMode == 1) {
-    circles
-    .attr("cx", function(d){ return futurePositions[d.id][0] })
-    .attr("cy", function(d){ return futurePositions[d.id][1] })
-    .attr("r", function(d) { return d.radius; })
-    .style("fill", function(d) { return d.color; })
-    .style("stroke", "black")
+  // } else if (futureMode == 1) {
+  //   circles
+  //   .attr("cx", function(d){ return futurePositions[d.id][0] })
+  //   .attr("cy", function(d){ return futurePositions[d.id][1] })
+  //   .attr("r", function(d) { return d.radius; })
+  //   .style("fill", function(d) { return d.color; })
+  //   .style("stroke", "black")
   }
+} // end if graph length > 10
 };//end updateMulti
 
 
@@ -3227,12 +3245,13 @@ graphViewCallout = function() {
   d3.select("#graph").style("box-shadow","0px 0px 17px 7px #E6E447")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",1)
   d3.select("#graphCallout2").transition().duration(400).style("opacity",1)
-    
+  d3.select("#resetFilters").style("box-shadow","0px 0px 17px 7px #E6E447")  
 }
 
 // hide
 hideGraphViewCallout = function() {
   d3.select("#graph").style("box-shadow","3px 3px 17px grey")
+  d3.select("#resetFilters").style("box-shadow","3px 3px 17px grey")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
   d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
@@ -3268,14 +3287,6 @@ function calloutCheck() {
 
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
-// bookmarklet
-
-// TODO:
-// - jam/disable the filters and callout at 10 jobs left
-
-// current structure:
-// each time a slider is moved, nodes(filterAll()) is called
-// 
 
 filterAll = function() {
   calloutCheck()
@@ -3291,7 +3302,7 @@ filterAll = function() {
     // put you on the list if the slider position is above your value:
       
     // for each slider
-    for(var s=0; s<sliderPositionsArray.length; s++){        
+    for(var s in sliderPositionsArray){        
       // if the slider position is above your value  &  if you're not already on the list
       if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
         // put you on the list
@@ -3489,8 +3500,8 @@ d3.select("body").append("div")
         .attr("src","img/search.png")
         .attr("height","40")
         .attr("width","40")
-        .on("mouseenter", function(){expandSearch()})
-        .on("click", function(){d3.select("#searchDiv").transition().duration(500).style("opacity",0)})
+        // .on("mouseenter", function(){expandSearch()})
+        .on("click", function(){expandSearch()})
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
@@ -3498,7 +3509,7 @@ var searchDiv = d3.select("body")
     .style("height", "39px")
     .style("position", "absolute")
     .style("top", "32px")
-    .style("right", "82px")
+    .style("right", "102px")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
     .style("border-radius", "7px")
@@ -3519,13 +3530,18 @@ var searchExpanded = 0;
 
 function expandSearch() {
 
-  searchExpanded = 1;
-  if(searchExpanded == 1){
+  if(searchExpanded == 0){
     d3.select("#searchDiv")
       .transition().duration(500).style("width", window.innerWidth/2 - 60 + "px").style("opacity", 1)
     d3.select("#jobTitle").transition().duration(500).style("opacity","1")
     // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
+    searchExpanded = 1;
 
+  } else if(searchExpanded==1){
+    d3.select("#searchDiv")
+      .transition().duration(500).style("width", 0 + "px").style("opacity", 0)
+    d3.select("#jobTitle").transition().duration(500).style("opacity","1")
+    searchExpanded = 0;
   }
 }
 
@@ -3537,9 +3553,9 @@ function searchJobTitles() {
   circles = circles.data(filterBySearch(), function(d) { return d.id });
   
   // EXIT
-  circles.exit().transition().duration(300)
+  circles.exit().transition().duration(500)
   // exit transition: "pop" radius * 1.5 + 5 & fade out
-  .attr("r", function(d) { return d.radius * 1.5 + 5 })
+  .attr("r", function(d) { return d.radius * 0 })
   .attrTween("opacity", function(d) {
     var i = d3.interpolate(1, 0);
     return function(t) { return d.opacity = i(t); };

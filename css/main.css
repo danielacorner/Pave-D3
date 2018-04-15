@@ -183,8 +183,8 @@ img.search-img:hover {
   border: none;
   background: none;
   border-radius: 12px;
-  box-shadow: 3px 3px 3px grey;
-  margin: -2px 2px 0px 0px;
+  box-shadow: 0px 0px 12px grey;
+  /*margin: -2px 2px 0px 0px;*/
 }
 button.submit-btn:hover {
   background: #eaeaea;

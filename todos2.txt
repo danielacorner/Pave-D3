@@ -4,15 +4,13 @@ ideas:
 ------------------------------------------
 todos
 
+
 current:
-- pause/jam filters at n = 10
-- or lower maximum slider positions to leave n = 10
 
 
 top5:
 
-- fix viz position at medium screen size
-
+- fix viz position at medium/all screen sizes
 
 - fix tooltip extra divs to animate closed behind original div
 
