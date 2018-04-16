@@ -153,6 +153,24 @@ function resize() {
     circles.attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
   }
 
+  graphYtranslate = window.innerHeight*0.14;
+
+  // Add an axis-holder group
+  if(typeof axisG != "undefined") {
+    console.log("!hello")
+    axisG.attr("transform", "translate(0," + graphYtranslate + ")");
+    // Add the X Axis
+    // axisX.attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*0.43+")");
+    // // .call(d3.axisBottom(x).ticks(5))
+    // // text label for the x axis
+    // axisLabelX.attr("transform", "translate("+window.innerWidth*0.50+","+window.innerHeight*0.5+")")
+
+    // // Add the Y Axis
+    axisY.attr("transform", "translate("+window.innerWidth*0.23+","+( -15 )+")")
+
+  }
+
+
   if(window.innerWidth<641){ // Phones
     margin = {top: 20, right: 12, bottom: 20, left: 12}
   }
@@ -791,31 +809,36 @@ var graphMode;
 
         "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
         "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
-        "JobBank Info Page</a><br>"+
+        "Job details page</a><br>"+
 
-        "<a id='btnVolunteer' class='btn btn-sm' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
-        "Volunteer Canada</a><br>"+
+        // "<a id='btnVolunteer' class='btn btn-sm' "+
+        // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
+        // "Volunteer Canada</a><br>"+
 
         "<br><br><span style='margin-left: -20px; color: white;'>"+
-        "View listings for this job:</span>"+
+        "This section is currently under construction...</span>"+
 
         "<div align='right' style='margin: 10px 0px 20px 0px'>"+
         "<a id='btnIndeed' class='btn btn-sm' "+
         "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
-        "&nbspIndeed.ca&nbsp</a><br>"+
+        "'>"+
+        "&nbspcoming soon&nbsp</a><br>"+
 
-        "<a id='btnGlassdoor' class='btn btn-sm' "+
-        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
-        "&nbspGlassdoor.ca&nbsp</a><br>"+
+        // "<a id='btnIndeed' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
+        // "&nbspIndeed.ca&nbsp</a><br>"+
 
-        "<a id='btnMonster' class='btn btn-sm' "+
-        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
-        "&nbspMonster.ca&nbsp</a><br>"+
+        // "<a id='btnGlassdoor' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
+        // "&nbspGlassdoor.ca&nbsp</a><br>"+
+
+        // "<a id='btnMonster' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
+        // "&nbspMonster.ca&nbsp</a><br>"+
 
         "</div></div>")
           
@@ -1730,7 +1753,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.y, 
                 // y = Automation Risk
-                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1747,7 +1770,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate);
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1764,7 +1787,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate);
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1781,7 +1804,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1798,7 +1821,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(futurePositions[d.id][1], 
                 // y = Automation Risk
-                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1855,7 +1878,7 @@ var compressY = 0.65;
 
     }
 
-  graphYtranslate = window.innerHeight*0.12;
+  graphYtranslate = window.innerHeight*0.14;
 
   // Add an axis-holder group
   axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
@@ -1866,7 +1889,7 @@ var compressY = 0.65;
   axisX = axisG.append("g")
   .attr("class", "axis")
   .attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*0.43+")")
-  .call(d3.axisBottom(x).ticks(5))
+  .call(d3.axisBottom(x).ticks(5)).attr("id","axisX")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
   // text label for the x axis
   axisLabelX = axisG.append("text")
@@ -1879,8 +1902,8 @@ var compressY = 0.65;
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*-0.015+")")
- .call(d3.axisLeft(y).ticks(5))
+ .attr("transform", "translate("+window.innerWidth*0.23+","+( -15 )+")")
+ .call(d3.axisLeft(y).ticks(4)).attr("id","axisY")
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
@@ -2344,7 +2367,7 @@ resetFilters = function(mode) {
       resetSimulation();
     } 
   } else if (graphMode == 1) {
-    
+
       switch (mode) {
 
         case 0:
@@ -2352,7 +2375,7 @@ resetFilters = function(mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 })
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 1:
@@ -2360,7 +2383,7 @@ resetFilters = function(mode) {
             // x = Years of Study
           .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
 
         case 2:
@@ -2368,7 +2391,7 @@ resetFilters = function(mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
@@ -2377,7 +2400,7 @@ resetFilters = function(mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 4:
@@ -2385,7 +2408,7 @@ resetFilters = function(mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 5: // graph mode off
@@ -3230,7 +3253,7 @@ function updateMulti(h, mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 })
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 1:
@@ -3238,7 +3261,7 @@ function updateMulti(h, mode) {
             // x = Years of Study
           .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
 
         case 2:
@@ -3246,7 +3269,7 @@ function updateMulti(h, mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
@@ -3255,7 +3278,7 @@ function updateMulti(h, mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 4:
@@ -3263,7 +3286,7 @@ function updateMulti(h, mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
         case 5: // graph mode off
@@ -3378,6 +3401,30 @@ filterAll = function() {
       })
     };
   });
+
+  // bookmarklet
+  // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
+  // todo: separate main and subslider for loops
+
+  // var sliderArray = [
+  // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+  //     // subskills
+  //     "s8OralCommunication","s10Reading","s14Writing",
+      
+  //     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+      
+  //     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+        
+  //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+  // ];
+
+
+  // for(var i=0; i<sliderArray.length; i++) {
+  //   var thisMinimum = d3.min(graph, function(d){ return d[sliderArray[i]] })
+  //   handleArray[i].attr("cx", sliderScaleArray[i](thisMinimum)); // move the slider handle
+  //   // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+  // };
+
   return graph;
 }
 
@@ -3769,14 +3816,6 @@ var subSliderDivComp;
       .style("border-radius", "16px")
       .style("visibility", "hidden")
       .style("background", "white")
-
-// createSubSliders(sliderArrayLang, sliderTitlesArrayLang, 1, 4);
-
-// createSubSliders(sliderArrayLogi, sliderTitlesArrayLogi, 1, 8);
-
-// createSubSliders(sliderArrayMath, sliderTitlesArrayMath, 3, 12);
-
-// createSubSliders(sliderArrayComp, sliderTitlesArrayComp, 3, 16);
 
 // div heights
 var heightLang = window.innerHeight*0.24,
