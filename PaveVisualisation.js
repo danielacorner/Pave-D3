@@ -564,7 +564,7 @@ d3.select("#chart").on("click", function(d){
 
 
 function showToolTip(duration) {
-      // d3.select("#tooltip").transition().duration(duration).style("opacity",1)
+      d3.select("#tooltip").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip0").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip1").transition().duration(duration).style("opacity",1)
       d3.select("#tooltip2").transition().duration(duration).style("opacity",1)
@@ -576,6 +576,7 @@ function showToolTip(duration) {
 
 function hideToolTip(duration) {
       // fade out each tooltip contents object
+      d3.select("#tooltip").transition().duration(duration).style("opacity",0)
       d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
       d3.select("#tooltip1").transition().duration(duration).style("opacity",0).remove()
       d3.select("#tooltip2").transition().duration(duration).style("opacity",0).remove()
@@ -2474,6 +2475,7 @@ enterUpdateCircles = function() {
       // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
       // tooltipSmall(d);}
       })
+
   drag_handler(newCircles);
   //  ENTER + UPDATE
   circles = circles.merge(newCircles);
@@ -2807,8 +2809,13 @@ function createSliders(createSliderArray, sliderTitlesArray){
       miniTooltip.transition().duration(200)
       .style("opacity",.9)
       miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
-      .style("left", (event.pageX - 64) + "px")
-      .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
+      // .style("left", (event.pageX - 64) + "px")
+      
+      if($(event.target).attr('class') == 'track-overlay'){
+        miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
+      }
+
+      graph.length >= 10 ? miniTooltip.style("left", (event.pageX - 65) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
 
       graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
 
@@ -3619,13 +3626,13 @@ function searchJobTitles() {
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
     .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
-  } else if (futureMode == 1) {
-    circles
-    .attr("cx", function(d){ return futurePositions[d.id][0] })
-    .attr("cy", function(d){ return futurePositions[d.id][1] })
-    .attr("r", function(d) { return d.radius; })
-    .style("fill", function(d) { return d.color; })
-    .style("stroke", "black")
+  // } else if (futureMode == 1) {
+  //   circles
+  //   .attr("cx", function(d){ return futurePositions[d.id][0] })
+  //   .attr("cy", function(d){ return futurePositions[d.id][1] })
+  //   .attr("r", function(d) { return d.radius; })
+  //   .style("fill", function(d) { return d.color; })
+  //   .style("stroke", "black")
   }
 
   // if no search results, display warning message
