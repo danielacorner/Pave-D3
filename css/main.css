@@ -344,7 +344,7 @@ div.tooltip:hover {
   display: inline;
   font-size: 20px;
   width: 100%;
-  line-height: 3.5;
+  line-height: 3.8;
   color: rgba(0, 0, 0, 0.8);
   content: "\25BC";
   position: absolute;

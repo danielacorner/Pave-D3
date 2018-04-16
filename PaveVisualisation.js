@@ -2809,7 +2809,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
       miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
       .style("left", (event.pageX - 64) + "px")
       .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
-      
+
+      graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
+
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
     
@@ -3140,6 +3142,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
           .style("left", (event.pageX - 64) + "px")
           .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
+
+          graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
