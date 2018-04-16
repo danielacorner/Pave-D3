@@ -6,10 +6,8 @@ todos
 
 
 current:
+
 - fix viz position at medium/all screen sizes
-- callout at the slider handle jamming
-- float number of jobs left could appear above the circle in tiny tooltip "30 job groups \n remain"
-- flash when under a certain number (with warning)
 
 
 - change the background colour of the screen?
@@ -17,6 +15,8 @@ current:
 
 top5:
 
+- callout at the slider handle jamming
+- flash when under a certain number (with warning)
 
 - fix tooltip extra divs to animate closed behind original div
 

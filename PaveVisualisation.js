@@ -149,8 +149,9 @@ resize();
 d3.select(window).on("resize", resize);
 // resize the window
 function resize() {
-  width = window.innerWidth/1.5, // set chart dimensions
-  height = window.innerHeight/1.5;
+  if(typeof circles != "undefined"){
+    circles.attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+  }
 
   if(window.innerWidth<641){ // Phones
     margin = {top: 20, right: 12, bottom: 20, left: 12}
@@ -472,8 +473,9 @@ var miniTooltip;
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
-.append('svg').style("position","absolute").style("z-index", "-1")   
-.attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
+  .append('svg').style("position","absolute").style("z-index", "-1")
+  // .attr("transform","translate(500px,0px)")
+// .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
 // .attr('transform', 'translate('+width/2+','+height/2+')');
 
@@ -489,7 +491,7 @@ circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
+    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
     .attr("id",function(d) { return "circle_"+d.id })
     .attr("class","jobCircle")
     .style("z-index", -1)
@@ -2632,7 +2634,14 @@ function createLegend(mode) {
 
 
 ///////////////////////////////// Filters ////////////////////////////////////
-
+var sliderSideTranslate = 9;
+if(window.innerWidth >= 1007) {
+  sliderSideTranslate = window.innerWidth*0.01
+  d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
+  d3.select(".search-div").style("right", window.innerWidth*0.0094 + "vw")
+}
+var sliderHeightTranslate = 9;
+// d3.select("#titleBar").style("margin-left","14vw")
 //////////////// Filter Sliders 2: Multiple Sliders from an Array //////////////////////
 
 createSliders(sliderArrayMain, sliderTitlesArrayMain);
@@ -2650,20 +2659,20 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
   // Top row
   if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
-    xtrans = 9;
-    ytrans = 9;
+    xtrans = sliderSideTranslate;
+    ytrans = sliderHeightTranslate;
     topOrBottom = "top";
   }
 	// Right column
 	if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
-		// xtrans = 9;
+		// xtrans = sliderSideTranslate;
     leftOrRight = "right";
     // posn = "fixed";
 	}
    // Bottom row
   if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
-    xtrans = 9;
-    ytrans = 9;
+    xtrans = sliderSideTranslate;
+    ytrans = sliderHeightTranslate;
     topOrBottom = "bottom";
   }
   // Left column
@@ -3541,6 +3550,8 @@ var searchExpanded = 0;
 
 d3.select("body").append("div")
   .attr("class", "search-div")
+  .style("position","absolute")
+  .style("right","9%")
   .append("span")
     .append("button").attr("id","searchButtonPC").attr("class","search-btn")
       .append("img").attr("id","searchImg").attr("class","search-img")
