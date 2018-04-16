@@ -459,26 +459,9 @@ var div = d3.select("body").append("div").style("width", "360px").style("border-
 var div2;
 var miniTooltip;
 
-// var miniTooltip = d3.select("body").append("div")
-//     .attr("class", "minitooltip")
-//     .style("opacity", 0);
-
-// .style("z-index", 99)
-// .style("position", "absolute")
-// .style("opacity", 0);
-
-// var div2 = d3.select("body").append("div")
-// .style("opacity", 0)
-// .attr("transform", "translate(0," + 200 + ")");
-
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
   .append('svg').style("position","absolute").style("z-index", "-1")
-  // .attr("transform","translate(500px,0px)")
-// .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
-
-// .attr('transform', 'translate('+width/2+','+height/2+')');
-
 
 var stretch_y = 1.7;
 var compress_y = 0.7;
@@ -2429,7 +2412,7 @@ function resetSimulation() {
 enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
+    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
     .attr("class","jobCircle")
 
