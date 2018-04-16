@@ -456,6 +456,12 @@ simulation = d3.forceSimulation()
 // Tooltip div (on hover)
 var div = d3.select("body").append("div").style("width", "360px").style("border-radius", "6px").attr("id","tooltip")
 var div2;
+var miniTooltip;
+
+// var miniTooltip = d3.select("body").append("div")
+//     .attr("class", "minitooltip")
+//     .style("opacity", 0);
+
 // .style("z-index", 99)
 // .style("position", "absolute")
 // .style("opacity", 0);
@@ -2735,7 +2741,6 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
 
   sliderSVGArray[i].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
-
   var mainSlidersWidth = 223;
   var reductionFactor = 0.7;
 
@@ -2782,22 +2787,33 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
   .attr("id", i)
+  .on("mouseout", function() {
+    miniTooltip.transition().duration(500)
+    .style("opacity",0)
+  })
   .call(d3.drag()
     .on("start.interrupt", function() {
-
       sliderMulti[event.target.id].interrupt();
-    
     }) // drag update function
     .on("start drag", function() {
-      // jam sliders at n <= 10
-      // if(graph.length <= 10){
-        // jamSliders()
-      // } else { 
-        // unjamSliders() 
-        updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      if(typeof miniTooltip == "undefined"){
+        miniTooltip = d3.select("body").append("div")
+          .attr("class", "minitooltip")
+          .style("opacity", 0);
+      }
+      // show mini tooltip indicating how many job groups remain
+      miniTooltip.transition().duration(200)
+      .style("opacity",.9)
+      miniTooltip.html(graph.length + " job groups<br>remain")
+      .style("left", (event.pageX - 64) + "px")
+      .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
+      
+      console.log(event.pageX)
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
     
-    }));
+    })
+  );
 
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
     .attr("class", "handle")
@@ -3105,7 +3121,9 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           sliderMulti[event.target.id].interrupt();
         }) // drag update function
         .on("start drag", function() {
+
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+        
         }));
 
     handleArray[i+j] = sliderMulti[i+j].insert("circle", ".track-overlay")
@@ -3135,7 +3153,6 @@ function updateMulti(h, mode) {
  
   // using the slider handle
   var sliderID = event.target.id;
-  console.log(graph.length)
   // jam sliders at n <= 10
   if(graph.length > 10){
     // jamSliders()

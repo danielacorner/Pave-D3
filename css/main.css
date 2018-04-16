@@ -327,3 +327,27 @@ div.tooltip:hover {
     margin-bottom: 15px;
     border-radius: 12px;
 }
+
+.minitooltip {
+  position: absolute;
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.minitooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 20px;
+  width: 100%;
+  line-height: 3.5;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  left: 55px;
+  pointer-events: none;
+}
