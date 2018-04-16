@@ -7,16 +7,26 @@ todos
 
 current:
 
-- fix viz position at medium/all screen sizes
+- update size legend "more less" & reposition button
 
+next:
+- add "more, less" green, red arrows to graph view
+- remove / simplify "view more" tooltip 3
 
-- change the background colour of the screen?
+- add all tooltips to tutorial
+	- page 2 & 3 circle tooltips
+	- page 3 slider tooltips
+
+- create mobile layout (<=640px)
+  - reposition sliders below circles
+  - combine all buttons above circles
 
 
 top5:
 
 - callout at the slider handle jamming
 - flash when under a certain number (with warning)
+- change the background colour of the screen?
 
 - fix tooltip extra divs to animate closed behind original div
 

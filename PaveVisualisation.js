@@ -1724,13 +1724,13 @@ function graphModeOn(mode) {
             .attrTween("cx", function(d) { // transition x position to...
               var i = d3.interpolate(d.x, 
                 // x = Number of Jobs
-                d.workers/maxWorkers*width*0.95 - width*0.57);
+                d.workers/maxWorkers*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.y, 
                 // y = Automation Risk
-                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1741,13 +1741,13 @@ function graphModeOn(mode) {
             .attrTween("cx", function(d) {
               var i = d3.interpolate(d.cx, 
                 // x = Years of Study
-                d.yearsStudy/maxYearsStudy*width*0.9 - width/2);
+                d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1758,13 +1758,13 @@ function graphModeOn(mode) {
             .attrTween("cx", function(d) {
               var i = d3.interpolate(d.cx, 
                 // x = Number of Jobs
-                d.workers/maxWorkers*width*0.95 - width*0.57);
+                d.workers/maxWorkers*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1775,13 +1775,13 @@ function graphModeOn(mode) {
             .attrTween("cx", function(d) { // transition x position to...
               var i = d3.interpolate(d.cx, 
                 // x = Number of Jobs
-                d.workers/maxWorkers*width*0.95 - width*0.57);
+                d.workers/maxWorkers*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1792,13 +1792,13 @@ function graphModeOn(mode) {
             .attrTween("cx", function(d) { // transition x position to...
               var i = d3.interpolate(futurePositions[d.id][0], 
                 // x = Number of Jobs
-                d.workers/maxWorkers*width*0.95 - width*0.57);
+                d.workers/maxWorkers*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(futurePositions[d.id][1], 
                 // y = Automation Risk
-                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+                (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -1813,7 +1813,7 @@ function graphModeOn(mode) {
   //////////////////////// Axes ////////////////////////////
 var compressY = 0.65;
   // Set the ranges
-  var x = d3.scaleLinear().range([0, width]);
+  var x = d3.scaleLinear().range([0, width*0.75]);
   var y = d3.scaleLinear().range([height*compressY, 0]);
 
    switch (mode) {
@@ -1864,29 +1864,29 @@ var compressY = 0.65;
 
   // Add the X Axis
   axisX = axisG.append("g")
- .attr("class", "axis")
- .attr("transform", "translate("+window.innerWidth*-0.05+","+window.innerHeight*0.31+")")
- .call(d3.axisBottom(x).ticks(5))
- .style("opacity", 0).transition().duration(500).style("opacity",1);
-   // text label for the x axis
+  .attr("class", "axis")
+  .attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*0.43+")")
+  .call(d3.axisBottom(x).ticks(5))
+  .style("opacity", 0).transition().duration(500).style("opacity",1);
+  // text label for the x axis
   axisLabelX = axisG.append("text")
-  .attr("transform", "translate("+window.innerWidth*0.33+","+window.innerHeight*0.36+")")
+  .attr("transform", "translate("+window.innerWidth*0.50+","+window.innerHeight*0.5+")")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-  d3.select("yaxis").remove();
+   d3.select("yaxis").remove();
 
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+window.innerWidth*-0.05+","+window.innerHeight*-0.14+")")
+ .attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*-0.015+")")
  .call(d3.axisLeft(y).ticks(5))
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", "-10vw")
-  .attr("x", "-10vh")
+  .attr("y", "17vw")
+  .attr("x", "-20vh")
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
@@ -1901,9 +1901,10 @@ var compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
+
             axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.html("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Years of Study
@@ -2343,47 +2344,48 @@ resetFilters = function(mode) {
       resetSimulation();
     } 
   } else if (graphMode == 1) {
+    
       switch (mode) {
 
         case 0:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57 })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 })
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 1:
           circles
             // x = Years of Study
-          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2})
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
           break;
 
         case 2:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 4:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 5: // graph mode off
@@ -2392,7 +2394,15 @@ resetFilters = function(mode) {
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
         }
-   };
+
+  // } else if (futureMode == 1) {
+  //   circles
+  //   .attr("cx", function(d){ return futurePositions[d.id][0] })
+  //   .attr("cy", function(d){ return futurePositions[d.id][1] })
+  //   .attr("r", function(d) { return d.radius; })
+  //   .style("fill", function(d) { return d.color; })
+  //   .style("stroke", "black")
+  }
 };
 
 
@@ -3218,42 +3228,42 @@ function updateMulti(h, mode) {
         case 0:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57 })
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 })
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 1:
           circles
             // x = Years of Study
-          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.9 - width/2})
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
           break;
 
         case 2:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.53 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
         case 3:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 4:
           circles
             // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.95 - width*0.57})
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.53 + graphYtranslate});
           break;
 
         case 5: // graph mode off
