@@ -2788,8 +2788,10 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("class", "track-overlay")
   .attr("id", i)
   .on("mouseout", function() {
-    miniTooltip.transition().duration(500)
-    .style("opacity",0)
+    if(typeof miniTooltip != "undefined"){
+      miniTooltip.transition().duration(500)
+      .style("opacity",0)
+    }
   })
   .call(d3.drag()
     .on("start.interrupt", function() {
@@ -3116,8 +3118,10 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("class", "track-overlay")
       .attr("id", i+j)
       .on("mouseout", function() {
-        miniTooltip.transition().duration(500)
-        .style("opacity",0)
+        if(typeof miniTooltip != "undefined"){
+          miniTooltip.transition().duration(500)
+          .style("opacity",0)
+        }
       })
 
       .call(d3.drag()
