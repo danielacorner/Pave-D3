@@ -2804,11 +2804,10 @@ function createSliders(createSliderArray, sliderTitlesArray){
       // show mini tooltip indicating how many job groups remain
       miniTooltip.transition().duration(200)
       .style("opacity",.9)
-      miniTooltip.html(graph.length + " job groups<br>remain")
+      miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
       .style("left", (event.pageX - 64) + "px")
       .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
       
-      console.log(event.pageX)
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
     
@@ -3116,11 +3115,27 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("x2", sliderScaleArray[i+j].range()[1])
       .attr("class", "track-overlay")
       .attr("id", i+j)
+      .on("mouseout", function() {
+        miniTooltip.transition().duration(500)
+        .style("opacity",0)
+      })
+
       .call(d3.drag()
         .on("start.interrupt", function() {
           sliderMulti[event.target.id].interrupt();
         }) // drag update function
         .on("start drag", function() {
+          if(typeof miniTooltip == "undefined"){
+            miniTooltip = d3.select("body").append("div")
+            .attr("class", "minitooltip")
+            .style("opacity", 0);
+          }
+          // show mini tooltip indicating how many job groups remain
+          miniTooltip.transition().duration(200)
+          .style("opacity",.9)
+          miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
+          .style("left", (event.pageX - 64) + "px")
+          .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
