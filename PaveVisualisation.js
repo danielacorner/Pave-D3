@@ -3423,18 +3423,17 @@ filterAll = function() {
   // ];
 
   // Main sliders
-  // for(var i=0; i<4; i++) {
-  //   var thisMinimum = d3.min(graph, function(d){ return d[sliderArray[i]] })
-  //   handleArray[i].attr("cx", sliderScaleArray[i](thisMinimum)); // move the slider handle
-  //   sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
-  // };
+  for(var i=0; i<4; i++) {
+    var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+    handleArray[i].attr("cx", thisMinimum); // move the slider handle
+    // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+  };
 
-  // // Main sliders
-  // for(var i=4; i<sliderArray.length; i++) {
-  //   var thisMinimum = d3.min(graph, function(d){ return d[sliderArray[i]] })
-  //   handleArray[i].attr("cx", sliderScaleArray[i](thisMinimum)); // move the slider handle
-  //   sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
-  // };
+  // Subskill sliders
+  for(var i=4; i<sliderArray.length; i++) {
+    var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+    handleArray[i].attr("cx", thisMinimum); // move the slider handle
+  };
 
   return graph;
 }
