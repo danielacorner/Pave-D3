@@ -158,7 +158,7 @@
 										Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" src="img/toggle-off.png"></img>
 									</button>
 									
-									<div align="center" id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: fixed; left: 36%; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea;">
+									<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea;">
 										Click here to compare these jobs.
 										<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
 									</div>
@@ -172,12 +172,6 @@
 									</div>
 								</div> <!-- end of viewButtons -->
 							</div> <!-- end of topButtons -->
-
-
-									<div align="center" id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: fixed; left: 34%; top: 70%; height: 50px; width: 360px; background: #eaeaea;">
-										<span style="color: #FE2E2E">Warning:</span> not many job groups remain!
-									</div>
-
 
 							<!-- suggested views buttons -->
 							<div id="suggestedViewsDiv" style="position: fixed; bottom: 50vh; right: 3%; display: none;">
@@ -250,23 +244,33 @@ else if(viewsMinimized == 0){
 <!-- The data visualization -->
 <script src="PaveVisualisation.js"></script>
 
+
 <div id="bottomButtons" class="col-4" align="center" style="position: fixed; bottom: 10vh; left: 33vw; z-index: 99">
+
 	<!-- Reset, pause, play buttons -->
 	<div id="playPauseDiv" align="center">
 
 		<button id="resetFilters" type="button" class="btn btn-md btn-grey">
 			<span style="color: white; padding-right: 6px;">
-			Reset Filters </span> <i class="fa fa-undo-alt"></i></button> 
+			Reset Filters </span> <i class="fa fa-undo-alt"></i>
+		</button> 
 
-			<button id="pause" type="button" class="btn btn-grey" style="margin-left: 1%;">
-				<span style="color: white; padding-right: 6px;">
-				Pause</span> <i class="fa fa-pause"></i></button>
+		<button id="pause" type="button" class="btn btn-grey" style="margin-left: 1%;">
+			<span style="color: white; padding-right: 6px;">
+			Pause</span> <i class="fa fa-pause"></i>
+		</button>
 
-				<button id="unpause" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey">
-					<span style="color: white; padding-right: 6px;">
-					Play</span> <i class="fa fa-play"></i></button>
+		<button id="unpause" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey">
+			<span style="color: white; padding-right: 6px;">
+			Play</span> <i class="fa fa-play"></i>
+		</button>
 
-				</div>
+	</div>
+
+	<!-- low filter level warning callout -->
+	<div id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea;">
+		<span style="color: #FE2E2E">Warning:</span> not many job groups remain!
+	</div>
 
 </div>
 <!-- end of centerDiv -->

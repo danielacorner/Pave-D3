@@ -2844,9 +2844,8 @@ function createSliders(createSliderArray, sliderTitlesArray){
       if($(event.target).attr('class') == 'track-overlay'){
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
       }
-
-      // graph.length >= 10 ? miniTooltip.style("left", (d3.select("#handle_"+this.id). - 65) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
-
+                  // (d3.select("#handle_"+this.id)
+      graph.length >= 10 ? miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
       graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
 
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
@@ -2968,7 +2967,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     // var leftOrRight = sliderLeftRightMap.get(subSliderTitlesArray[i])
 
     // Title & SVG
-    sliderSVGArray[i+j] = d3.select("#btnSubsliders_"+appendToDiv)
+    sliderSVGArray[(i+j)] = d3.select("#btnSubsliders_"+appendToDiv)
       .append("div").style("display","inline")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
@@ -3004,8 +3003,8 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("color", "#49AC52")
         .style("font-weight", "bold")
         .style("font-family", "Raleway")
-        .html("<div id='notmuchlots_"+i+j+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
-          +"<span id='notmuchSpan_"+i+j+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
+        .html("<div id='notmuchlots_"+(i+j)+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+          +"<span id='notmuchSpan_"+(i+j)+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
           +"Lots</div>")
         .select(function() {
         return this.parentNode;
@@ -3018,103 +3017,103 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("position", "absolute")
         .style("top", window.innerHeight*0.0215+"px") // y position
         // .style("margin-left", -xtranslate+"%") // x position
-        .attr("id", "slider_"+i+j)
+        .attr("id", "slider_"+(i+j))
         .attr("width", 280)
         .attr("height", 50);
 
 
      
-    // sliderSVGArray[i+j].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
+    // sliderSVGArray[(i+j)].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
 
     // hide until shown
-    sliderSVGArray[i+j].style("display","none")
-    // d3.select("#sliderDiv2_"+sliderArray[i+j]).style("visibility", "hidden")
-    d3.select("#notmuchlots_"+i+j).style("visibility", "hidden")
+    sliderSVGArray[(i+j)].style("display","none")
+    // d3.select("#sliderDiv2_"+sliderArray[(i+j)]).style("visibility", "hidden")
+    d3.select("#notmuchlots_"+(i+j)).style("visibility", "hidden")
     d3.select("#sliderDiv_"+subSliderArray[i]).style("visibility", "hidden")
 
     var slidersWidth = 230;
     var reductionFactorSubskills = 0.6; // reduce the subskill slider ranges to 60% to avoid over-filtering
 
     // Scale
-    sliderScaleArray[i+j] = d3.scaleLinear()
+    sliderScaleArray[(i+j)] = d3.scaleLinear()
       .domain([0, d3.max(nodes, function(d){ return d[subSliderArray[i]]}) * reductionFactorSubskills ])
       .range([0, slidersWidth]) // Width
       .clamp(true);
 
     if(["Oral Communication"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 43 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Reading"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 49 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Writing"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 55 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Job Task Planning and Organizing"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 23 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Critical Thinking"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 20 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Problem Solving"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 23 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Document Use"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 33 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Data Analysis"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 25 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Finding Information"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 20 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Digital Technology"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 58 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Measurement and Calculation"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 31 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Scheduling or Budgeting and Accounting"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 28 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
     }
     if(["Numerical Estimation"].includes(subSliderTitlesArray[i])){
-      sliderScaleArray[i+j] = d3.scaleLinear()
+      sliderScaleArray[(i+j)] = d3.scaleLinear()
         .domain([0, 11 * reductionFactorSubskills ])
         .range([0, slidersWidth]) // Width
         .clamp(true);      
@@ -3128,34 +3127,34 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     // }
    
    // Slider
-    sliderMulti[i+j] = sliderSVGArray[i+j].append("g") // switch to SVG with viewBox?
+    sliderMulti[(i+j)] = sliderSVGArray[(i+j)].append("g") // switch to SVG with viewBox?
       .attr("class", "slider")
       // .style("z-index", 99)
       .attr("transform", "translate(" + (15+xtranslate) + "," + 25 + ")");
 
       // track
-      sliderMulti[i+j].append("line")
+      sliderMulti[(i+j)].append("line")
       .attr("class", "track")
       // .style("z-index", 98)
-      .attr("x1", sliderScaleArray[i+j].range()[0])
-      .attr("x2", sliderScaleArray[i+j].range()[1])
+      .attr("x1", sliderScaleArray[(i+j)].range()[0])
+      .attr("x2", sliderScaleArray[(i+j)].range()[1])
       .select(function() {
         return this.parentNode;
       }) // inset
       .append("line")
       // .style("z-index", 98)
-      .attr("x1", sliderScaleArray[i+j].range()[0])
-      .attr("x2", sliderScaleArray[i+j].range()[1])
+      .attr("x1", sliderScaleArray[(i+j)].range()[0])
+      .attr("x2", sliderScaleArray[(i+j)].range()[1])
       .attr("class", "track-inset")
       .select(function() {
         return this.parentNode;
       }) // overlay
       .append("line")
       // .style("z-index", 99)
-      .attr("x1", sliderScaleArray[i+j].range()[0])
-      .attr("x2", sliderScaleArray[i+j].range()[1])
+      .attr("x1", sliderScaleArray[(i+j)].range()[0])
+      .attr("x2", sliderScaleArray[(i+j)].range()[1])
       .attr("class", "track-overlay")
-      .attr("id", i+j)
+      .attr("id", (i+j))
       .on("mouseout", function() {
         if(typeof miniTooltip != "undefined"){
           miniTooltip.transition().duration(500)
@@ -3186,7 +3185,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         
         }));
 
-    handleArray[i+j] = sliderMulti[i+j].insert("circle", ".track-overlay")
+    handleArray[(i+j)] = sliderMulti[(i+j)].insert("circle", ".track-overlay")
       .attr("class", "handle")
       // .style("z-index", 99)
       .style("box-shadow", "3px 3px 3px black")
@@ -3423,11 +3422,18 @@ filterAll = function() {
   //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
   // ];
 
-
-  // for(var i=0; i<sliderArray.length; i++) {
+  // Main sliders
+  // for(var i=0; i<4; i++) {
   //   var thisMinimum = d3.min(graph, function(d){ return d[sliderArray[i]] })
   //   handleArray[i].attr("cx", sliderScaleArray[i](thisMinimum)); // move the slider handle
-  //   // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+  //   sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+  // };
+
+  // // Main sliders
+  // for(var i=4; i<sliderArray.length; i++) {
+  //   var thisMinimum = d3.min(graph, function(d){ return d[sliderArray[i]] })
+  //   handleArray[i].attr("cx", sliderScaleArray[i](thisMinimum)); // move the slider handle
+  //   sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
   // };
 
   return graph;
