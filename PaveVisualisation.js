@@ -2553,6 +2553,8 @@ enterUpdateCircles = function() {
     .style("fill", function(d) { return color(d.cluster); })
     .attr("class","jobCircle")
 
+    // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
+
     // Tooltips
  // Tooltips
     .on("mouseenter", function(d) {
@@ -2600,7 +2602,12 @@ enterUpdateCircles = function() {
 
   drag_handler(newCircles);
   //  ENTER + UPDATE
-  circles = circles.merge(newCircles);
+  if(graphMode == 1){ // transition in radii in graph mode
+    circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
+  }else if(graphMode == 0){
+    circles = circles.merge(newCircles);
+  }
+  
 
 }
 
