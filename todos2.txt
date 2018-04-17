@@ -10,10 +10,11 @@ current:
 - add "more, less" green, red arrows to graph view
 
 next:
-- update all sliders to minimum values when sliding any slider
+- update all sliders to new minimum values when sliding any slider
 - remove / simplify "view more" tooltip 3
 - make graph view y axis responsive
 
+- graph view on click hideall()
 - add all tooltips to tutorial
 	- page 2 & 3 circle tooltips
 	- page 3 slider tooltips

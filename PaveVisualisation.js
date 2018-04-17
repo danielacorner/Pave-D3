@@ -2814,7 +2814,11 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
   .attr("id", i)
+  .on("mouseover", function() {
+    d3.select("#handle_"+this.id).style("fill","#eaeaea")
+  })
   .on("mouseout", function() {
+    d3.select("#handle_"+this.id).style("fill","white")
     if(typeof miniTooltip != "undefined"){
       miniTooltip.transition().duration(500)
       .style("opacity",0)
@@ -2831,6 +2835,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
           .style("opacity", 0);
       }
       // show mini tooltip indicating how many job groups remain
+      
       miniTooltip.transition().duration(200)
       .style("opacity",.9)
       miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
@@ -2840,7 +2845,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
       }
 
-      graph.length >= 10 ? miniTooltip.style("left", (event.pageX - 65) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
+      // graph.length >= 10 ? miniTooltip.style("left", (d3.select("#handle_"+this.id). - 65) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
 
       graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
 
@@ -2853,7 +2858,8 @@ function createSliders(createSliderArray, sliderTitlesArray){
   handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
     .attr("class", "handle")
     .style("z-index", 99)
-    .attr("r", 9);
+    .attr("r", 9)
+    .attr("id","handle_"+i);
 
     // Bugfix: lang slider not on top
   // if(["Language Skills"].includes(sliderTitlesArray[i])) {
@@ -2861,7 +2867,6 @@ function createSliders(createSliderArray, sliderTitlesArray){
   // }
 
 };
-
 
 
 

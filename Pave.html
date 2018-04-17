@@ -83,6 +83,7 @@
 
 	<br/>
 
+
 	<!-- title bar (hidden for xs & sm displays like mobile) -->
 
 	<div id="titleBar" style="position: fixed; height: 10vh; margin-left: 9%; margin-top: -0.35%" class="d-none d-md-block d-lg-block">
@@ -110,7 +111,6 @@
 
 	<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 70vh; top: 20vh" class="chart">	</svg>
 	<!-- end of headers -->
-
 
 	<!-- One column, visualisation & buttons in the middle, filters on top -->
 	<!-- Change to filters on sides (negative margins) on bigger screens -->
@@ -280,5 +280,35 @@ else if(viewsMinimized == 0){
 				</div>	<!-- end of bottomDiv -->	
 
 
-			</body>
-			</html>
+</body>
+
+<svg>
+	<defs>
+
+		<filter id="dropshadow" width="200%" height="200%">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/> <!-- stdDeviation is how much to blur -->
+			<feOffset dx="1.05" dy="1.4" result="offsetblur"/> <!-- how much to offset -->
+			<feComponentTransfer>
+				<feFuncA type="linear" slope="0.35"/> <!-- slope is the opacity of the shadow -->
+			</feComponentTransfer>
+			<feMerge> 
+				<feMergeNode/> <!-- this contains the offset blurred image -->
+				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+			</feMerge>
+		</filter>
+
+		<filter id="f1" width="150%" height="150%">
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+			<feComponentTransfer>
+				<feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
+			</feComponentTransfer>
+			<feMerge> 
+				<feMergeNode/> <!-- this contains the offset blurred image -->
+				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+			</feMerge>
+    </filter>
+	</defs>
+</svg>
+
+</html>
