@@ -1243,21 +1243,25 @@ function mouseEnterFn() {
 
     legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
         .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+"55"+","+(49 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
-        .text(function(d) { return d })
+        .attr("transform", function(d,i) { return "translate("+"95"+","+(49 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+        .text(function(d,i) { if(i==0){ return "Less" }else if(i==4){ return "More" } })
         .style("opacity",0).transition().duration(600).style("opacity",1)
     
     legendTitle = d3.select("#svgLegend").append("text")
-      .attr("transform","translate(54,17)")
+      .attr("transform","translate(4,17)")
 
       .text(currentSize) // must change this when size dropdown activated
       .style("font-size","22px").style("fill","#49AC52")
 
+    if(currentSize=="nothing"){
+      legendTitle.text("")
+    }
+
     sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
         .attr("class","dropup")
         .style("position","absolute")
-        .style("right","3%")
-        .style("bottom","12%")
+        .style("right","3%") //bookmarklet
+        .style("bottom","-12%")
         .append("button")
           .attr("id","sizeDropdownButton")
           .attr("class","btn btn-grey btn-primary dropdown-toggle")
@@ -1267,10 +1271,43 @@ function mouseEnterFn() {
           .style("border-width","0px")
           .html("Size by<br>"+currentSize+"<span class='caret'></span>")
           .append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
-          .html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
-                "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
-                "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-                "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
+
+    switch(currentSize) {
+      
+      case "Number of Jobs":
+        sizesDropdown.html("<li><strong>Number of Jobs</strong></li>" +
+                    "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
+                    "<li><a id='yearLink' href='#'>Years of study</a></li>" +
+                    "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
+      break;
+
+      case "Wage ($ per hr)":
+        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
+                          "<li><strong>Wage ($ per hr)</strong></li>" +
+                          "<li><a id='yearLink' href='#'>Years of study</a></li>" +
+                          "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
+      break;
+      
+      case "Years of Study":
+        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
+                          "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
+                          "<li><strong>Years of study</strong></li>" +
+                          "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
+      break;
+      
+      case "nothing":
+        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
+                          "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
+                          "<li><a id='yearLink' href='#'>Years of study</a></li>" +
+                          "<li><strong>Equal sizes</strong></li>")
+      break;
+        
+    }
+
+
+
+          //bookmarklet
+          // todo: disable & bold current dropdown option
 
     d3.select("#workLink").on("click", function() {
 
@@ -1314,7 +1351,7 @@ function mouseEnterFn() {
           simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
       }
 
-      currentSize = "Wage"
+      currentSize = "Wage ($ per hr)"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       mouseEnterOff()
       setSizes("wage")
@@ -3406,7 +3443,6 @@ filterAll = function() {
     };
   });
 
-  // bookmarklet
   // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
   // todo: separate main and subslider for loops
 
