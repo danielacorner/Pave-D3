@@ -1743,7 +1743,8 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 function graphModeOn(mode) {
 
-  hideGraphViewCallout();
+  hideAll();
+  // hideGraphViewCallout();
   moveBottomDown();
   hideToolTip(500);
   d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("pointer-events","none")
@@ -3460,15 +3461,19 @@ filterAll = function() {
 
   // Main sliders
   for(var i=0; i<4; i++) {
-    var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
-    handleArray[i].attr("cx", thisMinimum); // move the slider handle
-    // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+    if(event.target.id != i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+    }
   };
 
   // Subskill sliders
   for(var i=4; i<sliderArray.length; i++) {
-    var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-    handleArray[i].attr("cx", thisMinimum); // move the slider handle
+    if(event.target.id != i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+    }
   };
 
   return graph;

@@ -3,14 +3,20 @@ ideas:
 - "guild hall" where users post/upvote insightful views
 ------------------------------------------
 todos
-
+- ask users "what information do you care about in making a career decision?" to determine views
 
 current:
-- update size legend "more less" & reposition button
+
 - add "more, less" green, red arrows to graph view
 
 next:
-- update all sliders to new minimum values when sliding any slider
+
+- annotate views
+	- vertical/horizontal dividers and x-y section names
+	- highlighted areas?
+
+- about, help, feedback pages
+
 - remove / simplify "view more" tooltip 3
 - make graph view y axis responsive
 
@@ -28,6 +34,8 @@ next:
 - change the background colour of the screen?
 
 - fix tooltip extra divs to animate closed behind original div
+
+- colour and size legend btnlegend btnsizes mouseover is twitchy, disable mouseover for .5 sec before reenabling pointer events?
 
 - check filter algorithm for possible speed improvements using "continue" (next loop) and "break" (end loop) -- should be able to run on a chromebook
 
