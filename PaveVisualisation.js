@@ -2382,6 +2382,16 @@ d3.select("#resetFilters").on('click', function(d) {
 });
 
 resetFilters = function(mode) {
+
+  // Reset green inset-left on all sliders
+  // Main sliders
+  for(var i=0; i<sliderArray.length; i++) {
+
+      d3.select("#inset-left_"+i).attr("x2", 0 )
+
+  };
+
+
   graph = store;
   hideAll();
   hideGraphViewCallout();
@@ -2826,28 +2836,32 @@ function createSliders(createSliderArray, sliderTitlesArray){
     // Slider
   sliderMulti[i] = sliderSVGArray[i].append("g") // switch to SVG with viewBox?
   .attr("class", "slider")
-  // .style("z-index", 99)
   .attr("transform", "translate(" + 25 + "," + 25 + ")");
 
   // track
   sliderMulti[i].append("line")
   .attr("class", "track")
-  // .style("z-index", 98)
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .select(function() {
     return this.parentNode;
   }) // inset
   .append("line")
-  // .style("z-index", 98)
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-inset")
   .select(function() {
     return this.parentNode;
+  }) // inset-left (fills up green on drag)
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[0])
+  .attr("class", "track-inset-left")
+  .attr("id","inset-left_"+i)
+  .select(function() {
+    return this.parentNode;
   }) // overlay
   .append("line")
-  // .style("z-index", 99)
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
@@ -3186,6 +3200,14 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("class", "track-inset")
       .select(function() {
         return this.parentNode;
+      }) // inset-left (fills up green on drag)
+      .append("line")
+      .attr("x1", sliderScaleArray[(i+j)].range()[0])
+      .attr("x2", sliderScaleArray[(i+j)].range()[0])
+      .attr("class", "track-inset-left")
+      .attr("id","inset-left_"+(i+j))
+      .select(function() {
+        return this.parentNode;
       }) // overlay
       .append("line")
       // .style("z-index", 99)
@@ -3461,10 +3483,17 @@ filterAll = function() {
 
   // Main sliders
   for(var i=0; i<4; i++) {
+
     if(event.target.id != i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       handleArray[i].attr("cx", thisMinimum); // move the slider handle
-      // sliderPositionsArray[i] = sliderScaleArray[i](thisMinimum); // Update the slider positions array
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+    }else if(event.target.id == i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
     }
   };
 
@@ -3473,6 +3502,13 @@ filterAll = function() {
     if(event.target.id != i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
       handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+    }else if(event.target.id == i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
     }
   };
 

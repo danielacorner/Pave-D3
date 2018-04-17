@@ -312,6 +312,18 @@ else if(viewsMinimized == 0){
 				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
 			</feMerge>
     </filter>
+
+		<filter id="f2" width="150%" height="150%">
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+			<feComponentTransfer>
+				<feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
+			</feComponentTransfer>
+			<feMerge> 
+				<feMergeNode/> <!-- this contains the offset blurred image -->
+				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+			</feMerge>
+    </filter>
 	</defs>
 </svg>
 

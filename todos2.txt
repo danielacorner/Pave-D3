@@ -17,40 +17,30 @@ next:
 
 - about, help, feedback pages
 
-- remove / simplify "view more" tooltip 3
 - make graph view y axis responsive
 
-- graph view on click hideall()
 - add all tooltips to tutorial
 	- page 2 & 3 circle tooltips
 	- page 3 slider tooltips
+
+- flash when slider under 10 jobs?
+	- change the background colour of the screen?
 
 - create mobile layout (<=640px)
   - reposition sliders below circles
   - combine all buttons above circles
 
-- callout at the slider handle jamming
-- flash when under a certain number (with warning)
-- change the background colour of the screen?
-
-- fix tooltip extra divs to animate closed behind original div
-
 - colour and size legend btnlegend btnsizes mouseover is twitchy, disable mouseover for .5 sec before reenabling pointer events?
 
 - check filter algorithm for possible speed improvements using "continue" (next loop) and "break" (end loop) -- should be able to run on a chromebook
 
-- bug: subskill sliders "i+j" concatenating not adding -- check if this causes problems
-- add "shrink" button to expanded subskill sliders?
 - bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)
 - bug: reset filters not working (when?)
 - bug: subskill sliders cut off at medium resolution
 - tutorial3: remove "prev" buttons?
 
-- toggle sliders: general skill OR subskills, not both
 - split button summary statistics for industries
-- hover on legend = show legend & split into industries, encircle & show summary statistics
-- speed up sliders: look into filter algorithm
-- increase slider responsive area
+
 - create slider inset shadow
 - speed up all? transitions
 

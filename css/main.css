@@ -249,6 +249,11 @@ div.tooltip:hover {
 .track-inset {
   stroke: #379392;
   stroke-width: 3px;
+  filter: url(../Pave.html#f2);
+}
+.track-inset-left {
+  stroke: #379392;
+  stroke-width: 3px;
 }
 
 .track-overlay {
