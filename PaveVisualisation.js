@@ -1951,6 +1951,49 @@ var compressY = 0.65;
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
+
+
+  axisDecorationYTop = axisG
+    .append("polygon")
+  .attr("points","20,15 0,15 10,0")
+  .style("fill","lime")
+  .style("stroke","black")
+  .attr("transform", "translate("+window.innerWidth*0.1+","+( -15 )+")")
+  
+  axisDecorationTextTop = axisG.append("text")
+    .style("fill","#49AC52")
+    .attr("y", "1vh")
+    .attr("x", "9.2vw")
+    .attr("dy", "1em")
+
+  axisDecorationYBtm = axisG
+    .append("polygon")
+  .attr("points","20,0 0,0 10,15")
+  .style("fill","red")
+  .style("stroke","black")
+  .attr("transform", "translate("+window.innerWidth*0.1+","+( window.innerHeight*0.4 )+")")
+  
+  axisDecorationTextBtm = axisG.append("text")
+    .style("fill","#C81B1B")
+    .attr("y", "36vh")
+    .attr("x", "9.2vw")
+    .attr("dy", "1em")
+
+  function decorateYAxis() {
+    axisDecorationTextTop.html("More").style("font-size", "20px")
+    .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+    axisDecorationTextBtm.html("Less").style("font-size", "20px")
+    .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+    axisDecorationYTop.html("More").style("font-size", "20px")
+    .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+    axisDecorationYBtm.html("Less").style("font-size", "20px")
+    .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+  }
+
   switch (mode) {
       // x = Number of Jobs
       // y = Automation Risk
@@ -1970,8 +2013,7 @@ var compressY = 0.65;
             
             // bookmarklet
             // todo: add green & red "more", "less" with triangles
-            
-
+            decorateYAxis();
             break;
       // x = Years of Study
       // y = Wage
@@ -1987,6 +2029,8 @@ var compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            decorateYAxis();
             break;
       // x = Number of Jobs
       // y = Wage
@@ -2002,6 +2046,8 @@ var compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            decorateYAxis();
             break;
       // x = Number of Jobs
       // y = Automation Risk (when graph mode already on)
@@ -2016,6 +2062,8 @@ var compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            decorateYAxis();
             break;
       // x = Number of Jobs
         // y = Automation Risk (when future mode already on)
@@ -2030,6 +2078,8 @@ var compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             axisLabelY.text("Risk of job tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+            decorateYAxis();
             break;
   }
 

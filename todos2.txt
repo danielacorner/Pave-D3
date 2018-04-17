@@ -17,7 +17,7 @@ pick one
 - enable all tutorial tooltips
 
 next:
-
+- remove capitalization from axis titles
 - annotate views
 	- vertical/horizontal dividers and x-y section names
 	- highlighted areas?
