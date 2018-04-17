@@ -5,9 +5,16 @@ ideas:
 todos
 - ask users "what information do you care about in making a career decision?" to determine views
 
+***********************************
 current:
+- graph view
+ add "more, less" green, red arrows 
+ add view sectioning
+***********************************
 
-- add "more, less" green, red arrows to graph view
+pick one
+- graph view first-time intro div
+- enable all tutorial tooltips
 
 next:
 
@@ -22,6 +29,8 @@ next:
 - add all tooltips to tutorial
 	- page 2 & 3 circle tooltips
 	- page 3 slider tooltips
+
+- switch sliders to dragstarted instead of on drag (to prevent mouseout from ending the drag -- interrupt?)
 
 - flash when slider under 10 jobs?
 	- change the background colour of the screen?

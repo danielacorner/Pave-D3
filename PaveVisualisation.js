@@ -1965,8 +1965,13 @@ var compressY = 0.65;
 
             axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.html("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.html("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
+            
+            // bookmarklet
+            // todo: add green & red "more", "less" with triangles
+            
+
             break;
       // x = Years of Study
       // y = Wage
@@ -2009,7 +2014,7 @@ var compressY = 0.65;
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.text("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
       // x = Number of Jobs
@@ -2023,7 +2028,7 @@ var compressY = 0.65;
             d3.selectAll("text").text("");
             axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of Machine Automation (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.text("Risk of job tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             break;
   }
@@ -2391,10 +2396,11 @@ resetFilters = function(mode) {
 
   };
 
-
+  // reset the graph
   graph = store;
   hideAll();
   hideGraphViewCallout();
+
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
     handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
@@ -3492,8 +3498,8 @@ filterAll = function() {
 
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
-      // fill the left side green
-      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+i).attr("x2", d3.event.x )
     }
   };
 
@@ -3507,8 +3513,8 @@ filterAll = function() {
 
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-      // fill the left side green
-      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+i).attr("x2", d3.event.x )
     }
   };
 
