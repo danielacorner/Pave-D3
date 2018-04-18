@@ -3305,7 +3305,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     handleArray[(i+j)] = sliderMulti[(i+j)].insert("circle", ".track-overlay")
       .attr("class", "handle")
       // .style("z-index", 99)
-      // .style("box-shadow", "3px 3px 3px black")
+      .style("box-shadow", "3px 3px 3px black")
       .attr("r", 9);
 
       // Bugfix: lang slider not on top
