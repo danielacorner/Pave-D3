@@ -150,15 +150,18 @@ d3.select(window).on("resize", resize);
 // resize the window
 function resize() {
   if(typeof circles != "undefined"){
-    circles.attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+    // console.log("resizing!")
+    circles.attr("transform", circleHeight(0, 28 )) //flag! need to make equation for width/height ratio
   }
 
-  graphYtranslate = window.innerHeight*0.14;
+  graphYtranslate = window.innerHeight*0.12 - 16;
+  // return "translate("+window.innerWidth*0.5+","+ (165 + window.innerHeight*0.12) +")"
 
   // Add an axis-holder group
   if(typeof axisG != "undefined") {
-    console.log("!hello")
+    // console.log("!hello")
     axisG.attr("transform", "translate(0," + graphYtranslate + ")");
+    // axisX.attr("transform", circleHeight(window.innerWidth*-0.25,0));
     // Add the X Axis
     // axisX.attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*0.43+")");
     // // .call(d3.axisBottom(x).ticks(5))
@@ -166,7 +169,7 @@ function resize() {
     // axisLabelX.attr("transform", "translate("+window.innerWidth*0.50+","+window.innerHeight*0.5+")")
 
     // // Add the Y Axis
-    axisY.attr("transform", "translate("+window.innerWidth*0.23+","+( -15 )+")")
+    // axisY.attr("transform", "translate("+window.innerWidth*0.23+","+( -15 )+")")
 
   }
 
@@ -487,12 +490,17 @@ var skillsBarsXtranslate = -15;
 var skillsBarsYtranslate = 80;
 // TODO: merge pre, post-filtering
 ///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
+
+function circleHeight(xtrans,ytrans) {
+  return "translate("+ (window.innerWidth*0.5 + xtrans)+","+ (window.innerHeight*0.12 + 165 + ytrans) +")"
+}
+
 // Add the circles with tooltips
 circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+    .attr("transform", circleHeight(0,0) ) //flag! need to make equation for width/height ratio
     .attr("id",function(d) { return "circle_"+d.id })
     .attr("class","jobCircle")
     .style("z-index", -1)
@@ -1912,22 +1920,24 @@ var compressY = 0.65;
 
     }
 
-  graphYtranslate = window.innerHeight*0.14;
+  graphYtranslate = window.innerHeight*0.12 - 10; // y position of entire graph
 
   // Add an axis-holder group
-  axisG = svg.append("g").attr("transform", "translate(0," + graphYtranslate + ")");
+  axisG = svg.append("g")
+
+  var axisYtranslate = window.innerHeight*-0.12;
 
   d3.select("xaxis").remove();
 
   // Add the X Axis
   axisX = axisG.append("g")
   .attr("class", "axis")
-  .attr("transform", "translate("+window.innerWidth*0.23+","+window.innerHeight*0.43+")")
+  .attr("transform", circleHeight((window.innerWidth*-0.28+15),(axisYtranslate*-1.15)) )
   .call(d3.axisBottom(x).ticks(5)).attr("id","axisX")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
   // text label for the x axis
   axisLabelX = axisG.append("text")
-  .attr("transform", "translate("+window.innerWidth*0.50+","+window.innerHeight*0.5+")")
+  .attr("transform", circleHeight((window.innerWidth*0),(axisYtranslate*-1.55)))
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
@@ -1936,7 +1946,7 @@ var compressY = 0.65;
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform", "translate("+window.innerWidth*0.23+","+( -15 )+")")
+ .attr("transform",  circleHeight((window.innerWidth*-0.28+9), (axisYtranslate*2.55)) )
  .call(d3.axisLeft(y).ticks(4)).attr("id","axisY")
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
@@ -1974,6 +1984,8 @@ var compressY = 0.65;
     .attr("y", "36vh")
     .attr("x", "9.2vw")
     .attr("dy", "1em")
+  
+  resize()
 
   function decorateYAxis() {
     axisDecorationTextTop.html("More").style("font-size", "20px")
@@ -3550,7 +3562,12 @@ filterAll = function() {
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       // fill the left side green (using mouse position on current slider)
-      d3.select("#inset-left_"+i).attr("x2", d3.event.x )
+
+      d3.select("#inset-left_"+i).attr("x2", function() {
+        if (sliderScaleArray[0].invert(d3.event.x) <= 0) { return sliderScaleArray[0](sliderPositionsArray[0]) }
+        else { 
+          return d3.event.x }
+        } )
     }
   };
 
