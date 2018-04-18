@@ -7,14 +7,15 @@ todos
 
 ***********************************
 current:
-- graph view
- add "more, less" green, red arrows 
- add view sectioning
+- tutorial1: fade in text divs
+- enable all tutorial tooltips
 ***********************************
 
 pick one
 - graph view first-time intro div
-- enable all tutorial tooltips
+- graph view
+ add 1 more view for testing (dropdown?)
+ add view sectioning
 
 next:
 - remove capitalization from axis titles

@@ -1260,7 +1260,7 @@ function mouseEnterFn() {
     sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
         .attr("class","dropup")
         .style("position","absolute")
-        .style("right","3%") //bookmarklet
+        .style("right","3%") 
         .style("bottom","-12%")
         .append("button")
           .attr("id","sizeDropdownButton")
@@ -1304,10 +1304,6 @@ function mouseEnterFn() {
         
     }
 
-
-
-          //bookmarklet
-          // todo: disable & bold current dropdown option
 
     d3.select("#workLink").on("click", function() {
 
@@ -2011,8 +2007,6 @@ var compressY = 0.65;
             axisLabelY.html("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             
-            // bookmarklet
-            // todo: add green & red "more", "less" with triangles
             decorateYAxis();
             break;
       // x = Years of Study
@@ -2908,19 +2902,19 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("x2", sliderScaleArray[i].range()[1])
   .select(function() {
     return this.parentNode;
-  }) // inset
-  .append("line")
-  .attr("x1", sliderScaleArray[i].range()[0])
-  .attr("x2", sliderScaleArray[i].range()[1])
-  .attr("class", "track-inset")
-  .select(function() {
-    return this.parentNode;
   }) // inset-left (fills up green on drag)
   .append("line")
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[0])
   .attr("class", "track-inset-left")
   .attr("id","inset-left_"+i)
+  .select(function() {
+    return this.parentNode;
+  }) // inset
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
+  .attr("class", "track-inset")
   .select(function() {
     return this.parentNode;
   }) // overlay

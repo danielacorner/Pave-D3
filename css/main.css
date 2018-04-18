@@ -235,25 +235,25 @@ div.tooltip:hover {
 
 .track,
 .track-inset,
-.track-overlay {
+.track-overlay,
+.track-inset-left {
   stroke-linecap: round;
   stroke-width: 40px;
 }
 
 .track {
-  stroke: #000;
-  stroke-opacity: 0.3;
+  stroke: #49AC52;
   stroke-width: 5px;
 }
-
 .track-inset {
-  stroke: #379392;
-  stroke-width: 3px;
+  stroke: #49AC52;
+  stroke-width: 5px;
+  stroke-opacity: 0.3;
   filter: url(../Pave.html#f2);
 }
 .track-inset-left {
-  stroke: #379392;
-  stroke-width: 3px;
+  stroke: #CBCBCB;
+  stroke-width: 5px;
 }
 
 .track-overlay {
