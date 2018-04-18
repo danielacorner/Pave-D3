@@ -212,6 +212,10 @@ var circles;
     graph = nodes;
     store = nodes;
 
+    var sliderArray = [
+   "skillsMath"
+    ];
+
     var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
 
     var sliderTitlesArrayMain = [
@@ -522,13 +526,13 @@ sliderSVGArray[0] = d3.select("body")
     .style("font-family", "Raleway")
     .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
      +"Not&nbspmuch"
-     +"<span id='notmuchSpan_"+0+"' style='margin-left: 19.520vw'></span>"
+     +"<span id='notmuchSpan_"+0+"' style='margin-left: 20.52vw'></span>"
      +"Lots</div>")
     .select(function() {
     	return this.parentNode;
     })
     .append("svg")
-    .style("z-index", 1)
+    // .style("z-index", -1)
   	// .attr("viewBox", "0 0 "+230+" "+150)
   	.style("position", "fixed")
     .style("top", "38vw") // y position
@@ -567,7 +571,6 @@ sliderSVGArray[0] = d3.select("body")
   // track
   sliderMulti[0].append("line")
   .attr("class", "track")
-  // .style("z-index", 98)
   .attr("x1", "2.4vw")
   .attr("x2", "30.7vw")
   .attr("y1", sliderY)
@@ -576,12 +579,21 @@ sliderSVGArray[0] = d3.select("body")
     return this.parentNode;
   }) // inset
   .append("line")
-  // .style("z-index", 98)
   .attr("x1", "2.4vw")
   .attr("x2", "30.7vw")
   .attr("y1", sliderY)
   .attr("y2", sliderY)
   .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  }) // inset-left (fills up green on drag)
+  .append("line")
+  .attr("x1", "2.4vw")
+  .attr("x2", "2.4vw")
+  .attr("y1", sliderY)
+  .attr("y2", sliderY)
+  .attr("class", "track-inset-left")
+  .attr("id","inset-left_"+0)
   .select(function() {
     return this.parentNode;
   }) // overlay
@@ -591,22 +603,55 @@ sliderSVGArray[0] = d3.select("body")
   .attr("y1", sliderY)
   .attr("y2", sliderY)
   .attr("class", "track-overlay")
-  // .attr("stroke-width", "100")
   .attr("id", 0)
+  .on("mouseover", function() {
+    d3.select("#handle_"+this.id).style("fill","#eaeaea")
+  })
+  .on("mouseout", function() {
+    d3.select("#handle_"+this.id).style("fill","white")
+    if(typeof miniTooltip != "undefined"){
+      miniTooltip.transition().duration(500)
+      .style("opacity",0)
+    }
+  })
   .call(d3.drag()
     .on("start.interrupt", function() {
-      sliderMulti[0].interrupt();
+      sliderMulti[event.target.id].interrupt();
     }) // drag update function
     .on("start drag", function() {
-      updateMulti(sliderScaleArray[0].invert(d3.event.x)); // pass the current line id to update function
-    }));
+      if(typeof miniTooltip == "undefined"){
+        miniTooltip = d3.select("body").append("div")
+          .attr("class", "minitooltip")
+          .style("opacity", 0);
+      }
+      // show mini tooltip indicating how many job groups remain
+      
+      miniTooltip.transition().duration(200)
+      .style("opacity",.9)
+      miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
+      // .style("left", (event.pageX - 64) + "px")
+      
+      if($(event.target).attr('class') == 'track-overlay'){
+        miniTooltip.style("top", (event.target.getBoundingClientRect().top - 100) + "px")
+      }
+                  // (d3.select("#handle_"+this.id)
+      graph.length >= 10 ? miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
+      graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
 
-  handleArray[0] = sliderMulti[0].insert("circle", ".track-overlay")
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      // }
+    
+    })
+  );
+
+  handleArray[0] = sliderMulti[0].append("circle", ".track-overlay")
   .attr("cx", "2.4vw")
   .attr("cy", sliderY)
-  .attr("class", "handle")
-  .style("z-index", 99)
-  .attr("r", "1vw");
+  .attr("class", "handleTutorial")
+  .style("stroke-width","0.275vw")
+  .style("pointer-events", "none")
+  .attr("r", "1vw")
+  .attr("id","handle_"+0);
 
     // Bugfix: lang slider not on top
   // if(["Language Skills"].includes(sliderTitlesArray[i])) {
@@ -657,40 +702,95 @@ function updateMulti(h) {
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
 filterAll = function() {
-  // h = sliderScaleArray[event.target.id].invert(d3.event.x)
-  // START by filtering out nodes under the minimums
-  store.forEach(function(d) {
-    // INEFFICIENT -- TODO: fewer loops
-      // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
-      if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
-      // then loop through the sliders array and put you on the list
-      for(var s=0; s<sliderPositionsArray.length; s++){
-        // if the slider position is above your value, put you on the list
-        var checkMin = sliderPositionsArray[s];
-        if(d["skillsMath"] < checkMin && !listToDeleteMulti.includes(d["skillsMath"])) {
-          listToDeleteMulti.push(d.id);
-        }
+  // first, clear the list
+  listToDeleteMulti = [];
+  
+  // reset the graph
+  graph = [];
 
-      }
+  store.forEach(function(d){ // for each circle
+
+    // put you on the list if the slider position is above your value:
       
-    })
-    // reset the graph
-    graph = [];
-  // THEN update the graph based on the filter list
+    // for each slider
+    for(var s in sliderPositionsArray){        
+      // if the slider position is above your value  &  if you're not already on the list
+      if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+        // put you on the list
+        listToDeleteMulti.push(d.id);
+      }
+    }
+
+  })
+  
+  // update the graph based on the filter list
   store.forEach(function(n) {
     // if you're not on the filter list
     if (!listToDeleteMulti.includes(n.id)) {
       // put you on the graph         (start graph empty? or check)
       graph.push(n);
     // if you're on the list
-  } else if (listToDeleteMulti.includes(n.id)) {
-    graph.forEach(function(d, p) {
-      if (n.id === d.id) {
+    } else if (listToDeleteMulti.includes(n.id)) {
+      // for each graph item
+      graph.forEach(function(d, p) {
+        if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
+
       })
+    };
+  });
+
+  // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
+  // todo: separate main and subslider for loops
+
+  // var sliderArray = [
+  // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+  //     // subskills
+  //     "s8OralCommunication","s10Reading","s14Writing",
+      
+  //     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+      
+  //     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+        
+  //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+  // ];
+
+  // Main sliders
+  for(var i=0; i<1; i++) {
+
+    if(event.target.id != i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+    }else if(event.target.id == i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+i).attr("x2", function() { 
+        if (sliderScaleArray[0].invert(d3.event.x) <= 0) { return sliderScaleArray[0](sliderPositionsArray[0]) }
+        else { console.log(sliderScaleArray[0](sliderPositionsArray[0]))
+          return d3.event.x }
+      })
+    }
   };
-});
+
+  // // Subskill sliders
+  // for(var i=4; i<sliderArray.length; i++) {
+  //   if(event.target.id != i) {
+  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+  //     handleArray[i].attr("cx", thisMinimum); // move the slider handle
+  //     // fill the left side green
+  //     d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+  //   }else if(event.target.id == i) {
+  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+  //     // fill the left side green (using mouse position on current slider)
+  //     d3.select("#inset-left_"+i).attr("x2", d3.event.x )
+  //   }
+  // };
+
   return graph;
 }
 
@@ -757,6 +857,11 @@ d3.select("#nextBtn1").on('click', function(d) {
 });
 
 function resetFilters(mode) {
+
+  graph = store;
+
+  d3.select("#inset-left_"+0).attr("x2", "2.4vw" )
+
   // reset the slider positions
     handleArray[0].attr("cx", sliderScaleArray[0](0)); // move the slider handle
     sliderPositionsArray[0] = 0; // Update the slider positions array
@@ -788,6 +893,24 @@ function resetSimulation() {
 
 
 </script>
+
+<svg>
+  <defs>
+
+    <filter id="f1" width="150%" height="150%">
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/> <!-- this contains the offset blurred image -->
+        <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+      </feMerge>
+    </filter>
+
+  </defs>
+</svg>
 
 </body>
 

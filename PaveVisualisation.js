@@ -2902,19 +2902,19 @@ function createSliders(createSliderArray, sliderTitlesArray){
   .attr("x2", sliderScaleArray[i].range()[1])
   .select(function() {
     return this.parentNode;
+  }) // inset
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
   }) // inset-left (fills up green on drag)
   .append("line")
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[0])
   .attr("class", "track-inset-left")
   .attr("id","inset-left_"+i)
-  .select(function() {
-    return this.parentNode;
-  }) // inset
-  .append("line")
-  .attr("x1", sliderScaleArray[i].range()[0])
-  .attr("x2", sliderScaleArray[i].range()[1])
-  .attr("class", "track-inset")
   .select(function() {
     return this.parentNode;
   }) // overlay
@@ -3305,7 +3305,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
     handleArray[(i+j)] = sliderMulti[(i+j)].insert("circle", ".track-overlay")
       .attr("class", "handle")
       // .style("z-index", 99)
-      .style("box-shadow", "3px 3px 3px black")
+      // .style("box-shadow", "3px 3px 3px black")
       .attr("r", 9);
 
       // Bugfix: lang slider not on top

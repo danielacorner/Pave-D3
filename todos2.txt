@@ -12,6 +12,7 @@ current:
 ***********************************
 
 pick one
+- fix graph axes positions
 - graph view first-time intro div
 - graph view
  add 1 more view for testing (dropdown?)

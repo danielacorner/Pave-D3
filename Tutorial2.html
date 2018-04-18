@@ -62,8 +62,8 @@
     <br>
     <br><span id="davidSpanner" style="margin-left: 0.2vw; opacity: 0;">Click the circle to see skills used on the job</span>
 
-    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 35vw;">
-        <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a>
+    <div id="nextDiv" style="position: fixed; left: 26.7vw; top: 35vw;">
+        <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
         <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
 
@@ -414,31 +414,36 @@ function tooltipLarge() {
 
         "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
         "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
-        "JobBank Info Page</a><br>"+
+        "Job details page</a><br>"+
 
-        "<a id='btnVolunteer' class='btn btn-sm' "+
-        "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
-        "Volunteer Canada</a><br>"+
+        // "<a id='btnVolunteer' class='btn btn-sm' "+
+        // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
+        // "Volunteer Canada</a><br>"+
 
         "<br><br><span style='margin-left: -20px; color: white;'>"+
-        "View listings for this job:</span>"+
+        "This section is currently under construction...</span>"+
 
         "<div align='right' style='margin: 10px 0px 20px 0px'>"+
         "<a id='btnIndeed' class='btn btn-sm' "+
         "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
-        "&nbspIndeed.ca&nbsp</a><br>"+
+        "'>"+
+        "&nbspcoming soon&nbsp</a><br>"+
 
-        "<a id='btnGlassdoor' class='btn btn-sm' "+
-        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
-        "&nbspGlassdoor.ca&nbsp</a><br>"+
+        // "<a id='btnIndeed' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
+        // "&nbspIndeed.ca&nbsp</a><br>"+
 
-        "<a id='btnMonster' class='btn btn-sm' "+
-        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
-        "&nbspMonster.ca&nbsp</a><br>"+
+        // "<a id='btnGlassdoor' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
+        // "&nbspGlassdoor.ca&nbsp</a><br>"+
+
+        // "<a id='btnMonster' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
+        // "&nbspMonster.ca&nbsp</a><br>"+
 
         "</div></div>")
           
@@ -448,6 +453,7 @@ function tooltipLarge() {
     })
 
    }, 275);
+
 
   // skill bars
   d3.select("#tooltipBottomDiv").append("svg")

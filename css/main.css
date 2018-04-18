@@ -269,6 +269,13 @@ div.tooltip:hover {
   stroke-width: 3px;
   filter: url(../Pave.html#f1);
 }
+.handleTutorial {
+  fill: white;
+  stroke: #379392;
+  stroke-opacity: 0.9;
+  stroke-width: 3px;
+  filter: url(../Tutorial3.html#f1);
+}
 
 .btn-arrow-right,
 .btn-arrow-left {
