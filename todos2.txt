@@ -7,8 +7,7 @@ todos
 
 ***********************************
 current:
-- tutorial1: fade in text divs
-- enable all tutorial tooltips
+- tutorial newcircles tooltips
 ***********************************
 
 pick one

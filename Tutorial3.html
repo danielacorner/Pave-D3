@@ -1352,6 +1352,48 @@ enterUpdateCircles = function() {
     .attr("r", function(d) { return d.radius }) // start at full radius
     .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
+    .on("mouseenter", function(d) {
+      if (clicked == 1) return;
+      // highlight the current circle
+      d3.selectAll("circle").attr("stroke", "none");
+      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      showToolTip(0);
+      tooltipMouseover(d);
+      hoverTimeout = setTimeout(function(){
+        tooltipLarge(d)
+        clicked = 1
+      }, 1750)
+      })
+    .on("mouseout", function(d) {
+      clearTimeout(hoverTimeout)
+      if (clicked == 1) return;
+      clicked = 0;
+      hideToolTip(500)
+      d3.select(this).attr("stroke", "none");
+      // div.transition().duration(500).style("opacity", 0)
+
+      // div
+      // .style("opacity", 0);
+      // setTimeout(function(){
+      // //   if(typeof div2 != "undefined") div2.remove();
+      //   if(typeof div != "undefined") div.remove();
+      // },250)
+    })
+    .on("click", function(d) {
+      clearTimeout(hoverTimeout)
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+       }
+      // hideToolTip(0);
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
+      })
 
     circles = circles.merge(newCircles);
 
