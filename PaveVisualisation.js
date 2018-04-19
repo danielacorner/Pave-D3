@@ -447,7 +447,8 @@ var forceYSeparateRandom = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
     // force the circles toward their cluster nodes
-function forceCluster(alpha) {
+function forceCluster(alpha) { 
+  // alpha = attractor force
   for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
     node = nodes[i];
     cluster = clusters[node.cluster];
@@ -2548,7 +2549,12 @@ function resetSimulation() {
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
-  simulation.alpha(0.2).alphaTarget(0.001).restart();
+
+  restartSimulation();
+}
+
+function restartSimulation(){
+  simulation.alpha(0.25).alphaTarget(0.1).restart();
 }
 
 /////// Tooltips (post-filter)
@@ -3370,6 +3376,8 @@ function updateMulti(h, mode) {
   // ENTER (create the circles with all attributes)
   enterUpdateCircles();
 
+  //bookmarklet : resetSimulation()?
+
   // reset simulation if graph mode = off
   if (graphMode == 0 && futureMode == 0) {
     simulation.nodes(filteredNodes)
@@ -3379,8 +3387,8 @@ function updateMulti(h, mode) {
     .force("x", forceXCombine)
     .force("y", forceYCombine)
     .on("tick", tick);
-    simulation.alphaTarget(0.2).restart();
-  } else if (graphMode == 1) { // else reposition nodes on graph
+    restartSimulation();
+    } else if (graphMode == 1) { // else reposition nodes on graph
   
       switch (mode) {
 
@@ -3497,10 +3505,9 @@ function calloutCheck() {
 
 
 filterAll = function() {
-  calloutCheck()
   
   // first, clear the list
-  listToDeleteMulti = [];
+  var listToDeleteMulti = [];
   
   // reset the graph
   graph = [];
@@ -3605,6 +3612,10 @@ filterAll = function() {
       d3.select("#inset-left_"+i).attr("x2", d3.event.x )
     }
   };
+
+  calloutCheck()
+
+  console.log(graph.length)
 
   return graph;
 }

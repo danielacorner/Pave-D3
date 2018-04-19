@@ -13,6 +13,8 @@ current:
 ***********************************
 
 pick one
+- bug: resize moves chart
+- hide pause button?
 - graph view tooltip positions
 - graph view first-time intro div
 - graph view
