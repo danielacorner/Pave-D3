@@ -1747,6 +1747,7 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 function graphModeOn(mode) {
 
+  hideGraphViewCallout();
   hideAll();
   // hideGraphViewCallout();
   moveBottomDown();
@@ -2448,7 +2449,7 @@ resetFilters = function(mode) {
   // Main sliders
   for(var i=0; i<sliderArray.length; i++) {
 
-      d3.select("#inset-left_"+i).attr("x2", 0 )
+      d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
 
   };
 
@@ -2459,7 +2460,7 @@ resetFilters = function(mode) {
 
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
-    handleArray[i].attr("cx", sliderScaleArray[i](0)); // move the slider handle
+    handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
     sliderPositionsArray[i] = 0; // Update the slider positions array
   };
 
@@ -3351,8 +3352,10 @@ function updateMulti(h, mode) {
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
 
   if(graph.length > 10){
+  
+  var filteredNodes = filterAll()
   //  UPDATE
-  circles = circles.data(filterAll(), function(d) { return d.id });
+  circles = circles.data(filteredNodes, function(d) { return d.id });
     
   // EXIT
   circles.exit().transition().duration(500)
@@ -3369,7 +3372,7 @@ function updateMulti(h, mode) {
 
   // reset simulation if graph mode = off
   if (graphMode == 0 && futureMode == 0) {
-    simulation.nodes(filterAll())
+    simulation.nodes(filteredNodes)
     .force("collide", forceCollide)
     .force("cluster", forceCluster)
     .force("gravity", forceGravity)
@@ -3502,11 +3505,15 @@ filterAll = function() {
   // reset the graph
   graph = [];
 
+  // var currentSlider = sliderPositionsArray[event.target.id]
+  // console.log(event.target.id)
+  // console.log(currentSlider)
+
   store.forEach(function(d){ // for each circle
 
     // put you on the list if the slider position is above your value:
-      
-    // for each slider
+    
+    // for current slider only
     for(var s in sliderPositionsArray){        
       // if the slider position is above your value  &  if you're not already on the list
       if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
@@ -3514,6 +3521,15 @@ filterAll = function() {
         listToDeleteMulti.push(d.id);
       }
     }
+      
+    // // for each slider
+    // for(var s in sliderPositionsArray){        
+    //   // if the slider position is above your value  &  if you're not already on the list
+    //   if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+    //     // put you on the list
+    //     listToDeleteMulti.push(d.id);
+    //   }
+    // }
 
   })
   
@@ -3526,7 +3542,7 @@ filterAll = function() {
     // if you're on the list
     } else if (listToDeleteMulti.includes(n.id)) {
       // for each graph item
-      graph.forEach(function(d, p) {
+      graph.forEach(function(d, p) { // p = position
         if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
@@ -3550,12 +3566,16 @@ filterAll = function() {
   //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
   // ];
 
+  // Update all sliders when dragging any one slider
+
   // Main sliders
   for(var i=0; i<4; i++) {
 
     if(event.target.id != i) {
+      // find the minimum of each slider on the current graphed set
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
-      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // move the slider handle
+      handleArray[i].attr("cx", thisMinimum);
       // fill the left side green
       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
 

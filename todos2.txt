@@ -7,17 +7,20 @@ todos
 
 ***********************************
 current:
-- tutorial newcircles tooltips
+- fix filter algorithm:
+	- only language skills?
+	- determine why some circles are filtering to invisible
 ***********************************
 
 pick one
-- fix graph axes positions
+- graph view tooltip positions
 - graph view first-time intro div
 - graph view
  add 1 more view for testing (dropdown?)
  add view sectioning
 
 next:
+- transition sliders on reset
 - remove capitalization from axis titles
 - annotate views
 	- vertical/horizontal dividers and x-y section names
