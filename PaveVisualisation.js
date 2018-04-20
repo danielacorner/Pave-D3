@@ -1663,12 +1663,12 @@ function createGraphExplainerDiv() {
       "<p>Graph View lets you compare job groups by their length of education, automation risk, and potential income.</p>"+
       // bookmarklet : todo - buttons onclick dismiss explainer
       "<div id='explainLeft' style='float: left; display: inline;'>"+
-                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-top: 25px; margin-bottom: 25px;'>"+
+                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-top: 14px; margin-bottom: 51px;'>"+
                   "<button id='b0' class='suggested-views-btn' style='background: #eaeaea' href='#'>"+
                     "What's the risk my job will be automated?"+
                   "</button>"+
                 "</li>"+
-                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-bottom: 25px;'>"+
+                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-bottom: 11px;'>"+
                   "<button id='b1' class='suggested-views-btn' href='#'>"+
                     "How much study for how much pay?"+
                   "</button>"+
@@ -1681,12 +1681,12 @@ function createGraphExplainerDiv() {
       "</div>"+
 
       "<div id='explainRight' style='display: inline;'>"+
-              "<p style='display: inline; margin-top: 1em;'>Machines are getting better at performing new tasks every day -- "+
+              "<p style='display: inline; margin-top: 1em;'>1. Machines are getting better at performing new tasks every day -- "+
               "this view compares the <strong>number of available positions</strong> with the <strong>risk that job tasks will be machine-automated</strong><sup>1</sup>.</p>" +
               
-              "<p style='margin-top: 1em'>This view compares average <strong>income</strong> and <strong>years of study</strong>.</p>"+
+              "<p style='margin-top: 1em'>2. This view compares average <strong>income</strong> and <strong>years of study</strong>.</p>"+
               
-              "<p style='margin-top: 1em'>This view compares the <strong>number of available positions</strong> and the average <strong>income</strong></p>"+
+              "<p style='margin-top: 1.5em'>3. This view compares the <strong>number of available positions</strong> and the average <strong>income</strong></p>"+
 
       "</div>"+
 
