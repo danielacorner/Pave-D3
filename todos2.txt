@@ -12,7 +12,6 @@ todos
 - fix 'movebottomdown'
 ***********************************
 current:
-- view more view less
 
 - filter from both sides
 - fix filter algorithm:

@@ -4198,6 +4198,11 @@ var subSliderDivComp;
       .style("visibility", "hidden")
       .style("background", "white")
 
+  d3.select("#btnSubsliders_0").style("pointer-events","auto")
+  d3.select("#btnSubsliders_1").style("pointer-events","auto")
+  d3.select("#btnSubsliders_2").style("pointer-events","auto")
+  d3.select("#btnSubsliders_3").style("pointer-events","auto")
+
 // div heights
 var heightLang = window.innerHeight*0.24,
     heightLogi = window.innerHeight*0.32,
@@ -4416,6 +4421,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         d3.select("#btnSubsliders_3")
           .transition().duration(350).style("height", heightComp+50+"px").style("width", widthAll*0.95+"px")
           .style("pointer-events","none")
+          // .style("pointer-events","none")
                   // append "hide skills" button
                   d3.select("#btnSubsliders_3").append("button")
                     .attr("id","btnSubsliders_3Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none")
@@ -4459,13 +4465,18 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 }
 
 
-d3.selectAll(".expand-sliders-btn").on("mouseover", function() {
-  d3.select("#chart").style("pointer-events","none")
-})
-d3.selectAll(".expand-sliders-btn").on("mouseout", function() {
-  d3.select("#chart").style("pointer-events","auto")
-
-})
+// d3.selectAll(".expand-sliders-btn").on("mouseover", function() {
+//   d3.select("#chart").style("pointer-events","none")
+// })
+// d3.selectAll(".expand-sliders-btn").on("mouseout", function() {
+//   d3.select("#chart").style("pointer-events","auto")
+// })
+// d3.select("resetFilters").on("mouseover", function() {
+//   d3.select("#chart").style("pointer-events","none")
+// })
+// d3.select("resetFilters").on("mouseout", function() {
+//   d3.select("#chart").style("pointer-events","auto")
+// })
 
 
 

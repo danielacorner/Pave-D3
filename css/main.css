@@ -94,8 +94,8 @@ img.img-question {
   top: 30px;
 }
 .fontawesome-i2svg-active {
-  pointer-events: none;
-}
+/*  pointer-events: none;
+*/}
 /*button.expand-sliders-btn:hover {
   background: #eaeaea;
 }
@@ -105,6 +105,7 @@ button.expand-sliders-btn{
   background: white; 
   border: 2px solid green; 
   border-radius: 16px;'
+  pointer-events: auto;
 }
 button.close-sliders-btn{
   margin: 5px 0px 0px 10px; 
