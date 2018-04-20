@@ -3,6 +3,7 @@ forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceY
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters;
 
 var legendCreated = 0;
+var graphFirstTime = true;
 
 // sliders to create
 // var sliderArray = [
@@ -1644,7 +1645,135 @@ var originalRadius = {};
 
 // })
 
+function createGraphExplainerDiv() {
+  // width of the div
+  var explainerWidth = 700;
+    // append a large div, transition its height and width
+  graphExplainerDiv = d3.select("body").append("div")
+    .style("width",explainerWidth+"px").style("height","400px")
+    .attr("id","graphExplainer").style("opacity",0)
+    .style("position","fixed").style("top","300px").style("left",(window.innerWidth*0.5-(explainerWidth/2))+"px")
+    .style("color", "#49AC52")
+    .style("font-size", "20px")
+    .style("border", "3px solid #49AC52")
+    .style("border-radius", "13px")
+    .style("padding", "20px")
+    .style("box-shadow","0px 0px 150px #404040FF")
+    .html(
+      "<p>Graph View lets you compare job groups by their length of education, automation risk, and potential income.</p>"+
+      // bookmarklet : todo - buttons onclick dismiss explainer
+      "<div id='explainLeft' style='float: left; display: inline;'>"+
+                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-top: 25px; margin-bottom: 25px;'>"+
+                  "<button id='b0' class='suggested-views-btn' style='background: #eaeaea' href='#'>"+
+                    "What's the risk my job will be automated?"+
+                  "</button>"+
+                "</li>"+
+                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-bottom: 25px;'>"+
+                  "<button id='b1' class='suggested-views-btn' href='#'>"+
+                    "How much study for how much pay?"+
+                  "</button>"+
+                "</li>"+
+                "<li class='list-graphModes' style='width: 220px; font-size: 16px;'>"+
+                  "<button id='b2' class='suggested-views-btn'  href='#'>"+
+                    "How many jobs exist?"+
+                  "</button>"+
+                "</li>"+
+      "</div>"+
+
+      "<div id='explainRight' style='display: inline;'>"+
+              "<p style='display: inline; margin-top: 1em;'>Machines are getting better at performing new tasks every day -- "+
+              "this view compares the <strong>number of available positions</strong> with the <strong>risk that job tasks will be machine-automated</strong><sup>1</sup>.</p>" +
+              
+              "<p style='margin-top: 1em'>This view compares average <strong>income</strong> and <strong>years of study</strong>.</p>"+
+              
+              "<p style='margin-top: 1em'>This view compares the <strong>number of available positions</strong> and the average <strong>income</strong></p>"+
+
+      "</div>"+
+
+      "<p style=' font-size: 12px'><sup>1</sup><a href='http://brookfieldinstitute.ca/research-analysis/automation-across-the-nation-understanding-distribution-automation-susceptibility-across-canada/' target='_blank'>"+
+      "The Brookfield Institute</a> has provided automation risk predictions.</p>"+ // 'make into a citation?''
+      "")
+ 
+//   //move button down and keep other button up
+//   d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
+//   d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
+  
+  // explainer transition
+  d3.select("#graphExplainer").transition().duration(500)
+    .style("background","white")
+    .style("opacity",1)
+
+//   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
+//     .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
+/////////////////////////////// Suggested Views buttons /////////////////////////
+
+d3.select("#b0").on('click', function() { // Automation vs Number of Jobs
+  currentMode = 3;
+  graphModeOn(3);
+
+  graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
+
+  d3.select("#b0").style("background", "#eaeaea")
+  d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+
+  d3.select("#b1").style("background", "white")
+  d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#b2").style("background", "white")
+  d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  // createLegend(0);
+});
+
+d3.select("#b1").on('click', function() { // Wage vs Years
+  currentMode = 1;
+  graphModeOn(1);
+
+  graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
+
+  d3.select("#b0").style("background", "white")
+  d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#b1").style("background", "#eaeaea")
+  d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+
+  d3.select("#b2").style("background", "white")
+  d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "white")})
+});
+
+d3.select("#b2").on('click', function() { // Wage vs Workers
+  currentMode = 2;
+  graphModeOn(2);
+
+  graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
+
+  d3.select("#b0").style("background", "white")
+  d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  
+  d3.select("#b1").style("background", "white")
+  d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+  d3.select("#b2").style("background", "#eaeaea")
+  d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+});
+
+
+}
+
 d3.select("#graph").on('click', function(d){
+  // first time?
+  if(graphFirstTime == true){
+    graphFirstTime = false;
+    createGraphExplainerDiv()
+  }
   // Toggle mode on or off
   graphMode = 1-graphMode;
   //cool to 0 degrees
@@ -1664,7 +1793,9 @@ d3.select("#graph").on('click', function(d){
   }
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
-
+    if(typeof graphExplainerDiv != "undefined"){
+      d3.select("#graphExplainer").transition().duration(500).style("opacity",0).remove()
+    }
     graphModeOff();
   }; // transition back to clusters
   
