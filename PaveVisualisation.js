@@ -1807,7 +1807,7 @@ function moveBottomDown() {
   d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "7vh");
   d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "7vh");
   
-  d3.select("#bottomButtons").transition().duration(500).style("bottom", "4vh");
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "10vh");
   d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "3vh");
   d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "3vh");
 }
@@ -1817,7 +1817,7 @@ function moveBottomUp() {
   d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "9vh");
   d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "9vh");
 
-  d3.select("#bottomButtons").transition().duration(500).style("bottom", "10vh");
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "15vh");
   d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "9vh");
   d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "9vh");
 }
