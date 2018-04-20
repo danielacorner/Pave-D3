@@ -93,12 +93,22 @@ img.img-question {
   right: 30px;
   top: 30px;
 }
-button.expand-sliders-btn:hover {
+.fontawesome-i2svg-active {
+  pointer-events: none;
+}
+/*button.expand-sliders-btn:hover {
   background: #eaeaea;
 }
+*/
 button.expand-sliders-btn{
   margin: 5px 0px 0px 10px; 
   background: white; 
+  border: 2px solid green; 
+  border-radius: 16px;'
+}
+button.close-sliders-btn{
+  margin: 5px 0px 0px 10px; 
+  background: none; 
   border: 2px solid green; 
   border-radius: 16px;'
 }
@@ -208,7 +218,18 @@ svg {
 }
 
 .axis { font: 14px sans-serif; }
-
+#axisHz path { 
+  stroke: #B52B00;
+  stroke-width: 2px;
+  stroke-dasharray: 6;
+}
+#axisHz text { 
+  stroke: #B52B00;
+}
+#axisLabelHz { 
+  stroke: #B52B00;
+  stroke-width: 0.3px;
+}
 div.tooltip {
   position: absolute;
   text-align: left;

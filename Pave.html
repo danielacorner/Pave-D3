@@ -109,7 +109,7 @@
 		</div>
 	</div> <!-- end of title -->
 
-	<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 70vh; top: 20vh" class="chart">	</svg>
+	<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; top: 20vh" class="chart">	</svg>
 	<!-- end of headers -->
 
 	<!-- One column, visualisation & buttons in the middle, filters on top -->
@@ -178,21 +178,29 @@
 
 								<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px; padding-right: 5px;">
 								Suggested Views</span>
-								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()"><i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i></button>
+								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()">
+									<i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i>
+								</button>
 
 								<li class="list-graphModes" style="margin-top: 10px">
 									<button id="a0" class="suggested-views-btn" style="background: #eaeaea" href="#">
-									What's the risk my job will be automated?</button></li>
-									<li class="list-graphModes">
-										<button id="a1" class="suggested-views-btn" href="#">
-										How much study for how much pay?</button></li>
-										<li class="list-graphModes">
-											<button id="a2" class="suggested-views-btn"  href="#">
-											How many jobs exist?</button></li>
+										What's the risk my job will be automated?
+									</button>
+								</li>
+								<li class="list-graphModes">
+									<button id="a1" class="suggested-views-btn" href="#">
+										How much study for how much pay?
+									</button>
+								</li>
+								<li class="list-graphModes">
+									<button id="a2" class="suggested-views-btn"  href="#">
+										How many jobs exist?
+									</button>
+								</li>
 
-										</div>
+							</div>
 
-										<script type="text/javascript">
+							<script type="text/javascript">
 											var viewsMinimized = 0;
 											function minimizeViews() {
 												viewsMinimized = 1-viewsMinimized;

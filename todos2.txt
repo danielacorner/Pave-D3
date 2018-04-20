@@ -6,11 +6,15 @@ ideas:
 
 ------------------------------------------
 todos
+- subtle dropdown axes?
 - 50% line for automation risk
 - ask users "what information do you care about in making a career decision?" to determine views
 - fix 'movebottomdown'
 ***********************************
 current:
+- view more view less
+
+- filter from both sides
 - fix filter algorithm:
 	- only language skills?
 	- determine why some circles are filtering to invisible
@@ -29,6 +33,7 @@ pick one
  add view sectioning
 
 next:
+- same size initially?
 - transition sliders on reset
 - remove capitalization from axis titles
 - annotate views
@@ -45,6 +50,8 @@ next:
 	- page 3 slider tooltips
 
 - switch sliders to dragstarted instead of on drag (to prevent mouseout from ending the drag -- interrupt?)
+
+-'about' page content
 
 - flash when slider under 10 jobs?
 	- change the background colour of the screen?
@@ -327,12 +334,5 @@ slider handles stuck
 
 --reduce btn sizes
 
-view more button
-
---increase legend size
-
---tooltip dual-colour style
-
---tooltip link (not appearing in front)
 
 top skills

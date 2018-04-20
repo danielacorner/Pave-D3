@@ -1709,7 +1709,7 @@ function createGraphExplainerDiv() {
 
 d3.select("#b0").on('click', function() { // Automation vs Number of Jobs
   currentMode = 3;
-  graphModeOn(3);
+  // graphModeOn(3);
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
@@ -1931,6 +1931,35 @@ function graphModeOn(mode) {
                 (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
+
+
+          // svgAutoAxis = svg.append("g")
+          //   .call(d3.svg.axis()
+          //               .scale(xScale)
+          //               .orient("bottom"))
+          //     .style("stroke", "#FF7F0E")
+          //     .style("stroke-width", "2.5px")
+          //     // .attr("x1", window.innerWidth*0.2)
+          //     // .attr("x2", window.innerWidth*0.75)
+          //     // .attr("y1", height*0.7 + 200 )  
+          //     // .attr("y2", 0 );
+
+          // // svgAutoAxis = svg.append("line")
+          // //     .style("stroke", "#FF7F0E")
+          // //     .style("stroke-width", "2.5px")
+          // //     .attr("x1", window.innerWidth*0.2)
+          // //     .attr("x2", window.innerWidth*0.75)
+          // //     .attr("y1", height*0.7 + 200 )  
+          // //     .attr("y2", 0 );
+
+          // //add text to fixed line
+          // svgAutoAxis.append("text")
+          //     .attr("x", window.innerWidth*0.55)
+          //     .attr("y", 0.5)
+          //     .attr("text-anchor", "middle")
+          //     .text("50% risk");
+
+
             break;
 
         case 1:
@@ -2059,6 +2088,30 @@ var compressY = 0.65;
   axisG = svg.append("g")
 
   var axisYtranslate = window.innerHeight*-0.12;
+
+  if(mode==0||mode==3){
+          // append dashed horizontal line at risk = 0.5
+
+          var axisHz = axisG.append("g")
+          .attr("class", "hz")
+          .attr("transform", circleHeight((window.innerWidth*-0.28+15),(axisYtranslate*-1.15)) ) // bookmark
+          .call(d3.axisBottom(x).tickSize(0))
+            .attr("id","axisHz")
+            .attr("transform",circleHeight((window.innerWidth*-0.28+15),(window.innerHeight*-0.09)))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+          // text label for the x axis
+          var axisLabelHz = axisG.append("text")
+          .attr("id","axisLabelHz")
+          .style("text-anchor", "middle")
+          .attr("transform",circleHeight((window.innerWidth*0.25+15),(window.innerHeight*-0.086)))
+          .style("opacity", 0).transition().duration(500).style("opacity",1)
+          .text("50% Risk").style("font-size", "16px");
+
+  } else {
+    d3.select("#axisHz").transition().duration(500).style("opacity",0).remove()
+    d3.select("#axisLabelHz").transition().duration(500).style("opacity",0).remove()
+  }
 
   d3.select("xaxis").remove();
 
@@ -3422,7 +3475,11 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("x2", sliderScaleArray[(i+j)].range()[1])
       .attr("class", "track-overlay")
       .attr("id", (i+j))
+      .on("mouseover", function() {
+        d3.select("#handle_"+this.id).style("fill","#eaeaea")
+      })
       .on("mouseout", function() {
+        d3.select("#handle_"+this.id).style("fill","white")
         if(typeof miniTooltip != "undefined"){
           miniTooltip.transition().duration(500)
           .style("opacity",0)
@@ -3454,6 +3511,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
     handleArray[(i+j)] = sliderMulti[(i+j)].insert("circle", ".track-overlay")
       .attr("class", "handle")
+      .attr("id","handle_"+(i+j))
       // .style("z-index", 99)
       .style("box-shadow", "3px 3px 3px black")
       .attr("r", 9);
@@ -4177,8 +4235,25 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[3] = 0;
           hideComp() }
 
+        // expand subsliders button and turn off
         d3.select("#btnSubsliders_0")
           .transition().duration(350).style("height", heightLang+20+"px").style("width",widthAll*0.95+"px")
+          .style("pointer-events","none")
+        // append "hide skills" button
+        d3.select("#btnSubsliders_0").append("button")
+          .attr("id","btnSubsliders_0Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none").style("pointer-events","none")
+            // .style("border-top-right-radius","0px")
+            // .style("border-top-left-radius","0px")
+          .style("width",widthAll*0.93+"px")
+          .style("margin-left",-widthAll*0.017+"px")
+          .html(
+            "&#9650 hide language skills &#9650"
+            ).style("color", "#49AC52")
+        // move "hide skills" button down
+        d3.select("#btnSubsliders_0Close")
+          .style("margin-top",0+"px").transition().duration(350)
+          .style("margin-top",heightLang-6+"px")
+
         d3.select("#spanSubsliders_0")
           .transition().duration(350).style("opacity", 0)
 
@@ -4215,8 +4290,24 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[3] = 0;
           hideComp() }
 
+                  // expand subsliders button and turn off
         d3.select("#btnSubsliders_1")
           .transition().duration(350).style("height", heightLogi+20+"px").style("width", widthAll*0.95+"px")
+          .style("pointer-events","none")
+                  // append "hide skills" button
+                  d3.select("#btnSubsliders_1").append("button")
+                    .attr("id","btnSubsliders_1Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none").style("pointer-events","none")
+                      // .style("border-top-right-radius","0px")
+                      // .style("border-top-left-radius","0px")
+                    .style("width",widthAll*0.93+"px")
+                    .style("margin-left",-widthAll*0.017+"px")
+                    .html(
+                      "&#9650 hide logic skills &#9650"
+                      ).style("color", "#49AC52")
+                  // move "hide skills" button down
+                  d3.select("#btnSubsliders_1Close")
+                    .style("margin-top",0+"px").transition().duration(350)
+                    .style("margin-top",heightLogi-6+"px")
 
         d3.select("#spanSubsliders_1")
           .transition().duration(350).style("opacity", 0)
@@ -4258,8 +4349,28 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           slidersExpanded[3] = 0;
           hideComp() }
 
+
+                  // expand subsliders button and turn off
         d3.select("#btnSubsliders_2")
           .transition().duration(350).style("height", heightMath+50+"px").style("width", widthAll*0.97+"px")
+          .style("pointer-events","none")
+                  // append "hide skills" button
+                  d3.select("#btnSubsliders_2").append("button")
+                    .attr("id","btnSubsliders_2Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none")
+                    .style("pointer-events","none")
+                      // .style("border-bottom-right-radius","0px")
+                      // .style("border-bottom-left-radius","0px")
+                    .style("width",widthAll*0.93+"px")
+                    .style("margin-left",-widthAll*0.017+"px")
+                    .html(
+                      "&#9660 hide math skills &#9660"
+                      ).style("color", "#49AC52")
+                    // .on("click",function(){hideMath()})
+                  // move "hide skills" button down
+                  d3.select("#btnSubsliders_2Close")
+                    .style("margin-top",0+"px").transition().duration(350)
+                    .style("margin-top",heightMath+20+"px")
+                  
         d3.select("#spanSubsliders_2")
           .transition().duration(350).style("opacity", 0)
 
@@ -4301,6 +4412,28 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           // if there is already a legend, unhide the legend
           // unhideLegend()
         }
+                  // expand subsliders button and turn off
+        d3.select("#btnSubsliders_3")
+          .transition().duration(350).style("height", heightComp+50+"px").style("width", widthAll*0.95+"px")
+          .style("pointer-events","none")
+                  // append "hide skills" button
+                  d3.select("#btnSubsliders_3").append("button")
+                    .attr("id","btnSubsliders_3Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none")
+                    .style("pointer-events","none")
+                      // .style("border-bottom-right-radius","0px")
+                      // .style("border-bottom-left-radius","0px")
+                    .style("width",widthAll*0.93+"px")
+                    .style("margin-left",-widthAll*0.017+"px")
+                    .html(
+                      "&#9660 hide computer skills &#9660"
+                      ).style("color", "#49AC52")
+                    // .on("click",function(){hideComp()})
+                  // move "hide skills" button down
+                  d3.select("#btnSubsliders_3Close")
+                    .style("margin-top",0+"px").transition().duration(350)
+                    .style("margin-top",heightComp+20+"px")
+                  
+
 
         d3.select("#btnSubsliders_3")
           .transition().duration(350).style("height", heightComp+50+"px").style("width",widthAll*0.95+"px")
@@ -4325,10 +4458,23 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
   }
 }
 
+
+d3.selectAll(".expand-sliders-btn").on("mouseover", function() {
+  d3.select("#chart").style("pointer-events","none")
+})
+d3.selectAll(".expand-sliders-btn").on("mouseout", function() {
+  d3.select("#chart").style("pointer-events","auto")
+
+})
+
+
+
+
 function hideLang() {
-  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px").style("width", 250+"px")
-  d3.select("#spanSubsliders_0")
-          .transition().duration(350).style("opacity", 1)
+
+  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px").style("width", 250+"px").style("pointer-events","auto")
+  d3.select("#spanSubsliders_0").transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_0Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
     // .style("top", window.innerHeight*0.20+"px");
 
   // setTimeout(function() {
@@ -4347,9 +4493,10 @@ function hideLang() {
 
 function hideLogi() {
 
-  d3.select("#btnSubsliders_1").transition().duration(500).style("height", "30px").style("width","250px")
-  d3.select("#spanSubsliders_1")
-          .transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_1").transition().duration(500).style("height", "30px").style("width","250px").style("pointer-events","auto")
+  d3.select("#spanSubsliders_1").transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_1Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
+
 
   setTimeout(function() {
       subSliderDivLogi.style("visibility", "hidden");
@@ -4367,9 +4514,9 @@ function hideLogi() {
 
 function hideMath() {
 
-  d3.select("#btnSubsliders_2").transition().duration(500).style("height", "30px").style("width", 250+"px")
-  d3.select("#spanSubsliders_2")
-          .transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_2").transition().duration(500).style("height", "30px").style("width", 250+"px").style("pointer-events","auto")
+  d3.select("#spanSubsliders_2").transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_2Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
 
   setTimeout(function() {
       subSliderDivMath.style("visibility", "hidden");
@@ -4387,9 +4534,9 @@ function hideMath() {
 
 function hideComp() {
 
-  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px").style("width","250px")
-  d3.select("#spanSubsliders_3")
-          .transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px").style("width","250px").style("pointer-events","auto")
+  d3.select("#spanSubsliders_3").transition().duration(350).style("opacity", 1)
+  d3.select("#btnSubsliders_3Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
 
   setTimeout(function() {
       subSliderDivComp.style("visibility", "hidden");
