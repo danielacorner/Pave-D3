@@ -1121,6 +1121,15 @@ function expandColoursLegend() {
       .attr("id",function(d,i) { return "legendCircle_"+i } )
       .attr("transform", function(d,i) { return "translate("+"14"+","+(45+i*27)+")" } ) //flag! need to make equation for width/height ratio
       .style("fill", function(d,i) { return color(i); })
+      .attr("opacity",  function(d,i) {
+        if( filteredIndustries.includes(+i) ) { 
+          // console.log(i)
+          return 0.1 }
+        else{ 
+          // console.log(d.industryNum)
+          // console.log(d.industryNum)
+          return 1 }
+      })
       // append rect with on click
       
   legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
