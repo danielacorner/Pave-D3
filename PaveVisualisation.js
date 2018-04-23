@@ -108,7 +108,7 @@ var clicked = 0; // on: tooltips don't disappear
 // load the data
 createViz();
 function createViz() {
-d3.csv("NOC_403.csv", function(error, datapoints) {
+d3.csv("NOC_494_interpolated.csv", function(error, datapoints) {
   if (error) throw error;
 
 
@@ -362,7 +362,7 @@ var clusters = new Array(m);
 // Nodes: the data you want to display & filter by
 var nodes = datapoints.map(function(el) {
   var i = el.cluster,
-  r = radiusScale(el.workers),
+  r = 10, // start equal radii
   d = {
     id: +el.id,
     favourite: 0,
@@ -1094,8 +1094,16 @@ d3.select("#btnLegend").on("mouseenter", function() {
   legendCircles = svgLegend.selectAll("circle").data(industriesArray).enter().append("circle")
       .attr("r", 0) // start at 0 radius and transition in
       .transition().duration(450).attr("r", 10)
+      .attr("id",function(d,i) { return "legendCircle_"+i } )
       .attr("transform", function(d,i) { return "translate("+"14"+","+(45+i*37)+")" } ) //flag! need to make equation for width/height ratio
       .style("fill", function(d,i) { return color(i); })
+      .on("click",function(){
+        // filter the data
+
+        // restart the simulation
+      })
+  // legendCircles on click: filter our industry i, turn circle transparent
+
 
   legendTexts = d3.select("#svgLegend").selectAll("text").data(industriesArray).enter().append("text")
       .attr("text-anchor","left")
@@ -4127,6 +4135,188 @@ var query = document.getElementById("jobTitle").value;
   return graph;
 }
 
+var filteredIndustries = [];
+
+
+
+
+
+
+
+// //////////////// Filter Functions 3: filter on all variables at once //////////////////////
+
+
+// filterAll = function() {
+  
+//   // first, clear the list
+//   var listToDeleteMulti = [];
+  
+//   // reset the graph
+//   graph = [];
+
+//   // var currentSlider = sliderPositionsArray[event.target.id]
+//   // console.log(event.target.id)
+//   // console.log(currentSlider)
+
+//   store.forEach(function(d){ // for each circle
+
+//     // put you on the list if the slider position is above your value:
+    
+//     // for current slider only
+//     for(var s in sliderPositionsArray){        
+//       // if the slider position is above your value  &  if you're not already on the list
+//       if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+//         // put you on the list
+//         listToDeleteMulti.push(d.id);
+//       }
+//     }
+      
+//     // // for each slider
+//     // for(var s in sliderPositionsArray){        
+//     //   // if the slider position is above your value  &  if you're not already on the list
+//     //   if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+//     //     // put you on the list
+//     //     listToDeleteMulti.push(d.id);
+//     //   }
+//     // }
+
+//   })
+  
+//   // update the graph based on the filter list
+//   store.forEach(function(n) {
+//     // if you're not on the filter list
+//     if (!listToDeleteMulti.includes(n.id)) {
+//       // put you on the graph         (start graph empty? or check)
+//       graph.push(n);
+//     // if you're on the list
+//     } else if (listToDeleteMulti.includes(n.id)) {
+//       // for each graph item
+//       graph.forEach(function(d, p) { // p = position
+//         if (n.id === d.id) {
+//           graph.splice(p, 1); // get you off of there!
+//         }
+
+//       })
+//     };
+//   });
+
+//   // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
+//   // todo: separate main and subslider for loops
+
+//   // var sliderArray = [
+//   // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+//   //     // subskills
+//   //     "s8OralCommunication","s10Reading","s14Writing",
+      
+//   //     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+      
+//   //     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+        
+//   //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+//   // ];
+
+//   // Update all sliders when dragging any one slider
+
+//   // Main sliders
+//   for(var i=0; i<4; i++) {
+
+//     if(event.target.id != i) {
+//       // find the minimum of each slider on the current graphed set
+//       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+//       // move the slider handle
+//       handleArray[i].attr("cx", thisMinimum);
+//       // fill the left side green
+//       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+//     }else if(event.target.id == i) {
+//       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
+//       // fill the left side green (using mouse position on current slider)
+
+//       d3.select("#inset-left_"+i).attr("x2", function() {
+//         if (sliderScaleArray[0].invert(d3.event.x) <= 0) { return sliderScaleArray[0](sliderPositionsArray[0]) }
+//         else { 
+//           return d3.event.x }
+//         } )
+//     }
+//   };
+
+//   // Subskill sliders
+//   for(var i=4; i<sliderArray.length; i++) {
+//     if(event.target.id != i) {
+//       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+//       handleArray[i].attr("cx", thisMinimum); // move the slider handle
+//       // fill the left side green
+//       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+
+//     }else if(event.target.id == i) {
+//       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+//       // fill the left side green (using mouse position on current slider)
+//       d3.select("#inset-left_"+i).attr("x2", d3.event.x )
+//     }
+//   };
+
+//   calloutCheck()
+
+//   console.log(graph.length)
+
+//   return graph;
+// }
+
+
+
+
+
+
+
+
+function filterByIndustry(industry) {
+
+  // update the filtered industries list
+
+  // if the industry is not on the list
+  if(!filteredIndustries.includes(industry)) {
+    // put it on the list
+    filteredIndustries.push(industry);
+  }
+  // if the industry is already on the list
+  else if(filteredIndustries.includes(industry)) {
+    // take it off the list
+    filteredIndustries.splice(filteredIndustries.indexOf(industry),1)
+  }
+  
+
+  // reset the list to delete
+  listToDeleteMulti = [];
+
+  // START by filtering out nodes under the minimums
+  store.forEach(function(d) {
+
+      // then if each job contains the query, add to the list
+      //indexOf returns the position of the string in the other string. If not found, it will return -1.
+      if(d.allTitles.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
+          listToDeleteMulti.push(d.id);
+      }
+    });
+    // reset the graph
+  graph = [];
+  // THEN update the graph based on the filter list
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!listToDeleteMulti.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    // if you're on the list
+    } else if (listToDeleteMulti.includes(n.id)) {
+      graph.forEach(function(d, p) {
+        if (n.id === d.id) {
+          graph.splice(p, 1); // get you off of there!
+        }
+      })
+    };
+  });
+  return graph;
+}
+
 
 
 
@@ -4197,11 +4387,6 @@ var subSliderDivComp;
       .style("border-radius", "16px")
       .style("visibility", "hidden")
       .style("background", "white")
-
-  d3.select("#btnSubsliders_0").style("pointer-events","auto")
-  d3.select("#btnSubsliders_1").style("pointer-events","auto")
-  d3.select("#btnSubsliders_2").style("pointer-events","auto")
-  d3.select("#btnSubsliders_3").style("pointer-events","auto")
 
 // div heights
 var heightLang = window.innerHeight*0.24,

@@ -12,18 +12,23 @@ todos
 - fix 'movebottomdown'
 ***********************************
 current:
+- noc 489 csv
+***********************************
+
+- bug: reset button not working
 
 - filter from both sides
 - fix filter algorithm:
 	- only language skills?
 	- determine why some circles are filtering to invisible
-***********************************
 
 content list?
 
+scrape pictures for each job
+
 pick one
-- bug: explainer div under reset button
-- bug: resize moves chart
+- bug: filters leaving holes
+
 - lengthen or explain graph views sentences
 - graph view tooltip positions
 - graph view first-time intro div
