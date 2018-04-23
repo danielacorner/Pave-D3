@@ -11,11 +11,30 @@ todos
 - ask users "what information do you care about in making a career decision?" to determine views
 - fix 'movebottomdown'
 ***********************************
+- noc 494 csv
+- filling data: average locally?
+
 current:
-- noc 489 csv
+- filterbyindustry must also filterAll by sliders
+- or make transparent
+-remove pause/others
+- wage: include low, med, high?
+
+- click off legends anywhere on chart
 ***********************************
 
+next steps:
+1. call filterIndustry(industry)
+
+- unjam filters
+
 - bug: reset button not working
+
+- filter button instead of search, separate search page
+
+- click color legend to filter industries
+	- transparencies for on/off
+- move split button to color legend
 
 - filter from both sides
 - fix filter algorithm:

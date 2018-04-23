@@ -134,13 +134,13 @@ button.btn-graph {
   bottom: 30%;
 }
 button.btn-legend {
-  height: 70px;
-  width: 100px;
+  height: 50px;
+  width: 85px;
   line-height: 1.2;
   background: white;
   border-width: 1px;
   border-color: #49AC52;
-  border-radius: 14px;
+  border-radius: 7px;
   box-shadow: 0px;
   font-weight: bold;
   font-family: Raleway;
@@ -268,7 +268,12 @@ div.tooltip:hover {
   stroke-linecap: round;
   stroke-width: 40px;
 }
-
+rect.legendBtn {
+  stroke:#fff;
+  fill:#fff;
+  fill-opacity:0;
+  stroke-opacity:0;
+}
 .track {
   stroke: #49AC52;
   stroke-width: 5px;

@@ -74,6 +74,7 @@ var sliderMulti = [];
 var handleArray = []; // array of slider handles
 listToDeleteMulti = []; // filtered IDs
 
+var filteredIndustries = [];
 
 
 
@@ -366,6 +367,7 @@ var nodes = datapoints.map(function(el) {
   d = {
     id: +el.id,
     favourite: 0,
+    // transparent: false,
     cluster: i, 
     radius: r, 
     job: el.job,
@@ -377,6 +379,7 @@ var nodes = datapoints.map(function(el) {
     title2: el.title2,
     title3: el.title3,
     industry: el.industry, 
+    industryNum: el.industryNum, 
     noc: el.noc, 
     workers: +el.workers,
     wage: el.wage,
@@ -564,7 +567,8 @@ circles = svg.selectAll("circle")
 
 d3.select("#chart").on("click", function(d){
   // hide any subskill sliders
-  hideAll()
+  hideAll();
+  closeColourLegend();
   // if clicked off of a circle
   if (clicked == 1) { 
     if (d3.event.target.nodeName == "circle") {
@@ -1057,6 +1061,9 @@ drag_handler(circles);
 
 ///////////////////////////////// Buttons ////////////////////////////////////
 
+var legendButtonHeight = 50,
+    legendButtonWidth = 85;
+
 /////////////// COLOUR LEGEND button
 
 industriesArray = [
@@ -1072,42 +1079,64 @@ industriesArray = [
 'Sales and services',
 ]
 
-d3.select("#btnLegend").on("mouseenter", function() {
+d3.select("#btnColours").on("click", function() {
+  expandColoursLegend()
+})
+
+function expandColoursLegend() {
+
+  d3.select("#btnColours").on("click", "")
 
   // shrink Size Legend button 
   d3.select("#btnSizes").transition().duration(250).style("opacity",0).style("height","0px").style("width","0px").style("border-width","1px")
 
   // expand colour legend
-  d3.select("#btnLegend").transition().duration(375)
-  .style("width", "325px")
-  .style("height", "425px").style("border-width","0px")
+  d3.select("#btnColours")
+    .append("div")
+  .attr("id","legendDiv1")
+    .style("position","absolute")
+    .style("width","0px")
+    .style("height","0px")
+    // .style("bottom","0px")
+  .transition().duration(375)
+    .style("background","white")
+    .style("width", "335px")
+    .style("height", "310px").style("border-width","1px").style("border","1px solid #49AC52").style("border-radius","6px")
+    .style("bottom","0px")
+    .style("left","0px")
   // .text("")
 
-  svgLegend = d3.select("#btnLegend")
+  svgLegend = d3.select("#legendDiv1")
       .html("")
       .append("svg").attr("id","svgLegend")
-        .attr("width","325px")
-        .attr("height","425px")
+        .attr("width","335px")
+        .attr("height","300px")
         .style("margin-top","5px")
-        // .style("background","#eaeaea")
+        .style("background","white")
     
-  legendCircles = svgLegend.selectAll("circle").data(industriesArray).enter().append("circle")
+  legendCircles = d3.select("#svgLegend").selectAll("circle").data(industriesArray).enter().append("circle")
       .attr("r", 0) // start at 0 radius and transition in
+      .attr("class","legendCirc")
       .transition().duration(450).attr("r", 10)
       .attr("id",function(d,i) { return "legendCircle_"+i } )
-      .attr("transform", function(d,i) { return "translate("+"14"+","+(45+i*37)+")" } ) //flag! need to make equation for width/height ratio
+      .attr("transform", function(d,i) { return "translate("+"14"+","+(45+i*27)+")" } ) //flag! need to make equation for width/height ratio
       .style("fill", function(d,i) { return color(i); })
-      .on("click",function(){
-        // filter the data
+      // append rect with on click
+      
+  legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
+        .attr("id",function(d,i){ return i+"filterColoursRect_" })
+        .attr("class","legendBtn")
+        // .style("fill","black")
+        .attr("onclick",function(d,i) { return "filterIndustry("+(this.id.substring(0,1))+")" }) // quote?
+        .attr("width","20px")
+        .attr("height","20px")
+        .attr("transform", function(d,i) { return "translate("+"4"+","+(35+i*27)+")" } ) //flag! need to make equation for width/height ratio
 
-        // restart the simulation
-      })
-  // legendCircles on click: filter our industry i, turn circle transparent
 
 
-  legendTexts = d3.select("#svgLegend").selectAll("text").data(industriesArray).enter().append("text")
+  legendTexts = svgLegend.selectAll("text").data(industriesArray).enter().append("text")
       .attr("text-anchor","left")
-      .attr("transform", function(d,i) { return "translate("+"38"+","+(50+i*37)+")" } ) //flag! need to make equation for width/height ratio
+      .attr("transform", function(d,i) { return "translate("+"38"+","+(50+i*27)+")" } ) //flag! need to make equation for width/height ratio
       .text(function(d) { return d })
       .style("opacity",0).transition().duration(600).style("opacity",1)
   
@@ -1123,28 +1152,38 @@ d3.select("#btnLegend").on("mouseenter", function() {
   // .style("width", "300px")
   // .style("height", "400px")
 
-})
+}
 
-d3.select("#btnLegend").on("mouseleave", function() {
+// d3.select("#btnColours").on("mouseleave", function() {
+function closeColourLegend() {
 
   // reset Size Legend button
-  d3.select("#btnSizes").transition().duration(300).style("opacity",1).style("height","70px").style("width","100px").style("border-width","1px")
+  d3.select("#btnSizes").transition().duration(300).style("opacity",1)
+    .style("height",legendButtonHeight+"px")
+    .style("width",legendButtonWidth+"px").style("border-width","1px")
 
-  d3.select("#btnLegend").transition().duration(300).style("border-width","1px")
-  .style("width", "100px")
-  .style("height", "70px")
+  // reset Colour Legend button
+  d3.select("#btnColours").transition().duration(300).style("border-width","1px")
+  .style("width", legendButtonWidth+"px")
+  .style("height", legendButtonHeight+"px")
+
+  d3.select("#btnColours").on("click", function() {
+    expandColoursLegend()
+  })
 
   svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
 
+  d3.select("#legendDiv1").transition().duration(300).style("opacity",0).remove()
   d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
   // legendTexts.selectAll("text").style("opacity",0).remove()
 
   setTimeout(function() {
-    d3.select("#btnLegend")
+    d3.select("#btnColours")
     .html("Colour<br>Legend")
     }, 400);
-
-})
+  
+  clickedColours = 0;
+}
 
 
 
@@ -1226,19 +1265,20 @@ function setSizes(mode){
 var currentSize = "Number of Jobs"
 var btnSizesDims = ["275px","300px"] // width, height
 
-mouseEnterOn()
 
-function mouseEnterOn() {
+var clickedSizes;
 
-  d3.select("#btnSizes").on("mouseenter", function() {
-    mouseEnterFn()
+d3.select("#btnSizes").on("click", function() {
+    if(clickedSizes == 0) {
+      clickedSizes = 1
+      createSizeLegend()  
+    }
   })
-}
 
-function mouseEnterFn() {
+function createSizeLegend() {
 
     // shrink Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
+    d3.select("#btnColours").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
 
     d3.select("#btnSizes").transition().duration(300).style("border-width","0px")
     .style("width", btnSizesDims[0])
@@ -1256,12 +1296,12 @@ function mouseEnterFn() {
     sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
         .attr("r", 0) // start at 0 radius and transition in
         .transition().duration(400).attr("r",  function(d,i) { return sizesArray[i] })
-        .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+        .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
         .style("fill", "#B5ADAD")
 
     legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
         .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+"95"+","+(49 + i*5 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+        .attr("transform", function(d,i) { return "translate("+"95"+","+(49 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
         .text(function(d,i) { if(i==0){ return "Less" }else if(i==4){ return "More" } })
         .style("opacity",0).transition().duration(600).style("opacity",1)
     
@@ -1342,10 +1382,10 @@ function mouseEnterFn() {
 
       currentSize = "Number of Jobs"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff() // turn off until mouseleave
+      // mouseEnterOff() // turn off until mouseleave
       setSizes("workers")
-      mouseEnterFn()
-      // mouseLeaveFn()
+      createSizeLegend()
+      // removeLegends()
     })
 
     d3.select("#wageLink").on("click", function() {
@@ -1367,10 +1407,10 @@ function mouseEnterFn() {
 
       currentSize = "Wage ($ per hr)"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
+      // mouseEnterOff()
       setSizes("wage")
-      mouseEnterFn()
-      // mouseLeaveFn()
+      createSizeLegend()
+      // removeLegends()
     })
 
     d3.select("#yearLink").on("click", function() {
@@ -1391,10 +1431,10 @@ function mouseEnterFn() {
 
       currentSize = "Years of Study"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
+      // mouseEnterOff()
       setSizes("yearsStudy")
-      mouseEnterFn()
-      // mouseLeaveFn()
+      createSizeLegend()
+      // removeLegends()
     })
 
     d3.select("#equaLink").on("click", function() {
@@ -1415,10 +1455,10 @@ function mouseEnterFn() {
 
       currentSize = "nothing"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      mouseEnterOff()
+      // mouseEnterOff()
       setSizes("none")
-      mouseEnterFn()
-      // mouseLeaveFn()
+      createSizeLegend()
+      // removeLegends()
     })
 
     // fade in dropdown
@@ -1426,23 +1466,26 @@ function mouseEnterFn() {
 }
 
 
-function mouseEnterOff() {
-  d3.select("#btnSizes").on("mouseenter", "")
-}
+// function mouseEnterOff() {
+//   d3.select("#btnSizes").on("mouseenter", "")
+// }
 
-mouseLeaveOn();
+// mouseLeaveOn();
 
-function mouseLeaveOn() {
-  d3.select("#btnSizes").on("mouseleave", function() {
-    mouseEnterOn()
-    mouseLeaveFn()
-  })
-}
+// function mouseLeaveOn() {
+//   d3.select("#btnSizes").on("mouseleave", function() {
+//     mouseEnterOn()
+//     removeLegends()
+//   })
+// }
 
-function mouseLeaveFn() {
+function removeLegends() {
     // reset Colour Legend button and Sizes dropdown
-    d3.select("#btnLegend").transition().duration(400).style("opacity",1).style("height","70px").style("width","100px").style("border-width","1px")
+    d3.select("#legendDiv1").transition().duration(400).style("opacity",0).remove()
+    clickedColours = 0;
+
     d3.select("#sizeDropdownDiv").style("opacity",1).transition().duration(200).style("opacity",0).remove()
+    clickedSizes = 0;
 
     d3.select("#btnSizes").transition().duration(500)
     .style("width", "100px")
@@ -1460,9 +1503,9 @@ function mouseLeaveFn() {
     mouseEnterOn()
 }
 
-function mouseLeaveOff() {
-    d3.select("#btnSizes").on("mouseleave", "")
-}
+// function mouseLeaveOff() {
+//     d3.select("#btnSizes").on("mouseleave", "")
+// }
 
 
 
@@ -1892,7 +1935,7 @@ function graphModeOn(mode) {
   // hideGraphViewCallout();
   moveBottomDown();
   hideToolTip(500);
-  d3.select("#btnLegend").transition().duration(500).style("opacity",0).style("pointer-events","none")
+  d3.select("#btnColours").transition().duration(500).style("opacity",0).style("pointer-events","none")
   d3.select("#btnSizes").transition().duration(500).style("opacity",0).style("pointer-events","none")
   d3.select("#splitShuffle").transition().duration(500).style("opacity", 0);
 
@@ -2320,7 +2363,7 @@ function showLeftButtons() {
 function graphModeOff() {
 
   // change available buttons
-  d3.select("#btnLegend").transition().duration(500).style("opacity",1).style("pointer-events","auto")
+  d3.select("#btnColours").transition().duration(500).style("opacity",1).style("pointer-events","auto")
   d3.select("#btnSizes").transition().duration(500).style("opacity",1).style("pointer-events","auto")
 
   d3.select("#splitShuffle").transition().duration(500).style("opacity", 1);
@@ -4135,7 +4178,6 @@ var query = document.getElementById("jobTitle").value;
   return graph;
 }
 
-var filteredIndustries = [];
 
 
 
@@ -4143,20 +4185,61 @@ var filteredIndustries = [];
 
 
 
-// //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
 
-// filterAll = function() {
-  
-//   // first, clear the list
-//   var listToDeleteMulti = [];
-  
-//   // reset the graph
-//   graph = [];
 
-//   // var currentSlider = sliderPositionsArray[event.target.id]
-//   // console.log(event.target.id)
-//   // console.log(currentSlider)
+
+function filterIndustry(input) { //bookmark
+
+  // var industry = industriesArray[input];
+  input = +input;
+
+  // update the filtered industries list:
+
+    // if the industry is not on the list
+    if(!filteredIndustries.includes(input)) { //console.log("on! "+input) 
+      // put it on the list
+      filteredIndustries.push(input);
+    }
+    // if the input is already on the list
+    else if(filteredIndustries.includes(input)) { //console.log("splicing position "+filteredIndustries.indexOf(input))
+      // take it off the list
+      filteredIndustries.splice(filteredIndustries.indexOf(input),1)
+    }
+
+// console.log("filtered Array: "+filteredIndustries)
+
+// fade the graph circles
+circles.attr("opacity",
+  function(d) { // make filtered circles transparent
+    // if the industry is on the list, transparent
+    if( filteredIndustries.includes(+d.industryNum) ) { 
+      console.log(+d.industryNum)
+      return 0.1 }
+    else{ 
+      // console.log(d.industryNum)
+      // console.log(d.industryNum)
+      return 1 }
+  })  
+
+// fade the legend circles
+d3.selectAll(".legendCirc").attr("opacity",
+  function(d,i) {
+    if( filteredIndustries.includes(+i) ) { 
+      // console.log(i)
+      return 0.1 }
+    else{ 
+      // console.log(d.industryNum)
+      // console.log(d.industryNum)
+      return 1 }
+  })
+
+}
+
+
+  // var currentSlider = sliderPositionsArray[event.target.id]
+  // console.log(event.target.id)
+  // console.log(currentSlider)
 
 //   store.forEach(function(d){ // for each circle
 
@@ -4260,62 +4343,43 @@ var filteredIndustries = [];
 //   console.log(graph.length)
 
 //   return graph;
+
+
+
+
+
+
+//   // reset the list to delete
+//   listToDeleteMulti = [];
+
+//   // START by filtering out nodes under the minimums
+//   store.forEach(function(d) {
+
+//       // then if each job contains the query, add to the list
+//       //indexOf returns the position of the string in the other string. If not found, it will return -1.
+//       if(d.allTitles.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
+//           listToDeleteMulti.push(d.id);
+//       }
+//     });
+//     // reset the graph
+//   graph = [];
+//   // THEN update the graph based on the filter list
+//   store.forEach(function(n) {
+//     // if you're not on the filter list
+//     if (!listToDeleteMulti.includes(n.id)) {
+//       // put you on the graph         (start graph empty? or check)
+//       graph.push(n);
+//     // if you're on the list
+//     } else if (listToDeleteMulti.includes(n.id)) {
+//       graph.forEach(function(d, p) {
+//         if (n.id === d.id) {
+//           graph.splice(p, 1); // get you off of there!
+//         }
+//       })
+//     };
+//   });
+//   return graph;
 // }
-
-
-
-
-
-
-
-
-function filterByIndustry(industry) {
-
-  // update the filtered industries list
-
-  // if the industry is not on the list
-  if(!filteredIndustries.includes(industry)) {
-    // put it on the list
-    filteredIndustries.push(industry);
-  }
-  // if the industry is already on the list
-  else if(filteredIndustries.includes(industry)) {
-    // take it off the list
-    filteredIndustries.splice(filteredIndustries.indexOf(industry),1)
-  }
-  
-
-  // reset the list to delete
-  listToDeleteMulti = [];
-
-  // START by filtering out nodes under the minimums
-  store.forEach(function(d) {
-
-      // then if each job contains the query, add to the list
-      //indexOf returns the position of the string in the other string. If not found, it will return -1.
-      if(d.allTitles.indexOf(query) == -1 && !listToDeleteMulti.includes(d.id)) {
-          listToDeleteMulti.push(d.id);
-      }
-    });
-    // reset the graph
-  graph = [];
-  // THEN update the graph based on the filter list
-  store.forEach(function(n) {
-    // if you're not on the filter list
-    if (!listToDeleteMulti.includes(n.id)) {
-      // put you on the graph         (start graph empty? or check)
-      graph.push(n);
-    // if you're on the list
-    } else if (listToDeleteMulti.includes(n.id)) {
-      graph.forEach(function(d, p) {
-        if (n.id === d.id) {
-          graph.splice(p, 1); // get you off of there!
-        }
-      })
-    };
-  });
-  return graph;
-}
 
 
 
