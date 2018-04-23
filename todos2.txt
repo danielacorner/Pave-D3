@@ -15,9 +15,8 @@ todos
 - filling data: average locally?
 
 current:
-- filterbyindustry must also filterAll by sliders
-- or make transparent
--remove pause/others
+- size legend
+
 - wage: include low, med, high?
 
 - click off legends anywhere on chart

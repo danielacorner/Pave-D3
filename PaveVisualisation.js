@@ -568,7 +568,7 @@ circles = svg.selectAll("circle")
 d3.select("#chart").on("click", function(d){
   // hide any subskill sliders
   hideAll();
-  closeColourLegend();
+  closeLegends();
   // if clicked off of a circle
   if (clicked == 1) { 
     if (d3.event.target.nodeName == "circle") {
@@ -1164,34 +1164,43 @@ function expandColoursLegend() {
 }
 
 // d3.select("#btnColours").on("mouseleave", function() {
-function closeColourLegend() {
+function closeLegends() {
 
   // reset Size Legend button
   d3.select("#btnSizes").transition().duration(300).style("opacity",1)
     .style("height",legendButtonHeight+"px")
     .style("width",legendButtonWidth+"px").style("border-width","1px")
+    
+    setTimeout(function() {
+      d3.select("#btnSizes")
+      .html("Size<br>Legend")
+      }, 300);
 
   // reset Colour Legend button
-  d3.select("#btnColours").transition().duration(300).style("border-width","1px")
+  d3.select("#btnColours").transition().duration(300).style("opacity",1)
   .style("width", legendButtonWidth+"px")
-  .style("height", legendButtonHeight+"px")
+  .style("height", legendButtonHeight+"px").style("border-width","1px")
+
+    setTimeout(function() {
+      d3.select("#btnColours")
+      .html("Colour<br>Legend")
+      }, 300);
 
   d3.select("#btnColours").on("click", function() {
     expandColoursLegend()
+  })
+
+  d3.select("#btnSizes").on("click", function() {
+    expandSizesLegend()  
   })
 
   svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
 
   d3.select("#legendDiv1").transition().duration(300).style("opacity",0).remove()
   d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
+  d3.select("#sizeDropdownButton").transition().duration(300).style("opacity",0).remove()
   // legendTexts.selectAll("text").style("opacity",0).remove()
 
-  setTimeout(function() {
-    d3.select("#btnColours")
-    .html("Colour<br>Legend")
-    }, 400);
-  
-  clickedColours = 0;
 }
 
 
@@ -1214,7 +1223,7 @@ var yearRadiusScale = d3.scaleSqrt()
 var sizesArray = []
 var sizesValuesArray = []
 
-setSizes("workers")
+setSizes("none")
 
 function setSizes(mode){
 
@@ -1266,35 +1275,49 @@ function setSizes(mode){
     }
     break;
     case "none":
+      sizesArray.push(10)
     break;
   }
 
 }
 
-var currentSize = "Number of Jobs"
-var btnSizesDims = ["275px","300px"] // width, height
+var currentSize = "nothing"
+var btnSizesDims = ["190px","300px"] // width, height
 
-
-var clickedSizes;
 
 d3.select("#btnSizes").on("click", function() {
-    if(clickedSizes == 0) {
-      clickedSizes = 1
-      createSizeLegend()  
-    }
-  })
+      expandSizesLegend()  
+    })
 
-function createSizeLegend() {
+function expandSizesLegend() {
 
-    // shrink Colour Legend button and Sizes dropdown
+  d3.select("#sizeDropdownDiv").remove()
+
+  if(typeof sizesDiv != "undefined") {
+    sizesDiv.remove()
+  }
+
+  d3.select("#btnSizes").on("click", "")
+
+   // shrink Colour Legend button and Sizes dropdown
     d3.select("#btnColours").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
+    // d3.select("#btnSizes").transition().duration(300)
 
-    d3.select("#btnSizes").transition().duration(300).style("border-width","0px")
+    sizesDiv = d3.select("#btnSizes")
+    .append("div").attr("id","legendDiv2").style("border","1px solid #49AC52").style("border-radius", "6px")
+    .style("width","0px")
+    .style("height","0px")
+    .style("background","white")
+    .style("position", "absolute")
+    .style("left","37px")
+
+    d3.select("#legendDiv2").transition().duration(350)
     .style("width", btnSizesDims[0])
     .style("height", btnSizesDims[1])
+    .style("bottom", "0px")
     // .text("")
 
-    svgLegend = d3.select("#btnSizes")
+    svgLegend = d3.select("#legendDiv2")
       .html("")
       .append("svg").attr("id","svgLegend")
         .attr("width",btnSizesDims[0])
@@ -1305,7 +1328,7 @@ function createSizeLegend() {
     sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
         .attr("r", 0) // start at 0 radius and transition in
         .transition().duration(400).attr("r",  function(d,i) { return sizesArray[i] })
-        .attr("transform", function(d,i) { return "translate("+"25"+","+(45 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+        .attr("transform", function(d,i) { return "translate("+"35"+","+(45 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
         .style("fill", "#B5ADAD")
 
     legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
@@ -1315,7 +1338,7 @@ function createSizeLegend() {
         .style("opacity",0).transition().duration(600).style("opacity",1)
     
     legendTitle = d3.select("#svgLegend").append("text")
-      .attr("transform","translate(4,17)")
+      .attr("transform","translate(11,23)")
 
       .text(currentSize) // must change this when size dropdown activated
       .style("font-size","22px").style("fill","#49AC52")
@@ -1326,14 +1349,17 @@ function createSizeLegend() {
 
     sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
         .attr("class","dropup")
-        .style("position","absolute")
-        .style("right","3%") 
-        .style("bottom","-12%")
+        // .style("position","relative")
+        // .style("right","50%") 
+        // .style("bottom","15%")
         .append("button")
           .attr("id","sizeDropdownButton")
           .attr("class","btn btn-grey btn-primary dropdown-toggle")
           .attr("type","button")
           .attr("data-toggle","dropdown")
+          .style("position","absolute")
+          .style("left","45px")
+          .style("bottom","10px")
           .style("height","50px")
           .style("border-width","0px")
           .html("Size by<br>"+currentSize+"<span class='caret'></span>")
@@ -1393,7 +1419,7 @@ function createSizeLegend() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       // mouseEnterOff() // turn off until mouseleave
       setSizes("workers")
-      createSizeLegend()
+      expandSizesLegend()
       // removeLegends()
     })
 
@@ -1418,7 +1444,7 @@ function createSizeLegend() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       // mouseEnterOff()
       setSizes("wage")
-      createSizeLegend()
+      expandSizesLegend()
       // removeLegends()
     })
 
@@ -1442,7 +1468,7 @@ function createSizeLegend() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       // mouseEnterOff()
       setSizes("yearsStudy")
-      createSizeLegend()
+      expandSizesLegend()
       // removeLegends()
     })
 
@@ -1466,7 +1492,7 @@ function createSizeLegend() {
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       // mouseEnterOff()
       setSizes("none")
-      createSizeLegend()
+      expandSizesLegend()
       // removeLegends()
     })
 
@@ -2809,6 +2835,15 @@ enterUpdateCircles = function() {
     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
     .attr("class","jobCircle")
+    .attr("opacity",
+      function(d) { // make filtered circles transparent
+        // if the industry is on the list, transparent
+        if( filteredIndustries.includes(+d.industryNum) ) { 
+          return 0.1 }
+        else{ 
+          return 1 }
+    })  
+
 
     // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
 
@@ -3217,8 +3252,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
       }
                   // (d3.select("#handle_"+this.id)
-      graph.length >= 10 ? miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") : miniTooltip.style("left", d3.select(".miniTooltip").style("left"))
-      graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
+      if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
+      graph.length <= 50 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
+      if(graph.length <= 15){ miniTooltip.style("color","#FE2E2E") }
 
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
@@ -3563,7 +3599,9 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           .style("left", (event.pageX - 64) + "px")
           .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
 
-          graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white")
+          if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
+          graph.length <= 30 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
+          if(graph.length <= 15){ miniTooltip.style("color","#FE2E2E") }
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
@@ -3598,15 +3636,15 @@ function updateMulti(h, mode) {
   // using the slider handle
   var sliderID = event.target.id;
   // jam sliders at n <= 10
-  if(graph.length > 10){
+  // if(graph.length > 10){
     // jamSliders()
     handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
-  }
+  // }
 
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
 
-  if(graph.length > 10){
+  // if(graph.length > 10){
   
   var filteredNodes = filterAll()
   //  UPDATE
@@ -3697,7 +3735,7 @@ function updateMulti(h, mode) {
   //   .style("fill", function(d) { return d.color; })
   //   .style("stroke", "black")
   }
-} // end if graph length > 10
+// } // end if graph length > 10
 };//end updateMulti
 
 
@@ -3762,8 +3800,6 @@ filterAll = function() {
   graph = [];
 
   // var currentSlider = sliderPositionsArray[event.target.id]
-  // console.log(event.target.id)
-  // console.log(currentSlider)
 
   store.forEach(function(d){ // for each circle
 
@@ -3864,7 +3900,6 @@ filterAll = function() {
 
   calloutCheck()
 
-  console.log(graph.length)
 
   return graph;
 }
@@ -4216,7 +4251,6 @@ function filterIndustry(input) { //bookmark
       filteredIndustries.splice(filteredIndustries.indexOf(input),1)
     }
 
-// console.log("filtered Array: "+filteredIndustries)
 
 // fade the graph circles
 circles.attr("opacity",
@@ -4226,8 +4260,6 @@ circles.attr("opacity",
       console.log(+d.industryNum)
       return 0.1 }
     else{ 
-      // console.log(d.industryNum)
-      // console.log(d.industryNum)
       return 1 }
   })  
 
@@ -4238,8 +4270,6 @@ d3.selectAll(".legendCirc").attr("opacity",
       // console.log(i)
       return 0.1 }
     else{ 
-      // console.log(d.industryNum)
-      // console.log(d.industryNum)
       return 1 }
   })
 
@@ -4247,8 +4277,6 @@ d3.selectAll(".legendCirc").attr("opacity",
 
 
   // var currentSlider = sliderPositionsArray[event.target.id]
-  // console.log(event.target.id)
-  // console.log(currentSlider)
 
 //   store.forEach(function(d){ // for each circle
 
