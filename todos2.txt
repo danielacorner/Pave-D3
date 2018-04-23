@@ -15,17 +15,20 @@ todos
 - filling data: average locally?
 
 current:
-- size legend
+- colour / size legend leave on in graph mode
 
 - wage: include low, med, high?
 
 - click off legends anywhere on chart
 ***********************************
 
-next steps:
-1. call filterIndustry(industry)
+- search button to filter button?
 
-- unjam filters
+next steps:
+graph mode
+- change first mode to ROI in/out
+- annotate graphs with quadrants
+	- specific more/less/fewer per graph mode
 
 - bug: reset button not working
 
