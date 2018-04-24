@@ -107,6 +107,20 @@ button.expand-sliders-btn{
   border-radius: 16px;'
   pointer-events: auto;
 }
+button.expand-sliders-btn:hover{
+  margin: 5px 0px 0px 10px; 
+  background: #eaeaea; 
+  border: 2px solid green; 
+  border-radius: 16px;'
+  pointer-events: auto;
+}
+button.expand-sliders-btn-expanded{
+  margin: 5px 0px 0px 10px; 
+  background: white; 
+  border: 2px solid green; 
+  border-radius: 16px;'
+  pointer-events: auto;
+}
 button.close-sliders-btn{
   margin: 5px 0px 0px 10px; 
   background: none; 

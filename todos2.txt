@@ -11,26 +11,35 @@ todos
 - ask users "what information do you care about in making a career decision?" to determine views
 - fix 'movebottomdown'
 ***********************************
-- noc 494 csv
-- filling data: average locally?
 
 current:
-- colour / size legend leave on in graph mode
+graph mode
+- annotate graphs with quadrants
+	http://d3-annotation.susielu.com/
+big:
+- remove decorateYAxis(mode) for more/less 
+	- more/less styles
+- specific more/less/fewer per graph mode
+- wage -- > salary: include low, med, high
+- map annotations into/over colour legend or otherwise fix the legend/split overlap
 
-- wage: include low, med, high?
+small
+- annotate split view
+- embiggen reset button
+- remove suggested views minimize button?
+big
+save button
+- save filter states with mini screenshots
+tutorial
+ - sketch a mock-up before changing!
+- more hand-holding, third-person use-case
 
-- click off legends anywhere on chart
+
 ***********************************
 
 - search button to filter button?
 
 next steps:
-graph mode
-- change first mode to ROI in/out
-- annotate graphs with quadrants
-	- specific more/less/fewer per graph mode
-
-- bug: reset button not working
 
 - filter button instead of search, separate search page
 

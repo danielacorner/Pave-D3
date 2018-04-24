@@ -1,10 +1,10 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage;
 
 var legendCreated = 0;
 var graphFirstTime = true;
-
+var legendMode = 0;
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -138,8 +138,8 @@ d3.csv("NOC_494_interpolated.csv", function(error, datapoints) {
 
 // Viz dimensions & margins
 var margin = {top: 20, right: 20, bottom: 50, left: 50};
-var width = window.innerWidth/1.5, // set chart dimensions
-    height = window.innerHeight/1.5,
+width = window.innerWidth/1.5, // set chart dimensions
+height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
 
@@ -152,7 +152,6 @@ d3.select(window).on("resize", resize);
 // resize the window
 function resize() {
   if(typeof circles != "undefined"){
-    // console.log("resizing!")
     circles.attr("transform", circleHeight(0, 28 )) //flag! need to make equation for width/height ratio
   }
 
@@ -161,7 +160,6 @@ function resize() {
 
   // Add an axis-holder group
   if(typeof axisG != "undefined") {
-    // console.log("!hello")
     axisG.attr("transform", "translate(0," + graphYtranslate + ")");
     // axisX.attr("transform", circleHeight(window.innerWidth*-0.25,0));
     // Add the X Axis
@@ -260,8 +258,6 @@ function resize() {
 // //   d3.select("#split").style("display","inline")
 
 // // }
-// //   // width = d3.select("#chart").attr("width"), // set chart dimensions
-// //   // height = d3.select("#chart").attr("height");
 
 // //   // svg.attr("viewBox", "-"+width/2+" -"+height/2+" "+width+" "+height+"");
 //   // svg.attr("width", width).attr("height", height);
@@ -411,7 +407,7 @@ var nodes = datapoints.map(function(el) {
 });
 
 // Maximum values
-var maxWorkers = d3.max(nodes, function(d){ return d.workers});
+maxWorkers = d3.max(nodes, function(d){ return d.workers});
 
 
 // Graph mode
@@ -569,6 +565,9 @@ d3.select("#chart").on("click", function(d){
   // hide any subskill sliders
   hideAll();
   closeLegends();
+  if (graphMode == 0 && legendMode == 1) {
+    smashTogether(0.3, 0.4);
+  }
   // if clicked off of a circle
   if (clicked == 1) { 
     if (d3.event.target.nodeName == "circle") {
@@ -1083,8 +1082,24 @@ d3.select("#btnColours").on("click", function() {
   expandColoursLegend()
 })
 
+d3.select("#btnColours").on("mouseover", function() {
+  d3.select("#btnColours").style("background","#eaeaea")
+})
+d3.select("#btnColours").on("mouseout", function() {
+  d3.select("#btnColours").style("background","white")
+})
+
 function expandColoursLegend() {
 
+  if (graphMode == 0){
+    simulation
+    .force("x", forceXSeparate).alpha(0.4)
+    .force("y", forceYSeparate).alpha(0.4)
+      .alphaTarget(0) // after click, cool down to minimal temperature
+      .restart()
+  };
+
+  legendMode = 1;
   d3.select("#btnColours").on("click", "")
 
   // shrink Size Legend button 
@@ -1123,11 +1138,8 @@ function expandColoursLegend() {
       .style("fill", function(d,i) { return color(i); })
       .attr("opacity",  function(d,i) {
         if( filteredIndustries.includes(+i) ) { 
-          // console.log(i)
           return 0.1 }
         else{ 
-          // console.log(d.industryNum)
-          // console.log(d.industryNum)
           return 1 }
       })
       // append rect with on click
@@ -1161,11 +1173,18 @@ function expandColoursLegend() {
   // .style("width", "300px")
   // .style("height", "400px")
 
+  // btnSplitCombine = d3s bookmark todo: split button on click of colour legend
+
 }
 
 // d3.select("#btnColours").on("mouseleave", function() {
 function closeLegends() {
+    
+    if (graphMode == 0) {
+    smashTogether(0.3, 0.4);
+    }
 
+  legendMode = 0;
   // reset Size Legend button
   d3.select("#btnSizes").transition().duration(300).style("opacity",1)
     .style("height",legendButtonHeight+"px")
@@ -1287,7 +1306,13 @@ var btnSizesDims = ["190px","320px"] // width, height
 
 d3.select("#btnSizes").on("click", function() {
       expandSizesLegend()  
-    })
+})
+d3.select("#btnSizes").on("mouseover", function() {
+  d3.select("#btnSizes").style("background","#eaeaea")
+})
+d3.select("#btnSizes").on("mouseout", function() {
+  d3.select("#btnSizes").style("background","white")
+})
 
 function expandSizesLegend() {
 
@@ -1516,6 +1541,7 @@ function expandSizesLegend() {
 
 function removeLegends() {
     // reset Colour Legend button and Sizes dropdown
+
     d3.select("#legendDiv1").transition().duration(400).style("opacity",0).remove()
     clickedColours = 0;
 
@@ -1546,21 +1572,21 @@ function removeLegends() {
 
 //////////// Industry Split ////////////////
 
-d3.select("#split").on('click', function() {
-  if (graphMode == 1 || futureMode == 1) return;
-  simulation
-  .force("x", forceXSeparate).alpha(0.4)
-  .force("y", forceYSeparate).alpha(0.4)
-    .alphaTarget(0) // after click, cool down to minimal temperature
-    .restart()
+// d3.select("#industry").on('click', function() {
+//   if (graphMode == 1 || futureMode == 1) return;
+//   simulation
+//   .force("x", forceXSeparate).alpha(0.4)
+//   .force("y", forceYSeparate).alpha(0.4)
+//     .alphaTarget(0) // after click, cool down to minimal temperature
+//     .restart()
 
-  // d3.select("#split").style("display","none");
-  // d3.select("#shuffle").style("display","none");
+//   // d3.select("#split").style("display","none");
+//   // d3.select("#shuffle").style("display","none");
 
-  // d3.select("#combine").style("display", "inline");
+//   // d3.select("#combine").style("display", "inline");
 
-  // legend.transition().duration(500).style("opacity", 0).remove();
-  })
+//   // legend.transition().duration(500).style("opacity", 0).remove();
+//   })
 
 d3.select("#shuffle").on('click', function() {
   // legend.transition().duration(500).style("opacity", 0).remove();
@@ -1600,7 +1626,7 @@ d3.select("#combine").on('click', function(d) {
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
 minWage = d3.min(nodes, function(d) {return d.wage});
 
-var maxWage = 116.18; //busted
+maxWage = 116.18; //busted
 
 maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
@@ -1875,6 +1901,7 @@ d3.select("#b2").on('click', function() { // Wage vs Workers
   d3.select("#b2").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
   // d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+
   d3.select("#a0").style("background", "white").style("color","#49AC52")
   d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
@@ -2002,7 +2029,7 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 
 function graphModeOn(mode) {
-
+  createAnnotations(mode);
   hideGraphViewCallout();
   hideAll();
   // hideGraphViewCallout();
@@ -2043,19 +2070,19 @@ function graphModeOn(mode) {
           // transition circles to graph positions
           circles.transition()
           .duration(750)
-            .attrTween("cx", function(d) { // transition x position to...
+            .attrTween("cx", function(d) {
               var i = d3.interpolate(d.x, 
-                // x = Number of Jobs
-                d.workers/maxWorkers*width*0.73 - width*0.4);
+                // x = Years of Study
+                d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4);
               return function(t) { return d.cx = i(t); };
             })
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.y, 
-                // y = Automation Risk
-                (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate);
+                // y = Wage
+                ((maxWage-d.wage)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
-
+            break;
 
           // svgAutoAxis = svg.append("g")
           //   .call(d3.svg.axis()
@@ -2083,8 +2110,6 @@ function graphModeOn(mode) {
           //     .attr("text-anchor", "middle")
           //     .text("50% risk");
 
-
-            break;
 
         case 1:
           circles.transition()
@@ -2162,7 +2187,7 @@ function graphModeOn(mode) {
     }
 
   //////////////////////// Axes ////////////////////////////
-var compressY = 0.65;
+compressY = 0.65;
   // Set the ranges
   var x = d3.scaleLinear().range([0, width*0.75]);
   var y = d3.scaleLinear().range([height*compressY, 0]);
@@ -2267,50 +2292,50 @@ var compressY = 0.65;
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
-
-
-  axisDecorationYTop = axisG
-    .append("polygon")
-  .attr("points","20,15 0,15 10,0")
-  .style("fill","lime")
-  .style("stroke","black")
-  .attr("transform", "translate("+window.innerWidth*0.1+","+( -15 )+")")
-  
-  axisDecorationTextTop = axisG.append("text")
-    .style("fill","#49AC52")
-    .attr("y", "1vh")
-    .attr("x", "9.2vw")
-    .attr("dy", "1em")
-
-  axisDecorationYBtm = axisG
-    .append("polygon")
-  .attr("points","20,0 0,0 10,15")
-  .style("fill","red")
-  .style("stroke","black")
-  .attr("transform", "translate("+window.innerWidth*0.1+","+( window.innerHeight*0.4 )+")")
-  
-  axisDecorationTextBtm = axisG.append("text")
-    .style("fill","#C81B1B")
-    .attr("y", "36vh")
-    .attr("x", "9.2vw")
-    .attr("dy", "1em")
-  
   resize()
 
-  function decorateYAxis() {
-    axisDecorationTextTop.html("More").style("font-size", "20px")
-    .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-    axisDecorationTextBtm.html("Less").style("font-size", "20px")
-    .style("opacity", 0).transition().duration(500).style("opacity",1);
+  // axisDecorationYTop = axisG
+  //   .append("polygon")
+  // .attr("points","20,15 0,15 10,0")
+  // .style("fill","lime")
+  // .style("stroke","black")
+  // .attr("transform", "translate("+window.innerWidth*0.1+","+( -15 )+")")
+  
+  // axisDecorationTextTop = axisG.append("text")
+  //   .style("fill","#49AC52")
+  //   .attr("y", "1vh")
+  //   .attr("x", "9.2vw")
+  //   .attr("dy", "1em")
 
-    axisDecorationYTop.html("More").style("font-size", "20px")
-    .style("opacity", 0).transition().duration(500).style("opacity",1);
+  // axisDecorationYBtm = axisG
+  //   .append("polygon")
+  // .attr("points","20,0 0,0 10,15")
+  // .style("fill","red")
+  // .style("stroke","black")
+  // .attr("transform", "translate("+window.innerWidth*0.1+","+( window.innerHeight*0.4 )+")")
+  
+  // axisDecorationTextBtm = axisG.append("text")
+  //   .style("fill","#C81B1B")
+  //   .attr("y", "36vh")
+  //   .attr("x", "9.2vw")
+  //   .attr("dy", "1em")
+  
 
-    axisDecorationYBtm.html("Less").style("font-size", "20px")
-    .style("opacity", 0).transition().duration(500).style("opacity",1);
+  // function decorateYAxis() { //mode
+  //   axisDecorationTextTop.html("More").style("font-size", "20px")
+  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-  }
+  //   axisDecorationTextBtm.html("Less").style("font-size", "20px")
+  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+  //   axisDecorationYTop.html("More").style("font-size", "20px")
+  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+  //   axisDecorationYBtm.html("Less").style("font-size", "20px")
+  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+  // }
 
   switch (mode) {
       // x = Number of Jobs
@@ -2329,7 +2354,7 @@ var compressY = 0.65;
             axisLabelY.html("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
             
-            decorateYAxis();
+            // decorateYAxis();
             break;
       // x = Years of Study
       // y = Wage
@@ -2346,7 +2371,7 @@ var compressY = 0.65;
             axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-            decorateYAxis();
+            // decorateYAxis();
             break;
       // x = Number of Jobs
       // y = Wage
@@ -2363,7 +2388,7 @@ var compressY = 0.65;
             axisLabelY.text("Wage ($ per hr)").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-            decorateYAxis();
+            // decorateYAxis();
             break;
       // x = Number of Jobs
       // y = Automation Risk (when graph mode already on)
@@ -2379,7 +2404,7 @@ var compressY = 0.65;
             axisLabelY.text("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-            decorateYAxis();
+            // decorateYAxis();
             break;
       // x = Number of Jobs
         // y = Automation Risk (when future mode already on)
@@ -2395,7 +2420,7 @@ var compressY = 0.65;
             axisLabelY.text("Risk of job tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-            decorateYAxis();
+            // decorateYAxis();
             break;
   }
 
@@ -4041,11 +4066,11 @@ for (var i = 0; i < explainerDivs.length; i++) {
   question.on("mouseenter", function(){
 
   	var thisNum = event.target.id.substring(9,10)
-  	console.log(thisNum)
 
     d3.select("body").append("div")
     .style("height","auto").style("width","350px")
     .style("position","fixed")
+    .style("z-index","99")
     .style("padding","10px")
     .style("border", "1px solid #49AC52")
     .style("border-radius", "8px")
@@ -4282,12 +4307,12 @@ function filterIndustry(input) { //bookmark
   // update the filtered industries list:
 
     // if the industry is not on the list
-    if(!filteredIndustries.includes(input)) { //console.log("on! "+input) 
+    if(!filteredIndustries.includes(input)) {
       // put it on the list
       filteredIndustries.push(input);
     }
     // if the input is already on the list
-    else if(filteredIndustries.includes(input)) { //console.log("splicing position "+filteredIndustries.indexOf(input))
+    else if(filteredIndustries.includes(input)) {
       // take it off the list
       filteredIndustries.splice(filteredIndustries.indexOf(input),1)
     }
@@ -4298,7 +4323,6 @@ circles.attr("opacity",
   function(d) { // make filtered circles transparent
     // if the industry is on the list, transparent
     if( filteredIndustries.includes(+d.industryNum) ) { 
-      console.log(+d.industryNum)
       return 0.1 }
     else{ 
       return 1 }
@@ -4308,7 +4332,6 @@ circles.attr("opacity",
 d3.selectAll(".legendCirc").attr("opacity",
   function(d,i) {
     if( filteredIndustries.includes(+i) ) { 
-      // console.log(i)
       return 0.1 }
     else{ 
       return 1 }
@@ -4418,7 +4441,6 @@ d3.selectAll(".legendCirc").attr("opacity",
 
 //   calloutCheck()
 
-//   console.log(graph.length)
 
 //   return graph;
 
@@ -4571,6 +4593,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         d3.select("#btnSubsliders_0")
           .transition().duration(350).style("height", heightLang+20+"px").style("width",widthAll*0.95+"px")
           .style("pointer-events","none")
+          .attr("class","expand-sliders-btn-expanded")
         // append "hide skills" button
         d3.select("#btnSubsliders_0").append("button")
           .attr("id","btnSubsliders_0Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none").style("pointer-events","none")
@@ -4626,6 +4649,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         d3.select("#btnSubsliders_1")
           .transition().duration(350).style("height", heightLogi+20+"px").style("width", widthAll*0.95+"px")
           .style("pointer-events","none")
+          .attr("class","expand-sliders-btn-expanded")
+
                   // append "hide skills" button
                   d3.select("#btnSubsliders_1").append("button")
                     .attr("id","btnSubsliders_1Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none").style("pointer-events","none")
@@ -4686,6 +4711,8 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         d3.select("#btnSubsliders_2")
           .transition().duration(350).style("height", heightMath+50+"px").style("width", widthAll*0.97+"px")
           .style("pointer-events","none")
+          .attr("class","expand-sliders-btn-expanded")
+
                   // append "hide skills" button
                   d3.select("#btnSubsliders_2").append("button")
                     .attr("id","btnSubsliders_2Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none")
@@ -4748,7 +4775,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         d3.select("#btnSubsliders_3")
           .transition().duration(350).style("height", heightComp+50+"px").style("width", widthAll*0.95+"px")
           .style("pointer-events","none")
-          // .style("pointer-events","none")
+          .attr("class","expand-sliders-btn-expanded")
                   // append "hide skills" button
                   d3.select("#btnSubsliders_3").append("button")
                     .attr("id","btnSubsliders_3Close").attr("class","close-sliders-btn").style("border-width","0px").style("background","none")
@@ -4792,25 +4819,14 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
 }
 
 
-// d3.selectAll(".expand-sliders-btn").on("mouseover", function() {
-//   d3.select("#chart").style("pointer-events","none")
-// })
-// d3.selectAll(".expand-sliders-btn").on("mouseout", function() {
-//   d3.select("#chart").style("pointer-events","auto")
-// })
-// d3.select("resetFilters").on("mouseover", function() {
-//   d3.select("#chart").style("pointer-events","none")
-// })
-// d3.select("resetFilters").on("mouseout", function() {
-//   d3.select("#chart").style("pointer-events","auto")
-// })
-
-
 
 
 function hideLang() {
 
-  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px").style("width", 250+"px").style("pointer-events","auto")
+  d3.select("#btnSubsliders_0").transition().duration(500).style("height", "30px").style("width", 250+"px")
+  .style("pointer-events","auto")
+  .attr("class","expand-sliders-btn")
+
   d3.select("#spanSubsliders_0").transition().duration(350).style("opacity", 1)
   d3.select("#btnSubsliders_0Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
     // .style("top", window.innerHeight*0.20+"px");
@@ -4831,7 +4847,10 @@ function hideLang() {
 
 function hideLogi() {
 
-  d3.select("#btnSubsliders_1").transition().duration(500).style("height", "30px").style("width","250px").style("pointer-events","auto")
+  d3.select("#btnSubsliders_1").transition().duration(500).style("height", "30px").style("width","250px")
+  .style("pointer-events","auto")
+  .attr("class","expand-sliders-btn")
+
   d3.select("#spanSubsliders_1").transition().duration(350).style("opacity", 1)
   d3.select("#btnSubsliders_1Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
 
@@ -4852,7 +4871,10 @@ function hideLogi() {
 
 function hideMath() {
 
-  d3.select("#btnSubsliders_2").transition().duration(500).style("height", "30px").style("width", 250+"px").style("pointer-events","auto")
+  d3.select("#btnSubsliders_2").transition().duration(500).style("height", "30px").style("width", 250+"px")
+  .style("pointer-events","auto")
+  .attr("class","expand-sliders-btn")
+
   d3.select("#spanSubsliders_2").transition().duration(350).style("opacity", 1)
   d3.select("#btnSubsliders_2Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
 
@@ -4872,7 +4894,10 @@ function hideMath() {
 
 function hideComp() {
 
-  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px").style("width","250px").style("pointer-events","auto")
+  d3.select("#btnSubsliders_3").transition().duration(500).style("height", "30px").style("width","250px")
+  .style("pointer-events","auto")
+  .attr("class","expand-sliders-btn")
+
   d3.select("#spanSubsliders_3").transition().duration(350).style("opacity", 1)
   d3.select("#btnSubsliders_3Close").transition().duration(500).style("opacity",0).style("margin-top",0+"px").remove()
 
@@ -4897,3 +4922,218 @@ function hideAll() {
   hideComp()
 }
 
+
+
+
+
+
+
+
+
+
+
+/// Annotations ///
+
+// const type = d3.annotationLabel
+
+// const annotations = [{
+//   note: {
+//     label: "Longer text to show text wrapping",
+//     title: "Natural resources and agriculture",
+//   },
+//   //can use x, y directly instead of data
+//   data: { date: "18-Sep-09", close: 185.02 },
+//   x: 100, 
+//   y: 100,
+//   dy: 137,
+//   dx: 162,
+//   subject: { radius: 50, radiusPadding: 10 },
+// }]
+
+// const parseTime = d3.timeParse("%d-%b-%y")
+// const timeFormat = d3.timeFormat("%d-%b-%y")
+
+// var width = window.innerWidth/1.5, // set chart dimensions
+//     height = window.innerHeight/1.5,
+//     compressY = 0.65;
+// //Skipping setting domains for sake of example
+// const x = d3.scaleLinear().range([0, width*0.75]);
+// const y = d3.scaleLinear().range([height*compressY, 0]);
+
+
+
+// const makeAnnotations = d3.annotation()
+//   .editMode(true)
+//   .type(type)
+//   //accessors & accessorsInverse not needed
+//   //if using x, y in annotations JSON
+//   .accessors({
+//     x: d => x(parseTime(d.date)),
+//     y: d => y(d.close)
+//   })
+//   .accessorsInverse({
+//      date: d => timeFormat(x.invert(d.x)),
+//      close: d => y.invert(d.y)
+//   })
+//   .annotations(annotations)
+
+// d3.select("svg")
+//   .append("g")
+//   .attr("class", "annotation-group")
+//   .call(makeAnnotations)
+
+
+    // document.fonts.ready.then(function(){
+    //   d3.select("svg")
+    //     .append("g")
+    //     .attr("class", "annotation-group")
+    //     .style('font-size', fontSize(ratio))
+    //     .call(makeAnnotations)
+    // })
+    // createAnnotations(0);
+
+function createAnnotations(mode){
+
+  var xSc = d3.scaleLinear().range([0, width*0.75]);
+  var ySc = d3.scaleLinear().range([height*compressY, 0]);
+
+   switch (mode) {
+      // x = Number of Jobs
+      // y = Automation Risk
+        case 0:
+               // Scale the range of the data (using globally-stored nodes)
+                xSc.domain([0, maxWorkers]); //minmax workers
+                ySc.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+            break;
+      // x = Years of Study
+      // y = Wage
+        case 1:
+                xSc.domain([0, maxYearsStudy]); //minmax workers
+                ySc.domain([0, maxWage]);
+            break;
+      // x = Number of Jobs
+      // y = Wage
+        case 2:
+                xSc.domain([0, maxWorkers]); //minmax workers
+                ySc.domain([0, maxWage]);
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk (when graph mode already on)
+        case 3:
+                xSc.domain([0, maxWorkers]); //minmax workers
+                ySc.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+            break;
+      // x = Number of Jobs
+      // y = Automation Risk (when future mode already on)
+        case 4:
+                xSc.domain([0, maxWorkers]); //minmax workers
+                ySc.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+    }
+
+  // graphYtranslate = window.innerHeight*0.12 - 10; // y position of entire graph
+
+  // var axisYtranslate = window.innerHeight*-0.12;
+
+    // first mode: Wage vs Years of Study
+      // annotate judges, lawyers, dentists
+  d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
+  switch (mode) {
+    case 0:
+      var labels = [
+        {
+          note: {
+            title: "Lawyers and Quebec notaries",
+            label: "$$$$$$",
+          //   title: "d3.annotationLabel"
+          },
+          connector: {},
+          x: window.innerWidth*0.55,
+          y: window.innerHeight*0.3,
+          dy: -window.innerHeight*0.05,
+          dx: -window.innerWidth*0.1,
+        }
+      ]
+      var makeAnnotations = d3.annotation()
+        .type(d3.annotationLabel)
+        .annotations(labels)
+
+      d3.select("#chart")
+        .append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations)
+        .style("opacity",0).transition().duration(500).style("opacity",1)
+    break;
+
+    case 1:
+      var labels = [
+        {
+          note: {
+            title: "Lawyers and Quebec notaries",
+            label: "$$$$$$",
+          //   title: "d3.annotationLabel"
+          },
+          connector: {},
+          x: window.innerWidth*0.55,
+          y: window.innerHeight*0.3,
+          dy: -window.innerHeight*0.05,
+          dx: -window.innerWidth*0.1,
+        }
+      ]
+      makeAnnotations = d3.annotation()
+        .type(d3.annotationLabel)
+        .annotations(labels)
+
+      d3.select("#chart")
+        .append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations)
+        .style("opacity",0).transition().duration(500).style("opacity",1)
+    break;
+    }
+}
+      // },{
+      //   note: {
+      //     label: "somelabel",
+      //     title: "sometitle",
+      //     wrap: 150
+      //   },
+      //   connector: {
+      //     // end: "dot",
+      //     // type: "curve",
+      //     //can also add a curve type, e.g. curve: d3.curveStep
+      //     // points: [[100, 14],[190, 52]]
+      //   },
+      //   x: 350,
+      //   y: 150,
+      //   dy: 137,
+      //   dx: 262
+      // },{
+      //   //below in makeAnnotations has type set to d3.annotationLabel
+      //   //you can add this type value below to override that default
+      //   type: d3.annotationCalloutCircle,
+      //   note: {
+      //     label: "A different annotation type",
+      //     title: "d3.annotationCalloutCircle",
+      //     wrap: 190
+      //   },
+      //   //settings for the subject, in this case the circle radius
+      //   subject: {
+      //     radius: 50
+      //   },
+      //   x: 620,
+      //   y: 150,
+      //   dy: 137,
+      //   dx: 102
+      // }]
+      // .map(function (l) {
+      //   l.note = Object.assign({}, l.note, { title: "Title: " + l.note.title,
+      //     label: "label: " + l.note.label });
+      //   return l;
+      // })
+      // .map(function(d){ d.color = "#E8336D"; return d})

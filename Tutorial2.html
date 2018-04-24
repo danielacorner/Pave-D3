@@ -55,12 +55,17 @@
     </svg>
 </div>
 
-<div class="d-inline" style="position: fixed; left: 12vw; top: 13vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
+<div class="d-inline" style="position: fixed; left: 11vw; top: 13vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
     <span id="eachCircleSpan" style="font-size: 3.05vw;">Each circle is a job group</span>
     <br>
-    <br><span id="bruceSpanner" style="margin-left: 0.2vw; opacity: 1;">Hover over the circle on the right to see the details</span>
-    <br>
-    <br><span id="davidSpanner" style="margin-left: 0.2vw; opacity: 0;">Click the circle to see skills used on the job</span>
+    <span class="hoverClass" id="hoverSpan" style="margin-left: 0.2vw; opacity: 1;">
+      <p class="hoverClass" style="font-size: 1.5vw; margin-bottom: 0.5vw"><span style="font-size: 2vw">Hover</span> over the circle on the right </p>
+      <p class="hoverClass" style="font-size: 1.5vw; margin-left: 9vw">to see the job details</p>
+    </span>
+    <span class="clickClass" id="clickSpan" style="margin-left: 0.2vw; opacity: 0;">
+      <p class="clickClass" style="font-size: 1.5vw; margin-bottom: 0.5vw; opacity: 0; margin-top: -1.5vw"><span style="font-size: 2vw">Click</span> the circle on the right to see </p>
+      <p class="clickClass" style="font-size: 1.5vw; margin-left: 9vw; opacity: 0;">skills used on the job</p>
+    </span>
 
     <div id="nextDiv" style="position: fixed; left: 26.7vw; top: 35vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
@@ -215,11 +220,12 @@ function hideToolTip(duration) {
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
       tooltipMouseover(d);
       setTimeout(function() {
-        d3.select("#davidSpanner").transition().duration(500).style("opacity",1)
+        d3.selectAll(".hoverClass").transition().duration(500).style("opacity",0.2)
+        d3.selectAll(".clickClass").transition().duration(500).style("opacity",1)
       }, 500)
       setTimeout(function() {
-        d3.select("#bruceSpanner").transition().duration(500).style("opacity",0.2)
-        d3.select("#eachCircleSpan").transition().duration(500).style("opacity",0.2)
+        d3.select("#hoverSpan").transition().duration(500).style("opacity",0.2)
+        // d3.select("#eachCircleSpan").transition().duration(500).style("opacity",0.2)
       }, 500)
       })
     .on("mouseout", function(d) {

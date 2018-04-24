@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<!-- Page title (name on the tab) -->
+	<title>Pave: the Canadian Job Explorer</title>
 	<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
 
 	<!-- Bootstrap sources -->
@@ -12,16 +14,14 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+	<!-- d3 annotations -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.2.5/d3-annotation.min.js"></script>
 	<!-- Jquery -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 	<!-- Font Awesome icons -->
 	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 	<!-- Page icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-	<!-- Page title (name on the tab) -->
-	<title>Pave: the Canadian Job Explorer</title>
 
 	<!-- stylesheet -->
 	<link rel="stylesheet" href="css/main.css">
@@ -161,7 +161,7 @@
 										Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" src="img/toggle-off.png"></img>
 									</button>
 									
-									<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea;">
+									<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
 										Click here to compare these jobs.
 										<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
 									</div>
@@ -179,11 +179,11 @@
 							<!-- suggested views buttons -->
 							<div id="suggestedViewsDiv" style="position: fixed; bottom: 50vh; right: 3%; display: none;">
 
-								<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 15px; padding-right: 5px;">
+								<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 17px; padding-right: 5px;">
 								Suggested Views</span>
-								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()">
+<!-- 								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()">
 									<i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i>
-								</button>
+								</button> -->
 
 								<li class="list-graphModes" style="margin-top: 10px">
 									<button id="a1" class="suggested-views-btn" href="#">
@@ -259,7 +259,7 @@ else if(viewsMinimized == 0){
 <div id="bottomButtons" class="col-4" align="center" style="position: fixed; bottom: 15vh; left: 33vw; z-index: 99">
 
 	<!-- Reset, pause, play buttons -->
-	<div id="playPauseDiv" align="center">
+	<div id="playPauseDiv" align="center" style="z-index: -1">
 
 		<button id="resetFilters" type="button" class="btn btn-md btn-grey">
 			<span style="color: white; padding-right: 6px;">
@@ -279,7 +279,7 @@ else if(viewsMinimized == 0){
 	</div>
 
 	<!-- low filter level warning callout -->
-	<div id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea;">
+	<div id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea; pointer-events: none;">
 		<span style="color: #FE2E2E">Warning:</span> not many job groups remain!
 	</div>
 
