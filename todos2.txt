@@ -21,6 +21,7 @@ big:
 	- more/less styles
 - specific more/less/fewer per graph mode
 - wage -- > salary: include low, med, high
+	- annotate salary: 40k
 - map annotations into/over colour legend or otherwise fix the legend/split overlap
 
 small
