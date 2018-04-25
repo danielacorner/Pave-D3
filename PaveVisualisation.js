@@ -2032,7 +2032,10 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 
 function graphModeOn(mode) {
-  createAnnotations(mode);
+  setTimeout(function() {
+    createAnnotations(mode);}
+    , 1500)
+  
   hideGraphViewCallout();
   hideAll();
   // hideGraphViewCallout();
@@ -2339,7 +2342,8 @@ compressY = 0.65;
   //   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
   // }
-console.log("hello mode "+mode)
+console.log("graph mode "+mode)
+console.log("current mode "+currentMode)
   switch (mode) {
       // x = Number of Jobs
       // y = Automation Risk
@@ -2494,6 +2498,16 @@ console.log("hello mode "+mode)
     //     .style('font-size', fontSize(ratio))
     //     .call(makeAnnotations)
     // })
+function getPointCoords(circle){ 
+  thisCircle = d3.select("#circle_"+circle)
+  thisCircleQuery = document.getElementById("circle_"+circle)
+  var point = document.getElementById('chart').createSVGPoint();
+  point.x = thisCircle.attr("cx");//get the circle cx 
+  point.y = thisCircle.attr("cy");//get the circle cy
+  var newPoint = point.matrixTransform(thisCircleQuery.getCTM());//new point after the transform
+  // console.log(pointLawyers);  
+  return newPoint;
+}
 
 function createAnnotations(mode){
 
@@ -2549,6 +2563,12 @@ var makeAnnotations;
   // clear annotations
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
 
+  // Lawyers circle_207 Judges 206 Optometrists 170
+  var pointLawyers = getPointCoords(207)
+  var pointJudges = getPointCoords(206)
+  var pointOptometrists = getPointCoords(170)
+
+
   switch (mode) {
 
     case 0: // Salary vs Study
@@ -2557,15 +2577,52 @@ var makeAnnotations;
       labels = [
       {
         note: {
-          title: "Lawyers and Quebec notaries",
-          label: "$$$$$$",
+          title: "Judges",
+          label: "$ salary amount",
             //   title: "d3.annotationLabel"
           },
           connector: {},
-          x: 722 - 50,
-          y: 215 - 50,
-          dy: 50,
-          dx: 50,
+          // to obtain x-y coordinates:
+          // 1. select element based on its id
+            // Lawyers circle_207 Judges 206 Optometrists 170
+          // 2. return position
+
+          x: pointJudges.x,
+          y: pointJudges.y,
+          dy: -10,
+          dx: -20,
+      },{
+        note: {
+          title: "Lawyers and Quebec notaries",
+          label: "$ salary amount",
+            //   title: "d3.annotationLabel"
+          },
+          connector: {},
+          // to obtain x-y coordinates:
+          // 1. select element based on its id
+            // Lawyers circle_207 Judges 206 Optometrists 170
+          // 2. return position
+
+          x: pointLawyers.x,
+          y: pointLawyers.y,
+          dy: -30,
+          dx: -60,
+      },{
+        note: {
+          title: "Optometrists",
+          label: "$ salary amount",
+            //   title: "d3.annotationLabel"
+          },
+          connector: {},
+          // to obtain x-y coordinates:
+          // 1. select element based on its id
+            // Lawyers circle_207 Judges 206 Optometrists 170
+          // 2. return position
+
+          x: pointOptometrists.x,
+          y: pointOptometrists.y,
+          dy: -30,
+          dx: -150,
       }]
 
       break;
@@ -2611,7 +2668,7 @@ var makeAnnotations;
     } // end switch
 
     makeAnnotations = d3.annotation()
-      .editMode(true)
+      // .editMode(true)
       // .type(type)
       .type(d3.annotationLabel)
       //accessors & accessorsInverse not needed
@@ -3154,6 +3211,7 @@ enterUpdateCircles = function() {
     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
     .style("fill", function(d) { return color(d.cluster); })
     .attr("class","jobCircle")
+    .attr("id",function(d) { return "circle_"+d.id })
     .attr("opacity",
       function(d) { // make filtered circles transparent
         // if the industry is on the list, transparent
@@ -3994,18 +4052,12 @@ function updateMulti(h, mode) {
     .force("y", forceYCombine)
     .on("tick", tick);
     restartSimulation();
+
     } else if (graphMode == 1) { // else reposition nodes on graph
   
       switch (mode) {
 
         case 0:
-          circles
-            // x = Number of Jobs
-          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 })
-            // y = Automation Risk
-          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
-          break;
-
         case 1:
           circles
             // x = Years of Study

@@ -37,11 +37,11 @@ tutorial
 
 
 ***********************************
-
+- fix circle graph x position
 - search button to filter button?
 
 next steps:
-
+- note "tutorial x/4" on tutorial pages
 - filter button instead of search, separate search page
 
 - click color legend to filter industries
