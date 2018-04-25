@@ -13,16 +13,19 @@ todos
 ***********************************
 
 current:
-graph mode
-- annotate graphs with quadrants
-	http://d3-annotation.susielu.com/
-big:
-- remove decorateYAxis(mode) for more/less 
-	- more/less styles
-- specific more/less/fewer per graph mode
+
+- unjam filters in tutorial3
+
+- add pretty force simulation for equal size circles
+- read 'getting real' & learn ruby & rails
+- sketch 2 tutorial designs for criticisms
+
+
 - wage -- > salary: include low, med, high
 	- annotate salary: 40k
-- map annotations into/over colour legend or otherwise fix the legend/split overlap
+big:
+- sketch specific more/less/fewer decorateYAxis(mode)  per graph mode
+- map annotations over colour split or otherwise fix the legend/split overlap
 
 small
 - annotate split view
@@ -37,6 +40,7 @@ tutorial
 
 
 ***********************************
+- bug: circles move down slightly after graphmodeoff
 - fix circle graph x position
 - search button to filter button?
 

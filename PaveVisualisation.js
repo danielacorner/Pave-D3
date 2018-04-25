@@ -5,6 +5,7 @@ forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtr
 var legendCreated = 0;
 var graphFirstTime = true;
 var legendMode = 0;
+var equalRadius = 6.5;
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -359,7 +360,7 @@ var clusters = new Array(m);
 // Nodes: the data you want to display & filter by
 var nodes = datapoints.map(function(el) {
   var i = el.cluster,
-  r = 10, // start equal radii
+  r = equalRadius, // start equal radii
   d = {
     id: +el.id,
     favourite: 0,
@@ -425,7 +426,7 @@ var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
-.strength(function(d) { return -7 * d.radius })
+.strength(function(d) { return -10 * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -445,14 +446,22 @@ var forceYSeparateRandom = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
     // force the circles toward their cluster nodes
+
+var clusterForce = 3.5;
 function forceCluster(alpha) { 
   // alpha = attractor force
-  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.10; i < n; ++i) {
     node = nodes[i];
     cluster = clusters[node.cluster];
-    node.vx -= (3*node.x - cluster.x) * k;
-    node.vy -= (3*node.y - cluster.y) * k;
+    node.vx -= (clusterForce*node.x - cluster.x) * k;
+    node.vy -= (clusterForce*node.y - cluster.y) * k;
   }
+  // for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+  //   node = nodes[i];
+  //   cluster = clusters[node.cluster];
+  //   node.vx -= (3*node.x - cluster.x) * k;
+  //   node.vy -= (3*node.y - cluster.y) * k;
+  // }
   }
     // Update the positions each tick
 tick = function() {
@@ -1122,6 +1131,7 @@ function expandColoursLegend() {
     .style("left","0px")
   // .text("")
 
+
   svgLegend = d3.select("#legendDiv1")
       .html("")
       .append("svg").attr("id","svgLegend")
@@ -1176,7 +1186,12 @@ function expandColoursLegend() {
 
   // btnSplitCombine = d3s bookmark todo: split button on click of colour legend
 
-}
+  if (graphMode == 0){
+    d3.select("#legendDiv1").style("opacity",0.9)
+    // d3.selectAll(".legendCirc").style("opacity",1)
+  }
+
+} // end expandColoursLegend()
 
 // d3.select("#btnColours").on("mouseleave", function() {
 function closeLegends() {
@@ -1503,7 +1518,7 @@ function expandSizesLegend() {
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 1})
       .attrTween("r", function(d) {
-        var i = d3.interpolate(d.radius, 10);
+        var i = d3.interpolate(d.radius, equalRadius);
         return function(t) { return d.radius = i(t); };
       });
       if(graphMode == 0) {
@@ -1524,7 +1539,13 @@ function expandSizesLegend() {
 
     // fade in dropdown
     d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(700).style("opacity",1)
-}
+
+  if (graphMode == 0){
+    d3.select("#legendDiv2").style("opacity",0.9)
+    // d3.selectAll(".legendCirc").style("opacity",1)
+  }
+
+} // end expandSizesLegend()
 
 
 // function mouseEnterOff() {
@@ -2503,7 +2524,7 @@ function getPointCoords(circle){
 }
 
 function createAnnotations(mode){
-
+//  http://d3-annotation.susielu.com/
   var xSc = d3.scaleLinear().range([0, width*0.75]);
   var ySc = d3.scaleLinear().range([height*compressY, 0]);
 
@@ -3051,145 +3072,6 @@ enterUpdateCircles = function() {
 
 
 
-
-
-  /////////// Legend /////////////////
-
-function createLegendDiv() {
-  
-  legendDiv = d3.select("body").append("div")
-    .style("border", "3px solid #49AC52")
-    .style("border-radius", "7px")
-    .style("position","absolute")
-    .style("bottom", window.innerHeight*0.4+"px")
-    .style("right", window.innerWidth*0.4+"px")
-    .style("height", "10px")
-    .style("width", "10px")
-
-    legendDiv.transition().duration(500)
-      .style("width","700px")
-      .style("height","463px")
-      .style("right", window.innerWidth*0.05+"px")
-      .style("bottom", window.innerHeight*0.454+"px")
-
-  d3.selectAll("circle").transition().duration(500).style("opacity", 0.1)
-}
-
-
-// legendG = d3.select("#legend").append("");
-// legendG = d3.select("#legend").append("");
-
-var legendHeight = -9;
-
-var bottomLegend;
-
-// function createBottomLegend() {}
-
-function createLegend(mode) {
-
-              industriesArray = [
-              'Natural resources, agriculture and related production occupations',
-              'Management occupations',
-              'Occupations in art, culture, recreation and sport',
-              'Trades, transport and equipment operators and related occupations',
-              'Business, finance and administration occupations',
-              'Occupations in education, law and social, community and government services',
-              'Natural and applied sciences and related occupations',
-              'Occupations in manufacturing and utilities',
-              'Health occupations',
-              'Sales and service occupations',
-              ]
-
-    switch (mode) {
-        // Standard right-side legend
-        case 0:
-          // transition circles to graph positions
-              legend = d3.select("#chart").selectAll("#legend")
-                  .data(d3.range(10))
-                  .enter().append("g")
-                  .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate("+ -window.innerWidth/13.4 +","+ ((i * 13) + window.innerHeight/24) + ")"; })
-                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
-
-              legend.append("rect")
-                  .attr("x", width/2 - margin.right - 10)
-                  .attr("width", 8)
-                  .attr("height", 8)
-                  .attr("transform", "translate(10," + legendHeight*1.25 + ")")
-                  .style("opacity",0).transition().duration(500).style("opacity", 1)
-
-              legend.append("text")
-                  .attr("x", width/2 - margin.right - 0 )
-                  .attr("y", 3)
-                  .attr("dy", ".1em")
-                  .style("font-size","5px")
-                  .attr("transform", "translate(0," + legendHeight + ")")
-                  .style("text-anchor", "end")
-                  .text(function(d, i) { return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160) })
-                  // .text(function(d, i) { if (industriesArray[i].length > 30) {return industriesArray[i].substring(0,30) + "..." + String.fromCharCode(160);}
-                  //                         else {return industriesArray[i] + String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160)} })
-                  .style("opacity",0).transition().duration(500).style("opacity", 1);
-
-              svg.select(".legend")
-              .append("text") // title
-                  .attr("x", width/2 - margin.right - 0 )
-                  .attr("y", 9)
-                  .attr("dy", ".35em")
-                  .attr("transform", "translate(-50," + (legendHeight-25) + ")")
-                  .style("text-anchor", "end")
-                  .style("font-family", "Raleway")
-                  .style("font-size", "18")
-                  .text("Industries")
-                  .style("opacity",0).transition().duration(500).style("opacity", 1)
-                  // .style("font-weight", "bold");
-                  .style("text-decoration", "underline")
-
-          break;
-        // Industry Split
-        case 1:
-              legend = svg.selectAll("#legend")
-                  .data(d3.range(10))
-                  .enter().append("g")
-                  .attr("class", "legend")
-                  .attr("transform", function(d, i) { 
-                                    if(i<5){ // first 5 (top right)
-                                      return "translate(" + 
-                                      ((i * 60) + window.innerWidth*0.14) + ","+ // x-translate 
-                                      ((i * 20) - window.innerHeight*0.04)+")"; } // y-translate
-                                    else{ // last 5 (bottom left)
-                                      return "translate(" +
-                                      ((i * 60) - window.innerWidth*0.38) + ","+ //x
-                                      ((i * 20) + window.innerHeight*0.25)+")"} }) //y
-                  .style("fill", function(d, i) { return d3.schemeCategory10[i] });
-
-              legend.append("rect").attr("class","legendRect")
-                  .attr("x", width/2 - margin.right - 10)
-                  .attr("width", 16)
-                  .attr("height", 16)
-                  .attr("transform", "translate(10," + legendHeight + ")")
-                  .style("opacity",0).transition().duration(500).style("opacity", 1)
-
-              legend.append("text").attr("class","legendText")
-                  .attr("x", width/2 - margin.right - 0 )
-                  .attr("y", 9)
-                  .attr("dy", ".35em")
-                  .attr("transform", "translate(0," + legendHeight + ")")
-                  .style("text-anchor", "end")
-                  .style("font-family", "Raleway")
-                  .text(function(d, i) { return industriesArray[i].substring(0,30) + "..."; })
-                  .style("opacity",0).transition().duration(500).style("opacity", 1);
-          break;
-      // x = Number of Jobs
-      // y = Wage
-        case 2:
-            break;
-      // x = Number of Jobs
-      // y = Automation Risk
-
-    }
-
-
-}
 
 
 ///////////////////////////////// Filters ////////////////////////////////////

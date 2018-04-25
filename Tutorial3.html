@@ -96,7 +96,7 @@ listToDeleteMulti = []; // filtered IDs
 createViz();
 
 function createViz() {
-  d3.csv("NOC_403.csv", function(error, datapoints) {
+  d3.csv("NOC_494_interpolated.csv", function(error, datapoints) {
     if (error) throw error;
 
 // Viz dimensions & margins
@@ -1166,14 +1166,14 @@ sliderSVGArray[0] = d3.select("body")
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 100) + "px")
       }
                   // (d3.select("#handle_"+this.id)
-      if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
+      miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px")
 
       graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white");
 
       // jam sliders at n < 10
-      if(graph.length > 10){
+      // if(graph.length > 10){
         updateMulti(sliderScaleArray[0].invert(d3.event.x)); // pass the current line id to update function
-      }
+      // }
       // }
     
     })
@@ -1203,16 +1203,16 @@ function updateMulti(h) {
   handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
  
   // jam sliders at n <= 10
-  if(graph.length > 10){
+  // if(graph.length > 10){
     // jamSliders()
     handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
-  }
+  // }
 
   // Update the slider positions array
   sliderPositionsArray[0] = sliderScaleArray[0].invert(d3.event.x);
 
   // jam sliders
-  if(graph.length > 10){
+  // if(graph.length > 10){
 
   //  UPDATE
   circles = circles.data(filterAll(), function(d) { return d.id });
@@ -1239,7 +1239,7 @@ function updateMulti(h) {
   .force("y", forceYCombine)
   .on("tick", tick);
   simulation.alphaTarget(0.2).restart();
-}
+// }
 
 };//end updateMulti
 
