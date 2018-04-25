@@ -2032,9 +2032,13 @@ d3.select("#a2").on('click', function() { // Wage vs Workers
 
 
 function graphModeOn(mode) {
+
+  // clear annotations
+  d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
+  // wait for transform before applying transformed annotations
   setTimeout(function() {
     createAnnotations(mode);}
-    , 1500)
+    , 1000)
   
   hideGraphViewCallout();
   hideAll();
@@ -2560,13 +2564,31 @@ var labels;
 var makeAnnotations;
   // first mode: Wage vs Years of Study
 
-  // clear annotations
-  d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
 
   // Lawyers circle_207 Judges 206 Optometrists 170
-  var pointLawyers = getPointCoords(207)
-  var pointJudges = getPointCoords(206)
-  var pointOptometrists = getPointCoords(170)
+  var pointLawyers = getPointCoords(207),
+      titleLawyers = "Lawyers and Quebec notaries",
+      labelLawyers = "$ salary amount";
+
+  var pointJudges = getPointCoords(206),
+      titleJudges = "Judges",
+      labelJudges = "$ salary amount";
+
+  var pointOptometrists = getPointCoords(170),
+      titleOptometrists = "Optometrists",
+      labelOptometrists = "$ salary amount";
+
+  var pointSecondTeachers = getPointCoords(203),
+      titleSecondTeachers = "Secondary school teachers",
+      labelSecondTeachers = "$ salary amount";
+
+  var pointElementTeachers = getPointCoords(204),
+      titleElementTeachers = "Elementary school teachers",
+      labelElementTeachers = "$ salary amount";
+
+  var pointNurses = getPointCoords(165),
+      titleNurses = "Registered nurses",
+      labelNurses = "$ salary amount";
 
 
   switch (mode) {
@@ -2577,72 +2599,65 @@ var makeAnnotations;
       labels = [
       {
         note: {
-          title: "Judges",
-          label: "$ salary amount",
-            //   title: "d3.annotationLabel"
+          title: titleJudges,
+          label: labelJudges,
           },
-          connector: {},
-          // to obtain x-y coordinates:
-          // 1. select element based on its id
-            // Lawyers circle_207 Judges 206 Optometrists 170
-          // 2. return position
-
+          // connector: {},
           x: pointJudges.x,
           y: pointJudges.y,
           dy: -10,
           dx: -20,
       },{
         note: {
-          title: "Lawyers and Quebec notaries",
-          label: "$ salary amount",
-            //   title: "d3.annotationLabel"
+          title: titleLawyers,
+          label: labelLawyers,
           },
-          connector: {},
-          // to obtain x-y coordinates:
-          // 1. select element based on its id
-            // Lawyers circle_207 Judges 206 Optometrists 170
-          // 2. return position
-
+          // connector: {},
           x: pointLawyers.x,
           y: pointLawyers.y,
           dy: -30,
           dx: -60,
       },{
         note: {
-          title: "Optometrists",
-          label: "$ salary amount",
-            //   title: "d3.annotationLabel"
+          title: titleOptometrists,
+          label: labelOptometrists,
           },
-          connector: {},
-          // to obtain x-y coordinates:
-          // 1. select element based on its id
-            // Lawyers circle_207 Judges 206 Optometrists 170
-          // 2. return position
-
           x: pointOptometrists.x,
           y: pointOptometrists.y,
           dy: -30,
           dx: -150,
       }]
-
       break;
 
     case 2:
       labels = [
       {
         note: {
-          title: "Lawyers and Quebec notaries",
-          label: "$$$$$$",
-          //   title: "d3.annotationLabel"
+          title: titleLawyers,
+          label: labelLawyers,
         },
-        connector: {},
-          //graphYtranslate
-          x: window.innerWidth*0.35,
-          y: window.innerHeight*0.2,
-          dy: window.innerHeight*0.07,
-          dx: window.innerWidth*0.12,
-          // dy: window.innerHeight*0.07,
-          // dx: window.innerWidth*0.12,
+          x: pointLawyers.x,
+          y: pointLawyers.y,
+          dy: -30,
+          dx: 60,
+      },{
+        note: {
+          title: titleElementTeachers,
+          label: labelElementTeachers,
+        },
+          x: pointElementTeachers.x,
+          y: pointElementTeachers.y,
+          dy: -50,
+          dx: -10,
+      },{
+        note: {
+          title: titleSecondTeachers,
+          label: labelSecondTeachers,
+        },
+          x: pointSecondTeachers.x,
+          y: pointSecondTeachers.y,
+          dy: -50,
+          dx: 50,
       }]
 
       break;
@@ -2651,16 +2666,31 @@ var makeAnnotations;
       labels = [
       {
         note: {
-          title: "Lawyers and Quebec notaries",
-          label: "$$$$$$",
-          //   title: "d3.annotationLabel"
+          title: titleLawyers,
+          label: labelLawyers,
         },
-        connector: {},
-          //graphYtranslate
-          x: window.innerWidth*0.35,
-          y: window.innerHeight*0.2,
-          dy: window.innerHeight*0.07,
-          dx: window.innerWidth*0.12,
+          x: pointLawyers.x,
+          y: pointLawyers.y,
+          dy: 40,
+          dx: 50,
+      },{
+        note: {
+          title: titleElementTeachers,
+          label: labelElementTeachers,
+        },
+          x: pointElementTeachers.x,
+          y: pointElementTeachers.y,
+          dy: 95,
+          dx: -10,
+      },{
+        note: {
+          title: titleNurses,
+          label: labelNurses,
+        },
+          x: pointNurses.x,
+          y: pointNurses.y,
+          dy: 50,
+          dx: -40,
       }]
 
       break;
@@ -2769,6 +2799,9 @@ function showLeftButtons() {
 
 
 function graphModeOff() {
+
+  // clear annotations
+  d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
 
   // change available buttons
   d3.select("#btnColours").transition().duration(500).style("opacity",1).style("pointer-events","auto")
