@@ -14,7 +14,12 @@ todos
 
 current:
 
-- unjam filters in tutorial3
+- read 5 articles about ui
+	goodui
+		call to action, repeat if multiple pages
+- ruby tutorial
+
+- switch graph mode and reset button places?
 
 - add pretty force simulation for equal size circles
 - read 'getting real' & learn ruby & rails
