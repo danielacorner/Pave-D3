@@ -12,7 +12,14 @@ todos
 - fix 'movebottomdown'
 ***********************************
 
+- view more: connect to "schools offering this program"
+
+- set up job image bubbles
+	- create circle, start from hover's cx cy, expand radius, move to left of tooltip
+
 current:
+
+- convert to salary & annotate $40k
 
 - read 5 articles about ui
 	goodui
@@ -40,10 +47,12 @@ current:
 	" how much language-related skill would you like to have? "
 	- teasing information (job stats) : graph mode w/ annotations early in tutorial
 		- vertical & horizontal mouseover bars "crosshairs" tickbox
-- try attention grabs instead of neglect
+	- try attention grabs instead of neglect
+	- It's nice when people set expectations for each other. It doesn't take much effort for a person or interface to inform someone when the next task will be completed. You are on step 1 of X. Your choice will result in Y. You will receive something before Z. All those little promises not only inform but also build trust. Unhelpful interfaces on the other hand can come off a little cold as the user is kept in the dark.
+	
 
 - ruby tutorial
-
+- before "warning" prompt "filter here" etc
 - post-filter enterupdate force simulation too tight
 
 - switch graph mode and reset button places?

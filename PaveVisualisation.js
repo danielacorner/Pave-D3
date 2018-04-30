@@ -1,6 +1,7 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage;
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage,
+hoverTimeout;
 
 var legendCreated = 0;
 var graphFirstTime = true;
@@ -598,6 +599,8 @@ function showToolTip(duration) {
 }
 
 function hideToolTip(duration) {
+
+      hideHoverImg();
       // fade out each tooltip contents object
       d3.select("#tooltip").transition().duration(duration).style("opacity",0)
       d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
@@ -627,11 +630,78 @@ function hideToolTip(duration) {
       d3.select("#moreBtnsDiv").transition().duration(180).style("opacity",0)
 }
 
+
+
+
+var defs = svg.append("defs");
+
+// create for all 494? or create on the fly?
+
+  // defs.append("pattern")
+
+  defs.selectAll(".img-pattern")
+    .data(datapoints)
+    .enter().append("pattern")
+    .attr("class", "img-pattern")
+      .attr("id", function(d) { return "pattern_"+d.id} )
+      .attr("height", "100%")
+      .attr("width", "100%")
+      .attr("patternContentUnits", "objectBoundingBox")
+      .append("image")
+      .attr("height", 1)
+      .attr("width", 1)
+      .attr("preserveAspectRatio", "none")
+      // .attr("xmlns:xlink:href","/img/NOC_images/"+d.noc+".jpg")
+      .attr("xlink:href",function(d) {
+          return "/img/NOC_images/"+d.noc+".jpg"
+        })
+
+
+
+function createHoverImg(d) {
+  var leftRight;
+  if(d3.event.pageX >= window.innerWidth/2) { // right side
+    leftRight = 175;
+  }else{ // left side
+    leftRight = 50;
+  }
+  console.log("creating Hover Img! for " + d.id + d.x)
+  var imgCircle = d3.select("#chart").append("circle")
+    .attr("class","circleImg")
+    .attr("cx",d.x + width/2 + leftRight)
+    .attr("cy",d.y + height/2 - 50)
+    .attr("fill", "url(#pattern_"+d.id)
+  // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
+    // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
+    // .attr("r",d3.select(function(d){return d.r}))
+      .transition().duration(350)
+    .attr("r","50px")
+    // .attr("cx",)
+}
+function hideHoverImg() {
+  d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
+}
+
 function pad(num, size) { // add leading 0s to nocs like 0011
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var graphMode;
 
@@ -736,6 +806,9 @@ var graphMode;
       // .style("opacity", .9)
 
       // div2.html("test")
+      createHoverImg(d);
+
+
   }
 
   function tooltipLarge(d) {
