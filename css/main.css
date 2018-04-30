@@ -106,6 +106,7 @@ button.expand-sliders-btn{
   border: 2px solid green; 
   border-radius: 16px;'
   pointer-events: auto;
+  box-shadow: 1px 2px 1px grey ;
 }
 button.expand-sliders-btn:hover{
   margin: 5px 0px 0px 10px; 
@@ -118,7 +119,8 @@ button.expand-sliders-btn-expanded{
   margin: 5px 0px 0px 10px; 
   background: white; 
   border: 2px solid green; 
-  border-radius: 16px;'
+  border-radius: 16px;
+  box-shadow: 1px 2px 1px grey ;
   pointer-events: auto;
 }
 button.close-sliders-btn{
@@ -131,16 +133,19 @@ button.btn-grey {
   font-size: 14px; 
   height: 32px; 
   box-shadow: 3px 3px 17px grey; 
-  background: #A6B0A8;
+  background: #49AC52;
 }
 button.btn-graph:hover {
-  background: #888;
+  background: #179E00;
 }
 button.btn-graph {
-  font-size: 18px; 
-  height: 40px; 
-  box-shadow: 3px 3px 17px grey; 
-  background: #A6B0A8;
+  font-size: 20px; 
+  height: 45px; 
+  box-shadow: 1px 2px 1px grey ;
+  background: white;
+  color: #49AC52;
+  border-color: #49AC52;
+  border-width: 3px;
 }
 .legend {
   position: fixed;
@@ -148,14 +153,28 @@ button.btn-graph {
   bottom: 30%;
 }
 button.btn-legend {
-  height: 50px;
+  height: 60px;
   width: 85px;
   line-height: 1.2;
   background: white;
-  border-width: 1px;
+  border-width: 3px;
   border-color: #49AC52;
   border-radius: 7px;
-  box-shadow: 0px;
+  box-shadow: 1px 2px 1px grey ;
+  font-weight: bold;
+  font-family: Raleway;
+  color:  #49AC52;
+}
+button.btn-reset {
+  font-size: 20px; 
+  height: 45px;
+  width: 185px;
+  line-height: 1.2;
+  background: white;
+  border-width: 3px;
+  border-color: #49AC52;
+  border-radius: 7px;
+  box-shadow: 1px 2px 1px grey ;
   font-weight: bold;
   font-family: Raleway;
   color:  #49AC52;
@@ -163,19 +182,19 @@ button.btn-legend {
 button#minimizeViews {
   width: 20px;
   height: 20px;
-  background: #A6B0A8;
+  background: #49AC52;
   border-radius: 6px;
   border: none;
   box-shadow: 3px 3px 8px grey; 
 }
 button#minimizeViews:hover {
-  background: #888;
+  background: #179E00;
 }
 button.btn-grey:hover {
-  background: #888;
+  background: #179E00;
 }
 button.btn-group:hover {
-  background: #888;
+  background: #179E00;
 }
 button.suggested-views-btn {
   height: 60px;
@@ -190,16 +209,7 @@ button.suggested-views-btn {
   color:  #49AC52;
 }
 button.suggested-views-btn:hover {
-  height: 60px;
-  width: 200px;
   background: #eaeaea;
-  border-width: 3px;
-  border-color: #49AC52;
-  border-radius: 7px;
-  box-shadow: 0px;
-  font-weight: bold;
-  font-family: Raleway;
-  color:  #49AC52;
 }
 li.list-graphModes {
   list-style: none; 

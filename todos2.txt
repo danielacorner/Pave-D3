@@ -16,8 +16,35 @@ current:
 
 - read 5 articles about ui
 	goodui
-		call to action, repeat if multiple pages
+
+**- make all buttons the same colour
+	" clickable actions (links, buttons), selected elements (chosen items), and plain text should be clearly distinct"
+	- call to action, repeat if multiple pages 
+	- recommend, don't just show (graph annotations+)
+	- be explicit about who exactly your product or service is intended for (high school students)
+	- advanced first-time annotations that are dismissable
+	- expose options, don't use a dropdown
+	- "benefit buttons" instead of task buttons
+		-- Compare jobs --
+			  graph view
+	- fewer borders
+	- Selling Benefits instead of features (it will help you to xyz not it can do abc)
+	- Design for zero-data state "Hi John, why don't you do your first task over here" dismissable messages not callouts
+	- Try Loss Aversion instead of emphasizing gains. "to simplify career decisions" not "to make an informed career decision"
+	- keyboard shortcuts?
+	- Try smaller commitments instead of one big one
+	- Softer prompts instead of modal windows (less annoying)
+	- multifunctional controls instead of more parts
+	- icon labels (filter button "Filter [icon]")
+	- try natural language instead of dry text
+	" how much language-related skill would you like to have? "
+	- teasing information (job stats) : graph mode w/ annotations early in tutorial
+		- vertical & horizontal mouseover bars "crosshairs" tickbox
+- try attention grabs instead of neglect
+
 - ruby tutorial
+
+- post-filter enterupdate force simulation too tight
 
 - switch graph mode and reset button places?
 

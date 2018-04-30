@@ -57,11 +57,12 @@
 
 <div class="d-inline" style="position: fixed; left: 15vw; top: 10vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
     <span id='titlespan' style="opacity: 0; font-size: 3.05vw;">
-    <p style="margin-bottom: 0em">These circles represent</p>
-    <p style="margin-left: 3.5vw">all Canadian jobs:</p>
+    <p style="margin-bottom: 0em">Pave was made to help</p>
+    <p style="margin-bottom: 0em">high school students learn</p>
+    <p style="">about jobs in Canada.</p>
   	</span>
-      <button class="intro-tour-button" onclick="buttonClick()" style="z-index: 99; position: fixed; top: 20vw; left: 24vw; width: 8vw; opacity: 0; color: white" id="btnOK">NEXT</button>
-    <span id='span1' style="z-index: -1; opacity: 0; margin-left: 4vw">Each circle is a job group.</span>
+      <a class="intro-tour-button btn-arrow-right" style="z-index: 99; position: fixed; top: 25vw; left: 24vw; width: 8vw; opacity: 1; color: white" id="nextLink">NEXT</a>
+<!--     <span id='span1' style="z-index: -1; opacity: 0; margin-left: 4vw">Each circle is a job group.</span>
     <br>
     <br><span id='span2' style="opacity: 0; margin-left: 4vw">The bigger the circle, </span>
     <br><span id='span3' style="opacity: 0; margin-left: 4vw">the more jobs are available.</span>
@@ -69,32 +70,33 @@
     <div id="nextDiv" style="position: fixed; left: 31vw; top: 35vw;">
       <a class="intro-tour-button btn-arrow-right" style="width: 8vw; opacity: 0; color: white" id="nextLink">NEXT</a>
     </div>
-
+ -->
 </div>
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
-  setTimeout(function() {
-    d3.select("#titlespan").transition().duration(500).style("opacity",1)
-    d3.select("#btnOK").transition().duration(500).style("opacity",1)
-  }, 500) 
+    d3.select("#nextLink").attr("href","Tutorial1.html")
+  // setTimeout(function() {
+  //   d3.select("#titlespan").transition().duration(500).style("opacity",1)
+  //   d3.select("#btnOK").transition().duration(500).style("opacity",1)
+  // }, 500) 
 
-  function buttonClick() {
-  d3.select("#btnOK").transition().duration(500).style("opacity",0).remove()
-  d3.select("#span1").transition().duration(500).style("opacity",1)  
+  // function buttonClick() {
+  // d3.select("#btnOK").transition().duration(500).style("opacity",0).remove()
+  // d3.select("#span1").transition().duration(500).style("opacity",1)  
   
-  setTimeout(function() {
-    d3.select("#span2").transition().duration(500).style("opacity",1)
-  }, 1500)  
-  setTimeout(function() {
-    d3.select("#span3").transition().duration(500).style("opacity",1)
-  }, 2500)  
-  setTimeout(function() {
-    d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial2.html")
-  }, 3750)  
+  // setTimeout(function() {
+  //   d3.select("#span2").transition().duration(500).style("opacity",1)
+  // }, 1500)  
+  // setTimeout(function() {
+  //   d3.select("#span3").transition().duration(500).style("opacity",1)
+  // }, 2500)  
+  // setTimeout(function() {
+  //   d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial1.html")
+  // }, 3750)  
 
-  }
+  // }
 </script>
 
 </body>
