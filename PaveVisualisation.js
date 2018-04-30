@@ -661,11 +661,11 @@ var defs = svg.append("defs");
 function createHoverImg(d) {
   var leftRight;
   if(d3.event.pageX >= window.innerWidth/2) { // right side
-    leftRight = 175;
+    leftRight = 310;
   }else{ // left side
     leftRight = 50;
   }
-  console.log("creating Hover Img! for " + d.id + d.x)
+  // console.log("creating Hover Img! for " + d.id + d.x)
   var imgCircle = d3.select("#chart").append("circle")
     .attr("class","circleImg")
     .attr("cx",d.x + width/2 + leftRight)
@@ -675,7 +675,7 @@ function createHoverImg(d) {
     // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
     // .attr("r",d3.select(function(d){return d.r}))
       .transition().duration(350)
-    .attr("r","50px")
+    .attr("r","100px")
     // .attr("cx",)
 }
 function hideHoverImg() {
