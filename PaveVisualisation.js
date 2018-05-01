@@ -659,17 +659,36 @@ var defs = svg.append("defs");
 
 
 function createHoverImg(d) {
-  var leftRight;
-  if(d3.event.pageX >= window.innerWidth/2) { // right side
-    leftRight = 310;
-  }else{ // left side
-    leftRight = 50;
+
+  var circLeft, circTop;
+  
+  if(graphMode == 0) {
+
+    if(d3.event.pageX < window.innerWidth/2) { // left side
+      circLeft = window.innerWidth*0.5 + (d.x) - 125;
+      circTop = window.innerHeight*0.15 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+
+    }else if (d3.event.pageX >= window.innerWidth/2) { // right side
+      circLeft = window.innerWidth*0.5 + (d.x) + 125;
+      circTop = window.innerHeight*0.15 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+    }
+  }else if(graphMode == 1) {
+
+    if(d3.event.pageX < window.innerWidth/2) { // left side
+      circLeft = window.innerWidth*0.5 + (d.cx) - 125;
+      circTop = window.innerHeight*0.15 + ((window.innerHeight-300)*(d.cy/window.innerHeight));
+
+    }else if (d3.event.pageX >= window.innerWidth/2) { // right side
+      circLeft = window.innerWidth*0.5 + (d.cx) + 125;
+      circTop = window.innerHeight*0.15 + ((window.innerHeight-300)*(d.cy/window.innerHeight));
+    }
   }
+
   // console.log("creating Hover Img! for " + d.id + d.x)
   var imgCircle = d3.select("#chart").append("circle")
     .attr("class","circleImg")
-    .attr("cx",d.x + width/2 + leftRight)
-    .attr("cy",d.y + height/2 - 50)
+    .attr("cx",circLeft)
+    .attr("cy",circTop)
     .attr("fill", "url(#pattern_"+d.id)
   // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
     // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
@@ -726,18 +745,26 @@ var graphMode;
       
       if(graphMode == 0) {
 
-        divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
-      
         if(d3.event.pageX < window.innerWidth/2) { // left side
           divLeft = window.innerWidth*0.5 + (d.x) + 5;
+          divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
         } else if (d3.event.pageX >= window.innerWidth/2) { // right side
           divLeft = window.innerWidth*0.5 + (d.x) - 355;
           divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
         }
+
       }else if(graphMode == 1) {
+
+        if(d3.event.pageX < window.innerWidth/2) { // left side
+          divLeft = window.innerWidth*0.5 + (d.cx) + 5;
+          divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.cy/window.innerHeight));
+        } else if (d3.event.pageX >= window.innerWidth/2) { // right side
+          divLeft = window.innerWidth*0.5 + (d.cx) - 355;
+          divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.cy/window.innerHeight));
+        }
       
-        divTop = d.cy + window.innerHeight*0.4 - 150;      
-        divLeft = d.cx + window.innerWidth/2;
+        // divTop = d.cy + window.innerHeight*0.4 - 150;      
+        // divLeft = d.cx + window.innerWidth/2;
       }
 
       // pageY increases downward
@@ -1112,7 +1139,7 @@ circles.transition()
 
 // Enable dragging
 function dragstarted(d) { // no dragging in graph mode
-  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.2).restart();    
+  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0).restart();    
 
   d.fx = d.x;
   d.fy = d.y;
@@ -1702,7 +1729,7 @@ function smashTogether(force, temp) {
   simulation
   .force("x", d3.forceX().strength(force)).alpha(temp)
   .force("y", d3.forceY().strength(force)).alpha(temp)
-  .alphaTarget(0.1)
+  .alphaTarget(0)
   .restart()
 }
 
@@ -1737,7 +1764,7 @@ d3.select("#pause").on('click', function(d) {
 });
 ////////////////// unpause the simulation ////////////////////////
 d3.select("#unpause").on('click', function(d) {
-  simulation.alpha(0.7).alphaTarget(0.001).restart();
+  simulation.alpha(0.7).alphaTarget(0).restart();
 
   d3.select("#pause").style("display", "inline");
   d3.select("#unpause").style("display", "none");
@@ -2929,7 +2956,7 @@ function graphModeOff() {
 
     // start the simulation after the transition delay
     setTimeout(function() {
-      simulation.alphaTarget(0.2).restart();
+      simulation.alphaTarget(0).restart();
     }, 750);
 
   
@@ -3057,7 +3084,7 @@ function resetSimulation() {
 }
 
 function restartSimulation(){
-  simulation.alpha(0.25).alphaTarget(0.1).restart();
+  simulation.alpha(0.25).alphaTarget(0).restart();
 }
 
 /////// Tooltips (post-filter)
@@ -4230,7 +4257,7 @@ function searchJobTitles() {
     .force("x", forceXCombine)
     .force("y", forceYCombine)
     .on("tick", tick);
-    simulation.alphaTarget(0.2).restart();
+    simulation.alphaTarget(0).restart();
   } else if (graphMode == 1) { // else reposition nodes on graph
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })
