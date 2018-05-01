@@ -689,7 +689,7 @@ function createHoverImg(d) {
     .attr("class","circleImg")
     .attr("cx",circLeft)
     .attr("cy",circTop)
-    .attr("fill", "url(#pattern_"+d.id)
+    .attr("fill", "url(#pattern_"+d.id+")")
   // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
     // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
     // .attr("r",d3.select(function(d){return d.r}))
@@ -3374,9 +3374,59 @@ function createSliders(createSliderArray, sliderTitlesArray){
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
       }
                   // (d3.select("#handle_"+this.id)
-      if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
+      if(graph.length >= 10){ 
+        miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") 
+
+      }
       graph.length <= 50 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
-      if(graph.length <= 15){ miniTooltip.style("color","#FE2E2E") }
+      if(graph.length <= 15){ 
+        miniTooltip.style("color","#FE2E2E") 
+
+
+
+
+
+  // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
+    // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
+    // .attr("r",d3.select(function(d){return d.r}))
+        // .transition().duration(350)
+        // .attr("r","60px")
+
+        circles.transition().duration(1000)
+          .delay(function(d, i) { return i * 5})
+          .attrTween("r", function(d) {
+            var i = d3.interpolate(10, 40);
+            return function(t) { return d.radius = i(t); };
+          })
+          // transition the job images into the fill pattern
+          .style("fill", function(d) { return "url(#pattern_"+d.id+")" })
+          .style("border","3px solid #49AC52")
+
+
+          // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
+
+        if(graphMode == 0) {
+          setTimeout(function() { resetSimulation() }, 600);
+          setTimeout(function() { resetSimulation() }, 700);
+
+          // setTimeout(function() { enterUpdateCircles();
+            simulation
+            .force("collide", d3.forceCollide(function(d) { return d.radius + 1 }))
+            .alpha(0.5).alphaTarget(0).restart(); 
+          // }, 200);
+        }
+
+        // currentSize = "Number of Jobs"
+        // document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
+        // mouseEnterOff() // turn off until mouseleave
+        // setSizes("workers")
+
+
+
+
+
+
+      }
 
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
