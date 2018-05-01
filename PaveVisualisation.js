@@ -3,6 +3,7 @@ forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceY
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage,
 hoverTimeout;
 
+var circlesExpanded = 0;
 var legendCreated = 0;
 var graphFirstTime = true;
 var legendMode = 0;
@@ -3408,7 +3409,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
 
 
-      }
+      } else { collapseCircleImages(); }
 
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
@@ -3758,7 +3759,12 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           if(graph.length <= 15){ 
             miniTooltip.style("color","#FE2E2E") 
             expandCircleImages();
+          } else {
+
+            collapseCircleImages();
           }
+          // if(graph.length >= 16){
+          // }
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
@@ -3779,13 +3785,58 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
   } //end for
 };//end createSubSliders
 
+function collapseCircleImages() {
 
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
+
+    circles.transition().duration(700)
+    .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          simulation
+          .force("collide", d3.forceCollide(function(d) { return d.radius + 1 }))
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick);
+
+          simulation.alpha(0.15).alphaTarget(0).restart();
+
+      }, 0);
+      // setTimeout(function() { resetSimulation() }, 700);
+
+      // setTimeout(function() { enterUpdateCircles();
+        
+        forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+
+        simulation
+        .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                forceGravity)
+        // .force()
+        .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+        .alpha(0.6).alphaTarget(0).restart(); 
+    }
+  } else if (circlesExpanded == 0){
+
+  }
+}
 
 function expandCircleImages() {
 
-  //modify: toggle-on, toggle-off, shrink back down,
-  
-        circles.transition().duration(700)
+  //bookmark
+  //modify: toggle-on, toggle-off, shrink back down
+  if (circlesExpanded == 0) {
+        
+        circlesExpanded = 1;
+
+        circles.transition().duration(500)
           .delay(function(d, i) { return i * 5})
           .attrTween("r", function(d) {
             var i = d3.interpolate(10, 40);
@@ -3797,12 +3848,14 @@ function expandCircleImages() {
             circles.style("fill", function(d) { return "url(#pattern_"+d.id+")" })
               .style("stroke-width","2px")
               .style("stroke", function(d) { return color(d.cluster)})
-          }, 500)
+          }, 350)
 
           // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
 
         if(graphMode == 0) {
-          setTimeout(function() { 
+          // setTimeout(function() { 
+            forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+
               simulation
               .force("collide", d3.forceCollide(function(d) { return 42 }))
               .force("cluster", forceCluster)
@@ -3813,21 +3866,18 @@ function expandCircleImages() {
 
               simulation.alpha(0.15).alphaTarget(0).restart();
 
-          }, 0);
+          // }, 0);
           // setTimeout(function() { resetSimulation() }, 700);
 
           // setTimeout(function() { enterUpdateCircles();
             
-            forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
-
-            simulation
-            .force("gravity", // default strength = -30, negative strength = repel, positive = attract
-                    forceGravity)
-            // .force()
-            .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
-            .alpha(0.6).alphaTarget(0).restart(); 
+            // .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+            // .alpha(0.6).alphaTarget(0).restart(); 
           // }, 200);
         }
+      } else if (circlesExpanded == 1) {
+
+      }
 
 }
 
