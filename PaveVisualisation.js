@@ -3782,8 +3782,10 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
 
 function expandCircleImages() {
+
+  //modify: toggle-on, toggle-off, shrink back down,
   
-        circles.transition().duration(1000)
+        circles.transition().duration(700)
           .delay(function(d, i) { return i * 5})
           .attrTween("r", function(d) {
             var i = d3.interpolate(10, 40);
@@ -3800,8 +3802,19 @@ function expandCircleImages() {
           // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
 
         if(graphMode == 0) {
-          setTimeout(function() { resetSimulation() }, 600);
-          setTimeout(function() { resetSimulation() }, 700);
+          setTimeout(function() { 
+              simulation
+              .force("collide", d3.forceCollide(function(d) { return 42 }))
+              .force("cluster", forceCluster)
+              .force("gravity", forceGravity)
+              .force("x", forceXCombine)
+              .force("y", forceYCombine)
+              .on("tick", tick);
+
+              simulation.alpha(0.15).alphaTarget(0).restart();
+
+          }, 0);
+          // setTimeout(function() { resetSimulation() }, 700);
 
           // setTimeout(function() { enterUpdateCircles();
             
@@ -3926,7 +3939,7 @@ graphViewCallout = function() {
   // d3.select("#graphCallout").transition().duration(400).style("width","300px")
   d3.select("#graph").style("box-shadow","0px 0px 17px 7px #E6E447")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",1)
-  d3.select("#graphCallout2").transition().duration(400).style("opacity",1)
+  // d3.select("#graphCallout2").transition().duration(400).style("opacity",1)
   d3.select("#resetFilters").style("box-shadow","0px 0px 17px 7px #E6E447")  
 }
 
@@ -3935,7 +3948,7 @@ hideGraphViewCallout = function() {
   d3.select("#graph").style("box-shadow","3px 3px 17px grey")
   d3.select("#resetFilters").style("box-shadow","3px 3px 17px grey")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
-  d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
+  // d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
 
 // the size of the current set
