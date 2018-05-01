@@ -20,8 +20,11 @@ BIG-ticket TODO:
 - set up job image bubbles
 	- create circle, start from hover's cx cy, expand radius, move to left of tooltip
 
+- add "Reset images" button
+
 bug: industrial butchers, seafood processing, other labourers in Managers group (red cluster)
 (check cluster attribute in csv)
+bug: move right-side tooltip left a bit
 
 current:
 

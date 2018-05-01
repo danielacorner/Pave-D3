@@ -695,6 +695,9 @@ function createHoverImg(d) {
     // .attr("r",d3.select(function(d){return d.r}))
       .transition().duration(350)
     .attr("r","100px")
+    .style("stroke","black")
+    .style("stroke-width","1")
+
     // .attr("cx",)
 }
 function hideHoverImg() {
@@ -3392,29 +3395,8 @@ function createSliders(createSliderArray, sliderTitlesArray){
         // .transition().duration(350)
         // .attr("r","60px")
 
-        circles.transition().duration(1000)
-          .delay(function(d, i) { return i * 5})
-          .attrTween("r", function(d) {
-            var i = d3.interpolate(10, 40);
-            return function(t) { return d.radius = i(t); };
-          })
-          // transition the job images into the fill pattern
-          .style("fill", function(d) { return "url(#pattern_"+d.id+")" })
-          .style("border","3px solid #49AC52")
+        expandCircleImages()
 
-
-          // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
-
-        if(graphMode == 0) {
-          setTimeout(function() { resetSimulation() }, 600);
-          setTimeout(function() { resetSimulation() }, 700);
-
-          // setTimeout(function() { enterUpdateCircles();
-            simulation
-            .force("collide", d3.forceCollide(function(d) { return d.radius + 1 }))
-            .alpha(0.5).alphaTarget(0).restart(); 
-          // }, 200);
-        }
 
         // currentSize = "Number of Jobs"
         // document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
@@ -3773,7 +3755,10 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
           if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
           graph.length <= 30 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
-          if(graph.length <= 15){ miniTooltip.style("color","#FE2E2E") }
+          if(graph.length <= 15){ 
+            miniTooltip.style("color","#FE2E2E") 
+            expandCircleImages();
+          }
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
@@ -3796,7 +3781,42 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
 
 
+function expandCircleImages() {
+  
+        circles.transition().duration(1000)
+          .delay(function(d, i) { return i * 5})
+          .attrTween("r", function(d) {
+            var i = d3.interpolate(10, 40);
+            return function(t) { return d.radius = i(t); };
+          })
+          // transition the job images into the fill pattern
 
+          setTimeout(function() {
+            circles.style("fill", function(d) { return "url(#pattern_"+d.id+")" })
+              .style("stroke-width","2px")
+              .style("stroke", function(d) { return color(d.cluster)})
+          }, 500)
+
+          // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
+
+        if(graphMode == 0) {
+          setTimeout(function() { resetSimulation() }, 600);
+          setTimeout(function() { resetSimulation() }, 700);
+
+          // setTimeout(function() { enterUpdateCircles();
+            
+            forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+
+            simulation
+            .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                    forceGravity)
+            // .force()
+            .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+            .alpha(0.6).alphaTarget(0).restart(); 
+          // }, 200);
+        }
+
+}
 
 
 
