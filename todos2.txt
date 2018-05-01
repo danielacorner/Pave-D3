@@ -12,14 +12,23 @@ todos
 - fix 'movebottomdown'
 ***********************************
 
+BIG-ticket TODO:
 - view more: connect to "schools offering this program"
+	- 4 - Admissions
+	- create relationship between NOCs and Programs, Universities, Colleges
 
 - set up job image bubbles
 	- create circle, start from hover's cx cy, expand radius, move to left of tooltip
 
+bug: industrial butchers, seafood processing in Managers group (red cluster)
+
 current:
 
+- slow down slippery simulation
+
 - convert to salary & annotate $40k
+
+- on graph <= 10, expand circles into images and reveal "toggle images" button
 
 - read 5 articles about ui
 	goodui
