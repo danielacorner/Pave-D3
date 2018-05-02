@@ -1175,7 +1175,7 @@ drag_handler(circles);
 
 ///////////////////////////////// Buttons ////////////////////////////////////
 
-var legendButtonHeight = 50,
+var legendButtonHeight = 60,
     legendButtonWidth = 85;
 
 /////////////// COLOUR LEGEND button
@@ -1218,7 +1218,7 @@ function expandColoursLegend() {
   d3.select("#btnColours").on("click", "")
 
   // shrink Size Legend button 
-  d3.select("#btnSizes").transition().duration(250).style("opacity",0).style("height","0px").style("width","0px").style("border-width","1px")
+  d3.select("#btnSizes").transition().duration(250).style("opacity",0).style("height","0px").style("width","0px").style("border-width","2px")
 
   // expand colour legend
   d3.select("#btnColours")
@@ -1231,7 +1231,7 @@ function expandColoursLegend() {
   .transition().duration(375)
     .style("background","white")
     .style("width", "335px")
-    .style("height", "310px").style("border-width","1px").style("border","1px solid #49AC52").style("border-radius","6px")
+    .style("height", "310px").style("border","2px solid #49AC52").style("border-radius","6px")
     .style("bottom","0px")
     .style("left","0px")
   // .text("")
@@ -1309,7 +1309,7 @@ function closeLegends() {
   // reset Size Legend button
   d3.select("#btnSizes").transition().duration(300).style("opacity",1)
     .style("height",legendButtonHeight+"px")
-    .style("width",legendButtonWidth+"px").style("border-width","1px")
+    .style("width",legendButtonWidth+"px").style("border-width","3px")
     
     setTimeout(function() {
       d3.select("#btnSizes")
@@ -1319,7 +1319,7 @@ function closeLegends() {
   // reset Colour Legend button
   d3.select("#btnColours").transition().duration(300).style("opacity",1)
   .style("width", legendButtonWidth+"px")
-  .style("height", legendButtonHeight+"px").style("border-width","1px")
+  .style("height", legendButtonHeight+"px").style("border-width","3px")
 
     setTimeout(function() {
       d3.select("#btnColours")
@@ -1450,7 +1450,7 @@ function expandSizesLegend() {
     // d3.select("#btnSizes").transition().duration(300)
 
     sizesDiv = d3.select("#btnSizes")
-    .append("div").attr("id","legendDiv2").style("border","1px solid #49AC52").style("border-radius", "6px")
+    .append("div").attr("id","legendDiv2").style("border","2px solid #49AC52").style("border-radius", "6px")
     .style("width","0px")
     .style("height","0px")
     .style("background","white")
