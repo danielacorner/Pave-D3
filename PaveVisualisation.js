@@ -556,11 +556,19 @@ circles = svg.selectAll("circle")
     .on("mouseout", function(d) {
 
       if(!circleExpanded[d.id] == 1){
-        d3.select(this)
-          .style("fill", color(d.cluster) )
-          // .attr("stroke", "black")
-          .style("stroke-width", 2)
-          .attr("stroke", color(d.cluster));
+        //if not stuck
+        if(!sticky[d.id] == 1) {
+          d3.select(this)
+            .style("fill", color(d.cluster) )
+            // .attr("stroke", "black")
+            .style("stroke-width", 2)
+            .attr("stroke", color(d.cluster));
+        } else { // if stuck
+          d3.select(this)
+            .style("fill", "url(#pattern_"+d.id+")")
+            .attr("r","30px")
+
+        }
       }
 
       clearTimeout(hoverTimeout)
@@ -1189,12 +1197,15 @@ function dragged(d) {
   d3.select(this).classed("fixed", d.fixed = true);
 
 
-  // if in sticky zone
+  // if in right sticky zone
   if(d.x > window.innerWidth*0.4) { 
     // stick!
     sticky[d.id] = 2 // right side
+    d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
+  // if in left sticky zone
   } else if (d.x < window.innerWidth*-0.4){
     sticky[d.id] = 1 // left side
+    d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
   }
 
   d.fx = d3.event.x;
