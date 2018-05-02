@@ -3,6 +3,7 @@ forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceY
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage,
 hoverTimeout;
 
+var sticky = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
 var legendCreated = 0;
@@ -467,10 +468,31 @@ function forceCluster(alpha) {
   // }
   }
     // Update the positions each tick
+    console.log(window.innerWidth*0.3)
 tick = function() {
+
   circles
-  .attr("cx", function(d) { return d.x; })
-  .attr("cy", function(d) { return d.y; });
+  .attr("cx", function(d) { 
+      // if in sticky zone
+      if(d.x > window.innerWidth*0.4) { 
+        // stick!
+        sticky[d.id] = 2 // right side
+      } else if (d.x < window.innerWidth*-0.4){
+        sticky[d.id] = 1 // left side
+      }
+
+      // if sticky
+      if(sticky[d.id] == 2){
+        // stuck
+        return window.innerWidth*0.4 
+      } else if(sticky[d.id] == 1){
+        return window.innerWidth*-0.4
+      } else {
+      return d.x; 
+      }
+  })
+  .attr("cy", function(d) { 
+    return d.y; });
 }
 
 
@@ -1144,10 +1166,18 @@ circles.transition()
 
 // Enable dragging
 function dragstarted(d) { // no dragging in graph mode
+
+  // if clicking on the chart, restart the simulation
   if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001).restart();    
 
-  d.fx = d.x;
-  d.fy = d.y;
+
+    d.fx = d.x; // drag
+    d.fy = d.y;
+
+  // if dragged to right side, becomes sticky
+  // if (d.fx < window.innerWidth*0.8){
+    // sticky[d.id] = 1
+  // }
 
 }
 
