@@ -3,6 +3,7 @@ forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceY
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage,
 hoverTimeout;
 
+var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
 var legendCreated = 0;
 var graphFirstTime = true;
@@ -1143,7 +1144,7 @@ circles.transition()
 
 // Enable dragging
 function dragstarted(d) { // no dragging in graph mode
-  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0).restart();    
+  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001).restart();    
 
   d.fx = d.x;
   d.fy = d.y;
@@ -1158,7 +1159,7 @@ function dragged(d) {
 }
 
 function dragended(d) {
-  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0);
+  if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001);
   d.fx = null;
   d.fy = null;
 } 
@@ -1209,7 +1210,7 @@ function expandColoursLegend() {
     simulation
     .force("x", forceXSeparate).alpha(0.4)
     .force("y", forceYSeparate).alpha(0.4)
-      .alphaTarget(0) // after click, cool down to minimal temperature
+      .alphaTarget(0.001) // after click, cool down to minimal temperature
       .restart()
   };
 
@@ -1557,7 +1558,7 @@ function expandSizesLegend() {
         setTimeout(function() { resetSimulation() }, 700);
 
         setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+          simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
 
       currentSize = "Number of Jobs"
@@ -1582,7 +1583,7 @@ function expandSizesLegend() {
         setTimeout(function() { resetSimulation() }, 700);
         
         setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+          simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
 
       currentSize = "Wage ($ per hr)"
@@ -1606,7 +1607,7 @@ function expandSizesLegend() {
         setTimeout(function() { resetSimulation() }, 700);
 
         setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+          simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
 
       currentSize = "Years of Study"
@@ -1630,7 +1631,7 @@ function expandSizesLegend() {
         setTimeout(function() { resetSimulation() }, 700);
 
         setTimeout(function() { enterUpdateCircles();
-          simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
+          simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
 
       currentSize = "nothing"
@@ -1703,7 +1704,7 @@ function removeLegends() {
 //   simulation
 //   .force("x", forceXSeparate).alpha(0.4)
 //   .force("y", forceYSeparate).alpha(0.4)
-//     .alphaTarget(0) // after click, cool down to minimal temperature
+//     .alphaTarget(0.001) // after click, cool down to minimal temperature
 //     .restart()
 
 //   // d3.select("#split").style("display","none");
@@ -1724,7 +1725,7 @@ d3.select("#shuffle").on('click', function() {
   simulation
   .force("x", forceXSeparateRandom)
   .force("y", forceYSeparateRandom)
-  .alpha(0.15).alphaTarget(0).restart();
+  .alpha(0.15).alphaTarget(0.001).restart();
 
 
 })
@@ -1733,7 +1734,7 @@ function smashTogether(force, temp) {
   simulation
   .force("x", d3.forceX().strength(force)).alpha(temp)
   .force("y", d3.forceY().strength(force)).alpha(temp)
-  .alphaTarget(0)
+  .alphaTarget(0.001)
   .restart()
 }
 
@@ -1768,7 +1769,7 @@ d3.select("#pause").on('click', function(d) {
 });
 ////////////////// unpause the simulation ////////////////////////
 d3.select("#unpause").on('click', function(d) {
-  simulation.alpha(0.7).alphaTarget(0).restart();
+  simulation.alpha(0.7).alphaTarget(0.001).restart();
 
   d3.select("#pause").style("display", "inline");
   d3.select("#unpause").style("display", "none");
@@ -2960,7 +2961,7 @@ function graphModeOff() {
 
     // start the simulation after the transition delay
     setTimeout(function() {
-      simulation.alphaTarget(0).restart();
+      simulation.alphaTarget(0.001).restart();
     }, 750);
 
   
@@ -3088,7 +3089,7 @@ function resetSimulation() {
 }
 
 function restartSimulation(){
-  simulation.alpha(0.25).alphaTarget(0).restart();
+  simulation.alpha(0.25).alphaTarget(0.001).restart();
 }
 
 /////// Tooltips (post-filter)
@@ -3097,7 +3098,11 @@ enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
-    .style("fill", function(d) { return color(d.cluster); })
+    .style("fill", function(d) { 
+      if(circleExpanded[d.id] != 1){
+        return color(d.cluster); 
+      }else { return "url(#pattern_"+d.id+")" }
+     })
     .attr("class","jobCircle")
     .attr("id",function(d) { return "circle_"+d.id })
     .attr("opacity",
@@ -3383,7 +3388,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
       }
       graph.length <= 50 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
-      if(graph.length <= 15){ 
+      if(graph.length <= 25){ 
         miniTooltip.style("color","#FE2E2E") 
 
 
@@ -3410,6 +3415,24 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
 
       } else { collapseCircleImages(); }
+
+      if(graph.length >= 175){
+        forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+        simulation
+        .force("collide", d3.forceCollide(function(d) { return d.radius }))
+        .force("cluster", forceCluster)
+        .force("gravity", forceGravity)
+        .force("x", forceXCombine)
+        .force("y", forceYCombine)
+        .on("tick", tick);
+
+        if(graphMode == 0){
+          
+        simulation.alpha(0.15).alphaTarget(0.001).restart();
+        }
+
+      }
 
       updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
@@ -3756,7 +3779,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
           if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
           graph.length <= 30 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
-          if(graph.length <= 15){ 
+          if(graph.length <= 25){ 
             miniTooltip.style("color","#FE2E2E") 
             expandCircleImages();
           } else {
@@ -3765,6 +3788,21 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           }
           // if(graph.length >= 16){
           // }
+          if(graph.length >=175){
+
+            forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+            simulation
+            .force("collide", d3.forceCollide(function(d) { return d.radius }))
+            .force("cluster", forceCluster)
+            .force("gravity", forceGravity)
+            .force("x", forceXCombine)
+            .force("y", forceYCombine)
+            .on("tick", tick);
+
+            simulation.alpha(0.15).alphaTarget(0.001).restart();
+
+          }
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
         
@@ -3807,7 +3845,7 @@ function collapseCircleImages() {
           .force("y", forceYCombine)
           .on("tick", tick);
 
-          simulation.alpha(0.15).alphaTarget(0).restart();
+          simulation.alpha(0.15).alphaTarget(0.001).restart();
 
       }, 0);
       // setTimeout(function() { resetSimulation() }, 700);
@@ -3821,7 +3859,7 @@ function collapseCircleImages() {
                 forceGravity)
         // .force()
         .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
-        .alpha(0.6).alphaTarget(0).restart(); 
+        .alpha(0.6).alphaTarget(0.001).restart(); 
     }
   } else if (circlesExpanded == 0){
 
@@ -3844,17 +3882,19 @@ function expandCircleImages() {
           })
           // transition the job images into the fill pattern
 
-          setTimeout(function() {
-            circles.style("fill", function(d) { return "url(#pattern_"+d.id+")" })
+            circles.style("fill", function(d) { 
+              circleExpanded[d.id] = 1;
+              return "url(#pattern_"+d.id+")" })
               .style("stroke-width","2px")
               .style("stroke", function(d) { return color(d.cluster)})
-          }, 350)
+
+
 
           // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
 
         if(graphMode == 0) {
-          // setTimeout(function() { 
-            forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+          setTimeout(function() { 
+            forceGravity = d3.forceManyBody().strength(function(d) { return -30 * d.radius });
 
               simulation
               .force("collide", d3.forceCollide(function(d) { return 42 }))
@@ -3864,15 +3904,15 @@ function expandCircleImages() {
               .force("y", forceYCombine)
               .on("tick", tick);
 
-              simulation.alpha(0.15).alphaTarget(0).restart();
+              simulation.alpha(0.15).alphaTarget(0.001).restart();
 
-          // }, 0);
+          }, 500);
           // setTimeout(function() { resetSimulation() }, 700);
 
           // setTimeout(function() { enterUpdateCircles();
             
             // .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
-            // .alpha(0.6).alphaTarget(0).restart(); 
+            // .alpha(0.6).alphaTarget(0.001).restart(); 
           // }, 200);
         }
       } else if (circlesExpanded == 1) {
@@ -3891,7 +3931,6 @@ function updateMulti(h, mode) {
   // using the slider handle
   var sliderID = event.target.id;
   // jam sliders at n <= 10
-  // if(graph.length > 10){
     // jamSliders()
     handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
   // }
@@ -3899,7 +3938,6 @@ function updateMulti(h, mode) {
   // Update the slider positions array
   sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
 
-  // if(graph.length > 10){
   
   var filteredNodes = filterAll()
   //  UPDATE
@@ -4390,7 +4428,7 @@ function searchJobTitles() {
     .force("x", forceXCombine)
     .force("y", forceYCombine)
     .on("tick", tick);
-    simulation.alphaTarget(0).restart();
+    simulation.alphaTarget(0.001).restart();
   } else if (graphMode == 1) { // else reposition nodes on graph
     circles
     .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left })

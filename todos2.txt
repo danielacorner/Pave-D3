@@ -22,17 +22,18 @@ BIG-ticket TODO:
 
 - add "Reset images" button
 
+thursday :
+-tutorial suggestions? v3
+-manually create a relational table to connect NOCs to universities (high value high effort)
+
+
 bug: industrial butchers, seafood processing, other labourers in Managers group (red cluster)
 (check cluster attribute in csv)
 bug: move right-side tooltip left a bit
 
 current:
 
-- slow down slippery simulation
-
 - convert to salary & annotate $40k
-
-- on graph <= 10, expand circles into images and reveal "toggle images" button
 
 - read 5 articles about ui
 	goodui
