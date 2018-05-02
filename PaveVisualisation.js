@@ -473,13 +473,7 @@ tick = function() {
 
   circles
   .attr("cx", function(d) { 
-      // if in sticky zone
-      if(d.x > window.innerWidth*0.4) { 
-        // stick!
-        sticky[d.id] = 2 // right side
-      } else if (d.x < window.innerWidth*-0.4){
-        sticky[d.id] = 1 // left side
-      }
+
 
       // if sticky
       if(sticky[d.id] == 2){
@@ -1170,7 +1164,6 @@ function dragstarted(d) { // no dragging in graph mode
   // if clicking on the chart, restart the simulation
   if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001).restart();    
 
-
     d.fx = d.x; // drag
     d.fy = d.y;
 
@@ -1183,6 +1176,15 @@ function dragstarted(d) { // no dragging in graph mode
 
 function dragged(d) {
   d3.select(this).classed("fixed", d.fixed = true);
+
+
+  // if in sticky zone
+  if(d.x > window.innerWidth*0.4) { 
+    // stick!
+    sticky[d.id] = 2 // right side
+  } else if (d.x < window.innerWidth*-0.4){
+    sticky[d.id] = 1 // left side
+  }
 
   d.fx = d3.event.x;
   d.fy = d3.event.y;
