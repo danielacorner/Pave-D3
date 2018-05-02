@@ -1,9 +1,9 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxWage,
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
 hoverTimeout;
 
-maxWage = 132.922; //busted
+maxSalary = 132.922; //busted
 
 var sticky = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
@@ -471,8 +471,8 @@ function forceCluster(alpha) {
   //   node.vy -= (3*node.y - cluster.y) * k;
   // }
   }
-    // Update the positions each tick
-    console.log(window.innerWidth*0.3)
+   
+ // Update the positions each tick
 tick = function() {
 
   circles
@@ -819,8 +819,8 @@ var graphMode;
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(350*d.salaryMed/maxWage)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(Math.round((350*d.salaryMed/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+" per hr</text>"+
+                    "<rect width='"+(350*d.salaryMed/maxSalary)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(Math.round((350*d.salaryMed/maxSalary+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+"K per yr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #244F26' height='15' y='20'></rect>"+
@@ -1077,8 +1077,8 @@ function tooltipSmall(d) {
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(350*d.salaryMed/maxWage)+"'  style='fill: #256D1B;'height='15' ></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.salaryMed/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+" per hr</text>"+
+                    "<rect width='"+(350*d.salaryMed/maxSalary)+"'  style='fill: #256D1B;'height='15' ></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.salaryMed/maxSalary+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+"K per yr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #244F26' height='15' y='20'></rect>"+
@@ -1404,7 +1404,7 @@ function closeLegends() {
 
 // size scales
 var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
-.domain([14, maxWage]) // input
+.domain([14, maxSalary]) // input
 .range([1,maxRadius/1.2]); // output -- need to think about relative scales for each set of sizes
 
 var automationRadiusScale = d3.scaleSqrt()
@@ -1443,15 +1443,15 @@ function setSizes(mode){
     case "salary":
     // add minima
     sizesArray.push(wageRadiusScale(14))
-    sizesValuesArray.push("$ "+String(14).substring(0,2)+" K per yr")
+    sizesValuesArray.push("$ "+String(14).substring(0,2)+"K per yr")
     // split scales into 4 intervals after minimum
     for (var i = 1; i < 5; i++) {
       sizesArray.push(
-        (i/5) * wageRadiusScale(maxWage)
+        (i/5) * wageRadiusScale(maxSalary)
         )
       sizesValuesArray.push("$ "+String(
-        (i/5) * maxWage
-        ).substring(0,2)+" K per yr")
+        (i/5) * maxSalary
+        ).substring(0,2)+"K per yr")
     }
     break;
     case "yearsStudy":
@@ -1788,7 +1788,7 @@ d3.select("#combine").on('click', function(d) {
   }
 })
 
-// TODO: maxWorkers, maxWage, skillsMath not working
+// TODO: maxWorkers, maxSalary, skillsMath not working
 var minWorkers = d3.min(nodes, function(d) {return d.workers}),
 minWage = d3.min(nodes, function(d) {return d.salaryMed});
 
@@ -2246,7 +2246,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.y, 
                 // y = Wage
-                ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+                ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -2290,7 +2290,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+                ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -2307,7 +2307,7 @@ function graphModeOn(mode) {
             .attrTween("cy", function(d) {
               var i = d3.interpolate(d.cy, 
                 // y = Wage
-                ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate);
+                ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate);
               return function(t) { return d.cy = i(t); };
             });
             break;
@@ -2365,19 +2365,19 @@ compressY = 0.65;
         case 1:
                // Scale the range of the data (using globally-stored nodes)
                 x.domain([0, maxWorkers]); //minmax workers
-                y.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+                y.domain([0, maxSalary]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
       // x = Years of Study
       // y = Wage
         case 0:
                 x.domain([0, maxYearsStudy]); //minmax workers
-                y.domain([0, maxWage]);
+                y.domain([0, maxSalary]);
             break;
       // x = Number of Jobs
       // y = Wage
         case 2:
                 x.domain([0, maxWorkers]); //minmax workers
-                y.domain([0, maxWage]);
+                y.domain([0, maxSalary]);
             break;
       // x = Number of Jobs
       // y = Automation Risk (when graph mode already on)
@@ -2405,28 +2405,53 @@ compressY = 0.65;
 
   var axisYtranslate = window.innerHeight*-0.12;
 
+  // automation risk horizontal reference bar annotation
   if(mode==3){
           // append dashed horizontal line at risk = 0.5
 
-          var axisHz = axisG.append("g")
+          var axisHzAuto = axisG.append("g")
           .attr("class", "hz")
           .attr("transform", circleHeight((window.innerWidth*-0.28+15),(axisYtranslate*-1.15)) ) // bookmark
           .call(d3.axisBottom(x).tickSize(0))
-            .attr("id","axisHz")
+            .attr("id","axisHzAuto")
             .attr("transform",circleHeight((window.innerWidth*-0.28+15),(window.innerHeight*-0.09)))
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
           // text label for the x axis
-          var axisLabelHz = axisG.append("text")
-          .attr("id","axisLabelHz")
+          var axisLabelHzAuto = axisG.append("text")
+          .attr("id","axisLabelHzAuto")
           .style("text-anchor", "middle")
           .attr("transform",circleHeight((window.innerWidth*0.25+15),(window.innerHeight*-0.086)))
           .style("opacity", 0).transition().duration(500).style("opacity",1)
-          .text("50% Risk").style("font-size", "16px");
+          .text("50% Risk").style("font-size", "16px").style("font-color","#5F5F5F");
 
   } else {
-    d3.select("#axisHz").transition().duration(500).style("opacity",0).remove()
-    d3.select("#axisLabelHz").transition().duration(500).style("opacity",0).remove()
+    d3.select("#axisHzAuto").transition().duration(500).style("opacity",0).remove()
+    d3.select("#axisLabelHzAuto").transition().duration(500).style("opacity",0).remove()
+  }
+
+  if(mode==0 || mode==1 || mode==2){
+          // append dashed horizontal line at risk = 0.5
+
+          var axisHzWage = axisG.append("g")
+          .attr("class", "hz")
+          .attr("transform", circleHeight((window.innerWidth*-0.28+15),(axisYtranslate*-1.15)) ) // bookmark
+          .call(d3.axisBottom(x).tickSize(0))
+            .attr("id","axisHzWage")
+            .attr("transform",circleHeight((window.innerWidth*-0.28+15),(window.innerHeight*-0.003)))
+            .style("opacity", 0).transition().duration(500).style("opacity",1);
+
+          // text label for the x axis
+          var axisLabelHzWage = axisG.append("text")
+          .attr("id","axisLabelHzWage")
+          .style("text-anchor", "middle")
+          .attr("transform",circleHeight((window.innerWidth*0.25+15),(window.innerHeight*-0.00)))
+          .style("opacity", 0).transition().duration(500).style("opacity",1)
+          .text("$ 40K per yr").style("font-size", "16px").style("font-color","#5F5F5F");
+
+  } else {
+    d3.select("#axisHzWage").transition().duration(500).style("opacity",0).remove()
+    d3.select("#axisLabelHzWage").transition().duration(500).style("opacity",0).remove()
   }
 
   d3.select("xaxis").remove();
@@ -2502,9 +2527,7 @@ compressY = 0.65;
   //   axisDecorationYBtm.html("Less").style("font-size", "20px")
   //   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
-  // }
-console.log("graph mode "+mode)
-console.log("current mode "+currentMode)
+  // 
   switch (mode) {
       // x = Number of Jobs
       // y = Automation Risk
@@ -2666,7 +2689,6 @@ function getPointCoords(circle){
   point.x = thisCircle.attr("cx");//get the circle cx 
   point.y = thisCircle.attr("cy");//get the circle cy
   var newPoint = point.matrixTransform(thisCircleQuery.getCTM());//new point after the transform
-  // console.log(pointLawyers);  
   return newPoint;
 }
 
@@ -2677,23 +2699,23 @@ function createAnnotations(mode){
 
    switch (mode) {
       // x = Number of Jobs
-      // y = Automation Risk
+      // y = Salary
         case 0:
                // Scale the range of the data (using globally-stored nodes)
                 xSc.domain([0, maxWorkers]); //minmax workers
-                ySc.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+                ySc.domain([0, maxSalary]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
       // x = Years of Study
-      // y = Wage
+      // y = Salary
         case 1:
                 xSc.domain([0, maxYearsStudy]); //minmax workers
-                ySc.domain([0, maxWage]);
+                ySc.domain([0, maxSalary]);
             break;
       // x = Number of Jobs
-      // y = Wage
+      // y = Salary
         case 2:
                 xSc.domain([0, maxWorkers]); //minmax workers
-                ySc.domain([0, maxWage]);
+                ySc.domain([0, maxSalary]);
             break;
       // x = Number of Jobs
       // y = Automation Risk (when graph mode already on)
@@ -2705,7 +2727,7 @@ function createAnnotations(mode){
       // y = Automation Risk (when future mode already on)
         case 4:
                 xSc.domain([0, maxWorkers]); //minmax workers
-                ySc.domain([100, 0]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
+                ySc.domain([0, maxSalary]); //maxmin risk d3.max(store, function(d) { return d.automationRisk; })
             break;
         case 5:
 
@@ -2725,27 +2747,27 @@ var makeAnnotations;
   // Lawyers circle_207 Judges 206 Optometrists 170
   var pointLawyers = getPointCoords(207),
       titleLawyers = "Lawyers and Quebec notaries",
-      labelLawyers = "$ salary amount";
+      labelLawyers = "$ 134.8K per yr";
 
   var pointJudges = getPointCoords(206),
       titleJudges = "Judges",
-      labelJudges = "$ salary amount";
+      labelJudges = "$ 116.2K per yr";
 
   var pointOptometrists = getPointCoords(170),
       titleOptometrists = "Optometrists",
-      labelOptometrists = "$ salary amount";
+      labelOptometrists = "$ 99.2K per yr";
 
   var pointSecondTeachers = getPointCoords(203),
       titleSecondTeachers = "Secondary school teachers",
-      labelSecondTeachers = "$ salary amount";
+      labelSecondTeachers = "$ 44.87K per yr";
 
   var pointElementTeachers = getPointCoords(204),
       titleElementTeachers = "Elementary school teachers",
-      labelElementTeachers = "$ salary amount";
+      labelElementTeachers = "$ 22.36K per yr";
 
   var pointNurses = getPointCoords(165),
       titleNurses = "Registered nurses",
-      labelNurses = "$ salary amount";
+      labelNurses = "$ 40K per yr";
 
 
   switch (mode) {
@@ -3078,7 +3100,7 @@ resetFilters = function(mode) {
             // x = Years of Study
           .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
 
         case 2:
@@ -3086,7 +3108,7 @@ resetFilters = function(mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
@@ -4018,7 +4040,7 @@ function updateMulti(h, mode) {
             // x = Years of Study
           .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
 
         case 2:
@@ -4026,7 +4048,7 @@ function updateMulti(h, mode) {
             // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4})
             // y = Wage
-          .attr("cy", function(d){ return ((maxWage-d.salaryMed)/maxWage)*height*0.69 - height*0.5 + graphYtranslate});
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)

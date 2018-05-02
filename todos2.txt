@@ -6,8 +6,9 @@ ideas:
 
 ------------------------------------------
 todos
+- add "x" to graph intro div
+- only fade out changing axes
 - subtle dropdown axes?
-- 50% line for automation risk
 - ask users "what information do you care about in making a career decision?" to determine views
 - fix 'movebottomdown'
 ***********************************
@@ -17,15 +18,26 @@ BIG-ticket TODO:
 	- 4 - Admissions
 	- create relationship between NOCs and Programs, Universities, Colleges
 
-- set up job image bubbles
-	- create circle, start from hover's cx cy, expand radius, move to left of tooltip
 
-- add "Reset images" button
+- add "Reset images" button?
+- add "drag to sides to favourite" on drag
 
-thursday :
--tutorial suggestions? v3
--manually create a relational table to connect NOCs to universities (high value high effort)
+THURSDAY call :
+-----------------
+big-ticket items:
+-----------------
+-manually create a relational table to connect NOCs to universities	(between NOCs and Programs, Universities, Colleges)
+- manually create or source job descriptions for tooltips
+-----------------
+little-ticket items:
+-----------------
+- tutorial suggestions? v3
+- think about any important or interesting annotations? or let the user annotate?
+(-"strategy and nuance" in a sports viz)
+- second colour for non-interactive text? Language skills, logic skills...
 
+- drag to right side to favourite
+- keep patterns on permanently
 
 bug: industrial butchers, seafood processing, other labourers in Managers group (red cluster)
 (check cluster attribute in csv)
@@ -33,11 +45,12 @@ bug: move right-side tooltip left a bit
 
 current:
 
-- convert to salary & annotate $40k
+- annotate $40k
 
 - read 5 articles about ui
 	goodui
 
+-transition from last tutorial page?
 **- make all buttons the same colour
 	" clickable actions (links, buttons), selected elements (chosen items), and plain text should be clearly distinct"
 	- call to action, repeat if multiple pages 
