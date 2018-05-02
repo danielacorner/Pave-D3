@@ -537,7 +537,11 @@ circles = svg.selectAll("circle")
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      d3.select(this)
+        .style("fill", "url(#pattern_"+d.id+")" )
+        // .attr("stroke", "black")
+        .style("stroke-width", 2)
+        .attr("stroke", color(d.cluster));
       showToolTip(0);
       tooltipMouseover(d);
       hoverTimeout = setTimeout(function(){
@@ -546,6 +550,15 @@ circles = svg.selectAll("circle")
       }, 1750)
       })
     .on("mouseout", function(d) {
+
+      if(!circleExpanded[d.id] == 1){
+        d3.select(this)
+          .style("fill", color(d.cluster) )
+          // .attr("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("stroke", color(d.cluster));
+      }
+
       clearTimeout(hoverTimeout)
       if (clicked == 1) return;
       clicked = 0;
@@ -553,12 +566,6 @@ circles = svg.selectAll("circle")
       d3.select(this).attr("stroke", "none");
       // div.transition().duration(500).style("opacity", 0)
 
-      // div
-      // .style("opacity", 0);
-      // setTimeout(function(){
-      // //   if(typeof div2 != "undefined") div2.remove();
-      //   if(typeof div != "undefined") div.remove();
-      // },250)
     })
     .on("click", function(d) {
       clearTimeout(hoverTimeout)
@@ -3144,7 +3151,11 @@ enterUpdateCircles = function() {
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      d3.select(this)
+        .style("fill", "url(#pattern_"+d.id+")" )
+        // .attr("stroke", "black")
+        .style("stroke-width", 2)
+        .attr("stroke", color(d.cluster));
       showToolTip(0);
       tooltipMouseover(d);
       hoverTimeout = setTimeout(function(){
@@ -3153,6 +3164,15 @@ enterUpdateCircles = function() {
       }, 1750)
       })
     .on("mouseout", function(d) {
+
+      if(!circleExpanded[d.id] == 1){
+        d3.select(this)
+          .style("fill", color(d.cluster) )
+          // .attr("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("stroke", color(d.cluster));
+      }
+
       clearTimeout(hoverTimeout)
       if (clicked == 1) return;
       clicked = 0;
@@ -3160,12 +3180,6 @@ enterUpdateCircles = function() {
       d3.select(this).attr("stroke", "none");
       // div.transition().duration(500).style("opacity", 0)
 
-      // div
-      // .style("opacity", 0);
-      // setTimeout(function(){
-      // //   if(typeof div2 != "undefined") div2.remove();
-      //   if(typeof div != "undefined") div.remove();
-      // },250)
     })
     .on("click", function(d) {
       clearTimeout(hoverTimeout)
