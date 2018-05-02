@@ -1500,14 +1500,18 @@ function expandSizesLegend() {
         // .style("bottom","15%")
         .append("button")
           .attr("id","sizeDropdownButton")
-          .attr("class","btn btn-grey btn-primary dropdown-toggle")
+          .attr("class","btn-grey dropdown-toggle")
           .attr("type","button")
           .attr("data-toggle","dropdown")
           .style("position","absolute")
-          .style("left","15px")
-          .style("bottom","10px")
+          .style("right","-100px")
+          .style("bottom","5px")
           .style("height","50px")
-          .style("border-width","0px")
+          .style("border","3px solid #49AC52")
+          .style("border-radius","6px")
+          .style("font-weight","bold")
+          .style("color","#49AC52")
+          .style("background", "white")
           .html("Size by<br>"+currentSize+"<span class='caret'></span>")
           .append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
 
@@ -1653,18 +1657,6 @@ function expandSizesLegend() {
 } // end expandSizesLegend()
 
 
-// function mouseEnterOff() {
-//   d3.select("#btnSizes").on("mouseenter", "")
-// }
-
-// mouseLeaveOn();
-
-// function mouseLeaveOn() {
-//   d3.select("#btnSizes").on("mouseleave", function() {
-//     mouseEnterOn()
-//     removeLegends()
-//   })
-// }
 
 function removeLegends() {
     // reset Colour Legend button and Sizes dropdown
@@ -1677,7 +1669,7 @@ function removeLegends() {
 
     d3.select("#btnSizes").transition().duration(500)
     .style("width", "100px")
-    .style("height", "70px").style("border-width","1px")
+    .style("height", "70px").style("border-width","3px")
 
     svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
 
@@ -1691,9 +1683,6 @@ function removeLegends() {
     mouseEnterOn()
 }
 
-// function mouseLeaveOff() {
-//     d3.select("#btnSizes").on("mouseleave", "")
-// }
 
 
 
@@ -3428,8 +3417,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
         .on("tick", tick);
 
         if(graphMode == 0){
-          
-        simulation.alpha(0.15).alphaTarget(0.001).restart();
+          simulation.alpha(0.15).alphaTarget(0.001).restart();
         }
 
       }
