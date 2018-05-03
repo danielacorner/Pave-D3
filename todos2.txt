@@ -6,6 +6,8 @@ ideas:
 
 ------------------------------------------
 todos
+- turn on pattern permanently when stuck
+- add 'unstick' function
 - add "x" to graph intro div
 - only fade out changing axes
 - subtle dropdown axes?

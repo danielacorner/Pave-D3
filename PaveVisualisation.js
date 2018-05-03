@@ -786,10 +786,10 @@ var graphMode;
       if(graphMode == 0) {
 
         if(d3.event.pageX < window.innerWidth/2) { // left side
-          divLeft = window.innerWidth*0.5 + (d.x) + 5;
+          divLeft = window.innerWidth*0.5 + (d.x) + 10;
           divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
         } else if (d3.event.pageX >= window.innerWidth/2) { // right side
-          divLeft = window.innerWidth*0.5 + (d.x) - 355;
+          divLeft = window.innerWidth*0.5 + (d.x) - 370;
           divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
         }
 
@@ -3056,7 +3056,38 @@ d3.select("#resetFilters").on('click', function(d) {
 });
 
 resetFilters = function(mode) {
+//collapseCircleImages()
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
 
+    circles.transition().duration(350)
+    // .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          
+          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+          simulation
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick)
+          .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                  forceGravity)
+          // .force()
+          .force("collide", d3.forceCollide(function(d) { return d.radius + 1 }))
+
+          simulation.alpha(0.6).alphaTarget(0.001).restart(); 
+
+      }, 450);
+    }
+  }//end collapseCircleImages
   // Reset green inset-left on all sliders
   // Main sliders
   for(var i=0; i<sliderArray.length; i++) {
@@ -3069,7 +3100,6 @@ resetFilters = function(mode) {
   graph = store;
   hideAll();
   hideGraphViewCallout();
-
   // reset the slider positions
   for(var i=0; i<sliderArray.length; i++) {
     handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
@@ -3083,6 +3113,21 @@ resetFilters = function(mode) {
   // restart simulation only if graph mode off
   if (graphMode == 0) {
       resetSimulation();
+
+      // forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+      // simulation
+      // .force("collide", d3.forceCollide(function(d) { return d.radius }))
+      // .force("cluster", forceCluster)
+      // .force("gravity", forceGravity)
+      // .force("x", forceXCombine)
+      // .force("y", forceYCombine)
+      // .on("tick", tick);
+
+      // if(graphMode == 0){
+      //   simulation.alpha(0.15).alphaTarget(0.001).restart();
+      // }
+
   } else if (graphMode == 1) {
 
       switch (mode) {
@@ -3445,6 +3490,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
       }
       // show mini tooltip indicating how many job groups remain
       
+console.log(graph.length)
+
+
       miniTooltip.transition().duration(200)
       .style("opacity",.9)
       miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
