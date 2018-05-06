@@ -4,16 +4,52 @@
 		"selected_items":
 		[
 			[
+				"inne",
+				"innerWidth"
+			],
+			[
+				"restart",
+				"restartSimulation"
+			],
+			[
+				"La",
+				"Lawyers"
+			],
+			[
+				"current",
+				"currentMode"
+			],
+			[
+				"industries",
+				"industriesArray"
+			],
+			[
+				"industrie",
+				"industriesArray〔variable〕"
+			],
+			[
+				"industri",
+				"industriesArray〔variable〕"
+			],
+			[
+				"indus",
+				"industry"
+			],
+			[
+				"legendDiv",
+				"legendDiv1"
+			],
+			[
+				"legendButt",
+				"legendButtonWidth"
+			],
+			[
 				"aut",
 				"auto"
 			],
 			[
 				"point",
 				"pointer-events"
-			],
-			[
-				"inne",
-				"innerHeight〔variable〕"
 			],
 			[
 				"circl",
@@ -98,10 +134,6 @@
 			[
 				"t",
 				"timeout\tsetTimeout function"
-			],
-			[
-				"industrie",
-				"industriesArray"
 			],
 			[
 				"tdec",
@@ -242,10 +274,6 @@
 			[
 				"reset",
 				"resetFilters"
-			],
-			[
-				"indus",
-				"industriesArray〔variable〕"
 			],
 			[
 				"joy",
@@ -486,54 +514,57 @@
 			[
 				"ent",
 				"enteringCircles"
-			],
-			[
-				"upda",
-				"updateTransition"
-			],
-			[
-				"New",
-				"newCircles"
-			],
-			[
-				"tran",
-				"transition"
-			],
-			[
-				"filte",
-				"filteredNodes"
-			],
-			[
-				"po",
-				"positionsX"
-			],
-			[
-				"old",
-				"oldPositions"
-			],
-			[
-				"w",
-				"width"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "alternating current (AC) and direct current (DC) motors fitter-assembler alternator tester armature assembler – industrial electrical equipment armature coil former – industrial electrical equipment armature coil winder – industrial electric equipment armature inspector – industrial electrical equipment armature insulator – industrial electrical equipment armature winder – industrial electrical equipment automotive wiring harness inspector – industrial electrical equipment bushing core winder – industrial electrical equipment carbon brush assembler carbon brush maker circuit breaker fitter – industrial electrical equipment coil assembler – industrial electrical equipment coil builder – industrial electrical equipment coil former – industrial electrical equipment coil maker – industrial electrical equipment coil shaper – industrial electrical equipment coil-winding machine setter – industrial electrical equipment commutator assembler commutator assembler – industrial electrical equipment control panel assembler control panel assembler – industrial electrical equipment control panel technician – industrial electrical equipment core assembler – industrial electrical equipment current-transformer assembler current-transformer coil winder custom electrical panel assembler electric meter tester – industrial electrical equipment electric motor assembler electric motor inspector electrical continuity tester – industrial electrical equipment electrical control equipment fitter-assembler electrical control panel assembler electrical control panel final assembler electrical control panel subassembler electrical fitter electrical fitter – industrial electrical equipment electrical panel assembler and wirer – industrial electrical equipment electrical switchgear inspector electrical switchgear panel wirer electrical switchgear tester electrical switchgear wireperson electrolytic cell repairer – industrial electrical equipment field coil taper – industrial electrical equipment fitter-assembler – electrical control equipment fitter-assembler – industrial electrical equipment generator tester – industrial electrical equipment hand coil taper – industrial electrical equipment heavy-duty coil former – industrial electrical equipment heavy-duty transformer assembler heavy-duty transformer coil winder high voltage transformer bushing assembler industrial brake and alternating current (AC) motor assembler industrial electric equipment assembler industrial electric equipment fabricator industrial electric equipment inspector inspector – large transformer manufacturing inspector and tester, AC and DC motors inspector, AC (alternating current) and DC (direct current) motors inspector, electrical control panel inspector, electrical switchboards and panels inspector, electrical switchgear panel laminated core assembler – industrial electrical equipment lamination stacker – industrial electrical equipment large power transformer coil winder large transformer coil winder locomotive electrical inspector motor and control tester motor and generator assembler – industrial electrical equipment motor and generator assembler and wirer motor and generator inspector motor and transformer tester motor control assembler – industrial electrical equipment motor winder – industrial electrical equipment motor-coil and generator-coil builder motor-coil and generator-coil installer – industrial electrical equipment panelboard assembler – industrial electrical equipment pole shoe assembler – industrial electrical equipment power transformer assembler power transformer core builder rotating field coil assembler – industrial electrical equipment rotor assembler – industrial electrical equipment rotor coil former – industrial electrical equipment rotor core assembler – industrial electrical equipment stator inspector – industrial electrical equipment stator-core and rotor-core builder and welder – industrial electrical equipment storage battery salvager switchgear and control panel assembler – industrial electrical equipment switchgear assembler and wirer switchgear fitter-wirer switchgear fitter-wirer – industrial electrical equipment switchgear panel assembler – industrial electrical equipment switchgear panel installer-fitter switchgear rack assembler – industrial electrical equipment transformer accessories assembler transformer assembler transformer assembly clamper transformer assembly coil clamper transformer builder transformer coil winder transformer core assembler transformer core lapper transformer core maker transformer core stacker transformer department lead hand transformer fitter transformer fitter-wirer transformer gas detector relay assembler transformer inspector transformer maker transformer subassembler transformer tapgear assembler transformer tester transformer winder undercutting machine operator – industrial electrical equipment winder, AC (alternating current) and DC (direct current) armatures windings inspector – large electric motors manufacturing wireman/woman – industrial electrical equipment",
+			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 5069,
-				"line_ending": "Windows",
-				"name": "alternating current (AC) and direct current (DC) m"
+				"buffer_size": 2872,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "todos2.txt",
+			"contents": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"utf-8\">\n\t<!-- Page title (name on the tab) -->\n\t<title>Pave: the Canadian Job Explorer</title>\n\t<!-- <meta name=\"viewport\", content=\"width = device-width, initial-scale = 1\"> -->\n\n\t<!-- Bootstrap sources -->\n\t<script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>\n\t<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js\" integrity=\"sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4\" crossorigin=\"anonymous\"></script>\n\t<!-- <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js\" integrity=\"sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1\" crossorigin=\"anonymous\"></script> -->\n\t<!-- Bootstrap -->\n\t<script src=\"js/bootstrap.min.js\"></script>\n\t<!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.css\"> -->\n\t<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\n\t<!-- d3 annotations -->\n\t<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.2.5/d3-annotation.min.js\"></script>\n\t<!-- Jquery -->\n\t<script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-latest.min.js\"></script>\n\t<!-- Font Awesome icons -->\n\t<script src=\"https://use.fontawesome.com/releases/v5.0.7/js/all.js\"></script>\n\t<!-- Page icon -->\n\t<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\" />\n\n\t<!-- stylesheet -->\n\t<link rel=\"stylesheet\" href=\"css/main.css\">\n\n\t<!-- Google fonts -->\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://fonts.googleapis.com/css?family=Raleway\">\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://fonts.googleapis.com/css?family=Montserrat\">\n\n</head>\n<body scrolling=\"no\">\n\n\t<!-- Collapsible Navigation Bar (mobile only) -->\n\t<div id=\"navbar-collapsible\" class=\"container\">\n\t\t<!-- .navbar-fixed-top, or .navbar-fixed-bottom can be added to keep the nav bar fixed on the screen -->\n\t\t<nav class=\"navbar navbar-light bg-light navbar-toggleable-md fixed-top d-md-none d-lg-none\">\n\t\t\t<!-- Brand and toggle get grouped for better mobile display -->\n\t\t\t<span style=\"padding-left: 5px;\">\n\t\t\t\t<a class=\"navbar-brand\" style=\"font-size: 28px; font-weight: bold; font-family: Raleway; color: #49AC52; text-align: left;\" href=\"Pave.html\">\n\t\t\t\tPave</a>\n\t\t\t\t<button style=\"position: fixed; right: 20px; top: 13px;\" class=\"custom-toggler navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n\t\t\t\t\t<span class=\"navbar-toggler-icon\"></span>\n\t\t\t\t</button>\n\n\t\t\t\t<!-- Collect the nav links, forms, and other content for toggling -->\n\t\t\t\t<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n\t\t\t\t\t<ul class=\"navbar-nav mr-auto\">\n\t\t\t\t\t\t<li class=\"nav-item active\">\n\t\t\t\t\t\t\t<a class=\"nav-link\" href=\"#\" style=\"color: #49AC52; font-weight: bold\">Home <span class=\"sr-only\">(current)</span></a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"nav-item\">\n\t\t\t\t\t\t\t<a class=\"nav-link\" href=\"#\" style=\"color: #49AC52\">About</a>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"nav-item dropdown\">\n\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"color: #49AC52\">\n\t\t\t\t\t\t\t\tFeedback\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" style=\"color: #49AC52\">Action</a>\n\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" style=\"color: #49AC52\">Another action</a>\n\t\t\t\t\t\t\t\t<div class=\"dropdown-divider\"></div>\n\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" style=\"color: #49AC52\">A third action</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li class=\"nav-item\">\n\t\t\t\t\t\t\t\t<a class=\"nav-link\" href=\"#\" style=\"color: #49AC52\">Help</a>\n\t\t\t\t\t\t\t</li>\n\n\t\t\t\t\t</ul>\n\n\t\t\t\t\t</div>\n\n\t\t\t\t</div>\n\n\t\t\t</span>\n\t\t</nav>\n\t</div>\n\n\n\t<!-- end of navbar -->\n\n\t<br/>\n\n\n\t<!-- title bar (hidden for xs & sm displays like mobile) -->\n\n\t<div id=\"titleBar\" style=\"position: fixed; height: 10vh; margin-left: 9%; margin-top: -0.35%\" class=\"d-none d-md-block d-lg-block\">\n\t\t<div  class=\"title\" align=\"left\">\n\t\t\t<h1 style=\"font-weight: bold; color: #49AC52; text-align: left;\">\n\n\t\t\t\t<a href=\"index.html\" style=\"color: inherit\">\n\t\t\t\tPave</a>\n\t\t\t\t<span>\n\t\t\t\t\t<a class=\"link-top\" href=\"#\" > \n\n\t\t\t\t\tAbout</a>\n\t\t\t\t\t<a class=\"link-top\" href=\"#\" > \n\n\t\t\t\t\tHelp</a>\n\t\t\t\t\t<a class=\"link-top\" href=\"#\" > \n\n\t\t\t\t\tFeedback</a>\n\n\n\t\t\t\t</span>\n\t\t\t</h1>\n\t\t</div>\n\t</div> <!-- end of title -->\n\n\t<svg  id=\"chart\" style=\"pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; top: 20vh\" class=\"chart\">\t</svg>\n\t<!-- end of headers -->\n\n\t<!-- One column, visualisation & buttons in the middle, filters on top -->\n\t<!-- Change to filters on sides (negative margins) on bigger screens -->\n\n\t<!-- Column 1: slider 1 & 2 (Logic, Math) -->\n\n\n\n\t<!-- removed: slider with dropdown selection -->\n\t<!-- <div style=\"visibility: hidden; position: relative; bottom: 600px; left: 270px\" align=\"left\" id=\"dropdownSliderDiv\"> -->\n\n\t\t<!-- removed: slider title based on dropdown value -->\n\t\t<!-- <div id=\"dropdown1Title\" style=\"font-weight: bold; font-family: Raleway\"> -->\n\t\t\t<!-- </div> -->\n\t\t\t<!-- <select class=\"col-8\" id=\"dropdown1\" style=\"font-weight: bold; font-family: Raleway\"></select>  -->\n\t\t\t<!-- removed: Slider attached to Dropdown -->\n\t\t\t<!-- <div type=\"text\" class=\"slider\" id=\"slider2\"> -->\n\t\t\t\t<!-- </div> -->\n\t\t\t\t<!-- slider array 1: Filter by Stats-->\n\t\t\t\t<!-- Buttons -->\n\t\t\t\t<div id=\"topButtons\" style=\"pointer-events: none; position: fixed; z-index: 0; left: 33vw; top: 12vh;\" class=\"col-4\" align=\"center\">\n\t\t\t\t\t<!-- Split, shuffle -->\n<!-- \t\t\t\t\t<div id=\"splitShuffle\" align=\"center\" style=\"z-index: 0;\">\n\t\t\t\t\t\t<div class=\"btn-group\" align=\"center\" role=\"group\" aria-label=\"...\">\n\n\t\t\t\t\t\t\t<button id=\"split\" type=\"button\" class=\"btn btn-grey\" style=\"width: 88px; pointer-events: auto\">\n\t\t\t\t\t\t\t\t<span style=\"color: white; font-weight: 560;\">\n\t\t\t\t\t\t\t\tSplit</span> \n\t\t\t\t\t\t\t</button>\n\n\t\t\t\t\t\t\t<button id=\"shuffle\" type=\"button\" class=\"btn btn-grey\" style=\"width: 88px; pointer-events: auto\">\n\t\t\t\t\t\t\t\t<span style=\"color: white; font-weight: 560;\">\n\t\t\t\t\t\t\t\tShuffle</span>\n\t\t\t\t\t\t\t</button>\n\n\t\t\t\t\t\t\t<button id=\"combine\" type=\"button\" class=\"btn btn-grey\" style=\"width: 88px; pointer-events: auto\">\n\t\t\t\t\t\t\t\t<span style=\"color: white; font-weight: 560;\">\n\t\t\t\t\t\t\t\tCombine</span>\n\t\t\t\t\t\t\t</button>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div> -->\n\n\t\t\t\t\t\t\t\t<div id=\"viewButtons\" align=\"center\" style=\"pointer-events: none; position: relative; margin-top: 10px; z-index: 0;\">\n\n\t\t\t\t\t\t\t\t\t<button id=\"graph\" data-toggle=\"button\" type=\"button\" class=\"btn btn-reset\" style=\"pointer-events: auto;\" aria-pre autocomplete=\"off\">\n\t\t\t\t\t\t\t\t\t\t<span >\n\t\t\t\t\t\t\t\t\t\tGraph View&nbsp&nbsp</span><img width=\"30px\" style=\"padding-bottom: 3px; \" id=\"graphToggle\" src=\"img/toggle-off.png\"></img>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div id=\"graphCallout\" style=\"z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;\">\n\t\t\t\t\t\t\t\t\t\tClick here to compare these jobs.\n\t\t\t\t\t\t\t\t\t\t<div id=\"graphCalloutArrow\" style=\"pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1\">\n\t\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t\t<!-- <span style='padding-left: 10px'></span> -->\n\n<!-- \t\t\t\t\t\t\t\t\t<button id=\"futureView\" type=\"button\" class=\"btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline\">\n\t\t\t\t\t\t\t\t\t\t<span style=\"color: white; font-weight: 560; font-family: Raleway\">\n\t\t\t\t\t\t\t\t\t\tFuture View&nbsp&nbsp</span><img width=\"30px\" style=\"padding-bottom: 3px;\" id=\"futureToggle\" src=\"img/toggle-off.png\"></img>\n\t\t\t\t\t\t\t\t\t</button> -->\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div> <!-- end of viewButtons -->\n\t\t\t\t\t\t\t</div> <!-- end of topButtons -->\n\n\t\t\t\t\t\t\t<!-- suggested views buttons -->\n\t\t\t\t\t\t\t<div id=\"suggestedViewsDiv\" style=\"position: fixed; bottom: 50vh; right: 3%; display: none;\">\n\n\t\t\t\t\t\t\t\t<span style=\"font-size: 20px; font-weight: bold; color: grey; padding-left: 17px; padding-right: 5px;\">\n\t\t\t\t\t\t\t\tSuggested Views</span>\n<!-- \t\t\t\t\t\t\t\t<button class=\"btn-xs\" style=\"width: 20px;\" id=\"minimizeViews\" onclick=\"minimizeViews()\">\n\t\t\t\t\t\t\t\t\t<i id=\"minimizeIcon\" style=\"padding-right: 6px; padding-bottom: 4px;\" class=\"fas fa-window-minimize\"></i>\n\t\t\t\t\t\t\t\t</button> -->\n\n\t\t\t\t\t\t\t\t<li class=\"list-graphModes\" style=\"margin-top: 10px\">\n\t\t\t\t\t\t\t\t\t<button id=\"a1\" class=\"suggested-views-btn\" href=\"#\">\n\t\t\t\t\t\t\t\t\t\tHow much study for how much pay?\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"list-graphModes\">\n\t\t\t\t\t\t\t\t\t<button id=\"a2\" class=\"suggested-views-btn\"  href=\"#\">\n\t\t\t\t\t\t\t\t\t\tHow many jobs exist?\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"list-graphModes\">\n\t\t\t\t\t\t\t\t\t<button id=\"a0\" class=\"suggested-views-btn\" href=\"#\">\n\t\t\t\t\t\t\t\t\t\tWhat's the risk my job will be automated?\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</li>\n\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<script type=\"text/javascript\">\n\t\t\t\t\t\t\t\t\t\t\tvar viewsMinimized = 0;\n\t\t\t\t\t\t\t\t\t\t\tfunction minimizeViews() {\n\t\t\t\t\t\t\t\t\t\t\t\tviewsMinimized = 1-viewsMinimized;\n\t\t\t\t\t\t\t\t\t\t\t\tif(viewsMinimized == 1){\n\t// transition opacity and height\n\td3.selectAll(\".suggested-views-btn\").transition().duration(500).style(\"opacity\",\"0\")\n\td3.select(\"#suggested-views-btn\").transition().duration(500).style(\"opacity\",\"0\")\n\tsetTimeout(function(){\n\t\td3.selectAll(\".suggested-views-btn\").style(\"display\", \"none\")\n\t\td3.selectAll(\".list-graphModes\").style(\"height\", \"0px\")\n\t}, 500);\n\td3.select(\"#suggestedViewsDiv\").transition().duration(500).style(\"height\", \"0px\")\n\t// switch icon from - to +\n\td3.select(\"#minimizeIcon\").attr(\"class\", \"fas fa-plus\").style(\"padding-bottom\", \"2px\").style(\"padding-right\",\"6px\")\n}\nelse if(viewsMinimized == 0){\n\td3.select(\"#suggestedViewsDiv\").transition().duration(500).style(\"height\", \"250px\")\n\td3.selectAll(\".suggested-views-btn\").style(\"display\", \"inline\")\n\td3.selectAll(\".list-graphModes\").style(\"height\", \"67px\")\n\td3.selectAll(\".suggested-views-btn\").transition().duration(500).style(\"opacity\",\"1\")\t\n\td3.select(\"#minimizeIcon\").attr(\"class\", \"fas fa-window-minimize\").style(\"padding-bottom\", \"4px\").style(\"padding-right\",\"6px\")\n}\n}\n</script>\n\n<!-- This is D3, our graphing library -->\n<script type=\"text/javascript\" src=\"https://d3js.org/d3.v4.min.js\"></script>\n<!-- These are extra libraries for paired multi-attribute transitions -->\n<!-- \t<script src=\"https://d3js.org/d3-color.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-dispatch.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-ease.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-interpolate.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-selection.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-timer.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-transition.v1.min.js\"></script>\n<script src=\"https://d3js.org/d3-selection-multi.v1.min.js\"></script> -->\n\n<!-- legend container -->\n<g class=\"legend\" id=\"legend\" style=\"bottom: 230px\">\n\n\t\t\t\t\t\t<!-- legend buttons -->\n\t\t\t\t\t<button id=\"btnColours\" class=\"btn btn-legend\">\n\t\t\t\t\t\tColour<br>Legend</button>\t\t\t\t\t\t<!-- legend button -->\n\t\t\t\t\t<button id=\"btnSizes\" class=\"btn btn-legend\" style=\"margin-left: 7px\">\n\t\t\t\t\t\tSize<br>Legend</button>\n\n</g>\t\t\n\n<!-- The data visualization -->\n<script src=\"PaveVisualisation.js\"></script>\n\n\n<div id=\"bottomButtons\" class=\"col-4\" align=\"center\" style=\"position: fixed; bottom: 15vh; left: 33vw; z-index: 99\">\n\n\t<!-- Reset, pause, play buttons -->\n\t<div id=\"playPauseDiv\" align=\"center\" style=\"z-index: -1\">\n\n\t\t<button id=\"resetFilters\" type=\"button\" class=\"btn btn-reset\">\n\t\t\t<span style=\"padding-right: 6px;\">\n\t\t\tReset Filters </span> <i class=\"fa fa-undo-alt\"></i>\n\t\t</button> \n\n<!-- \t\t<button id=\"pause\" type=\"button\" class=\"btn btn-grey\" style=\"margin-left: 1%;\">\n\t\t\t<span style=\"color: white; padding-right: 6px;\">\n\t\t\tPause</span> <i class=\"fa fa-pause\"></i>\n\t\t</button>\n\n\t\t<button id=\"unpause\" style=\"margin-left: 1%; display: none;\" type=\"button\" class=\"btn btn-grey\">\n\t\t\t<span style=\"color: white; padding-right: 6px;\">\n\t\t\tPlay</span> <i class=\"fa fa-play\"></i>\n\t\t</button> -->\n\n\t</div>\n\n\t<!-- low filter level warning callout -->\n<!-- \t<div id=\"graphCallout2\" style=\"z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea; pointer-events: none;\">\n\t\t<span style=\"color: #FE2E2E\">Warning:</span> not many job groups remain!\n\t</div> -->\n\n</div>\n<!-- end of centerDiv -->\n\n\t\t\t\t<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->\n\n\t\t\t\t<div id=\"bottomDiv\" class=\"col-1\">\n\n\t\t\t\t\t<div id=\"sliderArray3\" style=\"margin-left: -15px; margin-top: 20px;\" type=\"text\" class=\"slider\"></div>\n\n\t\t\t\t</div>\t<!-- end of bottomDiv -->\t\n\n\n<svg>\n\t<defs>\n\n\t\t<filter id=\"dropshadow\" width=\"200%\" height=\"200%\">\n\t\t\t<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"2.5\"/> <!-- stdDeviation is how much to blur -->\n\t\t\t<feOffset dx=\"1.05\" dy=\"1.4\" result=\"offsetblur\"/> <!-- how much to offset -->\n\t\t\t<feComponentTransfer>\n\t\t\t\t<feFuncA type=\"linear\" slope=\"0.35\"/> <!-- slope is the opacity of the shadow -->\n\t\t\t</feComponentTransfer>\n\t\t\t<feMerge> \n\t\t\t\t<feMergeNode/> <!-- this contains the offset blurred image -->\n\t\t\t\t<feMergeNode in=\"SourceGraphic\"/> <!-- this contains the element that the filter is applied to -->\n\t\t\t</feMerge>\n\t\t</filter>\n\n\t\t<filter id=\"f1\" width=\"150%\" height=\"150%\">\n      <feGaussianBlur result=\"blurOut\" in=\"SourceAlpha\" stdDeviation=\"1.5\" />\n      <feOffset result=\"offsetBlur\" in=\"blurOut\" dx=\"1.25\" dy=\"2\" />\n\t\t\t<feComponentTransfer>\n\t\t\t\t<feFuncA type=\"linear\" slope=\"0.4\"/> <!-- slope is the opacity of the shadow -->\n\t\t\t</feComponentTransfer>\n\t\t\t<feMerge> \n\t\t\t\t<feMergeNode/> <!-- this contains the offset blurred image -->\n\t\t\t\t<feMergeNode in=\"SourceGraphic\"/> <!-- this contains the element that the filter is applied to -->\n\t\t\t</feMerge>\n    </filter>\n\n\t\t<filter id=\"f2\" width=\"150%\" height=\"150%\">\n      <feGaussianBlur result=\"blurOut\" in=\"SourceAlpha\" stdDeviation=\"1.5\" />\n      <feOffset result=\"offsetBlur\" in=\"blurOut\" dx=\"1.25\" dy=\"2\" />\n\t\t\t<feComponentTransfer>\n\t\t\t\t<feFuncA type=\"linear\" slope=\"0.4\"/> <!-- slope is the opacity of the shadow -->\n\t\t\t</feComponentTransfer>\n\t\t\t<feMerge> \n\t\t\t\t<feMergeNode/> <!-- this contains the offset blurred image -->\n\t\t\t\t<feMergeNode in=\"SourceGraphic\"/> <!-- this contains the element that the filter is applied to -->\n\t\t\t</feMerge>\n    </filter>\n\t</defs>\n</svg>\n\n</body>\n\n</html>",
+			"file": "Pave.html",
+			"file_size": 15321,
+			"file_write_time": 131694356765957225,
 			"settings":
 			{
-				"buffer_size": 8438,
+				"buffer_size": 14990,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "PaveVisualisation.js",
+			"settings":
+			{
+				"buffer_size": 200172,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/main.css",
+			"settings":
+			{
+				"buffer_size": 8264,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "ideas:\n- save filter states with mini screenshots? like collectibles in a \"backpack\" or inventory\n- \"guild hall\" where users post/upvote insightful views\n\n- base filter sliders presets on reported grades? to create a profile for students? like a \"suggestions\" button\n\n------------------------------------------\ntodos\n- turn on pattern permanently when stuck\n- add 'unstick' function\n- add \"x\" to graph intro div\n- only fade out changing axes\n- subtle dropdown axes?\n- ask users \"what information do you care about in making a career decision?\" to determine views\n- fix 'movebottomdown'\n***********************************\n\n- create data viz lesson 1 2 3\n\n- responsive design\n- drag images out of sticky zone\n\n- add \"drag to sides to favourite -->\" text on drag\n\n\n\n\nTHURSDAY call :\nfunding opportunities:\n- must incorporate as not-for-profit or social enterprise (for tax reasons)\n- PWC foundation - skills training and careers for youth\n- Civic action - \n\n\nnothing from Fed Gov until next election 11/2019\nsocial foundations only\n\nMcConnell foundation (skills training workshops for entrepreneurs)\n\nIntegrate RBC opportunities for funding?\n\nRed Academy - UX / Web code bootcamp, free student labour\n\n-------------------\nBusiness plan - impact, value, measure? Future vision? Key principles, essentials, how much funding needed, revenue expected?\n-------------------\n\nChris: needs to be self-sustaining, possibly revenue\n\nCompanies are looking for reskilling sources -- \n\nEddie: can use youth as \"community, goodwill\" and charge companies for extras\n\ntighten loop between discovering careers and training for those careers\n\t- link to / team up with online courses\n\n\t- use to explore internal opportunities\n\n\t- collect student interest data for sale...\n\t- identify skills gaps, \n\n\t- RBC: if building a pitch, could mock-up \"enhanced\" version with RBC job postings (could scrape)\n\n-----------------\nbig-ticket items:\n-----------------\n1 - view more: \"schools offering this program\"\n\t- manually create a relational table to connect NOCs to universities\t(between NOCs and Programs, Universities, Colleges)\n\t\tin data folder 4 - Admissions - Programs, Universities, Colleges\n\n2 - research 'landing page best practices' to improve tutorial/landing page\n\n3 - view more: NOC jobBank page data\n\t- convert NOC jobBank pages into a table to load into the 'more info' section of the tooltip\n\n4 - manually create or source kid-friendly job descriptions for tooltips\n\n\n-----------------\nlittle-ticket items:\n-----------------\n- tutorial suggestions? v3 is up, leave comments\n\t- iterate tutorial\n\n- get pics working in github page?\n\n- think about any important or interesting annotations? or let the user annotate?\n(-\"strategy and nuance\" in a sports viz)\n\n- second colour for non-interactive text? Language skills, logic skills...\n\n\n\n\n\n\n- mobile, responsive design [prototype]\n\n- drag to right side to favourite\n- keep patterns on permanently\n\nbug: industrial butchers, seafood processing, other labourers in Managers group (red cluster)\n(check cluster attribute in csv)\nbug: move right-side tooltip left a bit\n\ncurrent:\n\n- read 5 articles about ui\n\tgoodui\n\n-transition from last tutorial page?\n**- make all buttons the same colour\n\t\" clickable actions (links, buttons), selected elements (chosen items), and plain text should be clearly distinct\"\n\t- call to action, repeat if multiple pages \n\t- recommend, don't just show (graph annotations+)\n\t- be explicit about who exactly your product or service is intended for (high school students)\n\t- advanced first-time annotations that are dismissable\n\t- expose options, don't use a dropdown\n\t- \"benefit buttons\" instead of task buttons\n\t\t-- Compare jobs --\n\t\t\t  graph view\n\t- fewer borders\n\t- Selling Benefits instead of features (it will help you to xyz not it can do abc)\n\t- Design for zero-data state \"Hi John, why don't you do your first task over here\" dismissable messages not callouts\n\t- Try Loss Aversion instead of emphasizing gains. \"to simplify career decisions\" not \"to make an informed career decision\"\n\t- keyboard shortcuts?\n\t- Try smaller commitments instead of one big one\n\t- Softer prompts instead of modal windows (less annoying)\n\t- multifunctional controls instead of more parts\n\t- icon labels (filter button \"Filter [icon]\")\n\t- try natural language instead of dry text\n\t\" how much language-related skill would you like to have? \"\n\t- teasing information (job stats) : graph mode w/ annotations early in tutorial\n\t\t- vertical & horizontal mouseover bars \"crosshairs\" tickbox\n\t- try attention grabs instead of neglect\n\t- It's nice when people set expectations for each other. It doesn't take much effort for a person or interface to inform someone when the next task will be completed. You are on step 1 of X. Your choice will result in Y. You will receive something before Z. All those little promises not only inform but also build trust. Unhelpful interfaces on the other hand can come off a little cold as the user is kept in the dark.\n\t- Try Explaining instead of assuming the obvious.\n\t\"how many MATH SKILLS do you want to have?\"\n\n- ruby tutorial\n- before \"warning\" prompt \"filter here\" etc\n- post-filter enterupdate force simulation too tight\n\n- switch graph mode and reset button places?\n\n- add pretty force simulation for equal size circles\n- read 'getting real' & learn ruby & rails\n- sketch 2 tutorial designs for criticisms\n\n\n- wage -- > salary: include low, med, high\n\t- annotate salary: 40k\nbig:\n- sketch specific more/less/fewer decorateYAxis(mode)  per graph mode\n- map annotations over colour split or otherwise fix the legend/split overlap\n\nsmall\n- annotate split view\n- embiggen reset button\n- remove suggested views minimize button?\nbig\nsave button\n- save filter states with mini screenshots\ntutorial\n - sketch a mock-up before changing!\n- more hand-holding, third-person use-case\n\n\n***********************************\n- bug: circles move down slightly after graphmodeoff\n- fix circle graph x position\n- search button to filter button?\n\nnext steps:\n- note \"tutorial x/4\" on tutorial pages\n- filter button instead of search, separate search page\n\n- click color legend to filter industries\n\t- transparencies for on/off\n- move split button to color legend\n\n- filter from both sides\n- fix filter algorithm:\n\t- only language skills?\n\t- determine why some circles are filtering to invisible\n\ncontent list?\n\nscrape pictures for each job\n\npick one\n- bug: filters leaving holes\n\n- lengthen or explain graph views sentences\n- graph view tooltip positions\n- graph view first-time intro div\n- graph view\n add 1 more view for testing (dropdown?)\n add view sectioning\n\nnext:\n- same size initially?\n- transition sliders on reset\n- remove capitalization from axis titles\n- annotate views\n\t- vertical/horizontal dividers and x-y section names\n\t- highlighted areas?\n- hide pause button?\n\n- about, help, feedback pages\n\n- make graph view y axis responsive\n\n- add all tooltips to tutorial\n\t- page 2 & 3 circle tooltips\n\t- page 3 slider tooltips\n\n- switch sliders to dragstarted instead of on drag (to prevent mouseout from ending the drag -- interrupt?)\n\n-'about' page content\n\n- flash when slider under 10 jobs?\n\t- change the background colour of the screen?\n\n- create mobile layout (<=640px)\n  - reposition sliders below circles\n  - combine all buttons above circles\n\n- colour and size legend btnlegend btnsizes mouseover is twitchy, disable mouseover for .5 sec before reenabling pointer events?\n\n- check filter algorithm for possible speed improvements using \"continue\" (next loop) and \"break\" (end loop) -- should be able to run on a chromebook\n\n- bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)\n- bug: reset filters not working (when?)\n- bug: subskill sliders cut off at medium resolution\n- tutorial3: remove \"prev\" buttons?\n\n- split button summary statistics for industries\n\n- create slider inset shadow\n- speed up all? transitions\n\n- enclosure diagram containing split view? like on http://charts.vismio.com/9lqjn/\n\n- move div instead of shrinking on tooltipclose (to avoid contents floating out)\n\n- improve \"job titles\" and link top titles to search results\n\n- turn mini skillbars into tooltiplarge skillbars\n\n- Mute Split/Shuffle/Combine features when Graph view is enabled\n\n- switch skill bars to relative scale?\n\n- slow down or emphasize \"pop\" animation\n\n- start tutorial with equal sizes & change size to Number of Jobs (how easy is it to get each job?)\n\n- dropup fix double-click to single-click\n\n- \"language skills\" is ambiguous\n\n- add pause hover explainer div\n- add suggested views explainer divs\n\n- Explain why “lots” of skill = fewer job suggestions in tutorial\n\n- \"job type\" instead of \"job group\"\n- enable minimal (title-only) tooltips on tutorial3\n\n- graph view suggested view walkthroughs, zones on graph\n\n- place tooltip touching circle:\n\t-position buttons on top,\n\t-allow mouseovers through tooltip divs\n\n- explainer divs glitchy switching between each other\n\n- mobile version\n\t-ontouch instead of onclick\n\t\t-buttons: on first touch, open explainer div\n\t\t\ton second touch, activate\n\t-stack filters below break point\n- graphmodeoff post-filtering reset simulation\n- tooltip off in graph mode (switch sides to further outside)\n- a more fun colour legend\n- save button\n- tooltip bottomdiv height too big\n- tooltip divs don't fade-out on mouseout\n- future mode axis & positions\n\nexplainer divs need to come in from the top right, transition their bottoms\n\nmouseenter / mouseleave vs mouveover mouseout\n\n-normalize skill bars & minibars\n\n- change minibar colours to visible (grey-green? for invisible ones only)\n-bug: clickspan not disappearing\n\n- resize future view? y/n\n\n- collapse navbar at the lg breakpoint\n- collapse search bar to search icon\n\n- search not working\n- buttons not on top\n\n-bug: tooltip doesn't re-furl after clicking in out-zone to remove it\n\n- reset filters on tutorial 3?\n\nmobile version = vh instead of vw\n\nTutorial on HOME PAGE and different tutorial pages WOW\n\ngraph mode = move all sliders out to sides\n\nbug: compress graph vertically and movebottomdown/up less\nbug: top right div not aligned?\nbug: colour legend not aligned?\n\t- use position: absolute\n\n- append skill bars inside tooltip div with position bottom\n - multiply tooltip padding x 1.5\n\n- hover div on question marks\n\n- mobile setup & other sizes\n\n- create github readme.md\n\n- think about slider-subslider interactions\n\n- tooltip div side always on-screen (based on mouse location)\n\n- colour legend button\n\n- dropdown x and y selectors\n\n- subslider divs expand from width&height = expand button dimensions\n\n- move notmuchlots\n\n- move industry split circles up a bit\n\n- maybe move the sliders in from the sides? start by putting them all together for mobile\n\nput language, buttons, logic into 3 4-inlines in a row 12-grid\n\n- colour current suggested view button background & disable click\n\n- pause-play in graph mode needs to stay in graph mode;\n\npause then reset needs to stay paused\n(simulation restart if play mode on)\n\n- filtering on graph view + future view needs to keep future colours on\n\n- future view circles don't un-highlight\n\n- hover info button tooltip\n\n- Pave title = refresh button\n\n- graph view off = back to industry split, legend needs to be reset to industry split legend\n\n- combine button disappeared when coming out of graph view (on industry split)\n\n- combine / split / shuffle in a box of four with views\n& combine Size & Colour buttons in a row\n\n- colour button which pops up the legend\n\n- Pause button says \"Pause\" onhover = (for slow connections)\"\n\t- switch to \"stop\" so the simulation never starts again\n\n- make combine buttons unclickable but translucent in graph/future view\n\n- filtered, then turned off graph view: force simulation needs reset\n\n- append subsliders to the div instead of the chart\n\n- set viewbox / circles height based on height/width ratio\n\n- bug: showlogic not hidelegend-ing\n\n- subskill dropdowns -- math & logic (switch position: absolute; right: some%)\n\n- mobile: stretch distance between sliders based on window width\n\n\n- smooth hide \"combine\" on graph and future modes\n\n- bug: mouse-off of sliders while dragging stops dragging -- potential fix: on dragstarted, keep id constant, let go on dragended\n\n- cleaning code to css\n\n- subskill slider function\n- subskill slider white background\n\n- mini-bars to display on hover tooltip\n\n- fix bars: append a 2nd div to click tooltip with bars\n(can get fancy w the design)\n\n- look up refactoring\n\n- joyride style\n\n- job titles search (within job groups)\n\n- bug: tiny empty job in right side under purple group\n\n- mobile compatibility\n- mobile sliders sizes\n\n- mobile tooltip on touch\n\n- favourite toggle\n\n- bug: skills bar chart height on longer tooltips\n\n- responsive design for the canvas:\n - resize works, but viz starts too big on small windows\nsliderSVGArray[i].append(\"g\") // switch to SVG with viewBox?\n\n- responsive design for the sliders\n\n- legend for future mode\n\n\nOther todos:\n\n- combine button fun physics atom-smasher???\n\n-some circles aren't on top\n\n-lang slider not on top\n\n-switch \"pause simulation\" to a toggle & disable other buttons\n-retain filter mode colours, sizes on graph filtering\n\n-tooltip div styling\n\n-dropdowns not working\n\n--on tablet drag, mouseover (disable dragging)\n\n--background color\n\n--cool to 0 after industry split\n\n--search filter & move button in top right\n\n--favourites section\n\n--style legend\n\n--skills expansion buttons\n\n\n--math skills bug\n\n\n--esxpand canvas and add top padding\n\n---modularize graph mode\n\n--enlarge canvas, lower x-axis\n\n--slider design\n\n--future-view legend & move down\n\n--filters positions and reset position\n\n--graph view on == hide buttons 1/3 of group\ntoggle indicator\n\n--mobile view zooming\n\n-filter flexibility\n\n-sliders position relative\n\n-filter positioning, disappearing reappearing\n\n--make canvas responsive\n\n--remove axis ticks\n\n--format auto risk ticks to %s\n\n--axis styles\n\n--graph mode dropdown -> preset buttons\n\nslider handles stuck\n\n--reduce btn sizes\n\n\ntop skills",
+			"file": "todos2.txt",
+			"file_size": 13036,
+			"file_write_time": 131698289414257311,
+			"settings":
+			{
+				"buffer_size": 14037,
 				"line_ending": "Windows"
 			}
 		}
@@ -561,10 +592,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 274.0,
-		"last_filter": "",
+		"height": 354.0,
+		"last_filter": "text pastr",
 		"selected_items":
 		[
+			[
+				"text pastr",
+				"Text Pastry: Generate a list of numbers from 1 to 100"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -788,13 +823,18 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial3.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial1.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial0.html",
+		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial2.html",
+		"/C/Users/Daniel2/AppData/Local/Temp/Rar$DIa0.842/Please read.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/mnemonic chatbot.txt",
+		"/C/Users/Daniel2/Dropbox/computer lessons/000-999.txt",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/Text Pastry/TextPastry.sublime-settings",
 		"/C/Users/Daniel2/Documents/Pave-D3/Pave.html",
 		"/C/Users/Daniel2/Documents/Pave-D3/css/main.css",
 		"/C/Users/Daniel2/Documents/Pave-D3/PaveVisualisation.js",
-		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial3.html",
 		"/C/Users/Daniel2/Documents/Pave-D3/index.html",
-		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial2.html",
-		"/C/Users/Daniel2/Documents/Pave-D3/Tutorial1.html",
 		"/C/Users/Daniel2/Documents/Pave-D3/.git/packed-refs",
 		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/snippet8_selectParentNode.sublime-snippet",
 		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/snippet7_styleWidthHeight.sublime-snippet",
@@ -910,16 +950,11 @@
 		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/005-zoomSlider.py",
 		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/Plotly.sublime-project",
 		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/python3-1.sublime-build",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/multiple inputs.py",
-		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/001-Pseudocode.py",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/slider-graph.py",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/chain outputs and inputs.py",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/interactive visualizations.py"
+		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/getting started part 2/multiple inputs.py"
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
@@ -933,134 +968,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"btnSub",
-			"btnsub",
-			"hideall",
-			"chart",
-			"\")\n",
-			"html",
-			"hidelogi",
-			"\"background\",\"white",
-			"btnSubsliders_0Close",
-			"btnSubsliders_0",
-			"btnsubsli",
-			"handle",
-			"track-over",
-			"close",
-			"button",
-			"#4",
-			"sliderButtonArrows",
-			"view ",
-			"view more",
-			"CD1400",
-			"E36C03",
-			"stroke",
-			"bookmark",
-			"graphYtranslate",
-			"circlehe",
-			"(mode",
-			"append",
-			"#a",
-			"id='a",
-			"margin-bottom",
-			"display: inline;",
-			"margin-left: 200px",
-			"style",
-			"\"",
-			"performing new tas",
-			"suggestedViewsDiv",
-			"box-shadow",
-			"explainer",
-			"resetsimulation",
-			"resetSimulation",
-			"bookmark",
-			"enterUpdateCircles",
-			"resetsimul",
-			"forceCluster",
-			"filterAll",
-			"resetSimulation",
-			"calloutcheck",
-			"playPauseDiv",
-			"filterAll",
-			"sliderPositionsArray",
-			"filterAll",
-			"positions",
-			"position",
+			"collapseCircleImages",
+			"resetfilter",
+			"expandCircleImages",
 			"circles = ",
-			"axisG",
-			"circleHeight",
-			"circheHeight",
-			"resize",
-			"circleHeight",
-			"axisg",
-			"circleHeight",
-			"circleheight",
-			"circle",
-			"axisg",
-			"circleHeight",
-			"graphYtranslate",
-			"axisg",
-			"circleHeight",
-			"translate(",
+			"graphmodeon(",
+			"#a1\").on('cli",
+			"maxWage",
+			"Wage",
+			"case",
+			"#a1",
+			"mode==1",
+			"$40",
+			"$",
+			"$ ",
+			" K per y",
+			"K per yr",
+			"log",
+			"console.",
+			"helvetica",
+			"pointLawyers",
+			"k per yr",
+			"40 K per yr",
+			"per hr",
+			"axisLabelHzAuto",
+			"axisHzAuto",
+			"axisLabelHz",
+			"axisHz",
 			"axis",
-			"circles = ",
-			"button",
-			"handle",
-			"update",
-			"minitooltip",
-			"miniTooltip",
-			"currentmode",
-			"colortooltip2",
-			"clicked",
-			"circles = ",
-			"ave",
-			"minitool",
-			"handle",
-			"sliderPositionsArray",
-			"handle",
-			"svg",
-			"handle",
-			"inset-le",
-			"inset-left",
-			"d3.event.x",
-			"inset-left",
-			"sliderarray =",
-			"sliderar",
-			"sliderArray",
-			"sliderPositionsArray",
-			"inset-l",
-			"reset",
-			"inset-l",
-			"attr(\"href\",\"Tutorial2.html\")",
-			"inset-left",
-			"bookmark",
-			"graphmode",
-			"axisDecorationText",
-			"axisDecorationY",
-			"style",
-			"axisLabelY",
-			"axislabelx",
-			"inset-left",
-			"this.id",
-			"Risk of job tasks being replaced by machine work (%)",
-			"Risk of Machine Automation",
-			"inset-",
-			"track-inset",
-			"inset-left",
-			"track-inset_",
-			"track-",
-			"inset_",
-			"f1",
-			"filter",
-			"403",
-			"402",
-			"403",
-			"if(graph.",
-			"case ",
-			"switch",
+			"autoaxis",
+			"#pattern",
+			"mouseout",
+			"mouseleave",
+			"dragged",
+			"maxWage",
+			"wageRadiusScale",
+			"wageLink",
+			"setSizes",
+			"wage",
+			"salaryMed",
+			"wageRadiusScale",
+			"setSizes",
 			"currentSize",
-			"bookm",
-			"btnsizes"
+			"setSizes",
+			"wageRadiusScale",
+			"expandSizesLegend",
+			"btnsize",
+			"wage (",
+			"maxwage",
+			"wage",
+			"d.wage",
+			"on(\"mouse",
+			"on(\"mouseenter",
+			"on(\"mouseenter\"",
+			"pattern",
+			"circles = ",
+			"mouseover",
+			"drag",
+			"sticky",
+			"drag",
+			"btncolour",
+			"btnsize",
+			"legendButtonHeight",
+			"btnSize",
+			"btnSizes",
+			"expandSizesLegend",
+			"size legend",
+			"circleExpanded",
+			"graph.length >",
+			">= 100",
+			"forceGravity",
+			"if(graph.length >= 10",
+			"expandCircleImages",
+			"smashTogether",
+			"createHoverImg",
+			"tooltipMouseover",
+			"circles = ",
+			"drag",
+			"alphaTarget(0)",
+			"expandCircleImages",
+			"graph.length",
+			"expandCircleImages",
+			"graph.length <= 15",
+			"collapseCircleImages",
+			"expandcircleimages",
+			"forceCollide",
+			"resetSimulation",
+			"expandCircleImages",
+			"graphcallout2",
+			"expandCircleImages",
+			"graph.length <= 15",
+			"sliderSVGArray",
+			"colorTooltip",
+			"colortooltip(d",
+			"colorTooltip",
+			"graph.lengt",
+			"forceGravity",
+			".force",
+			"forcecollide",
+			"circles = ",
+			"radiusscale",
+			"csv",
+			"jobtitles",
+			"csv",
+			"divleft",
+			".x",
+			"divTop",
+			"divLeft",
+			"alphaTarget",
+			"resetsimul",
+			"pagex",
+			"mouse.",
+			"mouse",
+			"leftorright",
+			"cx",
+			"hoverTimeout",
+			"createHoverImg",
+			"toggle-o",
+			"legend",
+			"888",
+			"A6B0A8",
+			"grey",
+			"\n    ",
+			"=",
+			"= ",
+			"=",
+			"jam",
+			"equalRadius",
+			"equal"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1084,28 +1119,29 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5069,
+						"buffer_size": 2872,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								5069
+								2110,
+								2112
 							]
 						],
 						"settings":
 						{
-							"auto_name": "alternating current (AC) and direct current (DC) m",
+							"auto_complete": false,
 							"bracket_highlighter.busy": false,
 							"bracket_highlighter.clone": -1,
 							"bracket_highlighter.clone_locations":
@@ -1125,36 +1161,219 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2844,
+										2847
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/tag.png",
+										"region.orangish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2053,
+										2056
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Pave.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14990,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12949,
+								12619
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										12637,
+										12638
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										12623,
+										12624
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1165,21 +1384,46 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
+								"bh_round_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -1198,36 +1442,11 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1238,30 +1457,457 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4452.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "PaveVisualisation.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 200172,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								122534,
+								122534
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										122535,
+										122536
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										122423,
+										122424
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										122535,
+										122536
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										122423,
+										122424
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
 							],
-							"default_dir": "C:\\Users\\Daniel2\\Documents\\Pave-D3",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 227.0,
+						"translation.y": 51779.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "css/main.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8264,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8262,
+								8208
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										3354,
+										3355
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3094,
+										3095
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6647.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1271,20 +1917,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 1,
+					"buffer": 4,
 					"file": "todos2.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8438,
+						"buffer_size": 14037,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								550,
-								550
+								674,
+								674
 							]
 						],
 						"settings":
@@ -1308,36 +1954,11 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1348,21 +1969,46 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
+								"bh_round_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -1381,36 +2027,11 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1421,28 +2042,53 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
+								"bh_round_content"
 							],
 							"history_list_is_closing": true,
 							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 136.0,
+						"translation.y": 119.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1453,7 +2099,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 24.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -1479,7 +2125,7 @@
 		"cols":
 		[
 			0.0,
-			0.72091731452,
+			0.76296575546,
 			1.0
 		],
 		"rows":
@@ -1505,7 +2151,7 @@
 	"project": "Pave.sublime-project",
 	"replace":
 	{
-		"height": 114.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1515,12 +2161,40 @@
 		"selected_items":
 		[
 			[
-				"inde",
+				"tutorial3",
+				"Pave-D3\\Tutorial3.html"
+			],
+			[
+				"tutorial",
+				"Pave-D3\\Tutorial2.html"
+			],
+			[
+				"index",
 				"Pave-D3\\index.html"
 			],
 			[
-				"tutorial3",
+				"tutorial1",
+				"Pave-D3\\Tutorial1.html"
+			],
+			[
+				"tutori",
 				"Pave-D3\\Tutorial3.html"
+			],
+			[
+				"pave",
+				"Pave-D3\\Pave.html"
+			],
+			[
+				"main",
+				"Pave-D3\\css\\main.css"
+			],
+			[
+				"pavevi",
+				"Pave-D3\\PaveVisualisation.js"
+			],
+			[
+				"inde",
+				"Pave-D3\\index.html"
 			],
 			[
 				"tutorial2",
@@ -1535,15 +2209,7 @@
 				"Pave-D3\\Tutorial3.html"
 			],
 			[
-				"tutorial",
-				"Pave-D3\\Tutorial1.html"
-			],
-			[
 				"tut",
-				"Pave-D3\\Tutorial1.html"
-			],
-			[
-				"tutorial1",
 				"Pave-D3\\Tutorial1.html"
 			],
 			[
@@ -1559,24 +2225,8 @@
 				"Pave-D3\\todos2.txt"
 			],
 			[
-				"index",
-				"a-h-l\\index.html"
-			],
-			[
-				"main",
-				"Pave-D3\\css\\main.css"
-			],
-			[
-				"pave",
-				"Pave-D3\\Pave.html"
-			],
-			[
 				"tutor",
 				"Tutorial1.html"
-			],
-			[
-				"tutori",
-				"Tutorial3.html"
 			],
 			[
 				"pav",
@@ -1615,7 +2265,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 138.0,
+	"side_bar_width": 50.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

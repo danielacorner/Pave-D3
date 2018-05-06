@@ -5,6 +5,8 @@ ideas:
 - base filter sliders presets on reported grades? to create a profile for students? like a "suggestions" button
 
 ------------------------------------------
+- button for "set the skills to this job's skill levels"
+
 todos
 - turn on pattern permanently when stuck
 - add 'unstick' function
@@ -15,28 +17,86 @@ todos
 - fix 'movebottomdown'
 ***********************************
 
-BIG-ticket TODO:
-- view more: connect to "schools offering this program"
-	- 4 - Admissions
-	- create relationship between NOCs and Programs, Universities, Colleges
+- create data viz lesson 1 2 3
 
+- responsive design
+- drag images out of sticky zone
 
-- add "Reset images" button?
-- add "drag to sides to favourite" on drag
+- add "drag to sides to favourite -->" text on drag
+
+- mouseover text?
+
 
 THURSDAY call :
+funding opportunities:
+- must incorporate as not-for-profit or social enterprise (for tax reasons)
+- PWC foundation - skills training and careers for youth
+- Civic action - 
+
+
+nothing from Fed Gov until next election 11/2019
+social foundations only
+
+McConnell foundation (skills training workshops for entrepreneurs)
+
+Integrate RBC opportunities for funding?
+
+Red Academy - UX / Web code bootcamp, free student labour
+
+-------------------
+Business plan - impact, value, measure? Future vision? Key principles, essentials, how much funding needed, revenue expected?
+-------------------
+
+Chris: needs to be self-sustaining, possibly revenue
+
+Companies are looking for reskilling sources -- 
+
+Eddie: can use youth as "community, goodwill" and charge companies for extras
+
+tighten loop between discovering careers and training for those careers
+	- link to / team up with online courses
+
+	- use to explore internal opportunities
+
+	- collect student interest data for sale...
+	- identify skills gaps, 
+
+	- RBC: if building a pitch, could mock-up "enhanced" version with RBC job postings (could scrape)
+
 -----------------
 big-ticket items:
 -----------------
--manually create a relational table to connect NOCs to universities	(between NOCs and Programs, Universities, Colleges)
-- manually create or source job descriptions for tooltips
+1 - view more: "schools offering this program"
+	- manually create a relational table to connect NOCs to universities	(between NOCs and Programs, Universities, Colleges)
+		in data folder 4 - Admissions - Programs, Universities, Colleges
+
+2 - research 'landing page best practices' to improve tutorial/landing page
+
+3 - view more: NOC jobBank page data
+	- convert NOC jobBank pages into a table to load into the 'more info' section of the tooltip
+
+4 - manually create or source kid-friendly job descriptions for tooltips
+
+
 -----------------
 little-ticket items:
 -----------------
-- tutorial suggestions? v3
+- tutorial suggestions? v3 is up, leave comments
+	- iterate tutorial
+
+- get pics working in github page?
+
 - think about any important or interesting annotations? or let the user annotate?
 (-"strategy and nuance" in a sports viz)
+
 - second colour for non-interactive text? Language skills, logic skills...
+
+
+
+
+
+
+- mobile, responsive design [prototype]
 
 - drag to right side to favourite
 - keep patterns on permanently
@@ -46,8 +106,6 @@ bug: industrial butchers, seafood processing, other labourers in Managers group 
 bug: move right-side tooltip left a bit
 
 current:
-
-- annotate $40k
 
 - read 5 articles about ui
 	goodui
