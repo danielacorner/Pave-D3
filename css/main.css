@@ -77,10 +77,31 @@ display: block;
 border-radius: 8px;
 border-width: 0px;
 }
+#graph:hover {
+  background: #eaeaea;
+}
+#resetFilters:hover {
+  background: #eaeaea;
+}
+.link-top:hover {
+  color: #C7F2A7;
+}
+.link-top2:hover {
+  color: #B5DC98;
+}
 .link-top {
- font-size: 16px;
+ font-size: 20px;
  padding-left: 30px; 
  font-weight: bold; 
+ /*font-family: Raleway; */
+ color: #49AC52;
+}
+.link-top2 {
+ font-size: 18px;
+ padding-left: 13%; 
+ /*padding-bottom: 20px; */
+ font-weight: bold; 
+ /*vertical-align: text-top; */
  /*font-family: Raleway; */
  color: #49AC52;
 }
