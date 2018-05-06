@@ -136,6 +136,7 @@ function resize() {
   // console.log(w+" x "+h)
 
   if(w < 992){
+    d3.select("#titleBar").transition().duration(resizeDuration).style("margin-top","-10px").style("margin-left","20px")
     d3.select("#viewButtons").transition().duration(resizeDuration).style("margin-top","-20px")
     d3.select("#bottomButtons").transition().duration(resizeDuration).style("bottom","7.5vh")
     d3.select("#legend").transition().duration(resizeDuration) .style("margin-left","40px")
@@ -149,6 +150,7 @@ function resize() {
   },1)
 
   }else{
+    d3.select("#titleBar").transition().duration(resizeDuration).style("margin-top","-0.35%").style("margin-left","9vw")
     d3.select("#viewButtons").transition().duration(resizeDuration) .style("margin-top","10px")
     d3.select("#bottomButtons").transition().duration(resizeDuration) .style("bottom","13vh")
     d3.select("#legend").transition().duration(resizeDuration) .style("margin-left","0px") .style("float","right")
