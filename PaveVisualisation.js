@@ -136,58 +136,58 @@ function resize() {
   // console.log(w+" x "+h)
 
   if(w < 992){
-    d3.select("#chart").transition().duration(resizeDuration).style("margin-top","-20px")
-    d3.select("#titleBar").transition().duration(resizeDuration).style("margin-top","-10px").style("margin-left","20px")
-    d3.select("#viewButtons").transition().duration(resizeDuration).style("margin-top","-20px")
-    d3.select("#bottomButtons").transition().duration(resizeDuration).style("bottom","7.5vh")
-    d3.select("#legend").transition().duration(resizeDuration) .style("margin-left","60px")
+    d3.select("#chart").style("margin-top","-20px")
+    d3.select("#titleBar").style("margin-top","-10px").style("margin-left","20px")
+    d3.select("#viewButtons").style("margin-top","-20px")
+    d3.select("#bottomButtons").style("bottom","7.5vh")
+    d3.select("#legend") .style("margin-left","60px")
     d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
-    d3.select("#sliderDiv_skillsLang").transition().duration(resizeDuration).style("left", "0vw")
-    d3.select("#sliderDiv_skillsLogi").transition().duration(resizeDuration).style("right", "1.5vw")
+    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
   setTimeout(function() {
-    d3.select("#sliderDiv_skillsComp").transition().duration(resizeDuration).style("left", "0%")
-    d3.select("#sliderDiv_skillsMath").transition().duration(resizeDuration).style("right", "1.5%")
+    d3.select("#sliderDiv_skillsComp").style("left", "0%")
+    d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
   },1)
 
   }else{
-    d3.select("#chart").transition().duration(resizeDuration).style("margin-top","")
-    d3.select("#titleBar").transition().duration(resizeDuration).style("margin-top","-0.35%").style("margin-left","9vw")
-    d3.select("#viewButtons").transition().duration(resizeDuration) .style("margin-top","10px")
-    d3.select("#bottomButtons").transition().duration(resizeDuration) .style("bottom","8vh")
-    d3.select("#legend").transition().duration(resizeDuration) .style("margin-left","40px") .style("float","right")
+    d3.select("#chart").style("margin-top","")
+    d3.select("#titleBar").style("margin-top","-0.35%").style("margin-left","9vw")
+    d3.select("#viewButtons") .style("margin-top","10px")
+    d3.select("#bottomButtons") .style("bottom","8vh")
+    d3.select("#legend") .style("margin-left","40px") .style("float","right")
     d3.selectAll(".btn-legend").style("margin","5px")
-    d3.select("#sliderDiv_skillsLang").transition().duration(resizeDuration).style("left", "9vw")
-    d3.select("#sliderDiv_skillsLogi").transition().duration(resizeDuration).style("right", "9vw")
+    d3.select("#sliderDiv_skillsLang").style("left", "9vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
   setTimeout(function() {
-    d3.select("#sliderDiv_skillsComp").transition().duration(resizeDuration).style("left", "9%")
-    d3.select("#sliderDiv_skillsMath").transition().duration(resizeDuration).style("right", "9%")
+    d3.select("#sliderDiv_skillsComp").style("left", "9%")
+    d3.select("#sliderDiv_skillsMath").style("right", "9%")
   },1)
   }
 
   if(w < 768){
-    d3.select("#sliderDiv_skillsComp").transition().duration(resizeDuration).style("bottom", "1vw")
-    d3.select("#sliderDiv_skillsMath").transition().duration(resizeDuration).style("bottom", "1vw")
-    d3.select("#sliderDiv_skillsLang").transition().duration(resizeDuration).style("top", "5vh")
-    d3.select("#sliderDiv_skillsLogi").transition().duration(resizeDuration).style("top", "5vh")
+    d3.select("#sliderDiv_skillsComp").style("bottom", "1vw")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "1vw")
+    d3.select("#sliderDiv_skillsLang").style("top", "5vh")
+    d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
     d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
-      .transition().duration(resizeDuration) .style("width","85px") .style("margin-bottom","-15px")
+       .style("width","85px") .style("margin-bottom","-15px")
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
-      .transition().duration(resizeDuration) .style("width","85px") .style("margin-bottom","-15px")
+       .style("width","85px") .style("margin-bottom","-15px")
 
     $("#titleBar").hide()
 
   }else{
     $("#titleBar").show()
-    d3.select("#sliderDiv_skillsComp").transition().duration(resizeDuration).style("bottom", "9vw")
-    d3.select("#sliderDiv_skillsMath").transition().duration(resizeDuration).style("bottom", "9vw")
-    d3.select("#sliderDiv_skillsLang").transition().duration(resizeDuration).style("top", "9vh")
-    d3.select("#sliderDiv_skillsLogi").transition().duration(resizeDuration).style("top", "9vh")
+    d3.select("#sliderDiv_skillsComp").style("bottom", "9vw")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "9vw")
+    d3.select("#sliderDiv_skillsLang").style("top", "9vh")
+    d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
     d3.select("#resetFilters").html("<span style='padding-right: 6px;'>" +
       "Reset Filters</span> <i class='fa fa-undo-alt'></i>")
-      .transition().duration(resizeDuration) .style("width","185px") .style("margin-bottom","0px")
+       .style("width","185px") .style("margin-bottom","0px")
     d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
-      ).transition().duration(resizeDuration) .style("width","185px") .style("margin-bottom","-15px")
+      ) .style("width","185px") .style("margin-bottom","-15px")
 
   }
 
