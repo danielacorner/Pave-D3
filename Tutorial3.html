@@ -39,17 +39,18 @@
 			
 			<a id="homepage" href="index.html" style="">
 			Pave</a>
+
       <!-- "Tutorial $current of $total" -->
       <div id="progressTutorial0" class="progressTutorial">
-        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
-        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
-        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial2.html">3</a>
-        <a id="progTutCircle3" class="progTutCircle progTutCircleActive" href="Tutorial3.html">4</a>
-        <a id="progTutCircle4" class="progTutCircle" href="Tutorial4.html">5</a>
-        <a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
-        <div id="progTutLine0" class="progTutLine progTutLineActive"></div>
-        <div id="progTutLine1" class="progTutLine progTutLineActive"></div>
-        <div id="progTutLine2" class="progTutLine progTutLineActive"></div>
+        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial1.html"">1</a>
+        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial2.html"">2</a>
+        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial3.html"">3</a>
+        <a id="progTutCircle3" class="progTutCircle progTutLineInactive" href="Tutorial4.html">4</a>
+        <a id="progTutCircle4" class="progTutCircle progTutLineInactive" href="Tutorial5.html">5</a>
+        <a id="progTutCircle5" class="progTutCircle progTutLineInactive" href="Tutorial6.html">6</a>
+        <div id="progTutLine0" class="progTutLine progTutLineActive""></div>
+        <div id="progTutLine1" class="progTutLine progTutLineActive""></div>
+        <div id="progTutLine2" class="progTutLine" ></div>
         <div id="progTutLine3" class="progTutLine" ></div>
         <div id="progTutLine4" class="progTutLine" ></div>
         <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
@@ -71,7 +72,7 @@
 
     <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 43vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
-        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
+        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; pointer-events: none; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
 
 </div>
@@ -82,11 +83,12 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
-        d3.selectAll(".progTutCircleActive").on("mouseover",function(){
+      d3.selectAll(".progTutCircleActive").on("mouseover",function(){
       d3.select(this).style("background","#3C8D44")
     }).on("mouseout", function(){
       d3.select(this).style("background","#49AC52")
     })
+
 
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
@@ -105,7 +107,6 @@ var equalRadius = 9;
 var nodePadding = 1;
 var clicked = 0;
 var imgRadius = 125;
-var forceGravityMultiplier = -10;
 
 
   // load the data
@@ -382,15 +383,13 @@ graphMode = 0;
 graph = nodes;
 store = nodes;
 
-
 // Simulation, forces, & tick function
     // Forces for the simulation
 var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
-var forceGravity = d3.forceManyBody()
-.strength(function(d) { return forceGravityMultiplier * d.radius })
+var forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -804,7 +803,7 @@ var graphMode;
       createHoverImg(d);
 
       setTimeout(function() {
-        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial4.html")
+        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial4.html").style("pointer-events","auto")
       }, 500)
 
   }
@@ -1586,10 +1585,8 @@ filterAll = function() {
 } // end filterAll
 }// Update function which detects current slider
 
-
 })
 } // end of d3.csv
-
 
 
 

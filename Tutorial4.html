@@ -39,18 +39,18 @@
 			
 			<a id="homepage" href="index.html" style="">
 			Pave</a>
-
+      <!-- "Tutorial $current of $total" -->
       <div id="progressTutorial0" class="progressTutorial">
-        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
-        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
-        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial2.html">3</a>
-        <a id="progTutCircle3" class="progTutCircle progTutCircleActive" href="Tutorial3.html">4</a>
-        <a id="progTutCircle4" class="progTutCircle progTutCircleActive" href="Tutorial4.html">5</a>
-        <a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
+        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial1.html">1</a>
+        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial2.html">2</a>
+        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial3.html">3</a>
+        <a id="progTutCircle3" class="progTutCircle progTutCircleActive" href="Tutorial4.html">4</a>
+        <a id="progTutCircle4" class="progTutCircle progTutLineInactive" href="Tutorial5.html">5</a>
+        <a id="progTutCircle5" class="progTutCircle progTutLineInactive" href="Tutorial6.html">6</a>
         <div id="progTutLine0" class="progTutLine progTutLineActive"></div>
         <div id="progTutLine1" class="progTutLine progTutLineActive"></div>
         <div id="progTutLine2" class="progTutLine progTutLineActive"></div>
-        <div id="progTutLine3" class="progTutLine progTutLineActive" ></div>
+        <div id="progTutLine3" class="progTutLine" ></div>
         <div id="progTutLine4" class="progTutLine" ></div>
         <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
       </div>  
@@ -63,15 +63,13 @@
 
 <div class="d-inline" style="position: fixed; left: 1vw; top: 15vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
     <span id='titlespan' style="opacity: 0; font-size: 3.05vw; font-weight: normal;">
-      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
-      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
-      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 0em">Hover over the circles to see</p>
-      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 1.5em">the group details.</p>
-      <p style="margin-left: 7vw; margin-bottom: 0em">Click the circles on the right to</p>
-      <p style="margin-left: 7vw; margin-bottom: 0.25em">see skills used on the job.</p>
+      <p style="margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
+      <p style="margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
+      <p style="margin-left: 7vw; margin-bottom: 0em">Hover over the circles to see</p>
+      <p style="margin-left: 7vw; margin-bottom: 0.25em">the group details.</p>
     </span>
 
-    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 48vw;">
+    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 43vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
         <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
@@ -514,14 +512,22 @@ circles = svg.selectAll("circle")
     .on("mouseout", function(d) {
 
       if(!circleExpanded[d.id] == 1){
-        d3.select(this)
-          .style("fill", color(d.cluster) )
-          // .attr("stroke", "black")
-          .style("stroke-width", 2)
-          .attr("stroke", color(d.cluster));
+        //if not stuck
+        if(!sticky[d.id] == 1) {
+          d3.select(this)
+            .style("fill", color(d.cluster) )
+            // .attr("stroke", "black")
+            .style("stroke-width", 2)
+            .attr("stroke", color(d.cluster));
+        } else { // if stuck
+          d3.select(this)
+            .style("fill", "url(#pattern_"+d.id+")")
+            .attr("r","30px")
+
+        }
       }
 
-      // clearTimeout(hoverTimeout)
+      clearTimeout(hoverTimeout)
       if (clicked == 1) return;
       clicked = 0;
       hideToolTip(500)
@@ -529,23 +535,26 @@ circles = svg.selectAll("circle")
       // div.transition().duration(500).style("opacity", 0)
 
     })
-    .on("click", function(d) {
-      // clearTimeout(hoverTimeout)
-      // click-off
-      if (clicked == 1) { 
-        clicked = 0
-        hideToolTip(500)
-      // click-on
-      } else if (clicked == 0) {
-        clicked = 1;
-        tooltipLarge(d);
-        setTimeout(function(){d3.select("#nextLink").attr("href","Tutorial5.html").transition().duration(500).style("opacity",1)})
-       }
-      // hideToolTip(0);
-      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      // tooltipSmall(d);}
-      })
-
+    // .on("click", function(d) {
+    //   clearTimeout(hoverTimeout)
+    //   // click-off
+    //   if (clicked == 1) { 
+    //     clicked = 0
+    //     hideToolTip(500)
+    //   // click-on
+    //   } else if (clicked == 0) {
+    //     clicked = 1;
+    //     tooltipLarge(d);
+    //    }
+    //   // hideToolTip(0);
+    //   // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+    //   // tooltipSmall(d);}
+    //   })
+      
+      // setTimeout(function() {
+      // circles.transition().duration(2500).style("opacity",1)
+        
+      // }, 500)
 
 
 
@@ -794,6 +803,10 @@ var graphMode;
 
       createHoverImg(d);
 
+      setTimeout(function() {
+        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial5.html")
+      }, 500)
+
   }
 
 
@@ -897,6 +910,11 @@ var graphMode;
         "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
         "Similar jobs <br><span style='font-size: 12px'>(sets filters equal to <br>this group's skill levels)</span></button><br>"+
 
+        // "<a id='btnVolunteer' class='btn btn-sm' "+
+        // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
+        // "Volunteer Canada</a><br>"+
+
         "<br><br><span style='margin-left: -20px; color: white;'>"+
         "This section is currently under construction...</span>"+
 
@@ -905,6 +923,22 @@ var graphMode;
         "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "'>"+
         "&nbspcoming soon&nbsp</a><br>"+
+
+        // "<a id='btnIndeed' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
+        // "&nbspIndeed.ca&nbsp</a><br>"+
+
+        // "<a id='btnGlassdoor' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
+        // "&nbspGlassdoor.ca&nbsp</a><br>"+
+
+        // "<a id='btnMonster' class='btn btn-sm' "+
+        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
+        // "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
+        // "&nbspMonster.ca&nbsp</a><br>"+
+
         "</div></div>")
           
         d3.select("#btnSimilarSkills").on("click", function() {
@@ -955,7 +989,18 @@ var graphMode;
     .attr("height", (d.skillsMath*stretch_y))
     .attr("y",150)
 
+  // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
+  // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");
   div2.transition().duration(250).style("height","250px");
+
+        // Unfurl downward
+        // .style("height", 200)
+        // .transition()
+        // .duration(200)
+        // .style("height", "auto")
+       // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
+
+
 
      };
 
@@ -1316,93 +1361,93 @@ function restartSimulation(){
 }
 
 
-///// Tooltips (post-filter)
+/////// Tooltips (post-filter)
 
-enterUpdateCircles = function() {
-    var newCircles = circles.enter().append("circle")
-    .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
-    .style("fill", function(d) { 
-      if(circleExpanded[d.id] != 1){
-        return color(d.cluster); 
-      }else { return "url(#pattern_"+d.id+")" }
-     })
-    .attr("class","jobCircle")
-    .attr("id",function(d) { return "circle_"+d.id })
-    .attr("opacity",
-      function(d) { // make filtered circles transparent
-        // if the industry is on the list, transparent
-        if( filteredIndustries.includes(+d.industryNum) ) { 
-          return 0.1 }
-        else{ 
-          return 1 }
-    })  
+// enterUpdateCircles = function() {
+//     var newCircles = circles.enter().append("circle")
+//     .attr("r", function(d) { return d.radius }) // start at full radius
+//     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+//     .style("fill", function(d) { 
+//       if(circleExpanded[d.id] != 1){
+//         return color(d.cluster); 
+//       }else { return "url(#pattern_"+d.id+")" }
+//      })
+//     .attr("class","jobCircle")
+//     .attr("id",function(d) { return "circle_"+d.id })
+//     .attr("opacity",
+//       function(d) { // make filtered circles transparent
+//         // if the industry is on the list, transparent
+//         if( filteredIndustries.includes(+d.industryNum) ) { 
+//           return 0.1 }
+//         else{ 
+//           return 1 }
+//     })  
 
 
-    // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
+//     // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
 
-    // Tooltips
- // Tooltips
-    .on("mouseenter", function(d) {
-      if (clicked == 1) return;
-      // highlight the current circle
-      d3.selectAll("circle").attr("stroke", "none");
-      d3.select(this)
-        .style("fill", "url(#pattern_"+d.id+")" )
-        // .attr("stroke", "black")
-        .style("stroke-width", 2)
-        .attr("stroke", color(d.cluster));
-      showToolTip(0);
-      tooltipMouseover(d);
-      // hoverTimeout = setTimeout(function(){
-      //   tooltipLarge(d)
-      //   clicked = 1
-      // }, 1750)
-      })
-    .on("mouseout", function(d) {
+//     // Tooltips
+//  // Tooltips
+//     .on("mouseenter", function(d) {
+//       if (clicked == 1) return;
+//       // highlight the current circle
+//       d3.selectAll("circle").attr("stroke", "none");
+//       d3.select(this)
+//         .style("fill", "url(#pattern_"+d.id+")" )
+//         // .attr("stroke", "black")
+//         .style("stroke-width", 2)
+//         .attr("stroke", color(d.cluster));
+//       showToolTip(0);
+//       tooltipMouseover(d);
+//       hoverTimeout = setTimeout(function(){
+//         tooltipLarge(d)
+//         clicked = 1
+//       }, 1750)
+//       })
+//     .on("mouseout", function(d) {
 
-      if(!circleExpanded[d.id] == 1){
-        d3.select(this)
-          .style("fill", color(d.cluster) )
-          // .attr("stroke", "black")
-          .style("stroke-width", 2)
-          .attr("stroke", color(d.cluster));
-      }
+//       if(!circleExpanded[d.id] == 1){
+//         d3.select(this)
+//           .style("fill", color(d.cluster) )
+//           // .attr("stroke", "black")
+//           .style("stroke-width", 2)
+//           .attr("stroke", color(d.cluster));
+//       }
 
-      // clearTimeout(hoverTimeout)
-      if (clicked == 1) return;
-      clicked = 0;
-      hideToolTip(500)
-      d3.select(this).attr("stroke", "none");
-      // div.transition().duration(500).style("opacity", 0)
+//       clearTimeout(hoverTimeout)
+//       if (clicked == 1) return;
+//       clicked = 0;
+//       hideToolTip(500)
+//       d3.select(this).attr("stroke", "none");
+//       // div.transition().duration(500).style("opacity", 0)
 
-    })
-    .on("click", function(d) {
-      // clearTimeout(hoverTimeout)
-      // click-off
-      if (clicked == 1) { 
-        clicked = 0
-        hideToolTip(500)
-      // click-on
-      } else if (clicked == 0) {
-        clicked = 1;
-        tooltipLarge(d);
-       }
-      // hideToolTip(0);
-      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      // tooltipSmall(d);}
-      })
+//     })
+//     .on("click", function(d) {
+//       clearTimeout(hoverTimeout)
+//       // click-off
+//       if (clicked == 1) { 
+//         clicked = 0
+//         hideToolTip(500)
+//       // click-on
+//       } else if (clicked == 0) {
+//         clicked = 1;
+//         tooltipLarge(d);
+//        }
+//       // hideToolTip(0);
+//       // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+//       // tooltipSmall(d);}
+//       })
 
-  // drag_handler(newCircles);
-  // //  ENTER + UPDATE
-  // if(graphMode == 1){ // transition in radii in graph mode
-  //   circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
-  // }else if(graphMode == 0){
-  //   circles = circles.merge(newCircles);
-  // }
+//   drag_handler(newCircles);
+//   //  ENTER + UPDATE
+//   if(graphMode == 1){ // transition in radii in graph mode
+//     circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
+//   }else if(graphMode == 0){
+//     circles = circles.merge(newCircles);
+//   }
   
 
-} 
+// } 
 
 
 // Update function which detects current slider

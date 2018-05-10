@@ -37,23 +37,25 @@
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a id="homepage" href="index.html" style="">
+			<a href="index.html" style="color: inherit">
 			Pave</a>
+
       <!-- "Tutorial $current of $total" -->
 			<div id="progressTutorial0" class="progressTutorial">
-				<a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
-				<a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
-				<a id="progTutCircle2" class="progTutCircle" href="Tutorial2.html">3</a>
-				<a id="progTutCircle3" class="progTutCircle" href="Tutorial3.html">4</a>
-				<a id="progTutCircle4" class="progTutCircle" href="Tutorial4.html">5</a>
-				<a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
-				<div id="progTutLine0" class="progTutLine progTutLineActive"></div>
+				<a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial1.html">1</a>
+				<a id="progTutCircle1" class="progTutCircle progTutLineInactive" href="Tutorial2.html">2</a>
+				<a id="progTutCircle2" class="progTutCircle progTutLineInactive" href="Tutorial3.html">3</a>
+				<a id="progTutCircle3" class="progTutCircle progTutLineInactive" href="Tutorial4.html">4</a>
+				<a id="progTutCircle4" class="progTutCircle progTutLineInactive" href="Tutorial5.html">5</a>
+				<a id="progTutCircle5" class="progTutCircle progTutLineInactive" href="Tutorial6.html">6</a>
+				<div id="progTutLine0" class="progTutLine" ></div>
 				<div id="progTutLine1" class="progTutLine" ></div>
 				<div id="progTutLine2" class="progTutLine" ></div>
 				<div id="progTutLine3" class="progTutLine" ></div>
 				<div id="progTutLine4" class="progTutLine" ></div>
 				<!-- <div id="progTutLine5" class="progTutLine" ></div> -->
-			</div>	
+			</div>		
+      
 
 		</h1>
 	</div>
@@ -71,13 +73,13 @@
     </svg>
 </div> -->
 
-<div class="d-inline" style="position: fixed; left: 4vw; top: 15vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
-    <span id='titlespan' style="opacity: 0; font-size: 3.05vw; font-weight: normal;">
-  	  <p style="margin-left: 7vw; margin-bottom: 0em">You can use Pave to</p>
-	    <p style="margin-left: 7vw; margin-bottom: 0em">quickly compare many</p>
-	    <p style="margin-left: 7vw; margin-bottom: 0em">different careers.</p>
+<div class="d-inline" style="position: fixed; left: 10vw; top: 14vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
+    <span id='titlespan' style="opacity: 0; font-size: 3.05vw;">
+    <p style="font-weight: normal; margin-bottom: 0em">Pave was made to help</p>
+    <p style="margin-bottom: 0em">simplify career decisions</p>
+    <p style="font-weight: normal;">for high school students.</p>
   	</span>
-      <a class="intro-tour-button btn-arrow-right" onclick="buttonClick()" style="z-index: 99; position: fixed; top: 39vw; left: 18vw; width: 8vw; opacity: 0; color: white" id="nextLink">NEXT</a>
+      <a class="intro-tour-button btn-arrow-right" style="z-index: 99; position: fixed; top: 38vw; left: 19vw; width: 8vw; opacity: 1; color: white" id="nextLink">NEXT</a>
 <!--     <span id='span1' style="z-index: -1; opacity: 0; margin-left: 4vw">Each circle is a job group.</span>
     <br>
     <br><span id='span2' style="opacity: 0; margin-left: 4vw">The bigger the circle, </span>
@@ -86,19 +88,20 @@
     <div id="nextDiv" style="position: fixed; left: 31vw; top: 35vw;">
       <a class="intro-tour-button btn-arrow-right" style="width: 8vw; opacity: 0; color: white" id="nextLink">NEXT</a>
     </div>
-
-</div>
  -->
+</div>
+
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
-
+	
 		d3.selectAll(".progTutCircleActive").on("mouseover",function(){
 			d3.select(this).style("background","#3C8D44")
 		}).on("mouseout", function(){
 			d3.select(this).style("background","#49AC52")
 		})
 
+    d3.select("#nextLink").attr("href","Tutorial2.html")
   // setTimeout(function() {
   //   d3.select("#titlespan").transition().duration(500).style("opacity",1)
   //   d3.select("#btnOK").transition().duration(500).style("opacity",1)
@@ -115,7 +118,7 @@
   //   d3.select("#span3").transition().duration(500).style("opacity",1)
   // }, 2500)  
   // setTimeout(function() {
-    d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial2.html")
+  //   d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial1.html")
   // }, 3750)  
 
   // }

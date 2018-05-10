@@ -7,11 +7,10 @@ ideas:
 ------------------------------------------
 
 current:
-- add clickable progress bar
+- shrink tutorial viz to 1/3 page width & resize text content
 
 next:
 - check google styleguide for shadows
-- shrink tutorial viz to 1/3 page width & resize text content
 (add items to a css grid layout?)
 - add circle drop shadow
 - tutorial5 answerDiv

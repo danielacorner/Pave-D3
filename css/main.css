@@ -362,7 +362,7 @@ rect.legendBtn {
   stroke: #379392;
   stroke-opacity: 0.9;
   stroke-width: 3px;
-  filter: url(../Tutorial5.html#f1);
+  filter: url(../Tutorial6.html#f1);
 }
 
 .btn-arrow-right,
@@ -471,21 +471,11 @@ rect.legendBtn {
 .circleImg {
   filter: url(Pave.html#f3);
 }
-.circleTutorial1 {
-  filter: url(Tutorial1.html#f2);
-}
-.circleTutorial2 {
-  filter: url(Tutorial2.html#f2);
-}
-.circleTutorial3 {
-  filter: url(Tutorial3.html#f2);
-}
-.circleTutorial4 {
-  filter: url(Tutorial4.html#f2);
-}
-.circleTutorial5 {
-  filter: url(Tutorial5.html#f2);
-}
+.circleTutorial1 {filter: url(Tutorial1.html#f2);}
+.circleTutorial2 {filter: url(Tutorial2.html#f2);}
+.circleTutorial3 {filter: url(Tutorial3.html#f2);}
+.circleTutorial4 {filter: url(Tutorial4.html#f2);}
+.circleTutorial5 {filter: url(Tutorial5.html#f2);}
 
 .progressTutorial {
   /*background: #ccc;*/
@@ -527,6 +517,10 @@ rect.legendBtn {
   background: #49AC52; 
   border: none;
 }
+.progTutLineInactive {
+  pointer-events: none;
+  cursor: auto;
+}
 .progTutCircle:hover{
    color: white;
    /*background: #3C8D44;*/
@@ -536,14 +530,14 @@ rect.legendBtn {
    /*background: #3C8D44;*/
 }
 #progTutCircle0 {position: fixed; left: 29vw; top: 2.1vw;}
-#progTutCircle1 {position: fixed; left: 36vw; top: 2.1vw; }
-#progTutCircle2 {position: fixed; left: 43vw; top: 2.1vw; }
-#progTutCircle3 {position: fixed; left: 50vw; top: 2.1vw; }
-#progTutCircle4 {position: fixed; left: 57vw; top: 2.1vw; }
-#progTutCircle5 {position: fixed; left: 64vw; top: 2.1vw; }
-#progTutLine0 {position: fixed; left: 31.8vw; top: 3.4vw; }
-#progTutLine1 {position: fixed; left: 38.8vw; top: 3.4vw; }
-#progTutLine2 {position: fixed; left: 45.8vw; top: 3.4vw; }
-#progTutLine3 {position: fixed; left: 52.8vw; top: 3.4vw; }
-#progTutLine4 {position: fixed; left: 59.8vw; top: 3.4vw; }
+#progTutCircle1 {position: fixed; left: 36vw; top: 2.1vw;}
+#progTutCircle2 {position: fixed; left: 43vw; top: 2.1vw;}
+#progTutCircle3 {position: fixed; left: 50vw; top: 2.1vw;}
+#progTutCircle4 {position: fixed; left: 57vw; top: 2.1vw;}
+#progTutCircle5 {position: fixed; left: 64vw; top: 2.1vw;}
+#progTutLine0 {position: fixed; left: 31.8vw; top: 3.4vw;}
+#progTutLine1 {position: fixed; left: 38.8vw; top: 3.4vw;}
+#progTutLine2 {position: fixed; left: 45.8vw; top: 3.4vw;}
+#progTutLine3 {position: fixed; left: 52.8vw; top: 3.4vw;}
+#progTutLine4 {position: fixed; left: 59.8vw; top: 3.4vw;}
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
