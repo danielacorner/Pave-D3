@@ -5,7 +5,18 @@ ideas:
 - base filter sliders presets on reported grades? to create a profile for students? like a "suggestions" button
 
 ------------------------------------------
+
+/*PRIORITIES*/
+- mobile version
+- signup
+
+
 - button for "set the skills to this job's skill levels"
+- resize circles with page width then detect radius
+
+about, help, feedback pages
+
+bug: picture z-index
 
 todos
 - turn on pattern permanently when stuck

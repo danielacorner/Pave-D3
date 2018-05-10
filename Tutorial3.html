@@ -6,13 +6,13 @@
 	<!-- Bootstrap sources -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- Jquery -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 	<!-- Joyride CSS file -->
 	<!-- <link rel="stylesheet" type="text/css" href="node_modules/jquery.joyride/jquery.joyride.css"> -->
 	<!-- Joyride plugin -->
@@ -33,82 +33,194 @@
 
 <body>
 
-  <div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
-   <div class="title" align="left">
-    <h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
-
-     <a href="index.html" style="color: inherit">
-     Pave</a>
-   </h1>
- </div>
+<div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
+	<div class="title" align="left">
+		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
+			
+			<a href="index.html" style="color: inherit">
+			Pave</a>
+		</h1>
+	</div>
 </div>
 
-<div class="d-inline" style="position: fixed; left: 7vw; top: 19vw; font-size: 1.7vw; font-weight: 600; color: #49AC52">
-  <div id="div1">You can change the skill sliders
-  <br>to see which job groups suit
-  <br>your ideal future self.</div>
-<!-- 
-<div id="nextDiv" style="position: fixed; left: 13.7vw; top: 48vw;">
- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial2.html" id="prevLink">PREV</a>
-</div> -->
- <a class="intro-start-button" style="position: fixed; right: 5vw; top: 50vw; opacity: 0; color: white; z-index: 100" id="nextLink">START</a>
 
-<div id="rightSide">
 
-	<!-- 	<img style="opacity: 0.1; width: 47vw; position: fixed; right: 8vw; top: 6vw" id="background" src="img/logo.png"> -->
-  <svg  id="chart" style="position: fixed; z-index: 1; width: 75vw; height: 70vw; top: 2.5vw; left: 30.8vw;" class="chart"> </svg>
+<div class="d-inline" style="position: fixed; left: 1vw; top: 15vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
+    <span id='titlespan' style="opacity: 0; font-size: 3.05vw; font-weight: normal;">
+      <p style="margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
+      <p style="margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
+      <p style="margin-left: 7vw; margin-bottom: 0em">Hover over the circles to see</p>
+      <p style="margin-left: 7vw; margin-bottom: 0.25em">the group details.</p>
+    </span>
 
-</div>
-<div style="position: fixed; left: 63vw; top: 53vw; z-index: 99">
-  <span id="resetFiltersSpan" style="position: fixed; top: 49vw; left: 50vw; opacity: 0">You can click "Reset Filters" to reset the sliders.</span>
-  <span id="sizeDropdownSpan" style="pointer-events: none; text-align: right; position: fixed; top: 51vw; left: 48.4vw; opacity: 0">Use the size drop-down to change&nbsp;&nbsp;&nbsp;<br>what the size of each circle represents</span>
-  <button id="resetFilters" type="button" class="btn btn-md btn-grey" style="opacity: 0; width: 11vw; height: 3vw; box-shadow: 0px 0px 17px 7px #E6E447">
-    <span style="color: white; font-size: 1.12vw;">
-      Reset Filters &nbsp&nbsp&nbsp<i style="position: fixed; margin-left: -0.4vw; height: 1.7vw; width: 1.3vw; color: black" class="fa fa-undo-alt"></i></span> 
-  </button> 
-  <button id="nextBtn1" class="intro-tour-button btn-arrow-right" style="margin-left: 1.5vw; display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100">NEXT</button>
-
+    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 43vw;">
+        <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
+        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
 
-  </div>
+</div>
 
-  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-
-
+  <svg  id="chart" style="top: 0vw; left: 20vw; pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 100vh; padding-top: 30px" class="chart"> </svg>
 
 
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+<script>
+var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
+forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
+forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
+hoverTimeout;
+
+maxSalary = 132.922; //busted
+
+var sticky = []; // whether or not the current circle is expanded
+var circleExpanded = []; // whether or not the current circle is expanded
+var circlesExpanded = 0;
+var legendCreated = 0;
+var graphFirstTime = true;
+var legendMode = 0;
+var equalRadius = 9;
+var nodePadding = 1;
+var clicked = 0;
+var imgRadius = 125;
+var forceGravityMultiplier = -10;
 
 
-  <script>
-    var graph, store;
-    var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
-    forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
-    forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode;
-
-var sliderPositionsArray = []; // array to track all sliders
-var sliderSVGArray = []; // array of slider SVGs
-var sliderScaleArray = []; // array of slider scale functions
-var sliderMulti = [];
-var handleArray = []; // array of slider handles
-listToDeleteMulti = []; // filtered IDs
-
-// load the data
+  // load the data
 createViz();
 
 function createViz() {
-  d3.csv("NOC_494_interpolated.csv", function(error, datapoints) {
-    // if (error) throw error;
+
+d3.csv("NOC_494_interpolated.csv", function(error, datapoints) {
+  if (error) throw error;
+
+
 
 // Viz dimensions & margins
 var margin = {top: 20, right: 20, bottom: 50, left: 50};
-var width = window.innerWidth/1.5, // set chart dimensions
+width = window.innerWidth/1.5, // set chart dimensions
 height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
+
+
+///////////////// TODO: Mobile version /////////////////
+
+d3.select(window).on("resize", function() {
+  resize();
+
+  d3.selectAll(".jobCircle").attr("r", equalRadius)
+
+  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+
+  simulation.force("collide", forceCollide).force("gravity", forceGravity)
+    .alpha(0.25).alphaTarget(0.001).restart();
+
+});
+
+resize()
+
+function resize() {
+
+  var resizeDuration = 350;
+
+  var w = $(window).width();
+  console.log(w)
+  var h = $(window).height();
+  // console.log(w+" x "+h)
+
+  if(w < 992){
+    d3.select("#chart").style("margin-top","-20px")
+    d3.select("#titleBar").style("margin-top","-10px").style("margin-left","20px")
+    d3.select("#viewButtons").style("margin-top","-20px")
+    d3.select("#bottomButtons").style("bottom","7.5vh")
+    d3.select("#legend") .style("margin-left","60px")
+    d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
+    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
+    
+    nodePadding = 0;
+    equalRadius = 6;
+    forceGravityMultiplier = -6;
+
+    setTimeout(function() {
+      d3.select("#sliderDiv_skillsComp").style("left", "0%")
+      d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
+    },1)
+
+  }else{
+    d3.select("#chart").style("margin-top","")
+    d3.select("#titleBar").style("margin-top","-0.35%").style("margin-left","9vw")
+    d3.select("#viewButtons") .style("margin-top","10px")
+    d3.select("#bottomButtons") .style("bottom","8vh")
+    d3.select("#legend") .style("margin-left","40px") .style("float","right")
+    d3.selectAll(".btn-legend").style("margin","5px")
+    d3.select("#sliderDiv_skillsLang").style("left", "9vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
+    setTimeout(function() {
+      d3.select("#sliderDiv_skillsComp").style("left", "9%")
+      d3.select("#sliderDiv_skillsMath").style("right", "9%")
+    },1)
+
+    nodePadding = 1;
+    equalRadius = 9;
+    forceGravityMultiplier = -10;
+  }
+
+  if(w < 768){
+    d3.select("#sliderDiv_skillsComp").style("bottom", "1vw")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "1vw")
+    d3.select("#sliderDiv_skillsLang").style("top", "5vh")
+    d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
+    d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
+       .style("width","85px") .style("margin-bottom","-15px")
+    d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
+       .style("width","85px") .style("margin-bottom","-15px")
+
+    nodePadding = 0;
+    equalRadius = 5;
+    forceGravityMultiplier = -5;
+
+    $("#titleBar").hide()
+
+  }else{
+    $("#titleBar").show()
+    d3.select("#sliderDiv_skillsComp").style("bottom", "9vw")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "9vw")
+    d3.select("#sliderDiv_skillsLang").style("top", "9vh")
+    d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
+    d3.select("#resetFilters").html("<span style='padding-right: 6px;'>" +
+      "Reset Filters</span> <i class='fa fa-undo-alt'></i>")
+       .style("width","185px") .style("margin-bottom","0px")
+    d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
+      ) .style("width","185px") .style("margin-bottom","-15px")
+
+  }
+
+
+  if(typeof circles != "undefined"){
+    circles.attr("transform", circleHeight(0, 0 )) //flag! need to make equation for width/height ratio
+  }
+
+  graphYtranslate = window.innerHeight*0.12 - 16;
+  // return "translate("+window.innerWidth*0.5+","+ (165 + window.innerHeight*0.12) +")"
+
+  // Add an axis-holder group
+  if(typeof axisG != "undefined") {
+    axisG.attr("transform", "translate(0," + graphYtranslate + ")");
+  }
+
+
+  if(window.innerWidth<641){ // Phones
+    margin = {top: 20, right: 12, bottom: 20, left: 12}
+  }
+} // end of resize()
+
 
 // number of distinct clusters
 var industries = [];
 datapoints.forEach(function(row){
-  if(!industries.includes(row.industry)) industries.push(row.industry)
+if(!industries.includes(row.industry)) industries.push(row.industry)
 }); 
 var m = industries.length;
 
@@ -116,12 +228,10 @@ var m = industries.length;
 // Actual max workers... need to re-order?
 var maxWorkers = 120415; // patch: d3.max(datapoints, function(d) { return d.workers })
 
-// Scale Circle Area = Number of Workers
-// Sqrt scale because radius of a cicrle
-var radiusScale = d3.scaleSqrt()
-.domain([10, maxWorkers])
-.range([1,maxRadius]);
-
+// Scales
+    // Color scale for 10 categories
+// var color = d3.scaleOrdinal(d3.schemeCategory10)
+//     .domain(d3.range(m))
 
 var color = d3.scaleOrdinal()
     .domain(d3.range(m))
@@ -177,11 +287,12 @@ var colorSkillbar = d3.scaleOrdinal()
             "#256D1B", // brown
             "#256D1B" ]) // teal
 
+// Scale Circle Area = Number of Workers
+// Sqrt scale because radius of a cicrle
+var radiusScale = d3.scaleSqrt()
+.domain([10, maxWorkers])
+.range([1,maxRadius]);
 
-            var stretch_y = 1.7;
-var compress_y = 0.7;
-var skillsBarsXtranslate = -15;
-var skillsBarsYtranslate = 80;
 
 // The largest node for each cluster
 var clusters = new Array(m);
@@ -189,13 +300,15 @@ var clusters = new Array(m);
 // Nodes: the data you want to display & filter by
 var nodes = datapoints.map(function(el) {
   var i = el.cluster,
-  r = radiusScale(el.workers),
+  r = equalRadius, // start equal radii
   d = {
     id: +el.id,
     favourite: 0,
+    // transparent: false,
     cluster: i, 
     radius: r, 
     job: el.job,
+    allTitles: el.allTitles,
     topSkill1: el.topSkill1,
     topSkill2: el.topSkill2,
     topSkill3: el.topSkill3,
@@ -203,12 +316,13 @@ var nodes = datapoints.map(function(el) {
     title2: el.title2,
     title3: el.title3,
     industry: el.industry, 
+    industryNum: el.industryNum, 
     noc: el.noc, 
     workers: +el.workers,
     wage: el.wage,
+    salaryMed: el.salaryMed,
     automationRisk: el.automationRisk,
     yearsStudy: el.yearsStudy,
-    job: el.job,
     skillsComp: el.skillsComp,
     skillsLogi: el.skillsLogi,
     skillsMath: el.skillsMath,
@@ -229,46 +343,33 @@ var nodes = datapoints.map(function(el) {
     s14Writing: el.s14Writing,
     s15CriticalThinking: el.s15CriticalThinking,
 
-  };
+};
   // if there's no cluster i OR if biggest radius yet, set cluster
   if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
   return d;
 });
 
 // Maximum values
-var maxWorkers = d3.max(nodes, function(d){ return d.workers});
-var circles;
-var clicked = 0; //tooltip toggle
+maxWorkers = d3.max(nodes, function(d){ return d.workers});
+
+
 // Graph mode
     // Toggle for graph mode = off initially
-    graphMode = 0;
+graphMode = 0;
     // store nodes for drawing axes in graph mode
-    graph = nodes;
-    store = nodes;
+graph = nodes;
+store = nodes;
 
-    var sliderArray = [
-   "skillsMath"
-    ];
-
-    var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
-
-    var sliderTitlesArrayMain = [
-    "Language skills", "Logic skills", "Math skills", "Computer skills",
-    ];
-
-var div = d3.select("body").append("div").style("width", "360px").style("border-radius", "6px").attr("id","tooltip")
 
 // Simulation, forces, & tick function
     // Forces for the simulation
-    var forceCollide = d3.forceCollide(function(d) { return d.radius + 1 })
-    var forceXCombine = d3.forceX().strength(.3)
-    var forceYCombine = d3.forceY().strength(.3)
+var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+var forceXCombine = d3.forceX().strength(.3)
+var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
-.strength(function(d) { return -7 * d.radius })
-// var forceFutureMode = d3.forceManyBody()
+.strength(function(d) { return forceGravityMultiplier * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
-// var forceCollideFutureMode = d3.forceCollide(function(d) { return automationRadiusScale(d.radius) + 25 })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
 }).strength(0.3)
@@ -287,25 +388,49 @@ var forceYSeparateRandom = d3.forceY(function(d) {
 //     if (d.cluster/5>1) return d.cluster/5+1;
 // })
     // force the circles toward their cluster nodes
-    function forceCluster(alpha) {
-      for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
-        node = nodes[i];
-        cluster = clusters[node.cluster];
-        node.vx -= (3*node.x - cluster.x) * k;
-        node.vy -= (3*node.y - cluster.y) * k;
+
+var clusterForce = 3.5;
+function forceCluster(alpha) { 
+  // alpha = attractor force
+  for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.12; i < n; ++i) {
+    node = nodes[i];
+    cluster = clusters[node.cluster];
+    node.vx -= (clusterForce*node.x - cluster.x) * k;
+    node.vy -= (clusterForce*node.y - cluster.y) * k;
+  }
+  // for (var i = 0, n = nodes.length, node, cluster, k = alpha * 0.1; i < n; ++i) {
+  //   node = nodes[i];
+  //   cluster = clusters[node.cluster];
+  //   node.vx -= (3*node.x - cluster.x) * k;
+  //   node.vy -= (3*node.y - cluster.y) * k;
+  // }
+  }
+   
+ // Update the positions each tick
+tick = function() {
+
+  circles
+  .attr("cx", function(d) { 
+
+
+      // if sticky
+      if(sticky[d.id] == 2){
+        // stuck
+        return window.innerWidth*0.4 
+      } else if(sticky[d.id] == 1){
+        return window.innerWidth*-0.4
+      } else {
+      return d.x; 
       }
-    }
-    // Update the positions each tick
-    tick = function() {
-      circles
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-    }
+  })
+  .attr("cy", function(d) { 
+    return d.y; });
+}
 
 
     // The force simulation
-    simulation = d3.forceSimulation()
-    .nodes(store)
+simulation = d3.forceSimulation()
+.nodes(store)
     // .force("center", d3.forceCenter())
     .force("collide", forceCollide)
     .force("cluster", forceCluster)
@@ -314,33 +439,72 @@ var forceYSeparateRandom = d3.forceY(function(d) {
     .force("y", forceYCombine)
     .on("tick", tick);
 
-    var svg = d3.select("#chart")
-    .append('svg')    
-    .attr("viewBox", "-"+0+" -"+65+" "+window.innerWidth/1.5+" "+window.innerHeight/1.5+"");
 
-    var stretch_y = 1.7;
+// Tooltip div (on hover)
+var div = d3.select("body").append("div").style("width", "360px").style("border-radius", "6px").attr("id","tooltip")
+var div2;
+var miniTooltip;
 
-    circles = svg.selectAll("circle")
-    .data(nodes)
-    .enter().append("circle")
+// Append a group element to the svg & move to center
+var svg = d3.select("#chart")
+  .append('svg').style("position","absolute").style("z-index", "-1")
+
+var stretch_y = 1.7;
+var compress_y = 0.7;
+var skillsBarsXtranslate = -15;
+var skillsBarsYtranslate = 80;
+// TODO: merge pre, post-filtering
+///////////////////////// Circles, Tooltips (pre-filtering) /////////////////////////////
+
+function circleHeight(xtrans,ytrans) {
+  return "translate("+ (window.innerWidth*0.5 + xtrans)+","+ (window.innerHeight*0.12 + 190 + ytrans) +")"
+}
+
+// Add the circles with tooltips
+circles = svg.selectAll("circle")
+.data(nodes)
+.enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
-    .style("z-index", 100)
+    .attr("transform", circleHeight(0,0) ) //flag! need to make equation for width/height ratio
+    .attr("id",function(d) { return "circle_"+d.id })
+    .attr("class","jobCircle")
+    .style("z-index", -1)
     .style("fill", function(d) { return color(d.cluster); })
     // Tooltips
     .on("mouseenter", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
       d3.selectAll("circle").attr("stroke", "none");
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
+      d3.select(this)
+        .style("fill", "url(#pattern_"+d.id+")" )
+        // .attr("stroke", "black")
+        .style("stroke-width", 2)
+        .attr("stroke", color(d.cluster));
       showToolTip(0);
       tooltipMouseover(d);
-      hoverTimeout = setTimeout(function(){
-        tooltipLarge(d)
-        clicked = 1
-      }, 1750)
+      // hoverTimeout = setTimeout(function(){
+      //   tooltipLarge(d)
+      //   clicked = 1
+      // }, 1750)
       })
     .on("mouseout", function(d) {
+
+      if(!circleExpanded[d.id] == 1){
+        //if not stuck
+        if(!sticky[d.id] == 1) {
+          d3.select(this)
+            .style("fill", color(d.cluster) )
+            // .attr("stroke", "black")
+            .style("stroke-width", 2)
+            .attr("stroke", color(d.cluster));
+        } else { // if stuck
+          d3.select(this)
+            .style("fill", "url(#pattern_"+d.id+")")
+            .attr("r","30px")
+
+        }
+      }
+
       clearTimeout(hoverTimeout)
       if (clicked == 1) return;
       clicked = 0;
@@ -348,34 +512,46 @@ var forceYSeparateRandom = d3.forceY(function(d) {
       d3.select(this).attr("stroke", "none");
       // div.transition().duration(500).style("opacity", 0)
 
-      // div
-      // .style("opacity", 0);
-      // setTimeout(function(){
-      // //   if(typeof div2 != "undefined") div2.remove();
-      //   if(typeof div != "undefined") div.remove();
-      // },250)
     })
-    .on("click", function(d) {
-      clearTimeout(hoverTimeout)
-      // click-off
-      if (clicked == 1) { 
-        clicked = 0
-        hideToolTip(500)
-      // click-on
-      } else if (clicked == 0) {
-        clicked = 1;
-        tooltipLarge(d);
-       }
-      // hideToolTip(0);
-      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      // tooltipSmall(d);}
-      })
+    // .on("click", function(d) {
+    //   clearTimeout(hoverTimeout)
+    //   // click-off
+    //   if (clicked == 1) { 
+    //     clicked = 0
+    //     hideToolTip(500)
+    //   // click-on
+    //   } else if (clicked == 0) {
+    //     clicked = 1;
+    //     tooltipLarge(d);
+    //    }
+    //   // hideToolTip(0);
+    //   // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+    //   // tooltipSmall(d);}
+    //   })
+      
+      // setTimeout(function() {
+      // circles.transition().duration(2500).style("opacity",1)
+        
+      // }, 500)
 
 
+
+// d3.select("body").on("mouseover", function(d){
+//   // if clicked outside of left or right 1/5 page,
+//   if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
+//      d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
+//     hideToolTip(500);
+//   }
+// })
 
 
 d3.select("#chart").on("click", function(d){
   // hide any subskill sliders
+  // hideAll();
+  // closeLegends();
+  // if (graphMode == 0 && legendMode == 1) {
+  //   smashTogether(0.3, 0.4);
+  // }
   // if clicked off of a circle
   if (clicked == 1) { 
     if (d3.event.target.nodeName == "circle") {
@@ -399,6 +575,8 @@ function showToolTip(duration) {
 }
 
 function hideToolTip(duration) {
+
+      hideHoverImg();
       // fade out each tooltip contents object
       d3.select("#tooltip").transition().duration(duration).style("opacity",0)
       d3.select("#tooltip0").transition().duration(duration).style("opacity",0).remove()
@@ -428,11 +606,88 @@ function hideToolTip(duration) {
       d3.select("#moreBtnsDiv").transition().duration(180).style("opacity",0)
 }
 
+var defs = svg.append("defs");
+
+
+// create for all 494? or create on the fly?
+
+  // defs.append("pattern")
+
+  defs.selectAll(".img-pattern")
+    .data(datapoints)
+    .enter().append("pattern")
+    .attr("class", "img-pattern")
+      .attr("id", function(d) { return "pattern_"+d.id} )
+      .attr("height", "100%")
+      .attr("width", "100%")
+      .attr("patternContentUnits", "objectBoundingBox")
+      .append("image")
+      .attr("height", 1)
+      .attr("width", 1)
+      .attr("preserveAspectRatio", "none")
+      // .attr("xmlns:xlink:href","/img/NOC_images/"+d.noc+".jpg")
+      .attr("xlink:href",function(d) {
+          return "/img/NOC_images/"+d.noc+".jpg"
+        })
+
+
+
+function createHoverImg(d) {
+
+  var circLeft, circTop;
+
+  if(d3.event.pageX < window.innerWidth/2) { // left side
+    circLeft = window.innerWidth*0.5 + (d.x) - 125; // x
+    circTop = window.innerHeight*0.33 + ((window.innerHeight-300)*(d.y/window.innerHeight)); // y
+
+  }else if (d3.event.pageX >= window.innerWidth/2) { // right side
+    circLeft = window.innerWidth*0.5 + (d.x) + 125; // x
+    circTop = window.innerHeight*0.33 + ((window.innerHeight-300)*(d.y/window.innerHeight)); // y
+  }
+
+  var imgCircle = d3.select("#chart").append("circle")
+    .attr("class","circleImg")
+    .attr("cx",circLeft)
+    .attr("cy",circTop)
+    .attr("fill", "url(#pattern_"+d.id+")")
+  // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
+    // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
+    // .attr("r",d3.select(function(d){return d.r}))
+      .transition().duration(350)
+    .attr("r",imgRadius+"px")
+    .style("stroke","black")
+    .style("stroke-width","1")
+    .style("position","fixed") //bookmark
+    .style("z-index","999")
+    .style("pointer-events","none")
+
+    // .attr("cx",)
+}
+
+function hideHoverImg() {
+  d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
+}
+
 function pad(num, size) { // add leading 0s to nocs like 0011
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var graphMode;
 
@@ -453,20 +708,17 @@ var graphMode;
       .style("z-index", 999)
       .style("pointer-events","none")
 
-      var divLeft;
-      var divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+      var divLeft, divTop;
       
-      if(graphMode == 0) {
-        if(d3.event.pageX < window.innerWidth*0.65) { // left side
-          divLeft = window.innerWidth*0.7 + (d.x);
-        } else if (d3.event.pageX >= window.innerWidth*0.65) { // right side
-          divLeft = window.innerWidth*0.4 + (d.x);
-          divTop = window.innerHeight*0.3 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+
+        if(d3.event.pageX < window.innerWidth/2) { // left side
+          divLeft = window.innerWidth*0.71 + (d.x) + 10;
+          divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
+
+        } else if (d3.event.pageX >= window.innerWidth/2) { // right side
+          divLeft = window.innerWidth*0.69 + (d.x) - 370;
+          divTop = window.innerHeight*0.25 + ((window.innerHeight-300)*(d.y/window.innerHeight));
         }
-      }else if(graphMode == 1) {
-        divLeft = d.cx + window.innerWidth/2;
-        divTop = d.cy + window.innerHeight*0.4;
-      }
 
       // pageY increases downward
       // at small pageY, approach d3.event.pageY
@@ -480,8 +732,8 @@ var graphMode;
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(350*d.wage/maxWage)+"' style='fill: #256D1B;' height='15'></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
+                    "<rect width='"+(350*d.salaryMed/maxSalary)+"' style='fill: #256D1B;' height='15'></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Arial' x='"+(Math.round((350*d.salaryMed/maxSalary+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+"K per yr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #244F26' height='15' y='20'></rect>"+
@@ -527,14 +779,14 @@ var graphMode;
         .style("top", (divTop) + "px")
         .style("z-index",999);
 
-      // div2.transition()
-      // .duration(200)
-      // .style("left", (d3.event.pageX) + 20 + "px")
-      // .style("top", (d3.event.pageY - 80) - d.radius + "px")
-      // .style("opacity", .9)
+      createHoverImg(d);
 
-      // div2.html("test")
+      setTimeout(function() {
+        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial4.html")
+      }, 500)
+
   }
+
 
   function tooltipLarge(d) {
 
@@ -630,7 +882,11 @@ var graphMode;
 
         "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
         "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
-        "Job details page</a><br>"+
+        "JobBank page</a><br>"+
+
+        "<button id='btnSimilarSkills' class='btn btn-sm' "+
+        "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
+        "Similar jobs <br><span style='font-size: 12px'>(sets filters equal to <br>this group's skill levels)</span></button><br>"+
 
         // "<a id='btnVolunteer' class='btn btn-sm' "+
         // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
@@ -663,6 +919,10 @@ var graphMode;
 
         "</div></div>")
           
+        d3.select("#btnSimilarSkills").on("click", function() {
+          // set filter levels to this job group's levels
+        })
+
         div3.transition().duration(350).style("left","360px").style("height","360px")
 
         d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(350).style("opacity",1).style("left","360px")
@@ -735,8 +995,8 @@ function tooltipSmall(d) {
                 +"<svg height='55px' style='margin: 10 0;' class='chart' aria-labelledby='title desc' role='img'>"+
                   "<title id='title'>A bar chart showing information</title>"+
                   "<g class='bar'>"+
-                    "<rect width='"+(350*d.wage/maxWage)+"'  style='fill: #256D1B;'height='15' ></rect>"+
-                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.wage/maxWage+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.wage*100)/100+" per hr</text>"+
+                    "<rect width='"+(350*d.salaryMed/maxSalary)+"'  style='fill: #256D1B;'height='15' ></rect>"+
+                    "<text style='fill: " + colorTooltip(d.cluster) +"; font-family: Raleway' x='"+(Math.round((350*d.salaryMed/maxSalary+5)*100)/100)+"' y='9.5' dy='.35em'>$ "+Math.round(d.salaryMed*100)/100+"K per yr</text>"+
                   "</g>"+
                   "<g class='bar'>"+
                     "<rect width='"+(150*d.yearsStudy/5)+"' style='fill: #244F26' height='15' y='20'></rect>"+
@@ -825,441 +1085,415 @@ function tooltipSmall(d) {
     .attr("y",-100)
 }
 
-
 // on start, transition in radii from 0
 circles.transition()
-.duration(1000)
-.delay(function(d, i) { return i * 2})
+.duration(2000)
+.delay(function(d, i) { return i * 4})
 .attrTween("r", function(d) {
   var i = d3.interpolate(0, d.radius);
   return function(t) { return d.radius = i(t); };
+})
+.styleTween("opacity", function() {
+  var i = d3.interpolate(0, 1);
+  return function(t) { return i(t) }
 });
 
 
-// TODO: maxWorkers, maxWage, skillsMath not working
-var minWorkers = d3.min(nodes, function(d) {return d.workers}),
-minWage = d3.min(nodes, function(d) {return d.wage});
+// // Enable dragging
+// function dragstarted(d) { // no dragging in graph mode
 
-var maxWage = 116.18; //busted
+//   // if clicking on the chart, restart the simulation
+//   if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001).restart();    
+
+//     d.fx = d.x; // drag
+//     d.fy = d.y;
+
+//   // if dragged to right side, becomes sticky
+//   // if (d.fx < window.innerWidth*0.8){
+//     // sticky[d.id] = 1
+//   // }
+
+// }
+
+// function dragged(d) {
+//   d3.select(this).classed("fixed", d.fixed = true);
+
+
+//   // if in right sticky zone
+//   if(d.x > window.innerWidth*0.4) { 
+//     // stick!
+//     sticky[d.id] = 2 // right side
+//     d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
+//   // if in left sticky zone
+//   } else if (d.x < window.innerWidth*-0.4){
+//     sticky[d.id] = 1 // left side
+//     d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
+//   }
+
+//   d.fx = d3.event.x;
+//   d.fy = d3.event.y;
+// }
+
+// function dragended(d) {
+//   if (!d3.event.active && graphMode == 0) simulation.alphaTarget(0.001);
+//   d.fx = null;
+//   d.fy = null;
+// } 
+
+// drag_handler = d3.drag()
+// .on("start", dragstarted)
+// .on("drag", dragged)
+// .on("end", dragended);
+
+// drag_handler(circles);
+
+
+function smashTogether(force, temp) {
+  simulation
+  .force("x", d3.forceX().strength(force)).alpha(temp)
+  .force("y", d3.forceY().strength(force)).alpha(temp)
+  .alphaTarget(0.001)
+  .restart()
+}
+
+// TODO: maxWorkers, maxSalary, skillsMath not working
+var minWorkers = d3.min(nodes, function(d) {return d.workers}),
+minWage = d3.min(nodes, function(d) {return d.salaryMed});
+
 
 maxYearsStudy = d3.max(nodes, function(d) {return d.yearsStudy}); // 5
 
 
 
 
+///////////// Reset Filters /////////////
 
-function setSizes(mode){
+d3.select("#resetFilters").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
 
-  // radii of size legend circles
-  sizesArray = []
-  sizesValuesArray = []
+  //   graphModeOff();
+  // }c
+  resetFilters(currentMode);
+});
 
-  switch (mode) {
-    case "workers":
-    // add minima
-    sizesArray.push(radiusScale(d3.min(nodes, function(d) { return d.workers })))
-    sizesValuesArray.push(d3.min(nodes, function(d) { return d.workers }))
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
-        )
-      sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.workers })
-        )
+resetFilters = function(mode) {
+//collapseCircleImages()
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
+
+    circles.transition().duration(350)
+    // .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          
+          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+          simulation
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick)
+          .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                  forceGravity)
+          // .force()
+          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+
+          simulation.alpha(0.6).alphaTarget(0.001).restart(); 
+
+      }, 450);
     }
-    break;
-    case "wage":
-    // add minima
-    sizesArray.push(wageRadiusScale(d3.min(nodes, function(d) { return d.wage })))
-    sizesValuesArray.push("$ "+String(d3.min(nodes, function(d) { return d.wage })).substring(0,2)+" per hr")
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * wageRadiusScale(d3.max(nodes, function(d) { return d.wage }))
-        )
-      sizesValuesArray.push("$ "+String(
-        (i/5) * d3.max(nodes, function(d) { return d.wage })
-        ).substring(0,2)+" per hr")
-    }
-    break;
-    case "yearsStudy":
-    // add minima
-    sizesArray.push(yearRadiusScale(d3.min(nodes, function(d) { return d.yearsStudy })))
-    sizesValuesArray.push(d3.min(nodes, function(d) { return d.yearsStudy }))
-    // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
-      sizesArray.push(
-        (i/5) * yearRadiusScale(d3.max(nodes, function(d) { return d.yearsStudy }))
-        )
-      sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.yearsStudy })
-        )
-    }
-    break;
-    case "none":
-    break;
-  }
+  }//end collapseCircleImages
+  // Reset green inset-left on all sliders
+  // Main sliders
+  for(var i=0; i<sliderArray.length; i++) {
 
-}
-// size scales
-var wageRadiusScale = d3.scaleSqrt() // Sqrt scale because radius
-.domain([d3.min(nodes, function(d) { return d.wage }), d3.max(nodes, function(d) { return d.wage })]) // input
-.range([1,maxRadius/1.2]); // output -- need to think about relative scales for each set of sizes
+      d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
 
-var automationRadiusScale = d3.scaleSqrt()
-.domain([0.01, d3.max(nodes, function(d) { return d.automationRisk })])
-.range([1,maxRadius/3]);
+  };
 
-var yearRadiusScale = d3.scaleSqrt()
-.domain([d3.min(nodes, function(d) { return d.yearsStudy }), d3.max(nodes, function(d) { return d.yearsStudy })])
-.range([0.01,maxRadius/2]);
-var sizesArray = []
-var sizesValuesArray = []
+  // reset the graph
+  graph = store;
+  hideAll();
+  hideGraphViewCallout();
+  // reset the slider positions
+  for(var i=0; i<sliderArray.length; i++) {
+    handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
+    sliderPositionsArray[i] = 0; // Update the slider positions array
+  };
 
-var currentSize = "Number of Jobs";
-
-function resetSim2() {
-  setTimeout(function() { resetSimulation() }, 600);
-  setTimeout(function() { resetSimulation() }, 700);
-
-  setTimeout(function() { enterUpdateCircles();
-    simulation.alpha(0.7).alphaTarget(0).restart(); }, 200);
-
-  
-  setTimeout(function(){
-    d3.select("#sizeDropdownButton").transition().duration(700).style("opacity", 0).remove()
-    d3.select("#sizeDropdownSpan").transition().duration(700).style("opacity", 0).remove()
-    d3.select("#nextLink").transition().duration(700).style("opacity", 1)
-    d3.select("#nextLink").attr("href","Pave.html")
-  }, 500)
-
-}
-
-sizesDropdown = d3.select("body").append("div").attr("id","sizeDropdownDiv")
-.attr("class","dropup")
-.style("position","fixed")
-.style("opacity",0)
-.style("right","5vw")
-.style("top","51.5vw")
-.append("button")
-.attr("id","sizeDropdownButton")
-.attr("class","btn btn-grey btn-primary dropdown-toggle")
-.attr("type","button")
-.style("box-shadow","0px 0px 17px 7px #E6E447")
-.attr("data-toggle","dropdown")
-.style("height","50px")
-.style("border-width","0px")
-.html("Size by<br>"+currentSize+"<span class='caret'></span>")
-.append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
-.html("<li><strong>Number of Jobs</strong></li>" +
-  "<li><a id='wageLink' href='#'>Wage ($ per hr)</a></li>" +
-  "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-  "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
-
-d3.select("#workLink").on("click", function() {
-
-  circles.transition().duration(100)
-  .delay(function(d, i) { return i * 1})
-  .attrTween("r", function(d) {
-    var i = d3.interpolate(d.radius, radiusScale(d.workers));
-    return function(t) { return d.radius = i(t); };
-  });
-
-  currentSize = "Number of Jobs"
-  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-       // turn off until mouseleave
-       setSizes("workers")
-
-       resetSim2()
-     })
-
-d3.select("#wageLink").on("click", function() {
-
-  circles.transition().duration(100)
-  .delay(function(d, i) { return i * 1})
-  .attrTween("r", function(d) {
-    var i = d3.interpolate(d.radius, wageRadiusScale(d.wage)/1.2);
-    return function(t) { return d.radius = i(t); };
-  });
-
-  currentSize = "Wage"
-  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-
-  setSizes("wage")
-
-  resetSim2()
-})
-
-d3.select("#yearLink").on("click", function() {
-
-  circles.transition().duration(100)
-  .delay(function(d, i) { return i * 1})
-  .attrTween("r", function(d) {
-    var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
-    return function(t) { return d.radius = i(t); };
-  });
-
-  currentSize = "Years of Study"
-  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-
-  setSizes("yearsStudy")
-
-  resetSim2()
-})
-
-d3.select("#equaLink").on("click", function() {
-
-  circles.transition().duration(100)
-  .delay(function(d, i) { return i * 1})
-  .attrTween("r", function(d) {
-    var i = d3.interpolate(d.radius, 10);
-    return function(t) { return d.radius = i(t); };
-  });
-
-  currentSize = "nothing"
-  document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-
-  setSizes("none")
-
-  resetSim2()
-})
-
-
-
-var miniTooltip;
-
-
-
-
-
-sliderSVGArray[0] = d3.select("body")
-.append("div")
-    .attr("id", "sliderDiv_skillsMath") // sliderDiv_skillsLang
-    .style("position", "fixed")
-    .style("left", "7vw")
-    .style("top", "29vw")
-    // lg and xl
-    .html("<div id='div2' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"
-    	+"font-size: 2.5vw; font-weight: bold;"
-    	+" color:  #49AC52; font-family: Raleway'>How much math skill "
-     +"</br>do you wish to have?"
-     +"</div>"
-     )
-    .append("div")
-    .attr("align", "left")
-    .style("position", "fixed")
-    .style("top", "43.5vw")
-    .style("left", "7vw")
-    .style("color", "#49AC52")
-    .style("font-weight", "bold")
-    .style("font-size", "1.5vw")
-    .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+0+"' style='margin-left: 0px; margin-top: 0px'>"
-     +"Not&nbspmuch"
-     +"<span id='notmuchSpan_"+0+"' style='margin-left: 20.52vw'></span>"
-     +"Lots</div>")
-    .select(function() {
-    	return this.parentNode;
-    })
-    .append("svg")
-    // .style("z-index", -1)
-  	// .attr("viewBox", "0 0 "+230+" "+150)
-  	.style("position", "fixed")
-    .style("top", "38vw") // y position
-    .style("left", "5.7vw") // y position
-    // .style("margin-left", -sub_xtranslate+"%") // x position
-    .attr("id", "slider_"+0)
-    .style("width","35vw")
-    .style("height", "80px")
-    // .style("height", "3vw")
-    // .attr("width", "10vw")
-    // .attr("height", "5vw");
-
-
-
-  // Scale
-  sliderScaleArray[0] = d3.scaleLinear()
-  .domain([0, d3.max(nodes, function(d){ return d["skillsMath"]})])
-    .range([2.4, 30.7]) // Width of slider is 200 px
-    .clamp(true);
-  // Bugfix: math max not working
-  if(["Math skills"].includes("Math skills")) {
-    sliderScaleArray[0] = d3.scaleLinear()
-    .domain([0, 59])
-    .range([window.innerWidth*0.03, window.innerWidth*0.3]) // Width of slider is 200 px
-    .clamp(true);
-  }
-
-  // Move Wage, Number of Jobs down
-    // Slider
-  sliderMulti[0] = sliderSVGArray[0].append("g") // switch to SVG with viewBox?
-  .attr("class", "slider")
-  // .style("z-index", 99)
-  
-  var sliderY = "3.5vw"
-
-  // track
-  sliderMulti[0].append("line")
-  .attr("class", "track")
-  .attr("x1", "2.4vw")
-  .attr("x2", "30.7vw")
-  .attr("y1", sliderY)
-  .attr("y2", sliderY)
-  .select(function() {
-    return this.parentNode;
-  }) // inset
-  .append("line")
-  .attr("x1", "2.4vw")
-  .attr("x2", "30.7vw")
-  .attr("y1", sliderY)
-  .attr("y2", sliderY)
-  .attr("class", "track-inset")
-  .select(function() {
-    return this.parentNode;
-  }) // inset-left (fills up green on drag)
-  .append("line")
-  .attr("x1", "2.4vw")
-  .attr("x2", "2.4vw")
-  .attr("y1", sliderY)
-  .attr("y2", sliderY)
-  .attr("class", "track-inset-left")
-  .attr("id","inset-left_"+0)
-  .select(function() {
-    return this.parentNode;
-  }) // overlay
-  .append("line")
-  .attr("x1", "2.4vw")
-  .attr("x2", "30.7vw")
-  .attr("y1", sliderY)
-  .attr("y2", sliderY)
-  .attr("class", "track-overlay")
-  .attr("id", 0)
-  .on("mouseover", function() {
-    d3.select("#handle_"+this.id).style("fill","#eaeaea")
-  })
-  .on("mouseout", function() {
-    d3.select("#handle_"+this.id).style("fill","white")
-    if(typeof miniTooltip != "undefined"){
-      miniTooltip.transition().duration(500)
-      .style("opacity",0)
-    }
-  })
-  .call(d3.drag()
-    .on("start.interrupt", function() {
-      sliderMulti[event.target.id].interrupt();
-    }) // drag update function
-    .on("start drag", function() {
-      if(typeof miniTooltip == "undefined"){
-        miniTooltip = d3.select("body").append("div")
-          .attr("class", "minitooltip")
-          .style("opacity", 0);
-      }
-      // show mini tooltip indicating how many job groups remain
-      
-      miniTooltip.transition().duration(200)
-      .style("opacity",.9)
-      miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
-      // .style("left", (event.pageX - 64) + "px")
-      
-      if($(event.target).attr('class') == 'track-overlay'){
-        miniTooltip.style("top", (event.target.getBoundingClientRect().top - 100) + "px")
-      }
-                  // (d3.select("#handle_"+this.id)
-      miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px")
-
-      graph.length <= 10 ? miniTooltip.style("color","#FE2E2E") : miniTooltip.style("color", "white");
-
-      // jam sliders at n < 10
-      // if(graph.length > 10){
-        updateMulti(sliderScaleArray[0].invert(d3.event.x)); // pass the current line id to update function
-      // }
-      // }
-    
-    })
-  );
-
-  handleArray[0] = sliderMulti[0].append("circle", ".track-overlay")
-  .attr("cx", "2.4vw")
-  .attr("cy", sliderY)
-  .attr("class", "handleTutorial")
-  .style("stroke-width","0.275vw")
-  .style("pointer-events", "none")
-  .attr("r", "1vw")
-  .attr("id","handle_"+0);
-
-    // Bugfix: lang slider not on top
-  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
-  //   d3.select("#"+i).style("z-index", 99);
-  // }
-
-
-// Update function which detects current slider
-//  general update pattern for updating the graph
-function updateMulti(h) {
-
-  // using the slider handle
-  // var sliderID = event.target.id;
-  handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
- 
-  // jam sliders at n <= 10
-  // if(graph.length > 10){
-    // jamSliders()
-    handleArray[0].attr("cx", sliderScaleArray[0](h)); // move the slider handle
-  // }
-
-  // Update the slider positions array
-  sliderPositionsArray[0] = sliderScaleArray[0].invert(d3.event.x);
-
-  // jam sliders
-  // if(graph.length > 10){
-
-  //  UPDATE
-  circles = circles.data(filterAll(), function(d) { return d.id });
-  
-  // EXIT
-  circles.exit().transition().duration(300)
-  // exit transition: "pop" radius * 1.5 + 5 & fade out
-  .attr("r", function(d) { return d.radius * 1.5 + 5 })
-  .attrTween("opacity", function(d) {
-    var i = d3.interpolate(1, 0);
-    return function(t) { return d.opacity = i(t); };
-  })
-  .remove();
-
+  // reset all circles
+  circles = circles.data(store, function(d) { return d.id });
   // ENTER (create the circles with all attributes)
   enterUpdateCircles();
+  // restart simulation only if graph mode off
+  if (graphMode == 0) {
+      resetSimulation();
 
-  // reset simulation if graph mode = off
-  simulation.nodes(filterAll())
+      // forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+      // simulation
+      // .force("collide", d3.forceCollide(function(d) { return d.radius }))
+      // .force("cluster", forceCluster)
+      // .force("gravity", forceGravity)
+      // .force("x", forceXCombine)
+      // .force("y", forceYCombine)
+      // .on("tick", tick);
+
+      // if(graphMode == 0){
+      //   simulation.alpha(0.15).alphaTarget(0.001).restart();
+      // }
+
+  }
+///////////// Reset Filters /////////////
+
+d3.select("#resetFilters").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
+
+  //   graphModeOff();
+  // }c
+  resetFilters(currentMode);
+});
+
+resetFilters = function(mode) {
+//collapseCircleImages()
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
+
+    circles.transition().duration(350)
+    // .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          
+          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+          simulation
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick)
+          .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                  forceGravity)
+          // .force()
+          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+
+          simulation.alpha(0.6).alphaTarget(0.001).restart(); 
+
+      }, 450);
+    }
+  }//end collapseCircleImages
+  // Reset green inset-left on all sliders
+  // Main sliders
+  for(var i=0; i<sliderArray.length; i++) {
+
+      d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
+
+  };
+
+  // reset the graph
+  graph = store;
+  hideAll();
+  hideGraphViewCallout();
+  // reset the slider positions
+  for(var i=0; i<sliderArray.length; i++) {
+    handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
+    sliderPositionsArray[i] = 0; // Update the slider positions array
+  };
+
+  // reset all circles
+  circles = circles.data(store, function(d) { return d.id });
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+  // restart simulation only if graph mode off
+  resetSimulation();
+ }
+
+
+function resetSimulation() {
+  simulation.nodes(store)
   .force("collide", forceCollide)
   .force("cluster", forceCluster)
   .force("gravity", forceGravity)
   .force("x", forceXCombine)
   .force("y", forceYCombine)
   .on("tick", tick);
-  simulation.alphaTarget(0.2).restart();
-// }
 
+  restartSimulation();
+}
+
+function restartSimulation(){
+  simulation.alpha(0.25).alphaTarget(0.001).restart();
+}
+
+
+/////// Tooltips (post-filter)
+
+// enterUpdateCircles = function() {
+//     var newCircles = circles.enter().append("circle")
+//     .attr("r", function(d) { return d.radius }) // start at full radius
+//     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+//     .style("fill", function(d) { 
+//       if(circleExpanded[d.id] != 1){
+//         return color(d.cluster); 
+//       }else { return "url(#pattern_"+d.id+")" }
+//      })
+//     .attr("class","jobCircle")
+//     .attr("id",function(d) { return "circle_"+d.id })
+//     .attr("opacity",
+//       function(d) { // make filtered circles transparent
+//         // if the industry is on the list, transparent
+//         if( filteredIndustries.includes(+d.industryNum) ) { 
+//           return 0.1 }
+//         else{ 
+//           return 1 }
+//     })  
+
+
+//     // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
+
+//     // Tooltips
+//  // Tooltips
+//     .on("mouseenter", function(d) {
+//       if (clicked == 1) return;
+//       // highlight the current circle
+//       d3.selectAll("circle").attr("stroke", "none");
+//       d3.select(this)
+//         .style("fill", "url(#pattern_"+d.id+")" )
+//         // .attr("stroke", "black")
+//         .style("stroke-width", 2)
+//         .attr("stroke", color(d.cluster));
+//       showToolTip(0);
+//       tooltipMouseover(d);
+//       hoverTimeout = setTimeout(function(){
+//         tooltipLarge(d)
+//         clicked = 1
+//       }, 1750)
+//       })
+//     .on("mouseout", function(d) {
+
+//       if(!circleExpanded[d.id] == 1){
+//         d3.select(this)
+//           .style("fill", color(d.cluster) )
+//           // .attr("stroke", "black")
+//           .style("stroke-width", 2)
+//           .attr("stroke", color(d.cluster));
+//       }
+
+//       clearTimeout(hoverTimeout)
+//       if (clicked == 1) return;
+//       clicked = 0;
+//       hideToolTip(500)
+//       d3.select(this).attr("stroke", "none");
+//       // div.transition().duration(500).style("opacity", 0)
+
+//     })
+//     .on("click", function(d) {
+//       clearTimeout(hoverTimeout)
+//       // click-off
+//       if (clicked == 1) { 
+//         clicked = 0
+//         hideToolTip(500)
+//       // click-on
+//       } else if (clicked == 0) {
+//         clicked = 1;
+//         tooltipLarge(d);
+//        }
+//       // hideToolTip(0);
+//       // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+//       // tooltipSmall(d);}
+//       })
+
+//   drag_handler(newCircles);
+//   //  ENTER + UPDATE
+//   if(graphMode == 1){ // transition in radii in graph mode
+//     circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
+//   }else if(graphMode == 0){
+//     circles = circles.merge(newCircles);
+//   }
+  
+
+// } 
+
+
+// Update function which detects current slider
+//  general update pattern for updating the graph
+function updateMulti(h, mode) {
+ 
+  // using the slider handle
+  var sliderID = event.target.id;
+  // jam sliders at n <= 10
+    // jamSliders()
+    handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
+  // }
+
+  // Update the slider positions array
+  sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
+
+  
+  var filteredNodes = filterAll()
+  //  UPDATE
+  circles = circles.data(filteredNodes, function(d) { return d.id });
+    
+  // EXIT
+  circles.exit().transition().duration(500)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", function(d) { return d.radius * 2.1 + 5 })
+  .styleTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return i(t); };
+  })
+  .remove();
+
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+
+  //bookmarklet : resetSimulation()?
+
+  // reset simulation if graph mode = off
+    simulation.nodes(filteredNodes)
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+    restartSimulation();
+
+// } // end if graph length > 10
 };//end updateMulti
-
-
 
 
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
+
 filterAll = function() {
+  
   // first, clear the list
-  listToDeleteMulti = [];
+  var listToDeleteMulti = [];
   
   // reset the graph
   graph = [];
 
+  // var currentSlider = sliderPositionsArray[event.target.id]
+
   store.forEach(function(d){ // for each circle
 
     // put you on the list if the slider position is above your value:
-      
-    // for each slider
+    
+    // for current slider only
     for(var s in sliderPositionsArray){        
       // if the slider position is above your value  &  if you're not already on the list
       if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
@@ -1279,7 +1513,7 @@ filterAll = function() {
     // if you're on the list
     } else if (listToDeleteMulti.includes(n.id)) {
       // for each graph item
-      graph.forEach(function(d, p) {
+      graph.forEach(function(d, p) { // p = position
         if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
@@ -1288,222 +1522,56 @@ filterAll = function() {
     };
   });
 
-  // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
-  // todo: separate main and subslider for loops
-
-  // var sliderArray = [
-  // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
-  //     // subskills
-  //     "s8OralCommunication","s10Reading","s14Writing",
-      
-  //     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
-      
-  //     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
-        
-  //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
-  // ];
-
-  // jam sliders
-  if(graph.length > 10){
-
   // Main sliders
-  for(var i=0; i<1; i++) {
+  for(var i=0; i<4; i++) {
 
     if(event.target.id != i) {
+      // find the minimum of each slider on the current graphed set
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
-      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // move the slider handle
+      handleArray[i].attr("cx", thisMinimum);
       // fill the left side green
       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
 
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       // fill the left side green (using mouse position on current slider)
-      d3.select("#inset-left_"+i).attr("x2", function() { 
+
+      d3.select("#inset-left_"+i).attr("x2", function() {
         if (sliderScaleArray[0].invert(d3.event.x) <= 0) { return sliderScaleArray[0](sliderPositionsArray[0]) }
         else { 
           return d3.event.x }
-      })
+        } )
     }
   };
-  }
 
-  // // Subskill sliders
-  // for(var i=4; i<sliderArray.length; i++) {
-  //   if(event.target.id != i) {
-  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-  //     handleArray[i].attr("cx", thisMinimum); // move the slider handle
-  //     // fill the left side green
-  //     d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+  // Subskill sliders
+  for(var i=4; i<sliderArray.length; i++) {
+    if(event.target.id != i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+      handleArray[i].attr("cx", thisMinimum); // move the slider handle
+      // fill the left side green
+      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
 
-  //   }else if(event.target.id == i) {
-  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-  //     // fill the left side green (using mouse position on current slider)
-  //     d3.select("#inset-left_"+i).attr("x2", d3.event.x )
-  //   }
-  // };
-
-  return graph;
-}
-
-var firstTime = true;
-
-enterUpdateCircles = function() {
-  var newCircles = circles.enter().append("circle")
-    .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate("+window.innerWidth/3+","+window.innerHeight/5+")") //flag! need to make equation for width/height ratio
-    .style("fill", function(d) { return color(d.cluster); })
-    .on("mouseenter", function(d) {
-      if (clicked == 1) return;
-      // highlight the current circle
-      d3.selectAll("circle").attr("stroke", "none");
-      d3.select(this).attr("stroke", "black").attr("stroke-width", 3);
-      showToolTip(0);
-      tooltipMouseover(d);
-      hoverTimeout = setTimeout(function(){
-        tooltipLarge(d)
-        clicked = 1
-      }, 1750)
-      })
-    .on("mouseout", function(d) {
-      clearTimeout(hoverTimeout)
-      if (clicked == 1) return;
-      clicked = 0;
-      hideToolTip(500)
-      d3.select(this).attr("stroke", "none");
-      // div.transition().duration(500).style("opacity", 0)
-
-      // div
-      // .style("opacity", 0);
-      // setTimeout(function(){
-      // //   if(typeof div2 != "undefined") div2.remove();
-      //   if(typeof div != "undefined") div.remove();
-      // },250)
-    })
-    .on("click", function(d) {
-      clearTimeout(hoverTimeout)
-      // click-off
-      if (clicked == 1) { 
-        clicked = 0
-        hideToolTip(500)
-      // click-on
-      } else if (clicked == 0) {
-        clicked = 1;
-        tooltipLarge(d);
-       }
-      // hideToolTip(0);
-      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-      // tooltipSmall(d);}
-      })
-
-    circles = circles.merge(newCircles);
-
-    if (firstTime) {
-      d3.select("#div1").transition().duration(750).style("opacity", 0.2)
-      d3.select("#div2").transition().duration(750).style("opacity", 0.2)
-      d3.select("#div3").transition().duration(750).style("opacity", 0.2)
-      d3.select("#resetFilters").transition().duration(750).style("opacity", 1)
-      d3.select("#resetFiltersSpan").transition().duration(750).style("opacity", 1)
-      d3.select("#nextBtn1").transition().duration(750).style("opacity", 1)
+    }else if(event.target.id == i) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+i).attr("x2", d3.event.x )
     }
-    firstTime = false;
-
-  }
-
-
-
-///////////// Reset Filters /////////////
-
-d3.select("#resetFilters").on('click', function(d) {
-  // if (graphMode == 1) {
-  //   graphMode = 0;
-
-  //   graphModeOff();
-  // }c
-  resetFilters(0);
-
-  // fade in dropdown
-  d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
-  d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
-  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0).remove()
-  d3.select("#resetFilters").transition().duration(750).style("opacity", 0).remove()
-  d3.select("#nextBtn1").transition().duration(750).style("opacity", 0).remove()
+  };
+  calloutCheck()
+  return graph;
+} // end filterAll
+}// Update function which detects current slider
 
 
-});
-
-d3.select("#nextBtn1").on('click', function(d) {
-  // if (graphMode == 1) {
-  //   graphMode = 0;
-
-  //   graphModeOff();
-  // }c
-  resetFilters(0);
-
-  // fade in dropdown
-  d3.select("#sizeDropdownSpan").style("opacity",0).transition().duration(750).style("opacity",1)
-  d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(750).style("opacity",1)
-  d3.select("#resetFiltersSpan").transition().duration(750).style("opacity",0).remove()
-  d3.select("#resetFilters").transition().duration(750).style("opacity", 0).remove()
-  d3.select("#nextBtn1").transition().duration(750).style("opacity", 0).remove()
+})
+} // end of d3.csv
 
 
-});
-
-function resetFilters(mode) {
-
-  graph = store;
-
-  d3.select("#inset-left_"+0).attr("x2", "2.4vw" )
-
-  // reset the slider positions
-    handleArray[0].attr("cx", sliderScaleArray[0](0)); // move the slider handle
-    sliderPositionsArray[0] = 0; // Update the slider positions array
-
-  // reset all circles
-  circles = circles.data(store, function(d) { return d.id });
-  // ENTER (create the circles with all attributes)
-  enterUpdateCircles();
-  // restart simulation only if graph mode off
-
-  resetSimulation();
-
-};
-
-
-function resetSimulation() {
-  simulation.nodes(store)
-  .force("collide", forceCollide)
-  .force("cluster", forceCluster)
-  .force("gravity", forceGravity)
-  .force("x", forceXCombine)
-  .force("y", forceYCombine)
-  .on("tick", tick);
-  simulation.alphaTarget(0.2).restart();
-}
-}) // end of d3.csv
-
-} // end of createVis()
 
 
 </script>
-
-<svg>
-  <defs>
-
-    <filter id="f1" width="150%" height="150%">
-      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
-      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
-      </feComponentTransfer>
-      <feMerge> 
-        <feMergeNode/> <!-- this contains the offset blurred image -->
-        <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
-      </feMerge>
-    </filter>
-
-  </defs>
-</svg>
 
 </body>
 

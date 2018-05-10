@@ -13,6 +13,8 @@ var graphFirstTime = true;
 var legendMode = 0;
 var equalRadius = 9;
 var nodePadding = 1;
+var imgRadius = 125;
+var forceGravityMultiplier = -10;
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -122,16 +124,30 @@ height = window.innerHeight/1.5,
     maxRadius = 30; // Max circle radius
 
 
+
 ///////////////// TODO: Mobile version /////////////////
 
-d3.select(window).on("resize", resize);
+d3.select(window).on("resize", function() {
+  resize();
 
-// resize the window
+  d3.selectAll(".jobCircle").attr("r", equalRadius)
+
+  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+
+  simulation.force("collide", forceCollide).force("gravity", forceGravity)
+    .alpha(0.25).alphaTarget(0.001).restart();
+
+});
+
+resize()
+
 function resize() {
 
   var resizeDuration = 350;
 
   var w = $(window).width();
+  console.log(w)
   var h = $(window).height();
   // console.log(w+" x "+h)
 
@@ -145,10 +161,14 @@ function resize() {
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
-  setTimeout(function() {
-    d3.select("#sliderDiv_skillsComp").style("left", "0%")
-    d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
-  },1)
+    nodePadding = 0;
+    equalRadius = 6;
+    forceGravityMultiplier = -6;
+
+    setTimeout(function() {
+      d3.select("#sliderDiv_skillsComp").style("left", "0%")
+      d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
+    },1)
 
   }else{
     d3.select("#chart").style("margin-top","")
@@ -159,10 +179,14 @@ function resize() {
     d3.selectAll(".btn-legend").style("margin","5px")
     d3.select("#sliderDiv_skillsLang").style("left", "9vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
-  setTimeout(function() {
-    d3.select("#sliderDiv_skillsComp").style("left", "9%")
-    d3.select("#sliderDiv_skillsMath").style("right", "9%")
-  },1)
+    setTimeout(function() {
+      d3.select("#sliderDiv_skillsComp").style("left", "9%")
+      d3.select("#sliderDiv_skillsMath").style("right", "9%")
+    },1)
+
+    nodePadding = 1;
+    equalRadius = 9;
+    forceGravityMultiplier = -10;
   }
 
   if(w < 768){
@@ -174,6 +198,10 @@ function resize() {
        .style("width","85px") .style("margin-bottom","-15px")
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
+
+    nodePadding = 0;
+    equalRadius = 5;
+    forceGravityMultiplier = -5;
 
     $("#titleBar").hide()
 
@@ -208,7 +236,7 @@ function resize() {
   if(window.innerWidth<641){ // Phones
     margin = {top: 20, right: 12, bottom: 20, left: 12}
   }
-}
+} // end of resize()
 
 
 // number of distinct clusters
@@ -362,7 +390,7 @@ var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
 var forceGravity = d3.forceManyBody()
-.strength(function(d) { return -10 * d.radius })
+.strength(function(d) { return forceGravityMultiplier * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -408,14 +436,14 @@ tick = function() {
 
 
       // if sticky
-      if(sticky[d.id] == 2){
-        // stuck
-        return window.innerWidth*0.4 
-      } else if(sticky[d.id] == 1){
-        return window.innerWidth*-0.4
-      } else {
+      // if(sticky[d.id] == 2){
+      //   // stuck
+      //   return window.innerWidth*0.4 
+      // } else if(sticky[d.id] == 1){
+      //   return window.innerWidth*-0.4
+      // } else {
       return d.x; 
-      }
+      // }
   })
   .attr("cy", function(d) { 
     return d.y; });
@@ -528,15 +556,6 @@ circles = svg.selectAll("circle")
         
       // }, 500)
 
-
-
-// d3.select("body").on("mouseover", function(d){
-//   // if clicked outside of left or right 1/5 page,
-//   if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
-//      d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
-//     hideToolTip(500);
-//   }
-// })
 
 d3.select("#chart").on("click", function(d){
   // hide any subskill sliders
@@ -662,11 +681,12 @@ function createHoverImg(d) {
     // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
     // .attr("r",d3.select(function(d){return d.r}))
       .transition().duration(350)
-    .attr("r","100px")
+    .attr("r",imgRadius+"px")
     .style("stroke","black")
     .style("stroke-width","1")
     .style("position","fixed") //bookmark
     .style("z-index","999")
+    .style("pointer-events","none")
 
     // .attr("cx",)
 }
@@ -821,7 +841,6 @@ var graphMode;
   .style("border-bottom-right-radius","6px")
   .style("pointer-events","auto");
 
- 
   d3.select("#miniBars").transition().duration(275)
   // .style("margin-top",250+"px")
   .style("opacity",0);
@@ -924,22 +943,6 @@ var graphMode;
         "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "'>"+
         "&nbspcoming soon&nbsp</a><br>"+
-
-        // "<a id='btnIndeed' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
-        // "&nbspIndeed.ca&nbsp</a><br>"+
-
-        // "<a id='btnGlassdoor' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
-        // "&nbspGlassdoor.ca&nbsp</a><br>"+
-
-        // "<a id='btnMonster' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
-        // "&nbspMonster.ca&nbsp</a><br>"+
-
         "</div></div>")
           
         d3.select("#btnSimilarSkills").on("click", function() {
@@ -990,18 +993,7 @@ var graphMode;
     .attr("height", (d.skillsMath*stretch_y))
     .attr("y",150)
 
-  // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
-  // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");
   div2.transition().duration(250).style("height","250px");
-
-        // Unfurl downward
-        // .style("height", 200)
-        // .transition()
-        // .duration(200)
-        // .style("height", "auto")
-       // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
-
-
 
      };
 
@@ -1058,12 +1050,7 @@ function tooltipSmall(d) {
           // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
           "</g>"+
         "</svg>"
-        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
-        // Move div above mouse by "top" + radius and right by "left"
-        // .style("left", (d3.event.pageX) + 20 + "px")
-        // .style("background", color(d.cluster) )
-        // .style("top", (d3.event.pageY - 80) - d.radius + "px")
 
             }, 200);
 
@@ -1142,16 +1129,16 @@ function dragged(d) {
   d3.select(this).classed("fixed", d.fixed = true);
 
 
-  // if in right sticky zone
-  if(d.x > window.innerWidth*0.4) { 
-    // stick!
-    sticky[d.id] = 2 // right side
-    d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
-  // if in left sticky zone
-  } else if (d.x < window.innerWidth*-0.4){
-    sticky[d.id] = 1 // left side
-    d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
-  }
+  // // if in right sticky zone
+  // if(d.x > window.innerWidth*0.4) { 
+  //   // stick!
+  //   sticky[d.id] = 2 // right side
+  //   d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
+  // // if in left sticky zone
+  // } else if (d.x < window.innerWidth*-0.4){
+  //   sticky[d.id] = 1 // left side
+  //   d3.select(this).style("fill", function(d) { return "url(#pattern_"+d.id+")" }).attr("stroke-width", "2px").attr("r","30px")
+  // }
 
   d.fx = d3.event.x;
   d.fy = d3.event.y;
@@ -1867,7 +1854,7 @@ var originalRadius = {};
 
 // })
 
-function createGraphExplainerDiv() {
+function createGraphExplainerDiv() { //bookmarklet
   // width of the div
   var explainerWidth = 700;
     // append a large div, transition its height and width
@@ -3014,7 +3001,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -3166,12 +3153,8 @@ enterUpdateCircles = function() {
         else{ 
           return 1 }
     })  
-
-
     // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
-
     // Tooltips
- // Tooltips
     .on("mouseenter", function(d) {
       if (clicked == 1) return;
       // highlight the current circle
@@ -4125,17 +4108,12 @@ function calloutCheck() {
 
 
 filterAll = function() {
-  
   // first, clear the list
   var listToDeleteMulti = [];
-  
   // reset the graph
   graph = [];
-
   // var currentSlider = sliderPositionsArray[event.target.id]
-
   store.forEach(function(d){ // for each circle
-
     // put you on the list if the slider position is above your value:
     
     // for current slider only
@@ -4146,18 +4124,7 @@ filterAll = function() {
         listToDeleteMulti.push(d.id);
       }
     }
-      
-    // // for each slider
-    // for(var s in sliderPositionsArray){        
-    //   // if the slider position is above your value  &  if you're not already on the list
-    //   if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
-    //     // put you on the list
-    //     listToDeleteMulti.push(d.id);
-    //   }
-    // }
-
   })
-  
   // update the graph based on the filter list
   store.forEach(function(n) {
     // if you're not on the filter list
@@ -4171,28 +4138,9 @@ filterAll = function() {
         if (n.id === d.id) {
           graph.splice(p, 1); // get you off of there!
         }
-
       })
     };
   });
-
-  // move all slider handles to new minimums for the filtered set (to avoid wasted motion)
-  // todo: separate main and subslider for loops
-
-  // var sliderArray = [
-  // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
-  //     // subskills
-  //     "s8OralCommunication","s10Reading","s14Writing",
-      
-  //     "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
-      
-  //     "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
-        
-  //     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
-  // ];
-
-  // Update all sliders when dragging any one slider
-
   // Main sliders
   for(var i=0; i<4; i++) {
 
@@ -4203,19 +4151,16 @@ filterAll = function() {
       handleArray[i].attr("cx", thisMinimum);
       // fill the left side green
       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
-
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       // fill the left side green (using mouse position on current slider)
-
       d3.select("#inset-left_"+i).attr("x2", function() {
-        if (sliderScaleArray[0].invert(d3.event.x) <= 0) { return sliderScaleArray[0](sliderPositionsArray[0]) }
+        if (sliderScaleArray[i].invert(d3.event.x) <= 0) { return sliderScaleArray[i](sliderPositionsArray[i]) }
         else { 
           return d3.event.x }
         } )
     }
   };
-
   // Subskill sliders
   for(var i=4; i<sliderArray.length; i++) {
     if(event.target.id != i) {
@@ -4229,59 +4174,12 @@ filterAll = function() {
       // fill the left side green (using mouse position on current slider)
       d3.select("#inset-left_"+i).attr("x2", d3.event.x )
     }
-  };
-
+  }
   calloutCheck()
-
-
   return graph;
-}
+} // end filterAll
 
-// old version
-
-// filterAll = function() {
-//   calloutCheck()
-//   // h = sliderScaleArray[event.target.id].invert(d3.event.x)
-//   // START by filtering out nodes under the minimums
-//   store.forEach(function(d) {
-//     // INEFFICIENT -- TODO: fewer loops
-
-//       // first, take all nodes off the list              OR loop through sliders removing, then loop through adding?
-//       if (listToDeleteMulti.includes(d.id)) listToDeleteMulti.splice(listToDeleteMulti.indexOf(d.id),1);
-
-//       // then loop through the sliders array and put you on the list
-//       for(var s=0; s<sliderPositionsArray.length; s++){
-//         // if the slider position is above your value, put you on the list
-//         var checkMin = sliderPositionsArray[s];
-//         if(d[sliderArray[s]] < checkMin && !listToDeleteMulti.includes(d[sliderArray[s]])) {
-//           listToDeleteMulti.push(d.id);
-//         }
-
-//       }
-      
-//     })
-//     // reset the graph
-//   graph = [];
-//   // THEN update the graph based on the filter list
-//   store.forEach(function(n) {
-//     // if you're not on the filter list
-//     if (!listToDeleteMulti.includes(n.id)) {
-//       // put you on the graph         (start graph empty? or check)
-//       graph.push(n);
-//     // if you're on the list
-//     } else if (listToDeleteMulti.includes(n.id)) {
-//       graph.forEach(function(d, p) {
-//         if (n.id === d.id) {
-//           graph.splice(p, 1); // get you off of there!
-//         }
-//       })
-//     };
-//   });
-//   return graph;
-// }
-
-
-};// Update function which detects current slider
+}// Update function which detects current slider
 
 
 
@@ -4427,12 +4325,12 @@ var searchDiv = d3.select("body")
 
 var searchExpanded = 0;
 
-
+expandSearch()
 function expandSearch() {
 
   if(searchExpanded == 0){
-    d3.select("#searchDiv")
-      .transition().duration(500).style("width", window.innerWidth/2 - 60 + "px").style("opacity", 1)
+    d3.select("#searchDiv").style("right",18+"%")
+      .transition().duration(500).style("width", window.innerWidth * 0.5 - 200 + "px").style("opacity", 1)
     d3.select("#jobTitle").transition().duration(500).style("opacity","1")
     // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
     searchExpanded = 1;
@@ -5070,8 +4968,6 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       
   }
 }
-
-
 
 
 function hideLang() {

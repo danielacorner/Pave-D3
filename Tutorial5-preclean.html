@@ -46,14 +46,21 @@
 
 
 <div class="d-inline" style="position: fixed; left: 1vw; top: 15vw; font-size: 1.4vw; font-weight: 600; color: #49AC52">
-    <span id='titlespan' style="opacity: 0; font-size: 3.05vw; font-weight: normal;">
-      <p style="margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
-      <p style="margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
-      <p style="margin-left: 7vw; margin-bottom: 0em">Hover over the circles to see</p>
-      <p style="margin-left: 7vw; margin-bottom: 0.25em">the group details.</p>
-    </span>
+    <span id='titlespan' style="opacity: 0; font-size: 2.25vw; font-weight: normal;">
+      <div id="textBox" style="margin-left: 12vw; width: 35vw">
+        <p>The skill sliders let you look at jobs that use different amounts of various skillsets.</p>
 
-    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 43vw;">
+        <p>Move the slider handle below to "Lots" to see which jobs use more math skills.</p>
+      </div>
+<!--       <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
+      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
+      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 0em">Hover over the circles to see</p>
+      <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 1.5em">the group details.</p>
+      <p style="margin-left: 7vw; margin-bottom: 0em">Click the circles on the right to</p>
+      <p style="margin-left: 7vw; margin-bottom: 0.25em">see skills used on the job.</p>
+ -->    </span>
+
+    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 48vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
         <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
@@ -81,8 +88,74 @@ var graphFirstTime = true;
 var legendMode = 0;
 var equalRadius = 9;
 var nodePadding = 1;
-var clicked = 0;
 var imgRadius = 125;
+var forceGravityMultiplier = -10;
+
+
+////////////////////// Hover divs for question marks //////////////////////////////
+
+var sliderArray = [
+"skillsLang", "skillsLogi", "skillsMath", "skillsComp",
+    // subskills
+    "s8OralCommunication","s10Reading","s14Writing",
+    
+    "s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking","s2DecisionMaking",
+    
+    "s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting",
+      
+    "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
+];
+
+// var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
+//   // subskills
+//     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
+//     "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
+//     "Problem Solving","Reading","Scheduling or Budgeting and Accounting","Digital Technology",
+//     "Document Use","Writing","Critical Thinking"
+//     ];
+
+var sliderTitlesArray = [
+// "Language skills", "Logic skills", "Math skills", "Computer skills",
+  // subskills
+    "Oral Communication","Reading","Writing",
+    "Job Task Planning and Organizing","Problem Solving","Critical Thinking","Decision-Making",
+    "Measurement and Calculation","Money Math","Numerical Estimation","Scheduling or Budgeting and Accounting",
+    "Data Analysis","Finding Information","Digital Technology","Document Use"
+    ];
+
+var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
+
+var sliderTitlesArrayMain = [
+"Language skills", "Logic skills", "Math skills", "Computer skills",
+];
+
+// var sliderArrayStats = ["wage", "workers"];
+
+var sliderArrayLang = ["s8OralCommunication","s10Reading","s14Writing"];
+var sliderTitlesArrayLang = ["Oral Communication","Reading","Writing"];
+
+var sliderArrayLogi = ["s2DecisionMaking","s4JobTaskPlanningandOrganizing","s9ProblemSolving","s15CriticalThinking"];
+var sliderTitlesArrayLogi = ["Decision-Making","Job Task Planning and Organizing","Problem Solving","Critical Thinking"];
+
+var sliderArrayMath = ["s5MeasurementandCalculation","s6MoneyMath","s7NumericalEstimation","s11SchedulingorBudgetingandAccounting"];
+var sliderTitlesArrayMath = ["Measurement and Calculation","Money Math","Numerical Estimation","Scheduling, Budgeting, Accounting"];
+
+var sliderArrayComp = ["s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse",];
+var sliderTitlesArrayComp = ["Data Analysis","Finding Information","Digital Technology","Document Use"];
+
+
+var sliderPositionsArray = []; // array to track all sliders
+var sliderSVGArray = []; // array of slider SVGs
+var sliderScaleArray = []; // array of slider scale functions
+var sliderMulti = [];
+var handleArray = []; // array of slider handles
+listToDeleteMulti = []; // filtered IDs
+
+var filteredIndustries = [];
+
+
+var graph, store; // displayed, stored data
+var clicked = 0; // on: tooltips don't disappear
 
 
   // load the data
@@ -104,11 +177,21 @@ height = window.innerHeight/1.5,
 
 ///////////////// TODO: Mobile version /////////////////
 
-d3.select(window).on("resize", resize);
-setTimeout(function(){
-  resize()
-}, 4500)
-// resize the window
+d3.select(window).on("resize", function() {
+  resize();
+
+  d3.selectAll(".jobCircle").attr("r", equalRadius)
+
+  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+
+  simulation.force("collide", forceCollide).force("gravity", forceGravity)
+    .alpha(0.25).alphaTarget(0.001).restart();
+
+});
+
+resize()
+
 function resize() {
 
   var resizeDuration = 350;
@@ -128,11 +211,9 @@ function resize() {
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
-    d3.selectAll(".jobCircle").attr("r","6px")
-    forceCollide = d3.forceCollide(function(d) { return d.radius + 0 })
-    forceGravity = d3.forceManyBody().strength(function(d) { return -6 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 0;
+    equalRadius = 6;
+    forceGravityMultiplier = -6;
 
     setTimeout(function() {
       d3.select("#sliderDiv_skillsComp").style("left", "0%")
@@ -153,11 +234,9 @@ function resize() {
       d3.select("#sliderDiv_skillsMath").style("right", "9%")
     },1)
 
-    d3.selectAll(".jobCircle").attr("r","9px")
-    var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
-    var forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 1;
+    equalRadius = 9;
+    forceGravityMultiplier = -10;
   }
 
   if(w < 768){
@@ -170,11 +249,9 @@ function resize() {
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
 
-    d3.selectAll(".jobCircle").attr("r","5px")
-    forceCollide = d3.forceCollide(function(d) { return d.radius + 0 })
-    forceGravity = d3.forceManyBody().strength(function(d) { return -5 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 0;
+    equalRadius = 5;
+    forceGravityMultiplier = -5;
 
     $("#titleBar").hide()
 
@@ -193,8 +270,6 @@ function resize() {
   }
 
 
-
-
   if(typeof circles != "undefined"){
     circles.attr("transform", circleHeight(0, 0 )) //flag! need to make equation for width/height ratio
   }
@@ -211,7 +286,7 @@ function resize() {
   if(window.innerWidth<641){ // Phones
     margin = {top: 20, right: 12, bottom: 20, left: 12}
   }
-}
+} // end of resize()
 
 
 // number of distinct clusters
@@ -357,13 +432,15 @@ graphMode = 0;
 graph = nodes;
 store = nodes;
 
+
 // Simulation, forces, & tick function
     // Forces for the simulation
 var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
-var forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius })
+var forceGravity = d3.forceManyBody()
+.strength(function(d) { return forceGravityMultiplier * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -409,14 +486,14 @@ tick = function() {
 
 
       // if sticky
-      if(sticky[d.id] == 2){
-        // stuck
-        return window.innerWidth*0.4 
-      } else if(sticky[d.id] == 1){
-        return window.innerWidth*-0.4
-      } else {
+      // if(sticky[d.id] == 2){
+      //   // stuck
+      //   return window.innerWidth*0.4 
+      // } else if(sticky[d.id] == 1){
+      //   return window.innerWidth*-0.4
+      // } else {
       return d.x; 
-      }
+      // }
   })
   .attr("cy", function(d) { 
     return d.y; });
@@ -485,22 +562,14 @@ circles = svg.selectAll("circle")
     .on("mouseout", function(d) {
 
       if(!circleExpanded[d.id] == 1){
-        //if not stuck
-        if(!sticky[d.id] == 1) {
-          d3.select(this)
-            .style("fill", color(d.cluster) )
-            // .attr("stroke", "black")
-            .style("stroke-width", 2)
-            .attr("stroke", color(d.cluster));
-        } else { // if stuck
-          d3.select(this)
-            .style("fill", "url(#pattern_"+d.id+")")
-            .attr("r","30px")
-
-        }
+        d3.select(this)
+          .style("fill", color(d.cluster) )
+          // .attr("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("stroke", color(d.cluster));
       }
 
-      clearTimeout(hoverTimeout)
+      // clearTimeout(hoverTimeout)
       if (clicked == 1) return;
       clicked = 0;
       hideToolTip(500)
@@ -508,36 +577,22 @@ circles = svg.selectAll("circle")
       // div.transition().duration(500).style("opacity", 0)
 
     })
-    // .on("click", function(d) {
-    //   clearTimeout(hoverTimeout)
-    //   // click-off
-    //   if (clicked == 1) { 
-    //     clicked = 0
-    //     hideToolTip(500)
-    //   // click-on
-    //   } else if (clicked == 0) {
-    //     clicked = 1;
-    //     tooltipLarge(d);
-    //    }
-    //   // hideToolTip(0);
-    //   // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-    //   // tooltipSmall(d);}
-    //   })
-      
-      // setTimeout(function() {
-      // circles.transition().duration(2500).style("opacity",1)
-        
-      // }, 500)
-
-
-
-// d3.select("body").on("mouseover", function(d){
-//   // if clicked outside of left or right 1/5 page,
-//   if(d3.event.pageX < window.innerWidth*0.2 || d3.event.pageX > window.innerWidth*0.8 ||
-//      d3.event.pageY < window.innerHeight*0.2 || d3.event.pageY > window.innerHeight*0.8){
-//     hideToolTip(500);
-//   }
-// })
+    .on("click", function(d) {
+      // clearTimeout(hoverTimeout)
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+        setTimeout(function(){d3.select("#nextLink").attr("href","Tutorial5.html").transition().duration(500).style("opacity",1)})
+       }
+      // hideToolTip(0);
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
+      })
 
 
 d3.select("#chart").on("click", function(d){
@@ -776,12 +831,7 @@ var graphMode;
 
       createHoverImg(d);
 
-      setTimeout(function() {
-        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial3.html")
-      }, 500)
-
   }
-
 
   function tooltipLarge(d) {
 
@@ -793,7 +843,6 @@ var graphMode;
   .style("border-bottom-right-radius","6px")
   .style("pointer-events","auto");
 
- 
   d3.select("#miniBars").transition().duration(275)
   // .style("margin-top",250+"px")
   .style("opacity",0);
@@ -883,11 +932,6 @@ var graphMode;
         "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
         "Similar jobs <br><span style='font-size: 12px'>(sets filters equal to <br>this group's skill levels)</span></button><br>"+
 
-        // "<a id='btnVolunteer' class='btn btn-sm' "+
-        // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
-        // "Volunteer Canada</a><br>"+
-
         "<br><br><span style='margin-left: -20px; color: white;'>"+
         "This section is currently under construction...</span>"+
 
@@ -896,22 +940,6 @@ var graphMode;
         "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
         "'>"+
         "&nbspcoming soon&nbsp</a><br>"+
-
-        // "<a id='btnIndeed' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.indeed.ca/jobs?q="+d.job+"'>"+
-        // "&nbspIndeed.ca&nbsp</a><br>"+
-
-        // "<a id='btnGlassdoor' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.glassdoor.ca/Job/"+d.job.split(' ').join('-')+"-jobs-SRCH_KO0,19.htm'>"+
-        // "&nbspGlassdoor.ca&nbsp</a><br>"+
-
-        // "<a id='btnMonster' class='btn btn-sm' "+
-        // "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://www.monster.ca/jobs/search/?q="+d.job.split(' ').join('-')+"'>"+
-        // "&nbspMonster.ca&nbsp</a><br>"+
-
         "</div></div>")
           
         d3.select("#btnSimilarSkills").on("click", function() {
@@ -962,18 +990,7 @@ var graphMode;
     .attr("height", (d.skillsMath*stretch_y))
     .attr("y",150)
 
-  // d3.select("#tooltipBottomDiv2").transition().duration(250).style("height", "2800px");
-  // d3.select("#tooltipBottomDiv").transition().duration(250).style("height", "2802px");
   div2.transition().duration(250).style("height","250px");
-
-        // Unfurl downward
-        // .style("height", 200)
-        // .transition()
-        // .duration(200)
-        // .style("height", "auto")
-       // d3.select("#tooltipContent").transition().duration(250).style("height", "auto");
-
-
 
      };
 
@@ -1030,12 +1047,7 @@ function tooltipSmall(d) {
           // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
           "</g>"+
         "</svg>"
-        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
         +"</div>")
-        // Move div above mouse by "top" + radius and right by "left"
-        // .style("left", (d3.event.pageX) + 20 + "px")
-        // .style("background", color(d.cluster) )
-        // .style("top", (d3.event.pageY - 80) - d.radius + "px")
 
             }, 200);
 
@@ -1141,6 +1153,569 @@ circles.transition()
 // .on("end", dragended);
 
 // drag_handler(circles);
+
+
+
+///////////// Reset Filters /////////////
+
+d3.select("#resetFilters").on('click', function(d) {
+  // if (graphMode == 1) {
+  //   graphMode = 0;
+
+  //   graphModeOff();
+  // }c
+  resetFilters(currentMode);
+});
+
+resetFilters = function(mode) {
+//collapseCircleImages()
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
+
+    circles.transition().duration(350)
+    // .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
+
+          simulation
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick)
+          .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                  forceGravity)
+          // .force()
+          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+
+          simulation.alpha(0.6).alphaTarget(0.001).restart(); 
+
+      }, 450);
+    }
+  }//end collapseCircleImages
+  // Reset green inset-left on all sliders
+  // Main sliders
+  for(var i=0; i<sliderArray.length; i++) {
+
+      d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
+
+  };
+
+  // reset the graph
+  graph = store;
+  hideAll();
+  hideGraphViewCallout();
+  // reset the slider positions
+  for(var i=0; i<sliderArray.length; i++) {
+    handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
+    sliderPositionsArray[i] = 0; // Update the slider positions array
+  };
+
+  // reset all circles
+  circles = circles.data(store, function(d) { return d.id });
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+  // restart simulation only if graph mode off
+  // if (graphMode == 0) {
+      resetSimulation();
+    // }
+  }
+
+  function resetSimulation() {
+    simulation.nodes(store)
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+
+    restartSimulation();
+  }
+
+  function restartSimulation(){
+    simulation.alpha(0.25).alphaTarget(0.001).restart();
+  }
+
+
+
+/////// Tooltips (post-filter)
+
+enterUpdateCircles = function() {
+    var newCircles = circles.enter().append("circle")
+    .attr("r", function(d) { return d.radius }) // start at full radius
+    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+    .style("fill", function(d) { 
+      if(circleExpanded[d.id] != 1){
+        return color(d.cluster); 
+      }else { return "url(#pattern_"+d.id+")" }
+     })
+    .attr("class","jobCircle")
+    .attr("id",function(d) { return "circle_"+d.id })
+    .attr("opacity",
+      function(d) { // make filtered circles transparent
+        // if the industry is on the list, transparent
+        if( filteredIndustries.includes(+d.industryNum) ) { 
+          return 0.1 }
+        else{ 
+          return 1 }
+    })  
+    // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
+    // Tooltips
+    .on("mouseenter", function(d) {
+      if (clicked == 1) return;
+      // highlight the current circle
+      d3.selectAll("circle").attr("stroke", "none");
+      d3.select(this)
+        .style("fill", "url(#pattern_"+d.id+")" )
+        // .attr("stroke", "black")
+        .style("stroke-width", 2)
+        .attr("stroke", color(d.cluster));
+      showToolTip(0);
+      tooltipMouseover(d);
+      hoverTimeout = setTimeout(function(){
+        tooltipLarge(d)
+        clicked = 1
+      }, 1750)
+      })
+    .on("mouseout", function(d) {
+
+      if(!circleExpanded[d.id] == 1){
+        d3.select(this)
+          .style("fill", color(d.cluster) )
+          // .attr("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("stroke", color(d.cluster));
+      }
+
+      clearTimeout(hoverTimeout)
+      if (clicked == 1) return;
+      clicked = 0;
+      hideToolTip(500)
+      d3.select(this).attr("stroke", "none");
+      // div.transition().duration(500).style("opacity", 0)
+
+    })
+    .on("click", function(d) {
+      clearTimeout(hoverTimeout)
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+       }
+      // hideToolTip(0);
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
+      })
+
+  // drag_handler(newCircles);
+  //  ENTER + UPDATE
+  // if(graphMode == 1){ // transition in radii in graph mode
+  //   circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
+  // }else if(graphMode == 0){
+    circles = circles.merge(newCircles);
+  // }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////// Filters ////////////////////////////////////
+var sliderSideTranslate = 9;
+if(window.innerWidth >= 1007) {
+  sliderSideTranslate = window.innerWidth*0.01
+  d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
+  d3.select(".search-div").style("right", window.innerWidth*0.0094 + "vw")
+}
+var sliderHeightTranslate = 9;
+// d3.select("#titleBar").style("margin-left","14vw")
+//////////////// Filter Sliders 2: Multiple Sliders from an Array //////////////////////
+
+createSliders(sliderArrayMain, sliderTitlesArrayMain);
+
+// createSliders(sliderArrayLang, sliderTitlesArrayLang);
+
+function createSliders(createSliderArray, sliderTitlesArray){
+// For Each Slider create the slider
+  for(var i=0; i<createSliderArray.length; i++) {
+    
+    var sub_xtranslate = 3,
+        xtrans,
+        ytrans;
+    var leftOrRight, topOrBottom;
+
+  // Top row
+  if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
+    xtrans = sliderSideTranslate;
+    ytrans = sliderHeightTranslate;
+    topOrBottom = "top";
+  }
+  // Right column
+  if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
+    // xtrans = sliderSideTranslate;
+    leftOrRight = "right";
+    // posn = "fixed";
+  }
+   // Bottom row
+  if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
+    xtrans = sliderSideTranslate;
+    ytrans = sliderHeightTranslate;
+    topOrBottom = "bottom";
+  }
+  // Left column
+  if(["Language skills", "Computer skills"].includes(sliderTitlesArray[i])){
+    leftOrRight = "left";
+  }
+
+  // Title & SVG
+  var sliderButtonArrows = ["&#9660", "&#9660", "&#9650", "&#9650"];
+  var sliderButtonPositions = [];
+
+  sliderSVGArray[i] = d3.select("body")
+  .append("div")
+    .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
+    .style("position", "fixed")
+    .style(leftOrRight, xtrans+"vw")
+    .style(topOrBottom, ytrans+"vh")
+    // lg and xl
+    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
+      +"font-size: 150%; font-weight: bold;"
+      +" color:  #49AC52; font-family: Raleway'>"
+      +sliderTitlesArray[i] // "Language skills"
+      +"<img id=question_"+i+" class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
+      +"alt='help' height='21' width = '24'>"
+      +"</div>"
+    // md sm and xs
+  +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
+      +"font-size: 150%; font-weight: bold;"
+      +" color:  #49AC52; font-family: Raleway'>"
+      +sliderTitlesArray[i] // "Language skills"
+      +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +"alt='help' height='21' width = '24'>"
+      +"</div>"
+    // sm and xs
+  // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
+  //     +"font-size: 100%; font-weight: bold;"
+  //     +" color:  #49AC52; font-family: Raleway'>"
+  //     +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
+  //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+  //     +"alt='help' height='21' width = '24'>"
+  //     +"</div>"
+      )
+
+  // Not Much       Lots
+  .append("div")
+    .attr("align", "left")
+    .style("position", "relative")
+    .style("margin-top", "15.5%")
+    .style("margin-left", (sub_xtranslate)+"%")
+    .style("color", "#49AC52")
+    .style("font-weight", "bold")
+    .style("font-family", "Raleway")
+    .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
+      +"Not&nbspmuch"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px'></span>"
+      +"Lots</div>"+
+      "<div id=subSliderDiv_"+i+">"+
+      "<span>"+
+        "<button id='btnSubsliders_"+i+"' class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; fill: white; z-index: 99;' "+
+        "onclick='expandSliders("+i+")' type='button'>"+
+          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+        "</button>"+
+      "</span></div>")
+    .select(function() {
+    return this.parentNode;
+    })
+  // Slider svg
+  .append("svg")
+    .style("z-index", 99)
+    // .attr("viewBox", "0 3 "+230+" "+50)
+    .style("position", "absolute")
+    .style("top", 32+"px") // y position
+    // .style("margin-left", -sub_xtranslate+"%") // x position
+    .attr("id", "slider_"+i)
+    .attr("width", 250)
+    .attr("height", 50);
+
+
+  sliderSVGArray[i].attr("class", "d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline")
+  var mainSlidersWidth = 223;
+  var reductionFactor = 0.7;
+
+  // Scale
+  sliderScaleArray[i] = d3.scaleLinear()
+    .domain([0, d3.max(nodes, function(d){ return d[sliderArrayMain[i]]}) * reductionFactor ]) // lower the maximum for all skills by 20% to prevent filtering down to 0
+    .range([0, mainSlidersWidth]) // Width of slider is 200 px
+    .clamp(true);
+
+  // Bugfix: math max not working
+  if(["Math skills"].includes(sliderTitlesArray[i])) {
+  sliderScaleArray[i] = d3.scaleLinear()
+    .domain([0, 59 * reductionFactor])
+    .range([0, mainSlidersWidth]) // Width of slider is 200 px
+    .clamp(true);
+  }
+
+  // Move Wage, Number of Jobs down
+    // Slider
+  sliderMulti[i] = sliderSVGArray[i].append("g") // switch to SVG with viewBox?
+  .attr("class", "slider")
+  .attr("transform", "translate(" + 25 + "," + 25 + ")");
+
+  // track
+  sliderMulti[i].append("line")
+  .attr("class", "track")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
+  .select(function() {
+    return this.parentNode;
+  }) // inset
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
+  .attr("class", "track-inset")
+  .select(function() {
+    return this.parentNode;
+  }) // inset-left (fills up green on drag)
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[0])
+  .attr("class", "track-inset-left")
+  .attr("id","inset-left_"+i)
+  .select(function() {
+    return this.parentNode;
+  }) // overlay
+  .append("line")
+  .attr("x1", sliderScaleArray[i].range()[0])
+  .attr("x2", sliderScaleArray[i].range()[1])
+  .attr("class", "track-overlay")
+  .attr("id", i)
+  .on("mouseover", function() {
+    d3.select("#handle_"+this.id).style("fill","#eaeaea")
+  })
+  .on("mouseout", function() {
+    d3.select("#handle_"+this.id).style("fill","white")
+    if(typeof miniTooltip != "undefined"){
+      miniTooltip.transition().duration(500)
+      .style("opacity",0)
+    }
+  })
+  .call(d3.drag()
+    .on("start.interrupt", function() {
+      sliderMulti[event.target.id].interrupt();
+    }) // drag update function
+    .on("start drag", function() {
+      if(typeof miniTooltip == "undefined"){
+        miniTooltip = d3.select("body").append("div")
+          .attr("class", "minitooltip")
+          .style("opacity", 0);
+      }
+      // show mini tooltip indicating how many job groups remain
+      
+
+
+      miniTooltip.transition().duration(200)
+      .style("opacity",.9)
+      miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
+      // .style("left", (event.pageX - 64) + "px")
+      
+      if($(event.target).attr('class') == 'track-overlay'){
+        miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
+      }
+                  // (d3.select("#handle_"+this.id)
+      if(graph.length >= 10){ 
+        miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") 
+
+      }
+      graph.length <= 50 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
+      if(graph.length <= 25){ 
+        miniTooltip.style("color","#FE2E2E") 
+
+
+
+
+
+        expandCircleImages()
+
+
+
+
+
+
+
+
+
+      } else { collapseCircleImages(); }
+
+      if(graph.length >= 175){
+        forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+
+        simulation
+        .force("collide", d3.forceCollide(function(d) { return d.radius }))
+        .force("cluster", forceCluster)
+        .force("gravity", forceGravity)
+        .force("x", forceXCombine)
+        .force("y", forceYCombine)
+        .on("tick", tick);
+
+        if(graphMode == 0){
+          simulation.alpha(0.15).alphaTarget(0.001).restart();
+        }
+
+      }
+
+      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      // }
+    
+    })
+  );
+
+  handleArray[i] = sliderMulti[i].insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .style("z-index", 99)
+    .attr("r", 9)
+    .attr("id","handle_"+i);
+
+    // Bugfix: lang slider not on top
+  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
+  //   d3.select("#"+i).style("z-index", 99);
+  // }
+
+};
+
+
+function collapseCircleImages() {
+
+  if(circlesExpanded == 1){
+    circlesExpanded = 0;
+
+    circles.transition().duration(700)
+    .delay(function(d, i) { return i * 5})
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(40, 10);
+      return function(t) { return d.radius = i(t); };
+    }) 
+
+    if(graphMode == 0) {
+      setTimeout(function() { 
+          simulation
+          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+          .force("cluster", forceCluster)
+          // .force("gravity", forceGravity)
+          .force("x", forceXCombine)
+          .force("y", forceYCombine)
+          .on("tick", tick);
+
+          simulation.alpha(0.15).alphaTarget(0.001).restart();
+
+      }, 0);
+      // setTimeout(function() { resetSimulation() }, 700);
+
+      // setTimeout(function() { enterUpdateCircles();
+        
+        forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+
+        simulation
+        .force("gravity", // default strength = -30, negative strength = repel, positive = attract
+                forceGravity)
+        // collapse gravity 
+        .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+        .alpha(0.6).alphaTarget(0.001).restart(); 
+    }
+  }
+}
+
+function expandCircleImages() {
+
+  //bookmark
+  //modify: toggle-on, toggle-off, shrink back down
+  if (circlesExpanded == 0) {
+        
+        circlesExpanded = 1;
+
+        circles.transition().duration(500)
+          .delay(function(d, i) { return i * 5})
+          .attrTween("r", function(d) {
+            var i = d3.interpolate(10, 40);
+            return function(t) { return d.radius = i(t); };
+          })
+          // transition the job images into the fill pattern
+
+            circles.style("fill", function(d) { 
+              circleExpanded[d.id] = 1;
+              return "url(#pattern_"+d.id+")" })
+              .style("stroke-width","2px")
+              .style("stroke", function(d) { return color(d.cluster)})
+
+
+
+          // .attr("fill", function(d) { return "url(#pattern_"+d.id+")" })
+
+        if(graphMode == 0) {
+          setTimeout(function() { 
+            forceGravity = d3.forceManyBody().strength(function(d) { return -30 * d.radius });
+
+              simulation
+              .force("collide", d3.forceCollide(function(d) { return 42 }))
+              .force("cluster", forceCluster)
+              .force("gravity", forceGravity)
+              .force("x", forceXCombine)
+              .force("y", forceYCombine)
+              .on("tick", tick);
+
+              simulation.alpha(0.15).alphaTarget(0.001).restart();
+
+          }, 500);
+          // setTimeout(function() { resetSimulation() }, 700);
+
+          // setTimeout(function() { enterUpdateCircles();
+            
+            // .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+            // .alpha(0.6).alphaTarget(0.001).restart(); 
+          // }, 200);
+        }
+      } else if (circlesExpanded == 1) {
+
+      }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function smashTogether(force, temp) {
@@ -1334,93 +1909,93 @@ function restartSimulation(){
 }
 
 
-/////// Tooltips (post-filter)
+///// Tooltips (post-filter)
 
-// enterUpdateCircles = function() {
-//     var newCircles = circles.enter().append("circle")
-//     .attr("r", function(d) { return d.radius }) // start at full radius
-//     .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
-//     .style("fill", function(d) { 
-//       if(circleExpanded[d.id] != 1){
-//         return color(d.cluster); 
-//       }else { return "url(#pattern_"+d.id+")" }
-//      })
-//     .attr("class","jobCircle")
-//     .attr("id",function(d) { return "circle_"+d.id })
-//     .attr("opacity",
-//       function(d) { // make filtered circles transparent
-//         // if the industry is on the list, transparent
-//         if( filteredIndustries.includes(+d.industryNum) ) { 
-//           return 0.1 }
-//         else{ 
-//           return 1 }
-//     })  
+enterUpdateCircles = function() {
+    var newCircles = circles.enter().append("circle")
+    .attr("r", function(d) { return d.radius }) // start at full radius
+    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+    .style("fill", function(d) { 
+      if(circleExpanded[d.id] != 1){
+        return color(d.cluster); 
+      }else { return "url(#pattern_"+d.id+")" }
+     })
+    .attr("class","jobCircle")
+    .attr("id",function(d) { return "circle_"+d.id })
+    .attr("opacity",
+      function(d) { // make filtered circles transparent
+        // if the industry is on the list, transparent
+        if( filteredIndustries.includes(+d.industryNum) ) { 
+          return 0.1 }
+        else{ 
+          return 1 }
+    })  
 
 
-//     // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
+    // newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius })
 
-//     // Tooltips
-//  // Tooltips
-//     .on("mouseenter", function(d) {
-//       if (clicked == 1) return;
-//       // highlight the current circle
-//       d3.selectAll("circle").attr("stroke", "none");
-//       d3.select(this)
-//         .style("fill", "url(#pattern_"+d.id+")" )
-//         // .attr("stroke", "black")
-//         .style("stroke-width", 2)
-//         .attr("stroke", color(d.cluster));
-//       showToolTip(0);
-//       tooltipMouseover(d);
-//       hoverTimeout = setTimeout(function(){
-//         tooltipLarge(d)
-//         clicked = 1
-//       }, 1750)
-//       })
-//     .on("mouseout", function(d) {
+    // Tooltips
+ // Tooltips
+    .on("mouseenter", function(d) {
+      if (clicked == 1) return;
+      // highlight the current circle
+      d3.selectAll("circle").attr("stroke", "none");
+      d3.select(this)
+        .style("fill", "url(#pattern_"+d.id+")" )
+        // .attr("stroke", "black")
+        .style("stroke-width", 2)
+        .attr("stroke", color(d.cluster));
+      showToolTip(0);
+      tooltipMouseover(d);
+      // hoverTimeout = setTimeout(function(){
+      //   tooltipLarge(d)
+      //   clicked = 1
+      // }, 1750)
+      })
+    .on("mouseout", function(d) {
 
-//       if(!circleExpanded[d.id] == 1){
-//         d3.select(this)
-//           .style("fill", color(d.cluster) )
-//           // .attr("stroke", "black")
-//           .style("stroke-width", 2)
-//           .attr("stroke", color(d.cluster));
-//       }
+      if(!circleExpanded[d.id] == 1){
+        d3.select(this)
+          .style("fill", color(d.cluster) )
+          // .attr("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("stroke", color(d.cluster));
+      }
 
-//       clearTimeout(hoverTimeout)
-//       if (clicked == 1) return;
-//       clicked = 0;
-//       hideToolTip(500)
-//       d3.select(this).attr("stroke", "none");
-//       // div.transition().duration(500).style("opacity", 0)
+      // clearTimeout(hoverTimeout)
+      if (clicked == 1) return;
+      clicked = 0;
+      hideToolTip(500)
+      d3.select(this).attr("stroke", "none");
+      // div.transition().duration(500).style("opacity", 0)
 
-//     })
-//     .on("click", function(d) {
-//       clearTimeout(hoverTimeout)
-//       // click-off
-//       if (clicked == 1) { 
-//         clicked = 0
-//         hideToolTip(500)
-//       // click-on
-//       } else if (clicked == 0) {
-//         clicked = 1;
-//         tooltipLarge(d);
-//        }
-//       // hideToolTip(0);
-//       // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
-//       // tooltipSmall(d);}
-//       })
+    })
+    .on("click", function(d) {
+      // clearTimeout(hoverTimeout)
+      // click-off
+      if (clicked == 1) { 
+        clicked = 0
+        hideToolTip(500)
+      // click-on
+      } else if (clicked == 0) {
+        clicked = 1;
+        tooltipLarge(d);
+       }
+      // hideToolTip(0);
+      // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+      // tooltipSmall(d);}
+      })
 
-//   drag_handler(newCircles);
-//   //  ENTER + UPDATE
-//   if(graphMode == 1){ // transition in radii in graph mode
-//     circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
-//   }else if(graphMode == 0){
-//     circles = circles.merge(newCircles);
-//   }
+  // drag_handler(newCircles);
+  // //  ENTER + UPDATE
+  // if(graphMode == 1){ // transition in radii in graph mode
+  //   circles = circles.merge(newCircles.attr("r",0).transition().duration(500).attr("r", function(d) { return d.radius }));
+  // }else if(graphMode == 0){
+  //   circles = circles.merge(newCircles);
+  // }
   
 
-// } 
+} }
 
 
 // Update function which detects current slider
@@ -1541,26 +2116,28 @@ filterAll = function() {
   };
 
   // Subskill sliders
-  for(var i=4; i<sliderArray.length; i++) {
-    if(event.target.id != i) {
-      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-      handleArray[i].attr("cx", thisMinimum); // move the slider handle
-      // fill the left side green
-      d3.select("#inset-left_"+i).attr("x2", thisMinimum )
+  // for(var i=4; i<sliderArray.length; i++) {
+  //   if(event.target.id != i) {
+  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+  //     handleArray[i].attr("cx", thisMinimum); // move the slider handle
+  //     // fill the left side green
+  //     d3.select("#inset-left_"+i).attr("x2", thisMinimum )
 
-    }else if(event.target.id == i) {
-      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
-      // fill the left side green (using mouse position on current slider)
-      d3.select("#inset-left_"+i).attr("x2", d3.event.x )
-    }
-  };
-  calloutCheck()
+  //   }else if(event.target.id == i) {
+  //     var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
+  //     // fill the left side green (using mouse position on current slider)
+  //     d3.select("#inset-left_"+i).attr("x2", d3.event.x )
+  //   }
+  // };
+  // calloutCheck()
   return graph;
 } // end filterAll
 }// Update function which detects current slider
 
+
 })
 } // end of d3.csv
+
 
 
 
