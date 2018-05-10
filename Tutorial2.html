@@ -37,8 +37,25 @@
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a href="index.html" style="color: inherit">
+			<a id="homepage" href="index.html" style="">
 			Pave</a>
+
+      <!-- "Tutorial $current of $total" -->
+      <div id="progressTutorial0" class="progressTutorial">
+        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html"">1</a>
+        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html"">2</a>
+        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial2.html"">3</a>
+        <a id="progTutCircle3" class="progTutCircle" href="Tutorial3.html">4</a>
+        <a id="progTutCircle4" class="progTutCircle" href="Tutorial4.html">5</a>
+        <a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
+        <div id="progTutLine0" class="progTutLine progTutLineActive""></div>
+        <div id="progTutLine1" class="progTutLine progTutLineActive""></div>
+        <div id="progTutLine2" class="progTutLine" ></div>
+        <div id="progTutLine3" class="progTutLine" ></div>
+        <div id="progTutLine4" class="progTutLine" ></div>
+        <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
+      </div>  
+
 		</h1>
 	</div>
 </div>
@@ -55,7 +72,7 @@
 
     <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 43vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
-        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
+        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; pointer-events: none; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
     </div>
 
 </div>
@@ -66,6 +83,13 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+      d3.selectAll(".progTutCircleActive").on("mouseover",function(){
+      d3.select(this).style("background","#3C8D44")
+    }).on("mouseout", function(){
+      d3.select(this).style("background","#49AC52")
+    })
+
+
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
@@ -104,11 +128,21 @@ height = window.innerHeight/1.5,
 
 ///////////////// TODO: Mobile version /////////////////
 
-d3.select(window).on("resize", resize);
-setTimeout(function(){
-  resize()
-}, 4500)
-// resize the window
+d3.select(window).on("resize", function() {
+  resize();
+
+  d3.selectAll(".jobCircle").attr("r", equalRadius)
+
+  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+
+  simulation.force("collide", forceCollide).force("gravity", forceGravity)
+    .alpha(0.25).alphaTarget(0.001).restart();
+
+});
+
+resize()
+
 function resize() {
 
   var resizeDuration = 350;
@@ -128,11 +162,9 @@ function resize() {
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
-    d3.selectAll(".jobCircle").attr("r","6px")
-    forceCollide = d3.forceCollide(function(d) { return d.radius + 0 })
-    forceGravity = d3.forceManyBody().strength(function(d) { return -6 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 0;
+    equalRadius = 6;
+    forceGravityMultiplier = -6;
 
     setTimeout(function() {
       d3.select("#sliderDiv_skillsComp").style("left", "0%")
@@ -153,11 +185,9 @@ function resize() {
       d3.select("#sliderDiv_skillsMath").style("right", "9%")
     },1)
 
-    d3.selectAll(".jobCircle").attr("r","9px")
-    var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
-    var forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 1;
+    equalRadius = 9;
+    forceGravityMultiplier = -10;
   }
 
   if(w < 768){
@@ -170,11 +200,9 @@ function resize() {
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
 
-    d3.selectAll(".jobCircle").attr("r","5px")
-    forceCollide = d3.forceCollide(function(d) { return d.radius + 0 })
-    forceGravity = d3.forceManyBody().strength(function(d) { return -5 * d.radius })
-    simulation.force("collide", forceCollide).force("gravity", forceGravity)
-      .alpha(0.25).alphaTarget(0.001).restart();
+    nodePadding = 0;
+    equalRadius = 5;
+    forceGravityMultiplier = -5;
 
     $("#titleBar").hide()
 
@@ -193,8 +221,6 @@ function resize() {
   }
 
 
-
-
   if(typeof circles != "undefined"){
     circles.attr("transform", circleHeight(0, 0 )) //flag! need to make equation for width/height ratio
   }
@@ -211,7 +237,7 @@ function resize() {
   if(window.innerWidth<641){ // Phones
     margin = {top: 20, right: 12, bottom: 20, left: 12}
   }
-}
+} // end of resize()
 
 
 // number of distinct clusters
@@ -363,7 +389,7 @@ var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding }
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
-var forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius })
+var forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -641,7 +667,7 @@ function createHoverImg(d) {
   }
 
   var imgCircle = d3.select("#chart").append("circle")
-    .attr("class","circleImg")
+    .attr("class","circleTutorial2")
     .attr("cx",circLeft)
     .attr("cy",circTop)
     .attr("fill", "url(#pattern_"+d.id+")")
@@ -660,7 +686,7 @@ function createHoverImg(d) {
 }
 
 function hideHoverImg() {
-  d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
+  d3.selectAll(".circleTutorial2").transition().duration(200).style("opacity",0).remove()
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -777,7 +803,7 @@ var graphMode;
       createHoverImg(d);
 
       setTimeout(function() {
-        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial3.html")
+        d3.select("#nextLink").transition().duration(500).style("opacity",1).attr("href","Tutorial3.html").style("pointer-events","auto")
       }, 500)
 
   }
@@ -1187,7 +1213,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -1272,7 +1298,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -1565,7 +1591,21 @@ filterAll = function() {
 
 
 </script>
-
+<svg style="height: 0px">
+  <defs>
+    <filter id="f2" width="150%" height="150%">
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="5.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="2" dy="5" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.6"/> <!-- slope is the opacity of the shadow -->
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/> <!-- this contains the offset blurred image -->
+        <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
 </body>
 
 </html>  		

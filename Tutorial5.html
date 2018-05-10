@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 0px">
 <head>
 	<meta charset="utf-8">
 	<!-- <meta name="viewport", content="width = device-width, initial-scale = 1"> -->
@@ -31,14 +31,31 @@
 </head>
 
 
-<body>
+<body style="pointer-events: none">
 
 <div style="position: fixed; margin-top: 1.7%; height: 10vh; margin-left: 2.2%; margin-bottom: 1.5%" class="d-none d-sm-block d-md-block d-lg-block">
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a href="index.html" style="color: inherit">
+			<a id="homepage" href="index.html" style="pointer-events: auto;">
 			Pave</a>
+
+      <!-- "Tutorial $current of $total" -->
+      <div id="progressTutorial0" class="progressTutorial" style="pointer-events: auto">
+        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
+        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
+        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial2.html">3</a>
+        <a id="progTutCircle3" class="progTutCircle progTutCircleActive" href="Tutorial3.html">4</a>
+        <a id="progTutCircle4" class="progTutCircle progTutCircleActive" href="Tutorial4.html">5</a>
+        <a id="progTutCircle5" class="progTutCircle progTutCircleActive" href="Tutorial5.html">6</a>
+        <div id="progTutLine0" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine1" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine2" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine3" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine4" class="progTutLine progTutLineActive"></div>
+        <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
+      </div>  
+
 		</h1>
 	</div>
 </div>
@@ -60,9 +77,9 @@
       <p style="margin-left: 7vw; margin-bottom: 0.25em">see skills used on the job.</p>
  -->    </span>
 
-    <div id="nextDiv" style="position: fixed; left: 18.7vw; top: 48vw;">
+    <div id="nextDiv" style="position: fixed; left: 21.7vw; top: 50vw;">
         <!-- <a class="intro-tour-button btn-arrow-left" style="display: inline-block; width: 8vw; color: white; z-index: 99;" href="Tutorial1.html" id="prevLink">PREV</a> -->
-        <a class="intro-tour-button btn-arrow-right" style="display: inline-block; width: 8vw; opacity: 0; color: white; z-index: 100" id="nextLink">NEXT</a>
+        <a class="intro-start-button" style="display: inline-block; width: 10vw; opacity: 0; color: white; z-index: 100;" id="nextLink">START</a>
     </div>
 
 </div>
@@ -84,6 +101,12 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+          d3.selectAll(".progTutCircleActive").on("mouseover",function(){
+      d3.select(this).style("background","#3C8D44")
+    }).on("mouseout", function(){
+      d3.select(this).style("background","#49AC52")
+    })
+
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
@@ -596,7 +619,6 @@ circles = svg.selectAll("circle")
       } else if (clicked == 0) {
         clicked = 1;
         tooltipLarge(d);
-        setTimeout(function(){d3.select("#nextLink").attr("href","Tutorial5.html").transition().duration(500).style("opacity",1)})
        }
       // hideToolTip(0);
       // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
@@ -705,7 +727,7 @@ function createHoverImg(d) {
   }
 
   var imgCircle = d3.select("#chart").append("circle")
-    .attr("class","circleImg")
+    .attr("class","circleTutorial5")
     .attr("cx",circLeft)
     .attr("cy",circTop)
     .attr("fill", "url(#pattern_"+d.id+")")
@@ -724,7 +746,7 @@ function createHoverImg(d) {
 }
 
 function hideHoverImg() {
-  d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
+  d3.selectAll(".circleTutorial5").transition().duration(200).style("opacity",0).remove()
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -1405,7 +1427,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
   var sliderButtonPositions = [];
 
   sliderSVGArray[i] = d3.select("body")
-  .append("div")
+  .append("div").style("display","inline").style("width","30vw")
     .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
     .style("position", "fixed")
     .style("left", "11vw")
@@ -1713,6 +1735,9 @@ function expandCircleImages() {
       } else if (circlesExpanded == 1) {
 
       }
+
+      setTimeout(function(){d3.select("#nextLink").style("pointer-events","auto").attr("href","Pave.html").transition().duration(500).style("opacity",1)})
+
 
 }
 
@@ -2157,7 +2182,7 @@ filterAll = function() {
 
 </script>
 
-<svg>
+<svg style="pointer-events: none;">
   <defs>
 
     <filter id="dropshadow" width="200%" height="200%">
@@ -2185,10 +2210,10 @@ filterAll = function() {
     </filter>
 
     <filter id="f2" width="150%" height="150%">
-      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
-      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="5.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="2" dy="5" />
       <feComponentTransfer>
-        <feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
+        <feFuncA type="linear" slope="0.6"/> <!-- slope is the opacity of the shadow -->
       </feComponentTransfer>
       <feMerge> 
         <feMergeNode/> <!-- this contains the offset blurred image -->

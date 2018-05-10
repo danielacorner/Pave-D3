@@ -37,8 +37,24 @@
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a href="index.html" style="color: inherit">
+			<a id="homepage" href="index.html" style="">
 			Pave</a>
+      <!-- "Tutorial $current of $total" -->
+			<div id="progressTutorial0" class="progressTutorial">
+				<a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
+				<a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
+				<a id="progTutCircle2" class="progTutCircle" href="Tutorial2.html">3</a>
+				<a id="progTutCircle3" class="progTutCircle" href="Tutorial3.html">4</a>
+				<a id="progTutCircle4" class="progTutCircle" href="Tutorial4.html">5</a>
+				<a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
+				<div id="progTutLine0" class="progTutLine progTutLineActive"></div>
+				<div id="progTutLine1" class="progTutLine" ></div>
+				<div id="progTutLine2" class="progTutLine" ></div>
+				<div id="progTutLine3" class="progTutLine" ></div>
+				<div id="progTutLine4" class="progTutLine" ></div>
+				<!-- <div id="progTutLine5" class="progTutLine" ></div> -->
+			</div>	
+
 		</h1>
 	</div>
 </div>
@@ -76,6 +92,13 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+
+		d3.selectAll(".progTutCircleActive").on("mouseover",function(){
+			d3.select(this).style("background","#3C8D44")
+		}).on("mouseout", function(){
+			d3.select(this).style("background","#49AC52")
+		})
+
   // setTimeout(function() {
   //   d3.select("#titlespan").transition().duration(500).style("opacity",1)
   //   d3.select("#btnOK").transition().duration(500).style("opacity",1)

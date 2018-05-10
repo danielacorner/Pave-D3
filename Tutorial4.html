@@ -37,8 +37,24 @@
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a href="index.html" style="color: inherit">
+			<a id="homepage" href="index.html" style="">
 			Pave</a>
+
+      <div id="progressTutorial0" class="progressTutorial">
+        <a id="progTutCircle0" class="progTutCircle progTutCircleActive" href="Tutorial0.html">1</a>
+        <a id="progTutCircle1" class="progTutCircle progTutCircleActive" href="Tutorial1.html">2</a>
+        <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial2.html">3</a>
+        <a id="progTutCircle3" class="progTutCircle progTutCircleActive" href="Tutorial3.html">4</a>
+        <a id="progTutCircle4" class="progTutCircle progTutCircleActive" href="Tutorial4.html">5</a>
+        <a id="progTutCircle5" class="progTutCircle" href="Tutorial5.html">6</a>
+        <div id="progTutLine0" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine1" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine2" class="progTutLine progTutLineActive"></div>
+        <div id="progTutLine3" class="progTutLine progTutLineActive" ></div>
+        <div id="progTutLine4" class="progTutLine" ></div>
+        <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
+      </div>  
+
 		</h1>
 	</div>
 </div>
@@ -68,6 +84,12 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+        d3.selectAll(".progTutCircleActive").on("mouseover",function(){
+      d3.select(this).style("background","#3C8D44")
+    }).on("mouseout", function(){
+      d3.select(this).style("background","#49AC52")
+    })
+
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
@@ -637,7 +659,7 @@ function createHoverImg(d) {
   }
 
   var imgCircle = d3.select("#chart").append("circle")
-    .attr("class","circleImg")
+    .attr("class","circleTutorial4")
     .attr("cx",circLeft)
     .attr("cy",circTop)
     .attr("fill", "url(#pattern_"+d.id+")")
@@ -656,7 +678,7 @@ function createHoverImg(d) {
 }
 
 function hideHoverImg() {
-  d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
+  d3.selectAll(".circleTutorial4").transition().duration(200).style("opacity",0).remove()
 }
 
 function pad(num, size) { // add leading 0s to nocs like 0011
@@ -1147,7 +1169,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -1232,7 +1254,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -1527,7 +1549,21 @@ filterAll = function() {
 
 
 </script>
-
+<svg style="height: 0px">
+  <defs>
+    <filter id="f2" width="150%" height="150%">
+      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="5.5" />
+      <feOffset result="offsetBlur" in="blurOut" dx="2" dy="5" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.6"/> <!-- slope is the opacity of the shadow -->
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/> <!-- this contains the offset blurred image -->
+        <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
 </body>
 
 </html>  		
