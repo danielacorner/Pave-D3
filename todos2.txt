@@ -9,10 +9,10 @@ ideas:
 ------------------------------------------
 
 current:
-- shrink tutorial viz to 1/3 page width & resize text content
-- switch tut radii to vw
+- check all $(window).width() => height() in main viz
 - tut6 shadow
 - explainer div + x button + ? button to show again
+- fix size switching
 
 next:
 - Verbal and Communication, Logic and Critical Thinking, Computer and Information, Math and Spatial
