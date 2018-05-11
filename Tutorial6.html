@@ -67,7 +67,7 @@
       <div id="textBox" style="margin-left: 12vw; width: 35vw">
         <p>The skill sliders let you look at jobs that use different amounts of various skillsets.</p>
 
-        <p>Move the slider handle below to "Lots" to see which jobs use more math skills.</p>
+        <p>Move the slider handle below to "Lots" to see which jobs use more Math and Spatial skills.</p>
       </div>
 <!--       <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 0em">The circles on the right</p>
       <p style="opacity: 0.5; margin-left: 7vw; margin-bottom: 1.5em">represent job groups.</p>
@@ -140,7 +140,7 @@ var sliderArray = [
     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
 ];
 
-// var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
+// var sliderTitlesArray = ["Language skills", "Logic skills", "Math and Spatial skills", "Computer skills",
 //   // subskills
 //     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
 //     "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
@@ -149,7 +149,7 @@ var sliderArray = [
 //     ];
 
 var sliderTitlesArray = [
-// "Language skills", "Logic skills", "Math skills", "Computer skills",
+// "Language skills", "Logic skills", "Math and Spatial skills", "Computer skills",
   // subskills
     "Oral Communication","Reading","Writing",
     "Job Task Planning and Organizing","Problem Solving","Critical Thinking","Decision-Making",
@@ -159,7 +159,7 @@ var sliderTitlesArray = [
 
 var sliderArrayMain = [0,0,"skillsMath",0];
 
-var sliderTitlesArrayMain = [0,0,"Math skills",0];
+var sliderTitlesArrayMain = [0,0,"Math and Spatial skills",0];
 
 // var sliderArrayStats = ["wage", "workers"];
 
@@ -1406,13 +1406,13 @@ function createSliders(createSliderArray, sliderTitlesArray){
     topOrBottom = "top";
   }
   // Right column
-  if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
+  if(["Math and Spatial skills", "Logic skills"].includes(sliderTitlesArray[i])){
     // xtrans = sliderSideTranslate;
     leftOrRight = "right";
     // posn = "fixed";
   }
    // Bottom row
-  if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
+  if(["Math and Spatial skills", "Computer skills"].includes(sliderTitlesArray[i])){
     xtrans = sliderSideTranslate;
     ytrans = sliderHeightTranslate;
     topOrBottom = "bottom";
@@ -1442,7 +1442,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       +"</div>"
     // md sm and xs
   +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
-      +"font-size: 150%; font-weight: bold;"
+      +"font-size: 15vw; font-weight: bold;"
       +" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
       +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
@@ -1506,7 +1506,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
   //   .clamp(true);
 
   // Bugfix: math max not working
-  if(["Math skills"].includes(sliderTitlesArray[i])) {
+  if(["Math and Spatial skills"].includes(sliderTitlesArray[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, 59 * reductionFactor])
     .range([0, mainSlidersWidth]) // Width of slider is 200 px
