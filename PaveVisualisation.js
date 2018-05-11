@@ -5,7 +5,7 @@ hoverTimeout;
 
 maxSalary = 132.922; //busted
 
-var sticky = []; // whether or not the current circle is expanded
+var favourites = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
 var legendCreated = 0;
@@ -14,7 +14,6 @@ var legendMode = 0;
 var equalRadius = 9;
 var nodePadding = 1;
 var imgRadius = 125;
-var forceGravityMultiplier = -10;
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -130,21 +129,17 @@ height = window.innerHeight/1.5,
 d3.select(window).on("resize", function() {
   resize();
 
-  d3.selectAll(".jobCircle").attr("r", equalRadius)
-
-  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
-  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+  forceCollide = d3.forceCollide($(window).height()*0.009)
+  forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
   simulation.force("collide", forceCollide).force("gravity", forceGravity)
     .alpha(0.25).alphaTarget(0.001).restart();
 
 });
 
-resize()
+
 
 function resize() {
-
-  var resizeDuration = 350;
 
   var w = $(window).width();
   console.log(w)
@@ -152,7 +147,7 @@ function resize() {
   // console.log(w+" x "+h)
 
   if(w < 992){
-    d3.select("#chart").style("margin-top","-20px")
+    // d3.select("#chart").style("margin-top","-20px")
     d3.select("#titleBar").style("margin-top","-10px").style("margin-left","20px")
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
@@ -161,17 +156,13 @@ function resize() {
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
-    nodePadding = 0;
-    equalRadius = 6;
-    forceGravityMultiplier = -6;
-
     setTimeout(function() {
       d3.select("#sliderDiv_skillsComp").style("left", "0%")
       d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
     },1)
 
   }else{
-    d3.select("#chart").style("margin-top","")
+    // d3.select("#chart").style("margin-top","")
     d3.select("#titleBar").style("margin-top","-0.35%").style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
@@ -184,9 +175,6 @@ function resize() {
       d3.select("#sliderDiv_skillsMath").style("right", "9%")
     },1)
 
-    nodePadding = 1;
-    equalRadius = 9;
-    forceGravityMultiplier = -10;
   }
 
   if(w < 768){
@@ -198,10 +186,6 @@ function resize() {
        .style("width","85px") .style("margin-bottom","-15px")
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
-
-    nodePadding = 0;
-    equalRadius = 5;
-    forceGravityMultiplier = -5;
 
     $("#titleBar").hide()
 
@@ -219,9 +203,8 @@ function resize() {
 
   }
 
-
   if(typeof circles != "undefined"){
-    circles.attr("transform", circleHeight(0, 0 )) //flag! need to make equation for width/height ratio
+    circles.attr("transform", circleHeight(0, -100+$(window).height()*0.080 )) //flag! need to make equation for width/height ratio
   }
 
   graphYtranslate = window.innerHeight*0.12 - 16;
@@ -385,12 +368,11 @@ store = nodes;
 
 // Simulation, forces, & tick function
     // Forces for the simulation
-var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
-var forceXCombine = d3.forceX().strength(.3)
-var forceYCombine = d3.forceY().strength(.3)
+var forceCollide = d3.forceCollide($(window).height()*0.009)
+var forceXCombine = d3.forceX().strength(.4)
+var forceYCombine = d3.forceY().strength(.4)
 // default strength = -30, negative strength = repel, positive = attract
-var forceGravity = d3.forceManyBody()
-.strength(function(d) { return forceGravityMultiplier * d.radius })
+var forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -512,19 +494,19 @@ circles = svg.selectAll("circle")
     .on("mouseout", function(d) {
 
       if(!circleExpanded[d.id] == 1){
-        //if not stuck
-        if(!sticky[d.id] == 1) {
+        // //if not stuck
+        // if(!sticky[d.id] == 1) {
           d3.select(this)
             .style("fill", color(d.cluster) )
             // .attr("stroke", "black")
             .style("stroke-width", 2)
             .attr("stroke", color(d.cluster));
-        } else { // if stuck
-          d3.select(this)
-            .style("fill", "url(#pattern_"+d.id+")")
-            .attr("r","30px")
+        // } else { // if stuck
+        //   d3.select(this)
+        //     .style("fill", "url(#pattern_"+d.id+")")
+        //     .attr("r","30px")
 
-        }
+        // }
       }
 
       clearTimeout(hoverTimeout)
@@ -562,7 +544,7 @@ d3.select("#chart").on("click", function(d){
   hideAll();
   closeLegends();
   if (graphMode == 0 && legendMode == 1) {
-    smashTogether(0.3, 0.4);
+    smashTogether(0.4, 0.25);
   }
   // if clicked off of a circle
   if (clicked == 1) { 
@@ -1100,7 +1082,7 @@ circles.transition()
 .duration(2000)
 .delay(function(d, i) { return i * 4})
 .attrTween("r", function(d) {
-  var i = d3.interpolate(0, d.radius);
+  var i = d3.interpolate(0, d.radius*0.08 + "vh");
   return function(t) { return d.radius = i(t); };
 })
 .styleTween("opacity", function() {
@@ -1288,7 +1270,7 @@ function expandColoursLegend() {
 function closeLegends() {
     
     if (graphMode == 0) {
-    smashTogether(0.3, 0.4);
+    smashTogether(0.4, 0.25);
     }
 
   legendMode = 0;
@@ -1716,7 +1698,7 @@ function smashTogether(force, temp) {
 d3.select("#combine").on('click', function(d) {
 
   if (graphMode == 0) {
-    smashTogether(0.3, 0.4);
+    smashTogether(0.4, 0.25);
   }
 })
 
@@ -3001,7 +2983,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
+          // forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
 
           simulation
           .force("cluster", forceCluster)
@@ -3012,7 +2994,7 @@ resetFilters = function(mode) {
           .force("gravity", // default strength = -30, negative strength = repel, positive = attract
                   forceGravity)
           // .force()
-          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+          .force("collide", forceCollide)
 
           simulation.alpha(0.6).alphaTarget(0.001).restart(); 
 
@@ -3456,10 +3438,10 @@ $(document).ready(function(){resize()})
       } else { collapseCircleImages(); }
 
       if(graph.length >= 175){
-        forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+        forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
         simulation
-        .force("collide", d3.forceCollide(function(d) { return d.radius }))
+        .force("collide", forceCollide)
         .force("cluster", forceCluster)
         .force("gravity", forceGravity)
         .force("x", forceXCombine)
@@ -3828,10 +3810,10 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           // }
           if(graph.length >=175){
 
-            forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
+            forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
             simulation
-            .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+            .force("collide", forceCollide)
             .force("cluster", forceCluster)
             .force("gravity", forceGravity)
             .force("x", forceXCombine)
@@ -3876,7 +3858,7 @@ function collapseCircleImages() {
     if(graphMode == 0) {
       setTimeout(function() { 
           simulation
-          .force("collide", d3.forceCollide(function(d) { return d.radius + nodePadding }))
+          .force("collide", forceCollide)
           .force("cluster", forceCluster)
           // .force("gravity", forceGravity)
           .force("x", forceXCombine)
@@ -3886,17 +3868,15 @@ function collapseCircleImages() {
           simulation.alpha(0.15).alphaTarget(0.001).restart();
 
       }, 0);
-      // setTimeout(function() { resetSimulation() }, 700);
-
-      // setTimeout(function() { enterUpdateCircles();
         
-        forceGravity = d3.forceManyBody().strength(function(d) { return -22 * d.radius });
+        forceCollide = d3.forceCollide($(window).height()*0.009)
+        forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
         simulation
         .force("gravity", // default strength = -30, negative strength = repel, positive = attract
                 forceGravity)
         // collapse gravity 
-        .force("collide", d3.forceCollide(function(d) { return d.radius + 20 }))
+        .force("collide", forceCollide)
         .alpha(0.6).alphaTarget(0.001).restart(); 
     }
   }
@@ -3930,10 +3910,11 @@ function expandCircleImages() {
 
         if(graphMode == 0) {
           setTimeout(function() { 
-            forceGravity = d3.forceManyBody().strength(function(d) { return -30 * d.radius });
+            forceCollide = d3.forceCollide($(window).width()*0.022)
+            forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
               simulation
-              .force("collide", d3.forceCollide(function(d) { return 42 }))
+              .force("collide", forceCollide)
               .force("cluster", forceCluster)
               .force("gravity", forceGravity)
               .force("x", forceXCombine)
