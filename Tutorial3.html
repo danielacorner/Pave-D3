@@ -47,12 +47,10 @@
         <a id="progTutCircle2" class="progTutCircle progTutCircleActive" href="Tutorial3.html"">3</a>
         <a id="progTutCircle3" class="progTutCircle progTutLineInactive" href="Tutorial4.html">4</a>
         <a id="progTutCircle4" class="progTutCircle progTutLineInactive" href="Tutorial5.html">5</a>
-        <a id="progTutCircle5" class="progTutCircle progTutLineInactive" href="Tutorial6.html">6</a>
         <div id="progTutLine0" class="progTutLine progTutLineActive""></div>
         <div id="progTutLine1" class="progTutLine progTutLineActive""></div>
         <div id="progTutLine2" class="progTutLine" ></div>
         <div id="progTutLine3" class="progTutLine" ></div>
-        <div id="progTutLine4" class="progTutLine" ></div>
         <!-- <div id="progTutLine5" class="progTutLine" ></div> -->
       </div>  
 
@@ -77,7 +75,7 @@
 
 </div>
 
-  <svg  id="chart" style="top: 0vw; left: 20vw; pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 100vh; padding-top: 30px" class="chart"> </svg>
+  <svg  id="chart" style="top: 0vw; left: 20vw; pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 100vh; padding-top: 3vw" class="chart"> </svg>
 
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
@@ -96,6 +94,7 @@ forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtr
 hoverTimeout;
 
 maxSalary = 132.922; //busted
+// forceGravityMultiplier = -10;
 
 var sticky = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
@@ -131,17 +130,13 @@ height = window.innerHeight/1.5,
 d3.select(window).on("resize", function() {
   resize();
 
-  d3.selectAll(".jobCircle").attr("r", equalRadius)
+  forceCollide = d3.forceCollide($(window).width()*-0.08)
+  forceGravity = d3.forceManyBody().strength($(window).width()*-0.05)
 
-  forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
-  forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
-
-  simulation.force("collide", forceCollide).force("gravity", forceGravity)
-    .alpha(0.25).alphaTarget(0.001).restart();
-
+  simulation .force("collide", forceCollide) .force("gravity", forceGravity) .alpha(0.25).alphaTarget(0.001).restart();
 });
 
-resize()
+$(document).ready(function(){resize()})
 
 function resize() {
 
@@ -153,7 +148,7 @@ function resize() {
   // console.log(w+" x "+h)
 
   if(w < 992){
-    d3.select("#chart").style("margin-top","-20px")
+    // d3.select("#chart").style("margin-top","2vw")
     d3.select("#titleBar").style("margin-top","-10px").style("margin-left","20px")
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
@@ -162,9 +157,9 @@ function resize() {
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     
-    nodePadding = 0;
-    equalRadius = 6;
-    forceGravityMultiplier = -6;
+    // nodePadding = 0;
+    // equalRadius = 6;
+    // forceGravityMultiplier = -6;
 
     setTimeout(function() {
       d3.select("#sliderDiv_skillsComp").style("left", "0%")
@@ -172,7 +167,7 @@ function resize() {
     },1)
 
   }else{
-    d3.select("#chart").style("margin-top","")
+    // d3.select("#chart").style("margin-top","")
     d3.select("#titleBar").style("margin-top","-0.35%").style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
@@ -185,9 +180,9 @@ function resize() {
       d3.select("#sliderDiv_skillsMath").style("right", "9%")
     },1)
 
-    nodePadding = 1;
-    equalRadius = 9;
-    forceGravityMultiplier = -10;
+    // nodePadding = 1;
+    // equalRadius = 9;
+    // forceGravityMultiplier = -10;
   }
 
   if(w < 768){
@@ -200,9 +195,9 @@ function resize() {
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
 
-    nodePadding = 0;
-    equalRadius = 5;
-    forceGravityMultiplier = -5;
+    // nodePadding = 0;
+    // equalRadius = 5;
+    // forceGravityMultiplier = -5;
 
     $("#titleBar").hide()
 
@@ -222,21 +217,9 @@ function resize() {
 
 
   if(typeof circles != "undefined"){
-    circles.attr("transform", circleHeight(0, 0 )) //flag! need to make equation for width/height ratio
+    circles.attr("transform", circleHeight(0, -130+$(window).width()*0.080 )) //flag! need to make equation for width/height ratio
   }
 
-  graphYtranslate = window.innerHeight*0.12 - 16;
-  // return "translate("+window.innerWidth*0.5+","+ (165 + window.innerHeight*0.12) +")"
-
-  // Add an axis-holder group
-  if(typeof axisG != "undefined") {
-    axisG.attr("transform", "translate(0," + graphYtranslate + ")");
-  }
-
-
-  if(window.innerWidth<641){ // Phones
-    margin = {top: 20, right: 12, bottom: 20, left: 12}
-  }
 } // end of resize()
 
 
@@ -385,11 +368,11 @@ store = nodes;
 
 // Simulation, forces, & tick function
     // Forces for the simulation
-var forceCollide = d3.forceCollide(function(d) { return d.radius + nodePadding })
+var forceCollide = d3.forceCollide($(window).width()*-0.08)
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
-var forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius })
+var forceGravity = d3.forceManyBody().strength($(window).width()*-0.05)
 // .strength(function(d) { return -7 * automationRadiusScale(d.automationRisk) })
 var forceXSeparate = d3.forceX(function(d) {
   return ((width / m) * d.cluster - width/2 - 20) //try window.innerWidth??
@@ -1111,7 +1094,7 @@ circles.transition()
 .duration(2000)
 .delay(function(d, i) { return i * 4})
 .attrTween("r", function(d) {
-  var i = d3.interpolate(0, d.radius);
+  var i = d3.interpolate(0, d.radius*0.07 + "vw");
   return function(t) { return d.radius = i(t); };
 })
 .styleTween("opacity", function() {
@@ -1213,7 +1196,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
+          // forceGravity = d3.forceManyBody().strength($(window).width()*-0.08)
 
           simulation
           .force("cluster", forceCluster)
@@ -1298,7 +1281,7 @@ resetFilters = function(mode) {
     if(graphMode == 0) {
       setTimeout(function() { 
           
-          forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
+          // forceGravity = d3.forceManyBody().strength($(window).width()*-0.08)
 
           simulation
           .force("cluster", forceCluster)
