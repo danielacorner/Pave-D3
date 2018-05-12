@@ -163,7 +163,7 @@ button.close-sliders-btn{
 button.btn-grey {
   font-size: 14px; 
   height: 32px; 
-  box-shadow: 3px 3px 17px grey; 
+  box-shadow: 1px 2px 1px grey ;
   background: #49AC52;
 }
 button.btn-graph:hover {
@@ -227,25 +227,96 @@ button.btn-grey:hover {
 button.btn-group:hover {
   background: #179E00;
 }
+#graphExplainerDiv {
+  color: #49AC52; 
+  position: fixed;
+  font-size: 20px; 
+  border: 3px solid #49AC52; 
+  border-radius: 13px; 
+  padding: 20px 10px 0px 5px; 
+  box-shadow: 2px 2px 80px #404040FF; 
+  width: 620px;
+  background: white;
+}
 button.suggested-views-btn {
-  height: 60px;
-  width: 200px;
+  padding: 0px;
+  margin: 0px;
+  height: 175px;
+  width: 175px;
   background: white;
   border-width: 3px;
   border-color: #49AC52;
-  border-radius: 7px;
   box-shadow: 0px;
   font-weight: bold;
+  display: inline-block;
   font-family: Raleway;
   color:  #49AC52;
+  font-size: 21px;
+  border-radius: 7px;
 }
 button.suggested-views-btn:hover {
   background: #eaeaea;
 }
 li.list-graphModes {
+  display: inline;
   list-style: none; 
   padding-bottom: 10px;
   height: 67px;
+}
+.grid-container {
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: 175px 175px 175px;
+  grid-gap: 20px;
+}
+button.views-btn {
+  height: 95px;
+  width: 95px;
+  background: white;
+  border-width: 3px;
+  border-color: #49AC52;
+  box-shadow: 0px;
+  font-weight: bold;
+  display: inline-block;
+  font-family: Raleway;
+  color: #49AC52;
+  font-size: 15px;
+  border-radius: 7px;
+}
+button.views-btn:hover {
+  background: #eaeaea;
+}
+.p-view {
+  margin-bottom: 0px;
+}
+#grid-container-views {
+  position: fixed;
+  right: 20px;
+  bottom: 36vh;
+  display: grid;
+  grid-template-rows: 95px 95px 95px;
+  grid-gap: 10px;
+}
+.explainDiv {
+  display: inline;
+}
+.viewDiv {
+  display: inline;
+}
+.p-graphModes {
+  padding-left: 7px;
+  width: 170px;
+  font-size: 15px;
+  padding-top: 10px; 
+}
+#btnExit {
+  display: inline; 
+  float: right; 
+  margin-top: -61px;
+  font-weight: bolder;
+  background: none;
+  border: none;
+  font-size: 20px;
 }
 button.search-btn {
   border: none;

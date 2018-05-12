@@ -143,33 +143,35 @@
 							</div> <!-- end of topButtons -->
 
 							<!-- suggested views buttons -->
-							<div id="suggestedViewsDiv" style="position: fixed; bottom: 50vh; right: 3%; display: none;">
 
-								<span style="font-size: 20px; font-weight: bold; color: grey; padding-left: 17px; padding-right: 5px;">
-								Suggested Views</span>
-<!-- 								<button class="btn-xs" style="width: 20px;" id="minimizeViews" onclick="minimizeViews()">
-									<i id="minimizeIcon" style="padding-right: 6px; padding-bottom: 4px;" class="fas fa-window-minimize"></i>
-								</button> -->
-
-								<li class="list-graphModes" style="margin-top: 10px">
-									<button id="a1" class="suggested-views-btn" href="#">
-										How much study for how much pay?
-									</button>
-								</li>
-								<li class="list-graphModes">
-									<button id="a2" class="suggested-views-btn"  href="#">
-										How many jobs exist?
-									</button>
-								</li>
-								<li class="list-graphModes">
-									<button id="a0" class="suggested-views-btn" href="#">
-										What's the risk my job will be automated?
-									</button>
-								</li>
-
-							</div>
+				      <div id='grid-container-views'>
+				        <div class='viewDiv'>
+				          <button id='btnView1' class='views-btn' href='#'>
+				            <p class='p-view'>Income</p> 
+				            <p class='p-view'>vs.</p> 
+				            <p class='p-view'>Years of Study</p>
+				          </button>
+				        </div>
+				        <div class='viewDiv'>
+				          <button id='btnView2' class='views-btn' href='#'>
+				            <p class='p-view'>Income</p> 
+				            <p class='p-view'>vs.</p> 
+				            <p class='p-view'>Number of Jobs</p>
+				          </button>
+				        </div>
+				        <div class='viewDiv'>
+				          <button id='btnView3' class='views-btn' href='#'>
+				            <p class='p-view'>Machines</p> 
+				            <p class='p-view'>vs.</p> 
+				            <p class='p-view'>Number of Jobs</p>
+				          </button>
+				        </div>
+				      </div>
 
 							<script type="text/javascript">
+  $("#grid-container-views").hide();
+
+								
 											var viewsMinimized = 0;
 											function minimizeViews() {
 												viewsMinimized = 1-viewsMinimized;

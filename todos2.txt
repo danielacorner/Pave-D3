@@ -9,16 +9,14 @@ ideas:
 ------------------------------------------
 
 current:
-- check all $(window).width() => height() in main viz
-- tut6 shadow
-- explainer div + x button + ? button to show again
-- fix size switching
+- fix sizes dropdown & expose options
 
 next:
+- explainer div ? button to show again
 - Verbal and Communication, Logic and Critical Thinking, Computer and Information, Math and Spatial
 - check google styleguide for shadows
 (add items to a css grid layout?)
-- add circle drop shadow
+- tut6 shadow
 - tutorial5 answerDiv
 - join tut1 & tut2 together?
 

@@ -6,8 +6,8 @@ hoverTimeout;
 maxSalary = 132.922; //busted
 graphXtranslate = 0;
 
-expandedRadius = $(window).width()*0.045;
-collapsedRadius = $(window).height()*0.008;
+expandedRadius = $(window).height()*0.045;
+collapsedRadius = $(window).height()*0.007;
 
 var favourites = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
@@ -891,10 +891,6 @@ var graphMode;
     d3.select("#viewMoreBtn").on("click", function() {
         d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0).remove()
 
-        // d3.select("#tooltipBottomDiv").style("border-radius", "6px")
-        // .transition().duration(500).style("width","550px")
-        // .style("box-shadow","7px 7px 17px #404040FF")
-        
         div3 = d3.select("#tooltipBottomDiv").append("div").attr("id","moreBtnsContainerDiv")
           .style("height","250px")
           .style("box-shadow","6px 4px 12px #404040FF")
@@ -1748,256 +1744,157 @@ var originalRadius = {};
     originalRadius[d.id] = d.radius;
   });
 
-// mouseover explainer divs
 
-// d3.select("#graph").on('mouseenter', function(d) {
-
-//   // append a large div, transition its height and width
-//   d3.select("#graph").select(function(){return this.parentNode})
-//   .append("div").style("width","10px").style("height","0px")
-//     .attr("id","graphExplainer").style("opacity",0)
-//     .style("position","absolute").style("top","40px").style("left","0px")
- 
-//   //move button down and keep other button up
-//   d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
-//   d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
-  
-//   // explainer transition
-//   d3.select("#graphExplainer").transition().duration(250)
-//     .style("width","30vw")
-//     .style("height","auto")
-//     .style("background","#A6B0A8")
-//     .style("opacity",1)
-//     .style("border-bottom-left-radius","6px")
-//     .style("border-bottom-right-radius","6px")
-
-//   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
-//     .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
-
-// })
-
-// d3.select("#graph").on('mouseleave', function(d) {
-
-//     d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
-//     //move button up and keep other button down
-//     d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-//     // fade out
-//     d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
-//     d3.select("#futureExplanation").transition().duration(200).style("opacity",0).remove();
-//   //move button up and keep other button down
-//   // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
-//   d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-  
-//   // fade out
-//   // d3.select("#graph").transition().duration(250).style("height","32px")
-//   d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
-//   d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
-
-// })
-
-
-// d3.select("#futureView").on('mouseenter', function(d) {
-//   //move button up and keep other button down
-//   // d3.select("#futureView").transition().duration(250).style("margin-bottom","0px")
-//   d3.select("#graph").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-  
-//   // fade out
-//   // d3.select("#graph").transition().duration(250).style("height","32px")
-//   d3.select("#graphExplainer").transition().duration(200).style("opacity",0).remove();
-//   d3.select("#graphExplanation").transition().duration(200).style("opacity",0).remove();
-
-//   // append and transition the explainer div
-//   d3.select("#futureView").select(function(){return this.parentNode})
-//   .append("div").style("width","10px").style("height","0px")
-//     .attr("id","futureExplainer").style("opacity",0)
-//     .style("position","absolute").style("top","40px").style("right","0px")
-
-//   //move button down and keep other button up
-//   d3.select("#graph").transition().duration(250).style("margin-bottom","20px")
-//   d3.select("#futureView").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
-  
-//   // explainer transition
-//   d3.select("#futureExplainer").transition().duration(250)
-//     .style("width","30vw")
-//     .style("height","auto")
-//     .style("background","#A6B0A8")
-//     .style("opacity",1)
-//     .style("border-bottom-left-radius","6px")
-//     .style("border-bottom-right-radius","6px")
-
-//   d3.select("#futureExplainer").append("div").attr("id","futureExplanation").style("color","white").style("padding","25px 18px")
-//     .html("Machines are getting better at performing new tasks every day. <em>Automation Risk</em> tells us how likely a job will soon become unavailable.")
-
-// })
-
-// d3.select("#futureView").on('mouseleave', function(d) {
-
-//     //move button up and keep other button down
-//     d3.select("#futureView").transition().duration(250).style("padding-bottom","3px").style("margin-bottom","20px")
-//     // fade out
-//     d3.select("#futureExplainer").transition().duration(200).style("opacity",0).remove();
-
-// })
 
 function createGraphExplainerDiv() { //bookmarklet
   // width of the div
-  var explainerWidth = 700;
+  var explainerWidth = 620;
     // append a large div, transition its height and width
   graphExplainerDiv = d3.select("body").append("div")
-    .style("width",explainerWidth+"px").style("height","400px")
-    .attr("id","graphExplainer").style("opacity",0)
-    .style("position","fixed").style("top","300px").style("left",(window.innerWidth*0.5-(explainerWidth/2))+"px")
-    .style("color", "#49AC52")
-    .style("font-size", "20px")
-    .style("border", "3px solid #49AC52")
-    .style("border-radius", "13px")
-    .style("padding", "20px")
-    .style("box-shadow","0px 0px 150px #404040FF")
+    .attr("id","graphExplainerDiv").style("opacity",0)
+    .style("left",($(window).width()-explainerWidth)/2 + "px")
     .html(
-      "<p>Graph View lets you compare job groups by their length of education, automation risk, and potential income.</p>"+
-      // bookmarklet : todo - buttons onclick dismiss explainer
-      "<div id='explainLeft' style='float: left; display: inline;'>"+
-                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-bottom: 11px;'>"+
-                  "<button id='b1' class='suggested-views-btn' href='#'>"+
-                    "How much study for how much pay?"+
-                  "</button>"+
-                "</li>"+
-                "<li class='list-graphModes' style='width: 220px; font-size: 16px;'>"+
-                  "<button id='b2' class='suggested-views-btn'  href='#'>"+
-                    "How many jobs exist?"+
-                  "</button>"+
-                "</li>"+
-                "<li class='list-graphModes' style='width: 220px; font-size: 16px; margin-top: 14px; margin-bottom: 51px;'>"+
-                  "<button id='b0' class='suggested-views-btn' style='background: white' href='#'>"+
-                    "What's the risk my job will be automated?"+
-                  "</button>"+
-                "</li>"+
-      "</div>"+
-
-      "<div id='explainRight' style='display: inline;'>"+
-              "<p style='margin-top: 1em'>1. This view compares average <strong>income</strong> and <strong>years of study</strong>.</p>"+
-              
-              "<p style='margin-top: 1.5em; margin-bottom: 1.5em;'>2. This view compares the <strong>number of available positions</strong> and the average <strong>income</strong></p>"+
-
-              "<p style='display: inline; margin-top: 1.5em;'>3. Machines are getting better at performing new tasks every day -- "+
-              "this view compares the <strong>number of available positions</strong> with the <strong>risk that job tasks will be machine-automated</strong><sup>1</sup>.</p>" +
-              
-      "</div>"+
-
-      // "<p style=' font-size: 12px'><sup>1</sup><a href='http://brookfieldinstitute.ca/research-analysis/automation-across-the-nation-understanding-distribution-automation-susceptibility-across-canada/' target='_blank'>"+
-      // "The Brookfield Institute</a> has provided automation risk predictions.</p>"+ // 'make into a citation?''
-      "")
+      "<p style='margin: 2px 0px 20px 20px'>Graph View lets you compare job groups by what you care about most.</p>"+
+      "<button id='btnExit'>x</button>"+
+      "<div class='grid-container'>"+
+        "<div class='explainDiv'>"+
+          "<button id='btnSuggest1' class='suggested-views-btn' href='#'>"+
+            "<p style='padding-top: 10px'>Income</p> "+
+            "<p>vs.</p> "+
+            "<p>Years of Study</p>"+
+          "</button>"+
+          "<p class='p-graphModes' style='margin-bottom: -0.10em'>Usually, jobs that need more education have higher incomes.</p>"+
+          "<p class='p-graphModes'>Compare average income and years of study.</p>"+
+        "</div>"+
+        "<div class='explainDiv'>"+
+          "<button id='btnSuggest2' class='suggested-views-btn' href='#'>"+
+            "<p style='padding-top: 10px'>Income</p> "+
+            "<p>vs.</p> "+
+            "<p>Number of Jobs</p>"+
+          "</button>"+
+          "<p class='p-graphModes' style='margin-bottom: -0.10em'>The more jobs are available, the easier it might be to get hired.</p>"+
+          "<p class='p-graphModes'>Compare average income and how many jobs are available.</p>"+
+        "</div>"+
+        "<div class='explainDiv'>"+
+          "<button id='btnSuggest3' class='suggested-views-btn' href='#'>"+
+            "<p style='padding-top: 10px'>Machines</p> "+
+            "<p>vs.</p> "+
+            "<p>Number of Jobs</p>"+
+          "</button>"+
+          "<p class='p-graphModes' style='margin-bottom: -0.10em'>Machines are getting better at performing new tasks every day.</p>"+
+          "<p class='p-graphModes'>Compare risk that job tasks will be taken over by machines and how many jobs are available.</p>"+
+          "</p>"+
+        "</div>"+
+      "</div>"
+    )
  
-//   //move button down and keep other button up
-//   d3.select("#futureView").transition().duration(250).style("margin-bottom","20px")
-//   d3.select("#graph").transition().duration(250).style("padding-bottom","40px").style("margin-bottom","0px")
-  
   // explainer transition
-  d3.select("#graphExplainer").transition().duration(500)
+  d3.select("#graphExplainerDiv").transition().duration(500)
     .style("background","white")
     .style("opacity",1)
 
-//   d3.select("#graphExplainer").append("div").attr("id","graphExplanation").style("color","white").style("padding","25px 18px")
-//     .html("Not all jobs are equal! This view shows how jobs differ in terms of <em>wage, years of study,</em> and <em> number of jobs.</em>")
-/////////////////////////////// Suggested Views buttons /////////////////////////
+  d3.select("#btnExit").on("click", function(){
+    d3.select("#graphExplainerDiv").transition().duration(500).style("opacity",0).remove()
+  })
 
-d3.select("#b0").on('mouseover', function() {d3.select(this).style("background", "#eaeaea")})
-d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-d3.select("#b0").on('click', function() { // Automation vs Number of Jobs
+d3.select("#btnSuggest3").on('mouseover', function() {d3.select(this).style("background", "#eaeaea")})
+d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "white")})
+
+d3.select("#btnSuggest3").on('click', function() { // Automation vs Number of Jobs
   currentMode = 3;
   graphModeOn(3);
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#b0").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
-  // d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest3").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  // d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#b1").style("background", "white").style("color","#49AC52")
-  d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#b2").style("background", "white").style("color","#49AC52")
-  d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "white")})
   // createLegend(0);
 
-  d3.select("#a0").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#a1").style("background", "white").style("color","#49AC52").on("mouseover", "")
-  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "white").style("color","#49AC52").on("mouseover", "")
-  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
 });
 
-d3.select("#b1").on('click', function() { // Wage vs Years
+d3.select("#btnSuggest1").on('click', function() { // Wage vs Years
   currentMode = 1;
   // graphModeOn(1);
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#b0").style("background", "white").style("color","#49AC52")
-  d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#b1").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
-  // d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest1").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  // d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#b2").style("background", "white").style("color","#49AC52")
-  d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a0").style("background", "white").style("color","#49AC52")
-  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "white").style("color","#49AC52")
-  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
 });
 
-d3.select("#b2").on('click', function() { // Wage vs Workers
+d3.select("#btnSuggest2").on('click', function() { // Wage vs Workers
   currentMode = 2;
   graphModeOn(2);
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#b0").style("background", "white").style("color","#49AC52")
-  d3.select("#b0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "white")})
   
-  d3.select("#b1").style("background", "white").style("color","#49AC52")
-  d3.select("#b1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#b1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnSuggest1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#b2").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
-  // d3.select("#b2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#b2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnSuggest2").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  // d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#a0").style("background", "white").style("color","#49AC52")
-  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a1").style("background", "white").style("color","#49AC52")
-  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
 });
 
@@ -2033,77 +1930,77 @@ d3.select("#graph").on('click', function(d){
 
 function moveBottomDown() {
   // Move top up
-  d3.select("#topButtons").transition().duration(500).style("top", "10vh");
+  d3.select("#viewButtons").transition().duration(500).style("margin-top", "-20px");
   d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "7vh");
   d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "7vh");
   
-  d3.select("#bottomButtons").transition().duration(500).style("bottom", "10vh");
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "5vh");
   d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "3vh");
   d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "3vh");
 }
 function moveBottomUp() {
   // Move top up
-  d3.select("#topButtons").transition().duration(500).style("top", "12vh");
+  d3.select("#viewButtons").transition().duration(500).style("margin-top", "0px");
   d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "9vh");
   d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "9vh");
 
-  d3.select("#bottomButtons").transition().duration(500).style("bottom", "15vh");
+  d3.select("#bottomButtons").transition().duration(500).style("bottom", "7.5vh");
   d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "9vh");
   d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "9vh");
 }
 
 /////////////////////////////// Suggested Views buttons /////////////////////////
 
-d3.select("#a0").on('click', function() { // Automation vs Number of Jobs
+d3.select("#btnView3").on('click', function() { // Automation vs Number of Jobs
   currentMode = 3;
   graphModeOn(3);
 
-  d3.select("#a0").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#a1").style("background", "white").style("color","#49AC52").on("mouseover", "")
-  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "white").style("color","#49AC52").on("mouseover", "")
-  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
   // createLegend(0);
 });
 
-d3.select("#a1").on('click', function() { // Wage vs Years
+d3.select("#btnView1").on('click', function() { // Wage vs Years
   currentMode = 1;
   graphModeOn(1);
 
-  d3.select("#a0").style("background", "white").style("color","#49AC52")
-  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "white").style("color","#49AC52")
-  d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
 
-d3.select("#a2").on('click', function() { // Wage vs Workers
+d3.select("#btnView2").on('click', function() { // Wage vs Workers
   currentMode = 2;
   graphModeOn(2);
 
-  d3.select("#a0").style("background", "white").style("color","#49AC52")
-  d3.select("#a0").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a0").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a1").style("background", "white").style("color","#49AC52")
-  d3.select("#a1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  d3.select("#a1").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#a2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
-  // d3.select("#a2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
-  // d3.select("#a2").on("mouseout", function() {d3.select(this).style("background", "white")})
+  d3.select("#btnView2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  // d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
+  // d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
 
 
@@ -2112,7 +2009,7 @@ function graphModeOn(mode) {
   width=$(window).width()*0.75;
   height=$(window).height()*0.75;
   // move legend group right
-  d3.select(".legend").style("margin-left","30px")
+  d3.select("#legend").transition().duration(500).style("bottom","180px")
   // clear annotations
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
   // wait for transform before applying transformed annotations
@@ -2125,9 +2022,9 @@ function graphModeOn(mode) {
   // hideGraphViewCallout();
   moveBottomDown();
   hideToolTip(500);
-  d3.select("#btnColours").transition().duration(500).style("margin-left","100px")
-  d3.select("#btnSizes").transition().duration(500).style("margin-left","100px")
-  d3.select("#splitShuffle").transition().duration(500).style("opacity", 0);
+  // d3.select("#btnColours").transition().duration(500).style("margin-left","100px")
+  // d3.select("#btnSizes").transition().duration(500).style("margin-left","100px")
+  // d3.select("#splitShuffle").transition().duration(500).style("opacity", 0);
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -2138,7 +2035,7 @@ function graphModeOn(mode) {
 
   d3.select("#graphToggle").attr("src","img/toggle-on.png")
   
-  d3.select("#suggestedViewsDiv").style("display", "inline");
+  $("#grid-container-views").show();
     // cool to 0 degrees
     simulation.stop();
 
@@ -2871,7 +2768,7 @@ function showLeftButtons() {
 
 function graphModeOff() {
   // move legend div back
-  d3.select(".legend").style("margin-left","0px")
+  d3.select("#legend").transition().duration(500).style("bottom","230px")
 
   // clear annotations
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
@@ -2880,17 +2777,14 @@ function graphModeOff() {
   d3.select("#btnColours").transition().duration(500).style("opacity",1).style("pointer-events","auto")
   d3.select("#btnSizes").transition().duration(500).style("opacity",1).style("pointer-events","auto")
 
-  d3.select("#btnColours").transition().duration(500).style("margin-left","0px")
-  d3.select("#btnSizes").transition().duration(500).style("margin-left","0px")
-
-  d3.select("#splitShuffle").transition().duration(500).style("opacity", 1);
+  // d3.select("#splitShuffle").transition().duration(500).style("opacity", 1);
   d3.select("#graphToggle").attr("src","img/toggle-off.png")
 
     showLeftButtons();
   
 
   // hide graph modes options
-  d3.select("#suggestedViewsDiv").style("display","none");
+  $("#grid-container-views").hide();
   
   // remove axes
   axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
@@ -2901,7 +2795,7 @@ function graphModeOff() {
     // Transition back to original positions
     circles.transition()
     .duration(750)
-    .attr("r", function(d) { return originalRadius[d.id] })
+    // .attr("r", function(d) { return originalRadius[d.id] })
     .style("fill", function(d) { return color(d.cluster) })
       // set x, y values
     .attrTween("cx", function(d) { // transition x position to...
@@ -3171,7 +3065,7 @@ enterUpdateCircles = function() {
   if(graphMode == 1){ // transition in radii in graph mode
     circles = circles.merge(
       newCircles.attr("r",0).transition().duration(500)
-      .attr("r", $(window).width()*0.01));
+      .attr("r", collapsedRadius));
   }else if(graphMode == 0){
     circles = circles.merge(newCircles);
   }
@@ -3247,19 +3141,11 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style(leftOrRight, xtrans+"vw")
     .style(topOrBottom, ytrans+"vh")
     // lg and xl
-    .html("<div class='d-none d-sm-none d-md-none d-lg-inline d-xl-inline' align='left' style='margin-left: "+(sub_xtranslate+2)+"%;"
-    	+"font-size: 150%; font-weight: bold;"
-    	+" color:  #49AC52; font-family: Raleway'>"
-      +sliderTitlesArray[i] // "Language skills"
-      +"<img id=question_"+i+" class='img-question d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
-      +"alt='help' height='21' width = '24'>"
-      +"</div>"
-    // md sm and xs
-  +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
+    .html("<div align='left' style='margin-left: "+(sub_xtranslate)+"%;"
       +"font-size: 150%; font-weight: bold;"
       +" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
-      +"<img class='d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
+      +"<img id=question_"+i+" style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
       +"alt='help' height='21' width = '24'>"
       +"</div>"
     // sm and xs
@@ -3813,7 +3699,6 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("class", "handle")
       .attr("id","handle_"+(i+j))
       // .style("z-index", 99)
-      .style("box-shadow", "3px 3px 3px black")
       .attr("r", 9);
 
       // Bugfix: lang slider not on top
@@ -3865,8 +3750,8 @@ function collapseCircleImages() {
 
 function expandCircleImages() {
 
-expandedRadius = $(window).width()*0.045;
-collapsedRadius = $(window).height()*0.008;
+expandedRadius = $(window).height()*0.045;
+collapsedRadius = $(window).height()*0.007;
   //bookmark
   //modify: toggle-on, toggle-off, shrink back down
   if (circlesExpanded == 0) {
@@ -3946,7 +3831,7 @@ function updateMulti(h, mode) {
   // EXIT
   circles.exit().transition().duration(500)
   // exit transition: "pop" radius * 1.5 + 5 & fade out
-  .attr("r", $(window).width()*0.03)
+  .attr("r", $(window).height()*0.03)
   .styleTween("opacity", function(d) {
     var i = d3.interpolate(1, 0);
     return function(t) { return i(t); };
@@ -4033,8 +3918,8 @@ graphViewCallout = function() {
 
 // hide
 hideGraphViewCallout = function() {
-  d3.select("#graph").style("box-shadow","3px 3px 17px grey")
-  d3.select("#resetFilters").style("box-shadow","3px 3px 17px grey")  
+  d3.select("#graph").style("box-shadow","1px 2px 1px grey")
+  d3.select("#resetFilters").style("box-shadow","1px 2px 1px grey")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
   // d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
