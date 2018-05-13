@@ -1244,10 +1244,10 @@ function expandColoursLegend() {
       .text(function(d) { return d })
       .style("opacity",0).transition().duration(600).style("opacity",1)
   
-  legendTitle = d3.select("#svgLegend").append("text")
-    .attr("transform","translate(36,17)")
-    .text("Industries")
-    .style("font-size","22px").style("fill","#49AC52")
+  // legendTitle = d3.select("#svgLegend").append("text")
+  //   .attr("transform","translate(36,17)")
+  //   .text("Industries")
+  //   .style("font-size","22px").style("fill","#49AC52")
 
   //     .attr("r","20px").style("fill", function(d,i) { return color(i) })
   //     .attr("cx", "80vw")
@@ -1344,12 +1344,12 @@ function setSizes(mode){
     sizesArray.push(radiusScale(d3.min(nodes, function(d) { return d.workers })))
     sizesValuesArray.push(d3.min(nodes, function(d) { return d.workers }))
     // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 2; i++) {
       sizesArray.push(
-        (i/5) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
+        (i/2) * radiusScale(d3.max(nodes, function(d) { return d.workers }))
         )
       sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.workers })
+        (i/2) * d3.max(nodes, function(d) { return d.workers })
         )
     }
     break;
@@ -1358,12 +1358,12 @@ function setSizes(mode){
     sizesArray.push(wageRadiusScale(14))
     sizesValuesArray.push("$ "+String(14).substring(0,2)+"K per yr")
     // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 2; i++) {
       sizesArray.push(
-        (i/5) * wageRadiusScale(maxSalary)
+        (i/2) * wageRadiusScale(maxSalary)
         )
       sizesValuesArray.push("$ "+String(
-        (i/5) * maxSalary
+        (i/2) * maxSalary
         ).substring(0,2)+"K per yr")
     }
     break;
@@ -1372,12 +1372,12 @@ function setSizes(mode){
     sizesArray.push(yearRadiusScale(d3.min(nodes, function(d) { return d.yearsStudy })))
     sizesValuesArray.push(d3.min(nodes, function(d) { return d.yearsStudy }))
     // split scales into 4 intervals after minimum
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 2; i++) {
       sizesArray.push(
-        (i/5) * yearRadiusScale(d3.max(nodes, function(d) { return d.yearsStudy }))
+        (i/2) * yearRadiusScale(d3.max(nodes, function(d) { return d.yearsStudy }))
         )
       sizesValuesArray.push(
-        (i/5) * d3.max(nodes, function(d) { return d.yearsStudy })
+        (i/2) * d3.max(nodes, function(d) { return d.yearsStudy })
         )
     }
     break;
@@ -1389,7 +1389,7 @@ function setSizes(mode){
 }
 
 var currentSize = "nothing"
-var btnSizesDims = ["190px","320px"] // width, height
+var btnSizesDims = ["185px","150px"] // width, height
 
 
 d3.select("#btnSizes").on("click", function() {
@@ -1422,7 +1422,7 @@ function expandSizesLegend() {
     .style("height","0px")
     .style("background","white")
     .style("position", "absolute")
-    .style("left","37px")
+    .style("right","-40px")
 
     d3.select("#legendDiv2").transition().duration(350)
     .style("width", btnSizesDims[0])
@@ -1437,28 +1437,53 @@ function expandSizesLegend() {
         .attr("height",btnSizesDims[1])
         .style("margin-top","5px")
         // .style("background","#eaeaea")
-      
+  
+      // // using susielu's d3-legend library:    
+      // // Size legend.
+      // var sizeScale = d3.scaleLinear()
+      //   .domain([0, 10])
+      //   .range([2, 30]);
+
+      // var sizeLegend = d3.legendSize()
+      //   .scale(sizeScale)
+      //   .shape("circle")
+      //   .shapePadding(3)
+      //   .cells(9)
+      //   .labelOffset(10);
+
+      // d3.select("#legendDiv2").append("g")
+      //   // .attr("transform", "translate(650, 60)")
+      //   .call(sizeLegend);
+
+
     sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
         .attr("r", 0) // start at 0 radius and transition in
-        .transition().duration(400).attr("r",  function(d,i) { return sizesArray[i] })
-        .attr("transform", function(d,i) { return "translate("+"35"+","+(45 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
+        .transition().duration(400).attr("r",  function(d,i) { 
+          if(sizesArray.length < 2) { return sizesArray[i] }
+          else{ return sizesArray[i]+5 }
+        })
+        .attr("transform", function(d,i) { return "translate("+(35 + i*45) + 
+          // Math.pow(sizesArray[i], 1.6))+
+        ","+"25"+")" } ) 
         .style("fill", "#B5ADAD")
 
     legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
         .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+"95"+","+(49 + i*0 + Math.pow(sizesArray[i], 1.6))+")" } ) 
-        .text(function(d,i) { if(i==0){ return "Less" }else if(i==4){ return "More" } })
+        .attr("transform", function(d,i) { return "translate("+(20 + i*45) + 
+          // Math.pow(sizesArray[i], 1.6))+
+        ","+"60"+")" } ) 
+        .text(function(d,i) { if(i==0){ return "Less" }else if(i==1){ return "More" } })
         .style("opacity",0).transition().duration(600).style("opacity",1)
     
-    legendTitle = d3.select("#svgLegend").append("text")
-      .attr("transform","translate(11,23)")
+    // legendTitle = d3.select("#svgLegend").append("text")
+    //   .attr("transform","translate(11,23)")
 
-      .text(currentSize) // must change this when size dropdown activated
-      .style("font-size","22px").style("fill","#49AC52")
+    //   .text(currentSize) // must change this when size dropdown activated
+    //   .style("font-size","22px").style("fill","#49AC52")
 
-    if(currentSize=="nothing"){
-      legendTitle.text("")
-    }
+    // if(currentSize=="nothing"){
+    //   legendTitle.text("")
+    // }
 
     sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
         .attr("class","dropup")
@@ -1607,10 +1632,8 @@ function expandSizesLegend() {
 
       currentSize = "nothing"
       document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      // mouseEnterOff()
       setSizes("none")
       expandSizesLegend()
-      // removeLegends()
     })
 
     // fade in dropdown
@@ -1818,7 +1841,6 @@ d3.select("#btnSuggest3").on('click', function() { // Automation vs Number of Jo
   d3.select("#btnSuggest2").style("background", "white").style("color","#49AC52")
   d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "white")})
-  // createLegend(0);
 
   d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
@@ -1966,7 +1988,6 @@ d3.select("#btnView3").on('click', function() { // Automation vs Number of Jobs
   d3.select("#btnView2").style("background", "white").style("color","#49AC52").on("mouseover", "")
   d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
-  // createLegend(0);
 });
 
 d3.select("#btnView1").on('click', function() { // Wage vs Years
