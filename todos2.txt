@@ -8,7 +8,7 @@ ideas:
 
 current:
 - bottom 2 sliders should be positioned with vh not vw
-- reset button should reset sizes and colour filters
+- explainer divs should position based on img bbox
 
 next:
 - explainer div ? button to show again

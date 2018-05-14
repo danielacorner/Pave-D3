@@ -42,7 +42,7 @@ var sliderArray = [
     "s1DataAnalysis","s3FindingInformation","s12DigitalTechnology","s13DocumentUse"
 ];
 
-// var sliderTitlesArray = ["Language skills", "Logic skills", "Math skills", "Computer skills",
+// var sliderTitlesArray = ["Communication <p class='sliderText'>and Verbal skills</p>", "Logic and <p class='sliderText'>Reasoning skills</p>", "Math and <p class='sliderText'>Spatial skills</p>", "Computer and <p class='sliderText'>Information skills</p>",
 //   // subskills
 //     "Data Analysis","Decision-Making","Finding Information","Job Task Planning and Organizing",
 //     "Measurement and Calculation","Money Math","Numerical Estimation","Oral Communication",
@@ -51,7 +51,7 @@ var sliderArray = [
 //     ];
 
 var sliderTitlesArray = [
-// "Language skills", "Logic skills", "Math skills", "Computer skills",
+// "Communication <p class='sliderText'>and Verbal skills</p>", "Logic and <p class='sliderText'>Reasoning skills</p>", "Math and <p class='sliderText'>Spatial skills</p>", "Computer and <p class='sliderText'>Information skills</p>",
   // subskills
     "Oral Communication","Reading","Writing",
     "Job Task Planning and Organizing","Problem Solving","Critical Thinking","Decision-Making",
@@ -62,7 +62,10 @@ var sliderTitlesArray = [
 var sliderArrayMain = ["skillsLang", "skillsLogi", "skillsMath", "skillsComp"];
 
 var sliderTitlesArrayMain = [
-"Language skills", "Logic skills", "Math skills", "Computer skills",
+"Communication <p class='sliderText'>and Verbal skills</p>", "Logic and <p class='sliderText'>Reasoning skills</p>", "Math and <p class='sliderText'>Spatial skills</p>", "Computer and <p class='sliderText'>Information skills</p>",
+];
+var sliderTitlesArrayMainCompact = [
+"Communication skills", "Logic skills", "Math skills", "Computer skills",
 ];
 
 // var sliderArrayStats = ["wage", "workers"];
@@ -132,21 +135,16 @@ height = window.innerHeight/1.5,
 
 d3.select(window).on("resize", function() {
   resize();
-
   forceCollide = d3.forceCollide($(window).height()*0.009)
   forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
-
   simulation.force("collide", forceCollide).force("gravity", forceGravity)
     .alpha(0.25).alphaTarget(0.001).restart();
 
 });
 
-
-
 function resize() {
-
   var w = $(window).width();
-  console.log(w)
+  console.log("width: "+w+"px")
   var h = $(window).height();
   // console.log(w+" x "+h)
 
@@ -159,44 +157,35 @@ function resize() {
     d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
-    
-    setTimeout(function() {
-      d3.select("#sliderDiv_skillsComp").style("left", "0%")
-      d3.select("#sliderDiv_skillsMath").style("right", "1.5%")
-    },1)
-
+    d3.select("#sliderDiv_skillsComp").style("left", "0vw")
+    d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
   }else{
     // d3.select("#chart").style("margin-top","")
-    d3.select("#titleBar").style("margin-top","-0.35%").style("margin-left","9vw")
+    d3.select("#titleBar").style("margin-top","-0.35vh").style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
     d3.select("#legend") .style("margin-left","40px") .style("float","right")
     d3.selectAll(".btn-legend").style("margin","5px")
     d3.select("#sliderDiv_skillsLang").style("left", "9vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
-    setTimeout(function() {
-      d3.select("#sliderDiv_skillsComp").style("left", "9%")
-      d3.select("#sliderDiv_skillsMath").style("right", "9%")
-    },1)
-
+    d3.select("#sliderDiv_skillsComp").style("left", "9vw")
+    d3.select("#sliderDiv_skillsMath").style("right", "9vw")
   }
 
   if(w < 768){
-    d3.select("#sliderDiv_skillsComp").style("bottom", "1vw")
-    d3.select("#sliderDiv_skillsMath").style("bottom", "1vw")
+    d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsLang").style("top", "5vh")
     d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
     d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
-
     $("#titleBar").hide()
-
   }else{
     $("#titleBar").show()
-    d3.select("#sliderDiv_skillsComp").style("bottom", "9vw")
-    d3.select("#sliderDiv_skillsMath").style("bottom", "9vw")
+    d3.select("#sliderDiv_skillsComp").style("bottom", "9vh")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "9vh")
     d3.select("#sliderDiv_skillsLang").style("top", "9vh")
     d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
     d3.select("#resetFilters").html("<span style='padding-right: 6px;'>" +
@@ -204,14 +193,11 @@ function resize() {
        .style("width","185px") .style("margin-bottom","0px")
     d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
       ) .style("width","185px") .style("margin-bottom","-15px")
-
   }
 
   if(typeof circles != "undefined"){
     circles.attr("transform", circleHeight(0, -100+$(window).height()*0.080 )) //flag! need to make equation for width/height ratio
   }
-
-  // return "translate("+window.innerWidth*0.5+","+ (165 + window.innerHeight*0.12) +")"
 
   // Add an axis-holder group
   if(typeof axisG != "undefined") {
@@ -1198,14 +1184,14 @@ function expandColoursLegend() {
     .style("width","335px")
     .style("height","280px")
     .style("right", "15px")
-    .style("top", bboxColours.top - 30 + "px")
+    .style("top", bboxColours.top - 175 + "px")
     .style("border-radius","6px")
     .style("border","2px solid rgba(73, 172, 82, 0)")
   .transition().duration(375)
     .style("opacity",1)
     .style("background","white")
     .style("border","2px solid rgba(73, 172, 82, 1)") // fade in border
-    .style("top", bboxColours.top - 70 + "px")
+    .style("top", bboxColours.top - 215 + "px")
 
   d3.select("#btnColours").style("margin-right","18px")
 
@@ -1426,8 +1412,8 @@ function expandSizesLegend() {
     .style("width", btnSizesDims[0])
     .style("height", btnSizesDims[1])
     .style("position", "fixed")
-    .style("top",bboxSizes.top + 40 + "px" )
-    .style("right", "15px")
+    .style("top",bboxSizes.top - 45 + "px" )
+    .style("right", window.innerWidth*0.1 + "px")
 
     // transition in fade from below
 
@@ -1437,7 +1423,7 @@ function expandSizesLegend() {
     .transition().duration(350)
     .style("opacity", 1).style("border","2px solid rgba(73, 172, 82, 1)")
     .style("background","white")
-    .style("top",bboxSizes.top - 10 + "px" )
+    .style("top",bboxSizes.top - 85 + "px" )
     // .text("")
 
     svgLegend = d3.select("#legendDiv2")
@@ -1480,12 +1466,13 @@ function expandSizesLegend() {
     // size buttons
     sizesOptions = d3.select("#legendDiv2").append("div").attr("id","sizeOptionsDiv")
       .style("position","fixed")
-      .style("top",bboxSizes.top + 90 + "px" )
-      .style("right", "15px")
+      .style("top",bboxSizes.top - -25 + "px" )
+      .style("right", window.innerWidth*0.1 + "px")
       .style("width", btnSizesDims[0])
       .style("padding","10px")
     
-    sizesOptions.transition().duration(350).style("top",bboxSizes.top + 60 + "px" )
+    sizesOptions.transition().duration(350)
+      .style("top",bboxSizes.top - 15 + "px" )
 
     sizesOptions.append("button").attr("id","workLink")
       .style("float","left")
@@ -3089,25 +3076,25 @@ function createSliders(createSliderArray, sliderTitlesArray){
     var leftOrRight, topOrBottom;
 
   // Top row
-  if(["Language skills", "Logic skills"].includes(sliderTitlesArray[i])){
+  if(["Communication <p class='sliderText'>and Verbal skills</p>", "Logic and <p class='sliderText'>Reasoning skills</p>"].includes(sliderTitlesArray[i])){
     xtrans = sliderSideTranslate;
     ytrans = sliderHeightTranslate;
     topOrBottom = "top";
   }
 	// Right column
-	if(["Math skills", "Logic skills"].includes(sliderTitlesArray[i])){
+	if(["Math and <p class='sliderText'>Spatial skills</p>", "Logic and <p class='sliderText'>Reasoning skills</p>"].includes(sliderTitlesArray[i])){
 		// xtrans = sliderSideTranslate;
     leftOrRight = "right";
     // posn = "fixed";
 	}
    // Bottom row
-  if(["Math skills", "Computer skills"].includes(sliderTitlesArray[i])){
+  if(["Math and <p class='sliderText'>Spatial skills</p>", "Computer and <p class='sliderText'>Information skills</p>"].includes(sliderTitlesArray[i])){
     xtrans = sliderSideTranslate;
     ytrans = sliderHeightTranslate;
     topOrBottom = "bottom";
   }
   // Left column
-  if(["Language skills", "Computer skills"].includes(sliderTitlesArray[i])){
+  if(["Communication <p class='sliderText'>and Verbal skills</p>", "Computer and <p class='sliderText'>Information skills</p>"].includes(sliderTitlesArray[i])){
     leftOrRight = "left";
   }
 
@@ -3122,41 +3109,34 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style(leftOrRight, xtrans+"vw")
     .style(topOrBottom, ytrans+"vh")
     // lg and xl
-    .html("<div align='left' style='margin-left: "+(sub_xtranslate)+"%;"
-      +"font-size: 150%; font-weight: bold;"
-      +" color:  #49AC52; font-family: Raleway'>"
-      +sliderTitlesArray[i] // "Language skills"
-      +"<img id=question_"+i+" style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-      +"alt='help' height='21' width = '24'>"
+    .html(
+      "<img id=question_"+i+" style='display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
+      +"alt='help' height='26' width = '29'>"
+      +"<div align='left' style='display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
+      +"font-size: 140%; font-weight: bold;"
+      +" color: #49AC52; font-family: Raleway'>"
+      +sliderTitlesArray[i] // "Communication <p class='sliderText'>and Verbal skills</p>"
       +"</div>"
-    // sm and xs
-  // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(sub_xtranslate)+"%;"
-  //     +"font-size: 100%; font-weight: bold;"
-  //     +" color:  #49AC52; font-family: Raleway'>"
-  //     +sliderTitlesArray[i].substring(0,sliderTitlesArray[i].length - 7) // "Language skills"
-  //     +"<img style='padding-left: 5px; padding-bottom: 2px;' src='img/question.png' "
-  //     +"alt='help' height='21' width = '24'>"
-  //     +"</div>"
       )
 
   // Not Much       Lots
   .append("div")
     .attr("align", "left")
     .style("position", "relative")
-    .style("margin-top", "15.5%")
+    .style("margin-top", "39%")
     .style("margin-left", (sub_xtranslate)+"%")
     .style("color", "#49AC52")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
     .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
-      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px'></span>"
+      +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px;'></span>"
       +"Lots</div>"+
       "<div id=subSliderDiv_"+i+">"+
       "<span>"+
-        "<button id='btnSubsliders_"+i+"' class='expand-sliders-btn' style='width: 250px; margin-top: 10px; margin-left: 1px; fill: white; z-index: 99;' "+
+        "<button id='btnSubsliders_"+i+"' class='expand-sliders-btn' style='width: 250px; margin-top: 4px; margin-left: 1px; fill: white; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
-          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMain[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMainCompact[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
       "</span></div>")
     .select(function() {
@@ -3167,7 +3147,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
   	.style("z-index", 99)
   	// .attr("viewBox", "0 3 "+230+" "+50)
     .style("position", "absolute")
-    .style("top", 32+"px") // y position
+    .style("top", 56+"px") // y position
     // .style("margin-left", -sub_xtranslate+"%") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
@@ -3187,7 +3167,7 @@ $(document).ready(function(){resize()})
     .range([0, mainSlidersWidth]) // Width of slider is 200 px
     .clamp(true);
   // Bugfix: math max not working
-  if(["Math skills"].includes(sliderTitlesArray[i])) {
+  if(["Math and <p class='sliderText'>Spatial skills</p>"].includes(sliderTitlesArray[i])) {
   sliderScaleArray[i] = d3.scaleLinear()
     .domain([0, 59 * reductionFactor])
     .range([0, mainSlidersWidth]) // Width of slider is 200 px
@@ -3315,7 +3295,7 @@ $(document).ready(function(){resize()})
     .attr("id","handle_"+i);
 
     // Bugfix: lang slider not on top
-  // if(["Language Skills"].includes(sliderTitlesArray[i])) {
+  // if(["Communication <p class='sliderText'>and Verbal skills</p>"].includes(sliderTitlesArray[i])) {
   //   d3.select("#"+i).style("z-index", 99);
   // }
 
@@ -3438,13 +3418,13 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 115%; font-weight: bold;"
       //     +" color:  #49AC52; font-family: Raleway'>"
-      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Language skills"
+      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Communication <p class='sliderText'>and Verbal skills</p>"
       //     +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 100%; font-weight: bold;"
       //     +" color:  #49AC52; font-family: Raleway'>"
-      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Language skills"
+      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Communication <p class='sliderText'>and Verbal skills</p>"
 
       //     +"</div>"
           )
@@ -3573,7 +3553,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .clamp(true);      
     }
     // Bugfix: math max not working
-    // if(["Math skills"].includes(subSliderTitlesArray[i])) {
+    // if(["Math and <p class='sliderText'>Spatial skills</p>"].includes(subSliderTitlesArray[i])) {
     // sliderScaleArray[i] = d3.scaleLinear()
     //   .domain([0, 59])
     //   .range([0, 200]) // Width of slider is 200 px
@@ -3683,7 +3663,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
       .attr("r", 9);
 
       // Bugfix: lang slider not on top
-    // if(["Language Skills"].includes(subSliderTitlesArray[i])) {
+    // if(["Communication <p class='sliderText'>and Verbal skills</p>"].includes(subSliderTitlesArray[i])) {
     //   d3.select("#"+i).style("z-index", 99);
     // }
 

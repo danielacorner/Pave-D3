@@ -449,7 +449,9 @@ rect.legendBtn {
   stroke-width: 3px;
   filter: url(../Tutorial5.html#f1);
 }
-
+.sliderText {
+  font-size: 100%;
+}
 .btn-arrow-right,
 .btn-arrow-left {
 /*    position: relative;
