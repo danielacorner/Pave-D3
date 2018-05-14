@@ -50,10 +50,10 @@ a.intro-tour-button:hover {
 a.intro-start-button:hover {
   background: #3C8D44;
 }
-#homepage:hover {
+.homepage:hover {
  color: #3C8D44;
 }
-#homepage {
+.homepage {
  color: #49AC52;
 }
 a.intro-start-button {
@@ -94,10 +94,10 @@ border-width: 0px;
   background: #eaeaea;
 }
 .link-top:hover {
-  color: #C7F2A7;
+  color: #3C8D44;
 }
 .link-top2:hover {
-  color: #B5DC98;
+  color: #3C8D44;
 }
 .link-top {
  font-size: 20px;
@@ -121,8 +121,8 @@ img.img-question {
 }
 .search-div {
   position: fixed; 
-  right: 30px;
-  top: 30px;
+  right: 20px;
+  top: 22px;
 }
 .fontawesome-i2svg-active {
 /*  pointer-events: none;

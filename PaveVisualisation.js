@@ -150,7 +150,8 @@ function resize() {
 
   if(w < 992){
     // d3.select("#chart").style("margin-top","-20px")
-    d3.select("#titleBar").style("margin-top","-10px").style("margin-left","20px")
+    // d3.select("#titleBar").style("margin-top","-10px")
+    // .style("margin-left","20px")
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
     d3.select("#legend") .style("margin-left","60px")
@@ -161,7 +162,8 @@ function resize() {
     d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
   }else{
     // d3.select("#chart").style("margin-top","")
-    d3.select("#titleBar").style("margin-top","-0.35vh").style("margin-left","9vw")
+    // d3.select("#titleBar").style("margin-top","-0.35vh")
+    // .style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
     d3.select("#legend") .style("margin-left","40px") .style("float","right")
@@ -3055,8 +3057,8 @@ enterUpdateCircles = function() {
 var sliderSideTranslate = 9;
 if(window.innerWidth >= 1007) {
   sliderSideTranslate = window.innerWidth*0.01
-  d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
-  d3.select(".search-div").style("right", window.innerWidth*0.0094 + "vw")
+  // d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
+  // d3.select(".search-div").style("right", window.innerWidth*0.0094 + "vw")
 }
 var sliderHeightTranslate = 9;
 // d3.select("#titleBar").style("margin-left","14vw")
@@ -4101,7 +4103,7 @@ var searchExpanded = 0;
 d3.select("body").append("div")
   .attr("class", "search-div")
   .style("position","absolute")
-  .style("right","9%")
+  .style("right","2%")
   .append("span")
     .append("button").attr("id","searchButtonPC").attr("class","search-btn")
       .append("img").attr("id","searchImg").attr("class","search-img")
@@ -4113,10 +4115,10 @@ d3.select("body").append("div")
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .style("width", "0px")
+    .style("width", "50px")
     .style("height", "39px")
     .style("position", "absolute")
-    .style("top", "32px")
+    .style("top", "24px")
     .style("right", "102px")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
@@ -4124,7 +4126,7 @@ var searchDiv = d3.select("body")
     .style("opacity", 0)
     // .style("visibility", "visible")
     .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
-           "style='margin-right: -69px; padding-bottom: 8px; width: 100%; opacity: 1' type='text' "+
+           "style='margin-right: -69px; padding-bottom: 7px; width: 100%; opacity: 1' type='text' "+
            "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Submit</button>"
@@ -4139,8 +4141,8 @@ expandSearch()
 function expandSearch() {
 
   if(searchExpanded == 0){
-    d3.select("#searchDiv").style("right",18+"%")
-      .transition().duration(500).style("width", window.innerWidth * 0.5 - 200 + "px").style("opacity", 1)
+    d3.select("#searchDiv").style("right",7.5+"%")
+      .transition().duration(500).style("width", window.innerWidth - 650 + "px").style("opacity", 1)
     d3.select("#jobTitle").transition().duration(500).style("opacity","1")
     // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
     searchExpanded = 1;
