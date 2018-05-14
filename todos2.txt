@@ -4,12 +4,11 @@ ideas:
 
 - base filter sliders presets on reported grades? to create a profile for students? like a "suggestions" button
 
-- not sure how much money you want to make? check out https://www.gapminder.org/dollar-street/ to compare families by $ / month
-
 ------------------------------------------
 
 current:
-- fix sizes dropdown & expose options
+- bottom 2 sliders should be positioned with vh not vw
+- reset button should reset sizes and colour filters
 
 next:
 - explainer div ? button to show again

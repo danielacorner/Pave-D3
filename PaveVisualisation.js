@@ -324,7 +324,7 @@ var nodes = datapoints.map(function(el) {
     title2: el.title2,
     title3: el.title3,
     industry: el.industry, 
-    industryNum: el.industryNum, 
+    industryNum: +el.industryNum, 
     noc: el.noc, 
     workers: +el.workers,
     wage: el.wage,
@@ -1182,33 +1182,38 @@ function expandColoursLegend() {
   };
 
   legendMode = 1;
-  d3.select("#btnColours").on("click", "")
 
-  // shrink Size Legend button 
-  d3.select("#btnSizes").transition().duration(250).style("opacity",0).style("height","0px").style("width","0px").style("border-width","2px")
+  d3.select("#btnColours").on("click","")
+  // fade Size Legend button 
+  d3.select("#btnSizes").transition().duration(250).style("opacity",0)
+
+  var bboxColours = document.getElementById("btnColours").getBoundingClientRect()
 
   // expand colour legend
-  d3.select("#btnColours")
+  d3.select("#btnColours").style("opacity",0.9)
     .append("div")
   .attr("id","legendDiv1")
-    .style("position","absolute")
-    .style("width","0px")
-    .style("height","0px")
-    // .style("bottom","0px")
+    .style("opacity",0)
+    .style("position","fixed")
+    .style("width","335px")
+    .style("height","280px")
+    .style("right", "15px")
+    .style("top", bboxColours.top - 30 + "px")
+    .style("border-radius","6px")
+    .style("border","2px solid rgba(73, 172, 82, 0)")
   .transition().duration(375)
+    .style("opacity",1)
     .style("background","white")
-    .style("width", "335px")
-    .style("height", "310px").style("border","2px solid #49AC52").style("border-radius","6px")
-    .style("bottom","0px")
-    .style("left","0px")
-  // .text("")
+    .style("border","2px solid rgba(73, 172, 82, 1)") // fade in border
+    .style("top", bboxColours.top - 70 + "px")
 
+  d3.select("#btnColours").style("margin-right","18px")
 
   svgLegend = d3.select("#legendDiv1")
       .html("")
       .append("svg").attr("id","svgLegend")
         .attr("width","335px")
-        .attr("height","300px")
+        .attr("height","270px")
         .style("margin-top","5px")
         .style("background","white")
     
@@ -1217,7 +1222,7 @@ function expandColoursLegend() {
       .attr("class","legendCirc")
       .transition().duration(450).attr("r", 10)
       .attr("id",function(d,i) { return "legendCircle_"+i } )
-      .attr("transform", function(d,i) { return "translate("+"14"+","+(45+i*27)+")" } ) //flag! need to make equation for width/height ratio
+      .attr("transform", function(d,i) { return "translate("+"14"+","+(12+i*27)+")" } ) //flag! need to make equation for width/height ratio
       .style("fill", function(d,i) { return color(i); })
       .attr("opacity",  function(d,i) {
         if( filteredIndustries.includes(+i) ) { 
@@ -1228,19 +1233,17 @@ function expandColoursLegend() {
       // append rect with on click
       
   legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
-        .attr("id",function(d,i){ return i+"filterColoursRect_" })
+        .attr("id",function(d,i){ return i+"_filterColoursRect" })
         .attr("class","legendBtn")
         // .style("fill","black")
-        .attr("onclick",function(d,i) { return "filterIndustry("+(this.id.substring(0,1))+")" }) // quote?
+        .attr("onclick",function(d,i) { return "filterIndustry("+(this.id.substring(0,1))+")" })
         .attr("width","20px")
         .attr("height","20px")
-        .attr("transform", function(d,i) { return "translate("+"4"+","+(35+i*27)+")" } ) //flag! need to make equation for width/height ratio
-
-
+        .attr("transform", function(d,i) { return "translate("+"4"+","+(1+i*27)+")" } )
 
   legendTexts = svgLegend.selectAll("text").data(industriesArray).enter().append("text")
       .attr("text-anchor","left")
-      .attr("transform", function(d,i) { return "translate("+"38"+","+(50+i*27)+")" } ) //flag! need to make equation for width/height ratio
+      .attr("transform", function(d,i) { return "translate("+"32"+","+(17+i*27)+")" } )
       .text(function(d) { return d })
       .style("opacity",0).transition().duration(600).style("opacity",1)
   
@@ -1256,7 +1259,6 @@ function expandColoursLegend() {
   // .style("width", "300px")
   // .style("height", "400px")
 
-  // btnSplitCombine = d3s bookmark todo: split button on click of colour legend
 
   if (graphMode == 0){
     d3.select("#legendDiv1").style("opacity",0.9)
@@ -1265,7 +1267,6 @@ function expandColoursLegend() {
 
 } // end expandColoursLegend()
 
-// d3.select("#btnColours").on("mouseleave", function() {
 function closeLegends() {
     
     if (graphMode == 0) {
@@ -1284,6 +1285,7 @@ function closeLegends() {
       }, 300);
 
   // reset Colour Legend button
+  d3.select("#btnColours").style("margin-right","5px")
   d3.select("#btnColours").transition().duration(300).style("opacity",1)
   .style("width", legendButtonWidth+"px")
   .style("height", legendButtonHeight+"px").style("border-width","3px")
@@ -1592,9 +1594,14 @@ function expandSizesLegend() {
 
     // click "Equal sizes"
     d3.select("#equaLink").on("click", function() {
-      // reset all buttons & colour this button green      
       d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select(this).style("color","white").style("background","#49AC52")
+      d3.select("#equaLink").style("color","white").style("background","#49AC52")
+      resetSizes()
+      redrawSizeLegend()
+    })
+} // end expandSizesLegend()
+function resetSizes() {
+        // reset all buttons & colour this button green      
       // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 1})
@@ -1616,10 +1623,7 @@ function expandSizesLegend() {
       }
       currentSize = "nothing"
       setSizes("none")
-      redrawSizeLegend()
-    })
-
-} // end expandSizesLegend()
+}
 
 // re-draw size legend circles and "less, more" texts
 function redrawSizeLegend() {
@@ -2026,9 +2030,6 @@ function graphModeOn(mode) {
   // hideGraphViewCallout();
   moveBottomDown();
   hideToolTip(500);
-  // d3.select("#btnColours").transition().duration(500).style("margin-left","100px")
-  // d3.select("#btnSizes").transition().duration(500).style("margin-left","100px")
-  // d3.select("#splitShuffle").transition().duration(500).style("opacity", 0);
 
   // if there is already a legend, remove the legend
   if (typeof axisG != "undefined") axisG.transition().duration(500).style("opacity", 0).remove();
@@ -2845,47 +2846,42 @@ d3.select("#resetFilters").on('click', function(d) {
   resetFilters(currentMode);
 });
 
-resetFilters = function(mode) {
-//collapseCircleImages()
+function resetFilters(mode) {
+  // collapseCircleImages() if expanded 
   if(circlesExpanded == 1){
     circlesExpanded = 0;
+  }
+  // reset sizes
+      // reset all buttons & colour this button green      
+      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
+      d3.select("#equaLink").style("color","white").style("background","#49AC52")
+      currentSize = "nothing"
+      // transition radii to selected values
+      d3.selectAll(".jobCircle").attr("r",collapsedRadius)
 
-    circles.transition().duration(350)
-    // .delay(function(d, i) { return i * 5})
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(40, 10);
-      return function(t) { return d.radius = i(t); };
-    }) 
-
-    if(graphMode == 0) {
-      setTimeout(function() { 
-          
-          // forceGravity = d3.forceManyBody().strength(function(d) { return forceGravityMultiplier * d.radius });
-
-          simulation
-          .force("cluster", forceCluster)
-          // .force("gravity", forceGravity)
-          .force("x", forceXCombine)
-          .force("y", forceYCombine)
-          .on("tick", tick)
-          .force("gravity", // default strength = -30, negative strength = repel, positive = attract
-                  forceGravity)
-          // .force()
-          .force("collide", forceCollide)
-
-          simulation.alpha(0.6).alphaTarget(0.001).restart(); 
-
-      }, 450);
-    }
-  }//end collapseCircleImages
+  if(graphMode == 0) { // reset simulation forces if simulating
+    setTimeout(function() { 
+      forceCollide = d3.forceCollide($(window).height()*0.009)
+      forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
+      simulation
+      .force("cluster", forceCluster)
+      .force("x", forceXCombine)
+      .force("y", forceYCombine)
+      .force("gravity", forceGravity)
+      .force("collide", forceCollide)
+      .on("tick", tick)
+      simulation.alpha(0.5).alphaTarget(0.001).restart(); 
+    }, 450);
+  }
+  // reset colour filters
+  circles.transition().duration(500).style("opacity",1)  
+  filteredIndustries = []
+  d3.selectAll(".legendCirc").attr("opacity",1)
   // Reset green inset-left on all sliders
   // Main sliders
   for(var i=0; i<sliderArray.length; i++) {
-
-      d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
-
+    d3.select("#inset-left_"+i).transition().duration(500).attr("x2", 0 )
   };
-
   // reset the graph
   graph = store;
   hideAll();
@@ -2895,84 +2891,65 @@ resetFilters = function(mode) {
     handleArray[i].transition().duration(500).attr("cx", sliderScaleArray[i](0)); // move the slider handle
     sliderPositionsArray[i] = 0; // Update the slider positions array
   };
-
   // reset all circles
   circles = circles.data(store, function(d) { return d.id });
   // ENTER (create the circles with all attributes)
   enterUpdateCircles();
   // restart simulation only if graph mode off
   if (graphMode == 0) {
-      resetSimulation();
-
-      // forceGravity = d3.forceManyBody().strength(function(d) { return -10 * d.radius });
-
-      // simulation
-      // .force("collide", d3.forceCollide(function(d) { return d.radius }))
-      // .force("cluster", forceCluster)
-      // .force("gravity", forceGravity)
-      // .force("x", forceXCombine)
-      // .force("y", forceYCombine)
-      // .on("tick", tick);
-
-      // if(graphMode == 0){
-      //   simulation.alpha(0.15).alphaTarget(0.001).restart();
-      // }
-
+    resetSimulation();
   } else if (graphMode == 1) {
-
-      switch (mode) {
-
-        case 0:
-          circles
-            // x = Number of Jobs
+    switch (mode) {
+      case 0:
+        circles
+          // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
-            // y = Automation Risk
+          // y = Automation Risk
           .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
-
-        case 1:
-          circles
-            // x = Years of Study
+      case 1:
+        circles
+          // x = Years of Study
           .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4 + graphXtranslate})
-            // y = Wage
+          // y = Wage
           .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
 
-        case 2:
-          circles
-            // x = Number of Jobs
+      case 2:
+        circles
+          // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
-            // y = Wage
+          // y = Wage
           .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
           break;
           // x = Number of Jobs
           // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
-        case 3:
-          circles
-            // x = Number of Jobs
+      case 3:
+        circles
+          // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
-            // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+          // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
           .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
-        case 4:
-          circles
-            // x = Number of Jobs
+      case 4:
+        circles
+          // x = Number of Jobs
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
-            // y = Automation Risk
+          // y = Automation Risk
           .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
           break;
 
-        case 5: // graph mode off
-          circles
+      case 5: // graph mode off
+        circles
           .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left  + graphXtranslate})
           .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
           break;
-        }
+      }
 
 
-  }
-};
+    }
+  }; // end resetFilters()
 
 
 function resetSimulation() {
@@ -4321,9 +4298,8 @@ function filterIndustry(input) { //bookmark
       filteredIndustries.splice(filteredIndustries.indexOf(input),1)
     }
 
-
 // fade the graph circles
-circles.attr("opacity",
+circles.style("opacity",
   function(d) { // make filtered circles transparent
     // if the industry is on the list, transparent
     if( filteredIndustries.includes(+d.industryNum) ) { 
