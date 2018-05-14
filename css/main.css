@@ -400,6 +400,20 @@ rect.legendBtn {
   fill-opacity:0;
   stroke-opacity:0;
 }
+.btnSizesOption:hover {
+  background: #eaeaea;
+}
+.btnSizesOption {
+  padding: 5px;
+  margin: 1px;
+  font-size: 12px;
+  height: auto;
+  width: auto;
+  border-radius: 15px;
+  background: white;
+  border: 2px solid #49AC52;
+  color: #49AC52;
+}
 .track {
   stroke: #49AC52;
   stroke-width: 5px;

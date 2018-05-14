@@ -308,7 +308,7 @@ var clusters = new Array(m);
 // Nodes: the data you want to display & filter by
 var nodes = datapoints.map(function(el) {
   var i = el.cluster,
-  r = equalRadius, // start equal radii
+  r = collapsedRadius, // start equal radii
   d = {
     id: +el.id,
     favourite: 0,
@@ -1303,7 +1303,10 @@ function closeLegends() {
 
   d3.select("#svgLegend").selectAll("circle").transition().duration(400).attr("r", 0)
 
+  var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
+
   d3.select("#legendDiv1").transition().duration(300).style("opacity",0).remove()
+  d3.select("#legendDiv2").transition().duration(300).style("top",bboxSizes.top + 40 + "px" ).style("opacity",0).remove()
   d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
   d3.select("#sizeDropdownButton").transition().duration(300).style("opacity",0).remove()
   // legendTexts.selectAll("text").style("opacity",0).remove()
@@ -1382,14 +1385,13 @@ function setSizes(mode){
     }
     break;
     case "none":
-      sizesArray.push(10)
     break;
   }
 
 }
 
 var currentSize = "nothing"
-var btnSizesDims = ["185px","150px"] // width, height
+var btnSizesDims = ["220px","150px"] // width, height
 
 
 d3.select("#btnSizes").on("click", function() {
@@ -1414,20 +1416,26 @@ function expandSizesLegend() {
 
    // shrink Colour Legend button and Sizes dropdown
     d3.select("#btnColours").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
-    // d3.select("#btnSizes").transition().duration(300)
+
+    var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
     sizesDiv = d3.select("#btnSizes")
-    .append("div").attr("id","legendDiv2").style("border","2px solid #49AC52").style("border-radius", "6px")
-    .style("width","0px")
-    .style("height","0px")
-    .style("background","white")
-    .style("position", "absolute")
-    .style("right","-40px")
-
-    d3.select("#legendDiv2").transition().duration(350)
+    .append("div").attr("id","legendDiv2")
     .style("width", btnSizesDims[0])
     .style("height", btnSizesDims[1])
-    .style("bottom", "0px")
+    .style("position", "fixed")
+    .style("top",bboxSizes.top + 40 + "px" )
+    .style("right", "15px")
+
+    // transition in fade from below
+
+    d3.select("#legendDiv2")
+    .style("border-radius", "6px")
+    .style("opacity", 0).style("border","2px solid rgba(73, 172, 82, 0)")
+    .transition().duration(350)
+    .style("opacity", 1).style("border","2px solid rgba(73, 172, 82, 1)")
+    .style("background","white")
+    .style("top",bboxSizes.top - 10 + "px" )
     // .text("")
 
     svgLegend = d3.select("#legendDiv2")
@@ -1436,245 +1444,220 @@ function expandSizesLegend() {
         .attr("width",btnSizesDims[0])
         .attr("height",btnSizesDims[1])
         .style("margin-top","5px")
-        // .style("background","#eaeaea")
-  
-      // // using susielu's d3-legend library:    
-      // // Size legend.
-      // var sizeScale = d3.scaleLinear()
-      //   .domain([0, 10])
-      //   .range([2, 30]);
-
-      // var sizeLegend = d3.legendSize()
-      //   .scale(sizeScale)
-      //   .shape("circle")
-      //   .shapePadding(3)
-      //   .cells(9)
-      //   .labelOffset(10);
-
-      // d3.select("#legendDiv2").append("g")
-      //   // .attr("transform", "translate(650, 60)")
-      //   .call(sizeLegend);
-
 
     sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+        .attr("class","legendCircle")
         .attr("r", 0) // start at 0 radius and transition in
         .transition().duration(400).attr("r",  function(d,i) { 
           if(sizesArray.length < 2) { return sizesArray[i] }
           else{ return sizesArray[i]+5 }
         })
-        .attr("transform", function(d,i) { return "translate("+(35 + i*45) + 
+        .attr("transform", function(d,i) { return "translate("+(55 + i*95) + 
           // Math.pow(sizesArray[i], 1.6))+
         ","+"25"+")" } ) 
         .style("fill", "#B5ADAD")
 
     legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+        .attr("class","legendText")
         .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+(20 + i*45) + 
+        .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
           // Math.pow(sizesArray[i], 1.6))+
         ","+"60"+")" } ) 
         .text(function(d,i) { if(i==0){ return "Less" }else if(i==1){ return "More" } })
         .style("opacity",0).transition().duration(600).style("opacity",1)
     
-    // legendTitle = d3.select("#svgLegend").append("text")
-    //   .attr("transform","translate(11,23)")
-
-    //   .text(currentSize) // must change this when size dropdown activated
-    //   .style("font-size","22px").style("fill","#49AC52")
-
-    // if(currentSize=="nothing"){
-    //   legendTitle.text("")
-    // }
-
-    sizesDropdown = d3.select("#btnSizes").append("div").attr("id","sizeDropdownDiv")
-        .attr("class","dropup")
-        // .style("position","relative")
-        // .style("right","50%") 
-        // .style("bottom","15%")
-        .append("button")
-          .attr("id","sizeDropdownButton")
-          .attr("class","btn-grey dropdown-toggle")
-          .attr("type","button")
-          .attr("data-toggle","dropdown")
-          .style("position","relative")
-          .style("right","7px")
-          .style("bottom","50px")
-          .style("height","50px")
-          .style("border","3px solid #49AC52")
-          .style("border-radius","6px")
-          .style("font-weight","bold")
-          .style("color","#49AC52")
-          .style("background", "white")
-          .html("Size by<br>"+currentSize+"<span class='caret'></span>")
-          .append("ul").attr("class","dropdown-menu").style("padding-left", "5px")
-
-    switch(currentSize) {
-      
-      case "Number of Jobs":
-        sizesDropdown.html("<li><strong>Number of Jobs</strong></li>" +
-                    "<li><a id='wageLink' href='#'>Salary ($K per yr)</a></li>" +
-                    "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-                    "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
-      break;
-
-      case "Salary ($K per yr)":
-        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
-                          "<li><strong>Salary ($K per yr)</strong></li>" +
-                          "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-                          "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
-      break;
-      
-      case "Years of Study":
-        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
-                          "<li><a id='wageLink' href='#'>Salary ($K per yr)</a></li>" +
-                          "<li><strong>Years of study</strong></li>" +
-                          "<li><a id='equaLink' href='#'>Equal sizes</a></li>")
-      break;
-      
-      case "nothing":
-        sizesDropdown.html("<li><a id='workLink' href='#'>Number of Jobs</a></li>" +
-                          "<li><a id='wageLink' href='#'>Salary ($K per yr)</a></li>" +
-                          "<li><a id='yearLink' href='#'>Years of study</a></li>" +
-                          "<li><strong>Equal sizes</strong></li>")
-      break;
-        
+    if(currentSize=="nothing"){
+      d3.select("#svgLegend").append("text")
+      .attr("class","legendText")
+      .attr("text-anchor","left")
+      .attr("transform","translate(73,45)")
+      .text("Equal sizes")
+      .style("opacity",0).transition().duration(600).style("opacity",1)
     }
 
+    // size buttons
+    sizesOptions = d3.select("#legendDiv2").append("div").attr("id","sizeOptionsDiv")
+      .style("position","fixed")
+      .style("top",bboxSizes.top + 90 + "px" )
+      .style("right", "15px")
+      .style("width", btnSizesDims[0])
+      .style("padding","10px")
+    
+    sizesOptions.transition().duration(350).style("top",bboxSizes.top + 60 + "px" )
 
+    sizesOptions.append("button").attr("id","workLink")
+      .style("float","left")
+      .attr("class","btnSizesOption")
+      .text("Number of jobs")
+    sizesOptions.append("button").attr("id","yearLink")
+      .style("float","left")
+      .attr("class","btnSizesOption")
+      .text("Years of study")
+    sizesOptions.append("button").attr("id","wageLink")
+      .style("float","left")
+      .attr("class","btnSizesOption")
+      .text("Salary ($K per yr)")
+    sizesOptions.append("button").attr("id","equaLink")
+      .style("float","left")
+      .attr("class","btnSizesOption")
+      .text("Equal sizes")
+
+    // click "Number of Jobs"
     d3.select("#workLink").on("click", function() {
-
+      // reset all buttons & colour this button green      
+      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
+      d3.select(this).style("color","white").style("background","#49AC52")
+      // transition radii to selected values
       circles.transition().duration(100)
         .delay(function(d, i) { return i * 1})
         .attrTween("r", function(d) {
           var i = d3.interpolate(d.radius, radiusScale(d.workers));
           return function(t) { return d.radius = i(t); };
         });
-
+      // reset forces
+      forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+      forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+      simulation
+        .force("collide", forceCollide)
+        .force("gravity", forceGravity)
+      // if simulation active, reset simulation with new radius-appropriate forces
       if(graphMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
         setTimeout(function() { resetSimulation() }, 700);
-
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
-
       currentSize = "Number of Jobs"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      // mouseEnterOff() // turn off until mouseleave
+      // document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       setSizes("workers")
-      expandSizesLegend()
-      // removeLegends()
+      redrawSizeLegend()
     })
 
+    // click "Salary ($K per yr)"
     d3.select("#wageLink").on("click", function() {
-
+      // reset all buttons & colour this button green      
+      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
+      d3.select(this).style("color","white").style("background","#49AC52")
+      // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 1})
       .attrTween("r", function(d) {
         var i = d3.interpolate(d.radius, wageRadiusScale(d.salaryMed)/1.2);
         return function(t) { return d.radius = i(t); };
       });
-
+      // reset forces
+      forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+      forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+      simulation
+        .force("collide", forceCollide)
+        .force("gravity", forceGravity)
+      // if simulation active, reset simulation with new radius-appropriate forces
       if(graphMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
         setTimeout(function() { resetSimulation() }, 700);
-        
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
-
       currentSize = "Salary ($K per yr)"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      // mouseEnterOff()
       setSizes("salary")
-      expandSizesLegend()
-      // removeLegends()
+      redrawSizeLegend()
     })
 
+    // click "Years of study"
     d3.select("#yearLink").on("click", function() {
-
+      // reset all buttons & colour this button green      
+      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
+      d3.select(this).style("color","white").style("background","#49AC52")
+      // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 1})
       .attrTween("r", function(d) {
         var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
         return function(t) { return d.radius = i(t); };
       });
+      // reset forces
+      forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+      forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+      simulation
+        .force("collide", forceCollide)
+        .force("gravity", forceGravity)
+      // if simulation active, reset simulation with new radius-appropriate forces
       if(graphMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
         setTimeout(function() { resetSimulation() }, 700);
-
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
-
       currentSize = "Years of Study"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
-      // mouseEnterOff()
       setSizes("yearsStudy")
-      expandSizesLegend()
-      // removeLegends()
+      redrawSizeLegend()
     })
 
+    // click "Equal sizes"
     d3.select("#equaLink").on("click", function() {
-    
+      // reset all buttons & colour this button green      
+      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
+      d3.select(this).style("color","white").style("background","#49AC52")
+      // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 1})
       .attrTween("r", function(d) {
-        var i = d3.interpolate(d.radius, equalRadius);
+        var i = d3.interpolate(d.radius, collapsedRadius);
         return function(t) { return d.radius = i(t); };
       })
+      // reset forces
+      forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
+      forceCollide = d3.forceCollide($(window).height()*0.009)
+      simulation
+        .force("collide", forceCollide)
+        .force("gravity", forceGravity)
+      // if simulation active, reset simulation with new radius-appropriate forces
       if(graphMode == 0) {
-        setTimeout(function() { resetSimulation() }, 600);
         setTimeout(function() { resetSimulation() }, 700);
-
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
       }
-
       currentSize = "nothing"
-      document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
       setSizes("none")
-      expandSizesLegend()
+      redrawSizeLegend()
     })
-
-    // fade in dropdown
-    d3.select("#sizeDropdownDiv").style("opacity",0).transition().duration(700).style("opacity",1)
-
-  if (graphMode == 0){
-    d3.select("#legendDiv2").style("opacity",0.9)
-    // d3.selectAll(".legendCirc").style("opacity",1)
-  }
 
 } // end expandSizesLegend()
 
+// re-draw size legend circles and "less, more" texts
+function redrawSizeLegend() {
 
+    d3.selectAll(".legendCircle").remove()
+    d3.selectAll(".legendText").remove()
 
-function removeLegends() {
-    // reset Colour Legend button and Sizes dropdown
+    sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+      .attr("r", 0) // start at 0 radius and transition in
+      .attr("class","legendCircle")
+      .transition().duration(400).attr("r",  function(d,i) { 
+        if(sizesArray.length < 2) { return sizesArray[i] }
+        else{ return sizesArray[i]+5 }
+      })
+      .attr("transform", function(d,i) { return "translate("+(55 + i*95) + 
+        // Math.pow(sizesArray[i], 1.6))+
+      ","+"25"+")" } ) 
+      .style("fill", "#B5ADAD")
 
-    d3.select("#legendDiv1").transition().duration(400).style("opacity",0).remove()
-    clickedColours = 0;
+    legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+        .attr("class","legendText")
+        .attr("text-anchor","left")
+        .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
+          // Math.pow(sizesArray[i], 1.6))+
+        ","+"60"+")" } ) 
+        .text(function(d,i) { if(i==0){ return "Less" }else if(i==1){ return "More" } })
+        .style("opacity",0).transition().duration(600).style("opacity",1)
 
-    d3.select("#sizeDropdownDiv").style("opacity",1).transition().duration(200).style("opacity",0).remove()
-    clickedSizes = 0;
+    if(currentSize=="nothing"){
+      d3.select("#svgLegend").append("text")
+      .attr("class","legendText")
+      .attr("text-anchor","left")
+      .attr("transform","translate(73,45)")
+      .text("Equal sizes")
+      .style("opacity",0).transition().duration(600).style("opacity",1)
+    }
 
-    d3.select("#btnSizes").transition().duration(500)
-    .style("width", "100px")
-    .style("height", "70px").style("border-width","3px")
-
-    svgLegend.selectAll("circle").transition().duration(400).attr("r", 0)
-
-    d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
-    // legendTexts.selectAll("text").style("opacity",0).remove()
-
-    setTimeout(function() {
-      d3.select("#btnSizes")
-      .html("Size<br>Legend")
-      }, 400);
-    mouseEnterOn()
 }
-
-
-
 
 //////////// Industry Split ////////////////
 
