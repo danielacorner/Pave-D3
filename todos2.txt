@@ -7,10 +7,16 @@ ideas:
 ------------------------------------------
 
 current:
-- bottom 2 sliders should be positioned with vh not vw
+- bug: reset filters button disappears legend buttons!
+- bug: colour filters click disappears legend buttons!
 - explainer divs should position based on img bbox
+- search button should search
+- create a slider carousel in the tooltip
+- style search results warning message in searchJobTitles()
 
 next:
+- "legend: colours, sizes"
+- append media queries to all styles to start defaults as mobile-up
 - explainer div ? button to show again
 - Verbal and Communication, Logic and Critical Thinking, Computer and Information, Math and Spatial
 - check google styleguide for shadows
@@ -18,6 +24,7 @@ next:
 - tut6 shadow
 - tutorial5 answerDiv
 - join tut1 & tut2 together?
+- about/help/feedback styles: increase contrast on hover, underline on that page
 
 - should hover and click be two instructions or one?
 
@@ -25,7 +32,8 @@ next:
 - mobile version
 (- tablet version)
 
-
+later
+- move all style to css
 - button for "set the skills to this job's skill levels"
 - resize circles with page width then detect radius
 

@@ -9,6 +9,8 @@ graphXtranslate = 0;
 expandedRadius = $(window).height()*0.045;
 collapsedRadius = $(window).height()*0.007;
 
+function resetFilters(){} // global holder to resolve scope issue
+
 var favourites = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
@@ -828,7 +830,6 @@ var graphMode;
   }else{var title3 = d.title3}
 
   setTimeout(function(){
-
     d3.select("#tooltipBottomDiv")
     .html("<div id='tooltipBottomDiv2' style=' z-index: -1; margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
@@ -1218,16 +1219,6 @@ function expandColoursLegend() {
         else{ 
           return 1 }
       })
-      // append rect with on click
-      
-  legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
-        .attr("id",function(d,i){ return i+"_filterColoursRect" })
-        .attr("class","legendBtn")
-        // .style("fill","black")
-        .attr("onclick",function(d,i) { return "filterIndustry("+(this.id.substring(0,1))+")" })
-        .attr("width","20px")
-        .attr("height","20px")
-        .attr("transform", function(d,i) { return "translate("+"4"+","+(1+i*27)+")" } )
 
   legendTexts = svgLegend.selectAll("text").data(industriesArray).enter().append("text")
       .attr("text-anchor","left")
@@ -1235,6 +1226,17 @@ function expandColoursLegend() {
       .text(function(d) { return d })
       .style("opacity",0).transition().duration(600).style("opacity",1)
   
+      // append rect with on click event
+  legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
+        .attr("id",function(d,i){ return i+"_filterColoursRect" })
+        .attr("class","legendBtn")
+        // .style("fill","black")
+        .attr("onclick",function(d,i) { return "filterIndustry("+(this.id.substring(0,1))+")" })
+        .attr("width","320px")
+        .attr("height","20px")
+        .attr("transform", function(d,i) { return "translate("+"4"+","+(1+i*27)+")" } )
+
+
   // legendTitle = d3.select("#svgLegend").append("text")
   //   .attr("transform","translate(36,17)")
   //   .text("Industries")
@@ -2555,8 +2557,8 @@ var makeAnnotations;
 
   switch (mode) {
 
-    case 0: // Salary vs Study
-    case 1:
+    case 0: // Income vs Study
+    case 1: // Income vs Study
     // annotate judges, lawyers, optometrists
       labels = [
       {
@@ -2567,8 +2569,8 @@ var makeAnnotations;
           // connector: {},
           x: pointJudges.x,
           y: pointJudges.y,
-          dy: -10,
-          dx: -20,
+          dy: -20,
+          dx: -100,
       },{
         note: {
           title: titleLawyers,
@@ -2577,8 +2579,8 @@ var makeAnnotations;
           // connector: {},
           x: pointLawyers.x,
           y: pointLawyers.y,
-          dy: -30,
-          dx: -60,
+          dy: -10,
+          dx: -70,
       },{
         note: {
           title: titleOptometrists,
@@ -2586,12 +2588,12 @@ var makeAnnotations;
           },
           x: pointOptometrists.x,
           y: pointOptometrists.y,
-          dy: -30,
+          dy: -15,
           dx: -150,
       }]
       break;
 
-    case 2:
+    case 2: // Income vs Jobs
       labels = [
       {
         note: {
@@ -2600,7 +2602,7 @@ var makeAnnotations;
         },
           x: pointLawyers.x,
           y: pointLawyers.y,
-          dy: -30,
+          dy: -20,
           dx: 60,
       },{
         note: {
@@ -2624,7 +2626,7 @@ var makeAnnotations;
 
       break;
 
-    case 3:
+    case 3: // Machines vs Jobs
       labels = [
       {
         note: {
@@ -3881,8 +3883,8 @@ graphViewCallout = function() {
 
 // hide
 hideGraphViewCallout = function() {
-  d3.select("#graph").style("box-shadow","1px 2px 1px grey")
-  d3.select("#resetFilters").style("box-shadow","1px 2px 1px grey")  
+  d3.select("#graph").style("box-shadow","0px 2px 7px 0 rgba(0,0,0,0.3)")
+  d3.select("#resetFilters").style("box-shadow","0px 2px 7px 0 rgba(0,0,0,0.3)")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
   // d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
 }
@@ -4029,16 +4031,16 @@ var explainerDivs = [
 var offsetDown = 0
 var eTops = [] // comp
 
-    eTops.push(document.querySelector("#question_0").getBoundingClientRect().top + offsetDown)
-    eTops.push(document.querySelector("#question_1").getBoundingClientRect().top + offsetDown)
+    eTops.push(document.querySelector("#question_0").getBoundingClientRect().top + offsetDown) // lang
+    eTops.push(document.querySelector("#question_1").getBoundingClientRect().top + offsetDown) // logi
     eTops.push(document.querySelector("#question_2").getBoundingClientRect().top - 140) // math
-    eTops.push(document.querySelector("#question_3").getBoundingClientRect().top - 80)
+    eTops.push(document.querySelector("#question_3").getBoundingClientRect().top - 80) // comp
 
 var offsetRight = 55
 var eLefts = []
 
-    eLefts.push(document.querySelector("#question_0").getBoundingClientRect().left + offsetRight)
-    eLefts.push(document.querySelector("#question_1").getBoundingClientRect().left - 7*offsetRight)
+    eLefts.push(document.querySelector("#question_0").getBoundingClientRect().left + offsetRight) // lang
+    eLefts.push(document.querySelector("#question_1").getBoundingClientRect().left - 7*offsetRight) // logi
     eLefts.push(document.querySelector("#question_2").getBoundingClientRect().left - 7*offsetRight) // math
     eLefts.push(document.querySelector("#question_3").getBoundingClientRect().left + offsetRight) // comp
 
@@ -4090,20 +4092,9 @@ for (var i = 0; i < explainerDivs.length; i++) {
       ///////////////////// Search ///////////////////////
 var searchExpanded = 0;
 
-          // <!-- search button -->
-          // <div class="search-div">
-          //   <span class="input-group-btn">
-          //     <!-- <input type="text" class="col-4 form-control" placeholder="Search Jobs by Title or Keyword"></input> -->
-          //     <button id="searchbuttonPC" class="search-btn">
-          //       <img id="searchImg" class="search-img" src="img/search.png" onclick="expandSearch()" alt='help' height='40' width = '40'>
-          //     </button>
-          //   </span>
-          // </div>
 
 d3.select("body").append("div")
   .attr("class", "search-div")
-  .style("position","absolute")
-  .style("right","2%")
   .append("span")
     .append("button").attr("id","searchButtonPC").attr("class","search-btn")
       .append("img").attr("id","searchImg").attr("class","search-img")
@@ -4111,23 +4102,29 @@ d3.select("body").append("div")
         .attr("height","40")
         .attr("width","40")
         // .on("mouseenter", function(){expandSearch()})
-        .on("click", function(){expandSearch()})
+        .on("click", function() {searchJobTitles()})
+        // .on("hover", function() {
+        //   d3.select(".search-div")
+        //   .style("right","1.8%")
+        //   .style("top","2%")
+        // })
+
+var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .style("width", "50px")
+    .style("width",  $(window).width() - feedbackBbox.right - feedbackBbox.width + 20 + "px")
     .style("height", "39px")
     .style("position", "absolute")
     .style("top", "24px")
-    .style("right", "102px")
+    .style("right", "7.5%")
     // .style("background-color", "black")
     // .style("border", "1px solid grey")
     .style("border-radius", "7px")
-    .style("opacity", 0)
+    .style("opacity", 1)
     // .style("visibility", "visible")
     .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
-           "style='margin-right: -69px; padding-bottom: 7px; width: 100%; opacity: 1' type='text' "+
-           "onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
+           "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Submit</button>"
           )
@@ -4141,8 +4138,8 @@ expandSearch()
 function expandSearch() {
 
   if(searchExpanded == 0){
-    d3.select("#searchDiv").style("right",7.5+"%")
-      .transition().duration(500).style("width", window.innerWidth - 650 + "px").style("opacity", 1)
+    // d3.select("#searchDiv").style("right",7.5+"%")
+      // .transition().duration(500).style("width", window.innerWidth - 650 + "px").style("opacity", 1)
     d3.select("#jobTitle").transition().duration(500).style("opacity","1")
     // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
     searchExpanded = 1;
@@ -4215,7 +4212,7 @@ function searchJobTitles() {
 function filterBySearch() {
 // get the search query
 var query = document.getElementById("jobTitle").value;
-
+console.log(query)
   // START by filtering out nodes under the minimums
   store.forEach(function(d) {
     // INEFFICIENT -- TODO: fewer loops

@@ -60,7 +60,7 @@ a.intro-start-button {
   color: white;
 }
 .intro-tour-button {
-box-shadow: 3px 3px 3px grey;
+box-shadow: 2px 3px 10px 0 rgba(0,0,0,0.6);
 background: #49AC52;
 color: white;
 text-align: center;
@@ -86,6 +86,16 @@ width: 10vw;
 display: block;
 border-radius: 8px;
 border-width: 0px;
+}
+a#skipTutorial {
+  margin-top: 0.6vw; 
+  background: white; 
+  color: #A2A2A2; 
+  border: 2px solid #49AC52;
+}
+a#skipTutorial:hover {
+  color: #878787;
+  background: #eaeaea;
 }
 #graph:hover {
   background: #eaeaea;
@@ -125,19 +135,15 @@ img.img-question {
   top: 22px;
 }
 .fontawesome-i2svg-active {
-/*  pointer-events: none;
-*/}
-/*button.expand-sliders-btn:hover {
-  background: #eaeaea;
 }
-*/
+
 button.expand-sliders-btn{
   margin: 5px 0px 0px 10px; 
   background: white; 
   border: 2px solid green; 
   border-radius: 16px;'
   pointer-events: auto;
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
 }
 button.expand-sliders-btn:hover{
   margin: 5px 0px 0px 10px; 
@@ -151,7 +157,7 @@ button.expand-sliders-btn-expanded{
   background: white; 
   border: 2px solid green; 
   border-radius: 16px;
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   pointer-events: auto;
 }
 button.close-sliders-btn{
@@ -163,7 +169,7 @@ button.close-sliders-btn{
 button.btn-grey {
   font-size: 14px; 
   height: 32px; 
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   background: #49AC52;
 }
 button.btn-graph:hover {
@@ -172,7 +178,7 @@ button.btn-graph:hover {
 button.btn-graph {
   font-size: 20px; 
   height: 45px; 
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   background: white;
   color: #49AC52;
   border-color: #49AC52;
@@ -191,7 +197,7 @@ button.btn-legend {
   border-width: 3px;
   border-color: #49AC52;
   border-radius: 7px;
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   font-weight: bold;
   font-family: Raleway;
   color:  #49AC52;
@@ -205,7 +211,7 @@ button.btn-reset {
   border-width: 3px;
   border-color: #49AC52;
   border-radius: 7px;
-  box-shadow: 1px 2px 1px grey ;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   font-weight: bold;
   font-family: Raleway;
   color:  #49AC52;
@@ -216,7 +222,7 @@ button#minimizeViews {
   background: #49AC52;
   border-radius: 6px;
   border: none;
-  box-shadow: 3px 3px 8px grey; 
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
 }
 button#minimizeViews:hover {
   background: #179E00;
@@ -246,7 +252,7 @@ button.suggested-views-btn {
   background: white;
   border-width: 3px;
   border-color: #49AC52;
-  box-shadow: 0px;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   font-weight: bold;
   display: inline-block;
   font-family: Raleway;
@@ -275,7 +281,7 @@ button.views-btn {
   background: white;
   border-width: 3px;
   border-color: #49AC52;
-  box-shadow: 0px;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
   font-weight: bold;
   display: inline-block;
   font-family: Raleway;
@@ -322,12 +328,27 @@ button.search-btn {
   border: none;
   background: none;
 }
+#jobTitle {
+  margin-right: -69px; 
+  padding-bottom: 7px; 
+  width: 100%; 
+  opacity: 1;
+}
+.search-div {
+  right: 2%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+img.search-img {
+  border-radius: 9px;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
+}
 img.search-img:hover {
-  border: none;
-  background: none;
-  border-radius: 12px;
-  box-shadow: 0px 0px 12px grey;
-  /*margin: -2px 2px 0px 0px;*/
+  height: 43px;
+  width: 43px;
+  margin-top: -1px;
+  margin-left: -1px;
 }
 button.submit-btn:hover {
   background: #eaeaea;
@@ -628,3 +649,10 @@ rect.legendBtn {
 #progTutLine3 {position: fixed; left: 52.8vw; top: 3.4vw;}
 #progTutLine4 {position: fixed; left: 59.8vw; top: 3.4vw;}
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
+
+/*for variable screen sizes use media queries:*/
+/*@media (min-width: 600px) {
+  .column {
+    width: 100%;
+  }
+} */
