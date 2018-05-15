@@ -1,15 +1,16 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, graphXtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
-hoverTimeout;
+hoverTimeout, currentMode;
 
 maxSalary = 132.922; //busted
 graphXtranslate = 0;
+currentMode = 0;
 
 expandedRadius = $(window).height()*0.045;
 collapsedRadius = $(window).height()*0.007;
 
-function resetFilters(){} // global holder to resolve scope issue
+function resetFilters(){} // global function holder to resolve scope issue
 
 var favourites = []; // whether or not the current circle is expanded
 var circleExpanded = []; // whether or not the current circle is expanded
@@ -176,7 +177,14 @@ function resize() {
     d3.select("#sliderDiv_skillsMath").style("right", "9vw")
   }
 
-  if(w < 768){
+  if(w < 768){ // bookmarklet todo: style tablet navbar, decide on 3 breakpoints
+    d3.select("#searchDiv")
+      .style("width", $(window).width() * 0.4 + "px")
+      .style("top","0.5px")
+    d3.select(".search-div") // todo: combine with search div
+      .style("top","-1px")
+    d3.select("#searchImg")
+      .style("box-shadow","none")
     d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsLang").style("top", "5vh")
@@ -1953,7 +1961,7 @@ function moveBottomUp() {
 
 d3.select("#btnView3").on('click', function() { // Automation vs Number of Jobs
   currentMode = 3;
-  graphModeOn(3);
+  graphModeOn(currentMode);
 
   d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
@@ -1970,7 +1978,7 @@ d3.select("#btnView3").on('click', function() { // Automation vs Number of Jobs
 
 d3.select("#btnView1").on('click', function() { // Wage vs Years
   currentMode = 1;
-  graphModeOn(1);
+  graphModeOn(currentMode);
 
   d3.select("#btnView3").style("background", "white").style("color","#49AC52")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
@@ -1987,7 +1995,7 @@ d3.select("#btnView1").on('click', function() { // Wage vs Years
 
 d3.select("#btnView2").on('click', function() { // Wage vs Workers
   currentMode = 2;
-  graphModeOn(2);
+  graphModeOn(currentMode);
 
   d3.select("#btnView3").style("background", "white").style("color","#49AC52")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
@@ -2829,11 +2837,6 @@ function graphModeOff() {
 ///////////// Reset Filters /////////////
 
 d3.select("#resetFilters").on('click', function(d) {
-  // if (graphMode == 1) {
-  //   graphMode = 0;
-
-  //   graphModeOff();
-  // }c
   resetFilters(currentMode);
 });
 
@@ -3617,6 +3620,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           sliderMulti[event.target.id].interrupt();
         }) // drag update function
         .on("start drag", function() {
+          // remove old mini tooltip
           if(typeof miniTooltip == "undefined"){
             miniTooltip = d3.select("body").append("div")
             .attr("class", "minitooltip")
@@ -3631,17 +3635,14 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
           if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
           graph.length <= 30 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
+          // if under 25 circles left, expand images
           if(graph.length <= 25){ 
             miniTooltip.style("color","#FE2E2E") 
             expandCircleImages();
-          } else {
-
+          } else { // collapse images
             collapseCircleImages();
           }
-          // if(graph.length >= 16){
-          // }
           if(graph.length >=175){
-
             forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
 
             simulation
@@ -3651,13 +3652,13 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
             .force("x", forceXCombine)
             .force("y", forceYCombine)
             .on("tick", tick);
-
-            simulation.alpha(0.15).alphaTarget(0.001).restart();
-
+            
+            if(graphMode == 0){
+              simulation.alpha(0.15).alphaTarget(0.001).restart();
+            }
           }
 
           updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
-        
         }));
 
     handleArray[(i+j)] = sliderMulti[(i+j)].insert("circle", ".track-overlay")
@@ -3777,7 +3778,6 @@ collapsedRadius = $(window).height()*0.007;
 // Update function which detects current slider
 //  general update pattern for updating the graph
 function updateMulti(h, mode) {
- 
   // using the slider handle
   var sliderID = event.target.id;
   // jam sliders at n <= 10
@@ -4113,7 +4113,11 @@ var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .style("width",  $(window).width() - feedbackBbox.right - feedbackBbox.width + 20 + "px")
+    .style("width", function() {
+      if($(window).width() > 768) {
+        return $(window).width() - feedbackBbox.right - feedbackBbox.width + 20 + "px"
+      } else { return $(window).width() * 0.4 + "px" }
+     })
     .style("height", "39px")
     .style("position", "absolute")
     .style("top", "24px")
@@ -4128,7 +4132,6 @@ var searchDiv = d3.select("body")
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Submit</button>"
           )
-
 
 
 
@@ -4154,7 +4157,7 @@ function expandSearch() {
 
 function searchJobTitles() {
 
-  resetFilters();
+  resetFilters(currentMode);
 
   //  UPDATE
   circles = circles.data(filterBySearch(), function(d) { return d.id });
@@ -4212,7 +4215,6 @@ function searchJobTitles() {
 function filterBySearch() {
 // get the search query
 var query = document.getElementById("jobTitle").value;
-console.log(query)
   // START by filtering out nodes under the minimums
   store.forEach(function(d) {
     // INEFFICIENT -- TODO: fewer loops

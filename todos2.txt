@@ -6,34 +6,32 @@ ideas:
 
 ------------------------------------------
 
-current:
-- bug: reset filters button disappears legend buttons!
-- bug: colour filters click disappears legend buttons!
-- explainer divs should position based on img bbox
-- search button should search
-- create a slider carousel in the tooltip
-- style search results warning message in searchJobTitles()
-
-next:
-- "legend: colours, sizes"
-- append media queries to all styles to start defaults as mobile-up
-- explainer div ? button to show again
-- Verbal and Communication, Logic and Critical Thinking, Computer and Information, Math and Spatial
-- check google styleguide for shadows
-(add items to a css grid layout?)
-- tut6 shadow
-- tutorial5 answerDiv
-- join tut1 & tut2 together?
-- about/help/feedback styles: increase contrast on hover, underline on that page
-
-- should hover and click be two instructions or one?
-
 /*PRIORITIES*/
 - mobile version
 (- tablet version)
 
+current:
+- explainer divs should position based on <img> bbox
+- create a slider carousel in the tooltip
+- style search results warning message in searchJobTitles()
+
+next:
+- "legend: colours, sizes" compact legend section?
+- add a ? button to show explainer div again in graph mode
+- check google styleguide for shadows
+(add items to a css grid layout?)
+- append media queries to all styles to start defaults as mobile-up
+- tutorial5 answerDiv
+- about/help/feedback styles: increase contrast on hover, underline on that page
+
+
 later
+- bug: reset filters button disappears legend buttons!?
+- bug: colour filters click disappears legend buttons!?
+- join tut1 & tut2 together?
+	(should hover and click be two instructions or one?)
 - move all style to css
+- move btnView btnSuggest styles to css:hover and classes
 - button for "set the skills to this job's skill levels"
 - resize circles with page width then detect radius
 
