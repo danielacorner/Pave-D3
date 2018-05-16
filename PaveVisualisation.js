@@ -1016,9 +1016,9 @@ var graphMode;
   .attr("id","carousel")
   .html(
     "<div class='carouselTooltip'>"+
-    "<div style='backgrond: lavender'>Check out this sweet content</div>"+
-    "<div style='backgrond: limegreen'>Oh wow some more content</div>"+
-    "<div style='backgrond: yellow'>No way, even more content?</div>"+
+    "<div style='background: lavender'>Check out this sweet content</div>"+
+    "<div style='background: limegreen'>Oh wow some more content</div>"+
+    "<div style='background: yellow'>No way, even more content?</div>"+
     "</div>"
     )
 
