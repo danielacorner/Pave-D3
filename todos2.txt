@@ -11,11 +11,12 @@ ideas:
 (- tablet version)
 
 current:
-- explainer divs should position based on <img> bbox
 - create a slider carousel in the tooltip
 - style search results warning message in searchJobTitles()
 
 next:
+- show favourites btn next to search btn?
+- store data & favourites in the cache
 - "legend: colours, sizes" compact legend section?
 - add a ? button to show explainer div again in graph mode
 - check google styleguide for shadows

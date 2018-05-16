@@ -11,8 +11,10 @@ expandedRadius = $(window).height()*0.045;
 collapsedRadius = $(window).height()*0.007;
 
 function resetFilters(){} // global function holder to resolve scope issue
+// function resetSimulation(){} // global function holder to resolve scope issue
+// function restartSimulation(){} // global function holder to resolve scope issue
 
-var favourites = []; // whether or not the current circle is expanded
+var favourites = []; // whether or not the current circle is favourited
 var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
 var legendCreated = 0;
@@ -195,6 +197,12 @@ function resize() {
        .style("width","85px") .style("margin-bottom","-15px")
     $("#titleBar").hide()
   }else{
+    d3.select("#searchDiv")
+      .style("width", function() { var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
+        return $(window).width() - feedbackBbox.right - feedbackBbox.width + -10 + "px"})
+      .style("top", "24px")
+    d3.select(".search-div") // todo: combine with search div
+      .style("top", "21px")
     $("#titleBar").show()
     d3.select("#sliderDiv_skillsComp").style("bottom", "9vh")
     d3.select("#sliderDiv_skillsMath").style("bottom", "9vh")
@@ -309,7 +317,7 @@ var nodes = datapoints.map(function(el) {
   r = collapsedRadius, // start equal radii
   d = {
     id: +el.id,
-    favourite: 0,
+    favourited: 0,
     // transparent: false,
     cluster: i, 
     radius: r, 
@@ -663,7 +671,7 @@ function createHoverImg(d) {
   // .append("image").attr("xlink:href","/img/NOC_images/"+d.noc+".jpg")
     // .attr("cy",d3.select(function(){return this.parentNode}).attr("cy"))
     // .attr("r",d3.select(function(d){return d.r}))
-      .transition().duration(350)
+      // .transition().duration(350)
     .attr("r",imgRadius+"px")
     .style("stroke","black")
     .style("stroke-width","1")
@@ -715,7 +723,7 @@ var graphMode;
       .style("height", "auto")
       .style("position", "absolute")
       .style("z-index", 999)
-      .style("pointer-events","none")
+      // .style("pointer-events","none")
 
       var divLeft, divTop;
       
@@ -793,15 +801,135 @@ var graphMode;
           "<rect id='rect3' height='"+(d.skillsMath*compress_y)+"' width='18' style='fill: "+ colorSkillbar(d.cluster) +";' y='"+(skillsBarsYtranslate*0.25-(d.skillsMath*compress_y))+"' x='"+(110-skillsBarsXtranslate)+"'></rect>"+
           // "<text style='fill: " + colorTooltip(d.cluster) +"; transform: rotate(-90deg); font-family: Raleway' x='"+(-75)+"' y='"+(85-skillsBarsXtranslate)+"'>"+Math.round(10*d.skillsMath)/10+"</text>"+
           "</g>"+
-        "</svg>"
-        // +"<span id='clickSpan' style='position: absolute; right: 45px; bottom: -3px; color: white; font-size: 14px;'>&#9660&nbspclick&nbsp&#9660</span>"
-        +"</div>")
+        "</svg>"+
+
+        "<button id='btnSimilarSkills' class='btn btn-lg'"+
+        "style='position: absolute; right: 17px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "Similar jobs</button>"+
+
+        "<button id='btnFavourite' class='btn btn-lg'"+
+        "style='position: absolute; right: 17px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
+        "<i class='fa fa-star'></i>Favourite</button>"+
+
+        "</div>")
         // Move div above mouse by "top" + radius and right by "left"
         .style("left", divLeft + "px")
         .style("background", color(d.cluster) )
         .style("top", (divTop) + "px")
         .style("z-index",999);
 
+        d3.select("#btnSimilarSkills").style("margin-top","-110px").style("z-index",9999)
+        d3.select("#btnFavourite").style("margin-top","-60px").style("z-index",9999)
+        // d3.select("#btnSimilarSkills").style("top",(document.getElementById("tooltip3").getBoundingClientRect.height-120)+"px")
+        // d3.select("#btnFavourite").style("top",(document.getElementById("tooltip3").getBoundingClientRect.height-70)+"px")
+
+        if(d.favourited==1){
+          d3.select("#btnFavourite")
+          .html("<i class='fa fa-star'></i>Favourited")
+          .style("color","#ff9600")
+        }
+
+        d3.select("#btnFavourite").on("click", function() {
+          d.favourited = 1-d.favourited
+          if(d.favourited==1){
+            d3.select("#btnFavourite")
+            .html("<i class='fa fa-star'></i>Favourited")
+            .style("color","#ff9600")
+          } else {
+            d3.select("#btnFavourite")
+            .html("<i class='fa fa-star'></i>Favourite")
+            .style("color",color(d.cluster))
+          }
+
+        })
+
+          // set filter levels to this job group's levels
+        d3.select("#btnSimilarSkills").on("click", function() {
+          // for each skill in main skills and sub skills
+          // set skill slider to that level
+          for(var sliderID in sliderArray){
+            sliderPositionsArray[sliderID] = d[sliderArray[sliderID]];
+          }
+
+          // then continue the rest of updateMulti()
+          var filteredNodes = filterAll()
+          //  UPDATE
+          circles = circles.data(filteredNodes, function(d) { return d.id });
+
+          // EXIT
+          circles.exit().transition().duration(500)
+          // exit transition: "pop" radius * 1.5 + 5 & fade out
+          .attr("r", $(window).height()*0.03)
+          .styleTween("opacity", function(d) {
+            var i = d3.interpolate(1, 0);
+            return function(t) { return i(t); };
+          })
+          .remove();
+
+          // ENTER (create the circles with all attributes)
+          enterUpdateCircles();
+
+          //bookmarklet : resetSimulation()?
+
+          // reset simulation if graph mode = off
+          if (graphMode == 0) {
+            simulation.nodes(filteredNodes)
+            .force("collide", forceCollide)
+            .force("cluster", forceCluster)
+            .force("gravity", forceGravity)
+            .force("x", forceXCombine)
+            .force("y", forceYCombine)
+            .on("tick", tick);
+            restartSimulation();
+
+            } else if (graphMode == 1) { // else reposition nodes on graph
+
+              switch (mode) {
+
+                case 0:
+                case 1:
+                circles
+                    // x = Years of Study
+                    .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4 + graphXtranslate})
+                    // y = Wage
+                    .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
+                    break;
+
+                    case 2:
+                    circles
+                    // x = Number of Jobs
+                    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+                    // y = Wage
+                    .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
+                    break;
+                  // x = Number of Jobs
+                  // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
+                  case 3:
+                  circles
+                    // x = Number of Jobs
+                    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+                    // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+                    .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+                    break;
+
+                    case 4:
+                    circles
+                    // x = Number of Jobs
+                    .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+                    // y = Automation Risk
+                    .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+                    break;
+
+                case 5: // graph mode off
+                circles
+                .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left  + graphXtranslate})
+                .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+                break;
+              }
+
+            }
+
+          })
       // div2.transition()
       // .duration(200)
       // .style("left", (d3.event.pageX) + 20 + "px")
@@ -839,7 +967,8 @@ var graphMode;
 
   setTimeout(function(){
     d3.select("#tooltipBottomDiv")
-    .html("<div id='tooltipBottomDiv2' style=' z-index: -1; margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
+    .html(
+      "<div id='tooltipBottomDiv2' style=' z-index: -1; margin-top: -15px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; font-size: 16px; padding-top: 5px; padding-left: 10px; font-family: Raleway; color: " + colorTooltip(d.cluster)
       +"; background: "+ colorTooltip2(d.cluster) +";'>"
 
         +"<span style='padding-left: 3px;'>Some job titles from this group are:</span></br>"
@@ -881,56 +1010,24 @@ var graphMode;
         // +"<br/>" 
         "<span style='margin-left: 231px'></span>"+
         "<span style='margin-top: 10px; margin-left: 220px'></span>"+
-        "<button id='viewMoreBtn' class='btn btn-lg'"+
-        "style='position: absolute; right: 17px; bottom: 20px; z-index: 999; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; margin-top: 11px; font-family: Raleway; background: white; color: " + color(d.cluster) +"'>"+
-        "View more</button>"+"</div>")
 
-    d3.select("#viewMoreBtn").on("click", function() {
-        d3.select("#viewMoreBtn").transition().duration(500).style("opacity",0).remove()
+        "</div>")
+  d3.select("#tooltipBottomDiv").append("div")
+  .attr("id","carousel")
+  .html(
+    "<div class='carouselTooltip'>"+
+    "<div style='backgrond: lavender'>Check out this sweet content</div>"+
+    "<div style='backgrond: limegreen'>Oh wow some more content</div>"+
+    "<div style='backgrond: yellow'>No way, even more content?</div>"+
+    "</div>"
+    )
 
-        div3 = d3.select("#tooltipBottomDiv").append("div").attr("id","moreBtnsContainerDiv")
-          .style("height","250px")
-          .style("box-shadow","6px 4px 12px #404040FF")
-          .style("border-top-right-radius","6px")
-          .style("border-bottom-right-radius","6px")
-          .style("background", colorTooltip2(d.cluster))
-          .style("position","absolute")
-          .style("left","160px")
-          .style("bottom","0px")
-          .style("z-index","-1")
-          .html("<div id='moreBtnsDiv' align='right' style='margin-top: 0px; margin-left: 15px; margin-right: 15px;'>"+
-
-        "<a id='btnJobBank' class='btn btn-sm' href='"+"http://noc.esdc.gc.ca/English/NOC/QuickSearch.aspx?ver=&val65="+pad(d.noc,4)+"' target='_blank' "+
-        "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
-        "JobBank page</a><br>"+
-
-        "<button id='btnSimilarSkills' class='btn btn-sm' "+
-        "style='margin-top: 20px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) + "'>"+
-        "Similar jobs <br><span style='font-size: 12px'>(sets filters equal to <br>this group's skill levels)</span></button><br>"+
-
-        // "<a id='btnVolunteer' class='btn btn-sm' "+
-        // "style='margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        // "' target='_blank' href='"+"https://youth.volunteer.ca/"+"'>"+
-        // "Volunteer Canada</a><br>"+
-
-        "<br><br><span style='margin-left: -20px; color: white;'>"+
-        "This section is currently under construction...</span>"+
-
-        "<div align='right' style='margin: 10px 0px 20px 0px'>"+
-        "<a id='btnIndeed' class='btn btn-sm' "+
-        "style='border-radius: 4px; margin-bottom: 10px; box-shadow: 3px 3px 3px grey; font-size: 16px; font-weight: bold; font-family: Raleway; background: white; color: " + color(d.cluster) +
-        "'>"+
-        "&nbspcoming soon&nbsp</a><br>"+
-        "</div></div>")
-          
-        d3.select("#btnSimilarSkills").on("click", function() {
-          // set filter levels to this job group's levels
-        })
-
-        div3.transition().duration(350).style("left","360px").style("height","360px")
-
-        d3.select("#moreBtnsDiv").style("opacity",0).transition().duration(350).style("opacity",1).style("left","360px")
-    })
+  // $(document).ready(function(){
+    $('.carouselTooltip').slick({
+      autoplay: true
+      // more settings at http://kenwheeler.github.io/slick/#settings
+    // });
+    });
 
    }, 275);
 
@@ -2840,7 +2937,7 @@ d3.select("#resetFilters").on('click', function(d) {
   resetFilters(currentMode);
 });
 
-function resetFilters(mode) {
+resetFilters = function(mode) {
   // collapseCircleImages() if expanded 
   if(circlesExpanded == 1){
     circlesExpanded = 0;
@@ -3117,7 +3214,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style(topOrBottom, ytrans+"vh")
     // lg and xl
     .html(
-      "<img id=question_"+i+" style='display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
+      "<img id=question_"+i+" style='border-radius: 29px; display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
       +"<div align='left' style='display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
       +"font-size: 140%; font-weight: bold;"
@@ -3158,7 +3255,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     // .style("margin-left", -sub_xtranslate+"%") // x position
     .attr("id", "slider_"+i)
     .attr("width", 250)
-    .attr("height", 50);
+    .attr("height", 60);
 
 $(document).ready(function(){resize()})
 
@@ -3414,6 +3511,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("position", "absolute")
         .style("left", xtranslate+"%")
         .style("top", ytranslate+220+"px")
+        .style("width","400px")
         // lg and xl
         .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
           "position: absolute; left: "+(xtranslate+3)+"%; width: 400px;"
@@ -4034,7 +4132,7 @@ var eTops = [] // comp
     eTops.push(document.querySelector("#question_0").getBoundingClientRect().top + offsetDown) // lang
     eTops.push(document.querySelector("#question_1").getBoundingClientRect().top + offsetDown) // logi
     eTops.push(document.querySelector("#question_2").getBoundingClientRect().top - 140) // math
-    eTops.push(document.querySelector("#question_3").getBoundingClientRect().top - 80) // comp
+    eTops.push(document.querySelector("#question_3").getBoundingClientRect().top - 105) // comp
 
 var offsetRight = 55
 var eLefts = []
@@ -4115,7 +4213,7 @@ var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
     .style("width", function() {
       if($(window).width() > 768) {
-        return $(window).width() - feedbackBbox.right - feedbackBbox.width + 20 + "px"
+        return $(window).width() - feedbackBbox.right - feedbackBbox.width + -10 + "px"
       } else { return $(window).width() * 0.4 + "px" }
      })
     .style("height", "39px")
@@ -4193,24 +4291,31 @@ function searchJobTitles() {
 
   // if no search results, display warning message
   if (graph.length == 0) {
-    // display warning message
-    d3.select("body").append("div").attr("id","warningMsg")
-      .style("position","fixed").style("top","40%").style("left","41%")
-      .style("width","250px").style("height","115px")
-      .style("font-size","24px")
-      .attr("class","alert")
-      .html("No search results!<br>Resetting...")
-    
-    // reset and remove message
-    setTimeout(function() {
-      resetFilters(currentMode)
-      d3.select("#warningMsg").transition().duration(500).style("opacity",0).remove()
-    }, 1500)
+
+    zeroJobsRemain()
 
   }
 
 }
 
+function zeroJobsRemain() {
+      // display warning message
+    d3.select("body").append("div")
+      .attr("id","warningMsg").attr("class","alert")
+      .style("position","fixed")
+      .style("left",($(window).width()-250)/2 + "px")      
+      .style("top",($(window).height()-115)/2 + "px")      
+      .style("width","250px").style("height","115px")
+      .style("font-size","24px")
+      .html("No results!<br>Resetting...")
+    
+    // reset and remove message
+    // click reset instead?
+    setTimeout(function() {
+      resetFilters(currentMode)
+      d3.select("#warningMsg").transition().duration(500).style("opacity",0).remove()
+    }, 1500)
+}
 
 function filterBySearch() {
 // get the search query
