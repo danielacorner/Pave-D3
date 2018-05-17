@@ -633,13 +633,13 @@ rect.legendBtn {
 #resetFilters{
   pointer-events: auto;
 }
-#legendDiv2{
+#legendDiv2{ /*sizes*/
   position: fixed;
   width: 220px;
   height: 150px;
   right: 25px;
 }
-#legendDiv1{
+#legendDiv1{ /*colours*/
     position: fixed;
     width: 335px;
     height: 280px;
@@ -705,7 +705,10 @@ rect.legendBtn {
   #legendDiv2{
     right: 25px;
   }
-
+  #legendDiv1{ /*colours*/
+    left: 15px;
+    float: none;
+  }
   #sizeOptionsDiv{
     right: 25px;
     bottom: 170px;

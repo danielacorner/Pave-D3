@@ -1561,9 +1561,6 @@ function expandSizesLegend() {
 
   d3.select("#btnSizes").on("click", "")
 
-   // shrink Colour Legend button and Sizes dropdown
-    d3.select("#btnColours").transition().duration(300).style("opacity",0).style("height","0px").style("width","0px")
-
     var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
     sizesDiv = d3.select("#btnSizes")
@@ -1593,26 +1590,30 @@ function expandSizesLegend() {
         .attr("height",btnSizesDims[1])
         .style("margin-top","5px")
 
-    sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
-        .attr("class","legendCircle")
-        .attr("r", 0) // start at 0 radius and transition in
-        .transition().duration(400).attr("r",  function(d,i) { 
-          if(sizesArray.length < 2) { return sizesArray[i] }
-          else{ return sizesArray[i]+5 }
-        })
-        .attr("transform", function(d,i) { return "translate("+(55 + i*95) + 
-          // Math.pow(sizesArray[i], 1.6))+
-        ","+"25"+")" } ) 
-        .style("fill", "#B5ADAD")
+    if(currentSize!="nothing"){
 
-    legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
-        .attr("class","legendText")
-        .attr("text-anchor","left")
-        .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
-          // Math.pow(sizesArray[i], 1.6))+
-        ","+"60"+")" } ) 
-        .text(function(d,i) { if(i==0){ return "Less" }else if(i==1){ return "More" } })
-        .style("opacity",0).transition().duration(600).style("opacity",1)
+      sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+          .attr("class","legendCircle")
+          .attr("r", 0) // start at 0 radius and transition in
+          .transition().duration(400).attr("r",  function(d,i) { 
+            if(sizesArray.length < 2) { return sizesArray[i] }
+            else{ return sizesArray[i]+5 }
+          })
+          .attr("transform", function(d,i) { return "translate("+(55 + i*95) + 
+            // Math.pow(sizesArray[i], 1.6))+
+          ","+"25"+")" } ) 
+          .style("fill", "#B5ADAD")
+
+      legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+          .attr("class","legendText")
+          .attr("text-anchor","left")
+          .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
+            // Math.pow(sizesArray[i], 1.6))+
+          ","+"60"+")" } ) 
+          .text(function(d,i) { if(i==0){ return "Less" }else if(i==1){ return "More" } })
+          .style("opacity",0).transition().duration(600).style("opacity",1)
+
+    }
     
     if(currentSize=="nothing"){
       d3.select("#svgLegend").append("text")
@@ -3054,6 +3055,16 @@ resetFilters = function(mode) {
   circles.transition().duration(500).style("opacity",1)  
   filteredIndustries = []
   d3.selectAll(".legendCirc").attr("opacity",1)
+  // reset size filters
+  d3.selectAll(".legendCircle").remove()
+  d3.selectAll(".legendText").remove()
+  currentSize = "nothing"
+  d3.select("#svgLegend").append("text")
+  .attr("class","legendText")
+  .attr("text-anchor","left")
+  .attr("transform","translate(73,45)")
+  .text("Equal sizes")
+  .style("opacity",0).transition().duration(600).style("opacity",1)
   // Reset green inset-left on all sliders
   // Main sliders
   for(var i=0; i<sliderArray.length; i++) {
