@@ -28,12 +28,6 @@
   margin-top: -55px;
   margin-left: 30px; }
 
-#navBar {
-  height: 40px;
-  background: #F8F8F8;
-  padding: 2px 0px 10px 0px;
-  box-shadow: 0px 2px 3px 0 rgba(0, 0, 0, 0.2); }
-
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='$grn' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
 
@@ -131,10 +125,10 @@ img.img-question {
   padding-left: 5px;
   padding-bottom: 2px; }
 
-#search-btn-div {
+.search-div {
   position: fixed;
   right: 20px;
-  top: 11px; }
+  top: 22px; }
 
 button.expand-sliders-btn {
   margin: 5px 0px 0px 10px;
@@ -333,7 +327,7 @@ button.search-btn {
   width: 100%;
   opacity: 1; }
 
-#search-btn-div {
+.search-div {
   right: 2%;
   position: absolute;
   width: 40px;
@@ -342,6 +336,12 @@ button.search-btn {
 img.search-img {
   border-radius: 9px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3); }
+
+img.search-img:hover {
+  /*  height: 43px;
+    width: 43px;
+    margin-top: -1px;
+    margin-left: -1px;*/ }
 
 button.submit-btn:hover {
   background: #eaeaea;
@@ -425,16 +425,6 @@ rect.legendBtn {
   background: white;
   border: 2px solid #49AC52;
   color: #49AC52; }
-
-#yearLink {
-  margin-left: 4px; }
-
-#equaLink {
-  margin-left: 5px;
-  margin-top: 3px; }
-
-#wageLink {
-  margin-top: 3px; }
 
 .track {
   stroke: #49AC52;
@@ -655,199 +645,5 @@ rect.legendBtn {
     width: 100%;
   }
 } */
-#searchDiv {
-  right: 70px;
-  border-radius: 7px;
-  height: 39px;
-  position: absolute; }
 
-#topButtons {
-  pointer-events: none;
-  position: fixed;
-  z-index: 0;
-  left: 33vw;
-  top: 12vh; }
-
-#bottomButtons {
-  pointer-events: none;
-  position: fixed;
-  bottom: 15vh;
-  left: 33vw;
-  z-index: 99; }
-
-#resetFilters {
-  pointer-events: auto; }
-
-#legendDiv2 {
-  position: fixed;
-  width: 220px;
-  height: 150px;
-  right: 25px; }
-
-#legendDiv1 {
-  position: fixed;
-  width: 335px;
-  height: 280px;
-  right: 15px; }
-
-#sizeOptionsDiv {
-  position: fixed;
-  padding: 10px; }
-
-/*Media queries*/
-/*Mobile*/
-@media only screen and (min-width: 320px) {
-  #titleBar {
-    position: fixed;
-    height: 10vh;
-    margin-left: 20px;
-    margin-top: -15px; }
-
-  .link-top2 {
-    padding-left: 15px; }
-
-  #searchDiv {
-    top: 0.5px;
-    box-shadow: none; }
-
-  #search-btn-div {
-    top: -1px; }
-
-  #searchImg {
-    box-shadow: none; }
-
-  #sliderDiv_skillsComp {
-    bottom: 1vh; }
-
-  #sliderDiv_skillsMath {
-    bottom: 1vh; }
-
-  #sliderDiv_skillsLang {
-    top: 5vh; }
-
-  #sliderDiv_skillsLogi {
-    top: 5vh; }
-
-  #resetFilters, #graph {
-    width: 85px;
-    margin-bottom: -15px; }
-
-  #searchImg {
-    margin-top: 1px;
-    height: 38px;
-    width: 38px; } }
-/*move buttons when width < 700px*/
-@media only screen and (max-width: 700px) {
-  #topButtons {
-    left: -25px;
-    top: 230px; }
-
-  #bottomButtons {
-    left: 71vw;
-    top: 230px; }
-
-  #btnColours {
-    position: fixed;
-    left: 25px;
-    bottom: 170px; }
-
-  #btnSizes {
-    position: fixed;
-    right: 25px;
-    bottom: 170px; }
-
-  #legendDiv2 {
-    right: 25px; }
-
-  #sizeOptionsDiv {
-    right: 25px;
-    bottom: 170px; } }
-/*Tablet*/
-@media only screen and (min-width: 768px) {
-  #resetFilters, #graph {
-    width: 185px; }
-
-  #resetFilters {
-    margin-bottom: 0px; }
-
-  /*#graph{ margin-bottom: -15px; }*/
-  #searchDiv {
-    top: 13px;
-    /*width: 40%;*/ }
-
-  #search-btn-div {
-    top: 11px; }
-
-  #sliderDiv_skillsComp {
-    bottom: 9vh; }
-
-  #sliderDiv_skillsMath {
-    bottom: 9vh; }
-
-  #sliderDiv_skillsLang {
-    top: 9vh; }
-
-  #sliderDiv_skillsLogi {
-    top: 9vh; }
-
-  #viewButtons {
-    margin-top: -20px; }
-
-  #bottomButtons {
-    bottom: 7.5vh; }
-
-  #legend {
-    margin-left: 60px; }
-
-  #sliderDiv_skillsLang {
-    left: 0vw; }
-
-  #sliderDiv_skillsLogi {
-    right: 1.5vw; }
-
-  #sliderDiv_skillsComp {
-    left: 0vw; }
-
-  #sliderDiv_skillsMath {
-    right: 1.5vw; }
-
-  .btn-legend {
-    margin: 5px;
-    float: right; } }
-/*Laptop & Desktop*/
-@media only screen and (min-width: 1024px) {
-  /*// #chart{
-    margin-top: ;
-  }
-  // #titleBar{
-    margin-top: -0.35vh;
-  }
-  // {
-    margin-left: 9vw;
-  }*/
-  #viewButtons {
-    margin-top: 10px; }
-
-  #bottomButtons {
-    bottom: 8vh; }
-
-  #legend {
-    margin-left: 40px;
-    float: right; }
-
-  .btn-legend {
-    margin: 5px; }
-
-  #sliderDiv_skillsLang {
-    left: 9vw; }
-
-  #sliderDiv_skillsLogi {
-    right: 9vw; }
-
-  #sliderDiv_skillsComp {
-    left: 9vw; }
-
-  #sliderDiv_skillsMath {
-    right: 9vw; } }
-
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=style.css.map */

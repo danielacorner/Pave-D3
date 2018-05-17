@@ -41,8 +41,8 @@
 <body scrolling="no">
 
 	<!-- mobile size -->
-	<div id="navBar" class="d-block d-md-none d-lg-none d-xl-none" style="height: 40px; background: #F8F8F8; padding-bottom: 10px; box-shadow: 0px 2px 3px 0 rgba(0,0,0,0.2)"> 
-			<h1 style="display: inline; font-weight: bold; margin: 0px 15px; font-size: 30px; color: #49AC52; text-align: left;">
+	<div id="navBar" class="d-block d-md-none d-lg-none d-xl-none"> 
+			<h1 id="tabletLinks" style="display: inline; font-weight: bold; margin: 0px 15px; font-size: 30px; color: #49AC52; text-align: left;">
 				<a class="homepage" href="index.html">
 				Pave</a>
 				<!-- <span > -->
@@ -58,13 +58,13 @@
 
 	<br/>
 	<!-- title bar (tablet & desktop) -->
-	<div id="titleBar" style="position: fixed; height: 10vh; margin-left: 2.5%; margin-top: -1.05%" class="d-none d-md-block d-lg-block">
+	<div id="titleBar" class="d-none d-md-block d-lg-block">
 		<div  class="title" align="left">
 			<h1 style="font-weight: bold; color: #49AC52; text-align: left;">
 
 				<a class="homepage" href="index.html">
 				Pave</a>
-				<span>
+				<span id="links-top">
 					<a class="link-top" href="#" > 
 
 					About</a>
@@ -103,50 +103,18 @@
 				<!-- </div> -->
 				<!-- slider array 1: Filter by Stats-->
 				<!-- Buttons -->
-				<div id="topButtons" style="pointer-events: none; position: fixed; z-index: 0; left: 33vw; top: 12vh;" class="col-4" align="center">
-					<!-- Split, shuffle -->
-<!-- 					<div id="splitShuffle" align="center" style="z-index: 0;">
-						<div class="btn-group" align="center" role="group" aria-label="...">
+				<div id="topButtons" class="col-4" align="center">
+					<button id="graph" data-toggle="button" type="button" class="btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
+						<span >
+						Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
+					</button>
 
-							<button id="split" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
-								<span style="color: white; font-weight: 560;">
-								Split</span> 
-							</button>
-
-							<button id="shuffle" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
-								<span style="color: white; font-weight: 560;">
-								Shuffle</span>
-							</button>
-
-							<button id="combine" type="button" class="btn btn-grey" style="width: 88px; pointer-events: auto">
-								<span style="color: white; font-weight: 560;">
-								Combine</span>
-							</button>
-
+					<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
+						Click here to compare these jobs.
+						<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
 						</div>
-					</div> -->
-
-								<div id="viewButtons" align="center" style="pointer-events: none; position: relative; margin-top: 10px; z-index: 0;">
-
-									<button id="graph" data-toggle="button" type="button" class="btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
-										<span >
-										Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
-									</button>
-									
-									<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
-										Click here to compare these jobs.
-										<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
-									</div>
-
-									<!-- <span style='padding-left: 10px'></span> -->
-
-<!-- 									<button id="futureView" type="button" class="btn btn-grey d-block d-sm-inline d-md-inline d-lg-inline d-xl-inline">
-										<span style="color: white; font-weight: 560; font-family: Raleway">
-										Future View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="futureToggle" src="img/toggle-off.png"></img>
-									</button> -->
-									</div>
-								</div> <!-- end of viewButtons -->
-							</div> <!-- end of topButtons -->
+					</div>
+				</div> <!-- end of topButtons -->
 
 							<!-- suggested views buttons -->
 
@@ -228,7 +196,7 @@ else if(viewsMinimized == 0){
 <!-- slick carousel experiment -->
 <!-- <script src="slickExperiment.js"></script> -->
 
-<div id="bottomButtons" class="col-4" align="center" style="position: fixed; bottom: 15vh; left: 33vw; z-index: 99">
+<div id="bottomButtons" class="col-4" align="center">
 
 	<!-- Reset, pause, play buttons -->
 	<div id="playPauseDiv" align="center" style="z-index: -1">
@@ -237,17 +205,6 @@ else if(viewsMinimized == 0){
 			<span style="padding-right: 6px;">
 			Reset Filters </span> <i class="fa fa-undo-alt"></i>
 		</button> 
-
-<!-- 		<button id="pause" type="button" class="btn btn-grey" style="margin-left: 1%;">
-			<span style="color: white; padding-right: 6px;">
-			Pause</span> <i class="fa fa-pause"></i>
-		</button>
-
-		<button id="unpause" style="margin-left: 1%; display: none;" type="button" class="btn btn-grey">
-			<span style="color: white; padding-right: 6px;">
-			Play</span> <i class="fa fa-play"></i>
-		</button> -->
-
 	</div>
 
 	<!-- low filter level warning callout -->

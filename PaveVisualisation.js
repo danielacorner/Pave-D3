@@ -148,10 +148,45 @@ d3.select(window).on("resize", function() {
 });
 
 function resize() {
+  // desktop, tablet, mobile
+  // mobile: min-width: 320
+  // tablet: min-width: 768
+  // desktop: min-width: 1224
   var w = $(window).width();
-  console.log("width: "+w+"px")
+  // console.log("width: "+w+"px")
   var h = $(window).height();
   // console.log(w+" x "+h)
+  
+  // mobile
+  if(w >= 320){
+    d3.select("#searchDiv")
+    .style("width", function(){
+      var linksBbox = document.getElementById("tabletLinks").getBoundingClientRect()
+      return w - linksBbox.right - 100 + "px"
+    }) 
+  }else{
+
+  }
+  // tablet
+  if(w >= 768) {
+    d3.select("#searchDiv")
+    .style("width", function(){
+      var linksBbox = document.getElementById("links-top").getBoundingClientRect()
+      return w - linksBbox.right - 110 + "px"
+    })
+  }else{
+
+  }
+  // laptop & desktop
+  if(w >= 768) {
+    d3.select("#searchDiv")
+    .style("width", function(){
+      var linksBbox = document.getElementById("links-top").getBoundingClientRect()
+      return w - linksBbox.right - 110 + "px"
+    })
+  }else{
+
+  }
 
   if(w < 992){
     // d3.select("#chart").style("margin-top","-20px")
@@ -160,11 +195,11 @@ function resize() {
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
     d3.select("#legend") .style("margin-left","60px")
-    d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     d3.select("#sliderDiv_skillsComp").style("left", "0vw")
     d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
+    d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
   }else{
     // d3.select("#chart").style("margin-top","")
     // d3.select("#titleBar").style("margin-top","-0.35vh")
@@ -180,39 +215,31 @@ function resize() {
   }
 
   if(w < 768){ // bookmarklet todo: style tablet navbar, decide on 3 breakpoints
-    d3.select("#searchDiv")
-      .style("width", $(window).width() * 0.4 + "px")
-      .style("top","0.5px")
-    d3.select(".search-div") // todo: combine with search div
-      .style("top","-1px")
-    d3.select("#searchImg")
-      .style("box-shadow","none")
+
     d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsLang").style("top", "5vh")
     d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
+
     d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
     d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
        .style("width","85px") .style("margin-bottom","-15px")
+
     $("#titleBar").hide()
-  }else{
-    d3.select("#searchDiv")
-      .style("width", function() { var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
-        return $(window).width() - feedbackBbox.right - feedbackBbox.width + -10 + "px"})
-      .style("top", "24px")
-    d3.select(".search-div") // todo: combine with search div
-      .style("top", "21px")
+  }else{ // if w > 768 (desktop)
+
     $("#titleBar").show()
     d3.select("#sliderDiv_skillsComp").style("bottom", "9vh")
     d3.select("#sliderDiv_skillsMath").style("bottom", "9vh")
     d3.select("#sliderDiv_skillsLang").style("top", "9vh")
     d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
+
     d3.select("#resetFilters").html("<span style='padding-right: 6px;'>" +
       "Reset Filters</span> <i class='fa fa-undo-alt'></i>")
        .style("width","185px") .style("margin-bottom","0px")
     d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
-      ) .style("width","185px") .style("margin-bottom","-15px")
+      ).style("width","185px") .style("margin-bottom","-15px")
   }
 
   if(typeof circles != "undefined"){
@@ -1282,24 +1309,32 @@ function expandColoursLegend() {
   d3.select("#btnSizes").transition().duration(250).style("opacity",0)
 
   var bboxColours = document.getElementById("btnColours").getBoundingClientRect()
+  // var bboxMath = document.getElementById("sliderDiv_skillsMath").getBoundingClientRect()
 
   // expand colour legend
   d3.select("#btnColours").style("opacity",0.9)
     .append("div")
   .attr("id","legendDiv1")
     .style("opacity",0)
-    .style("position","fixed")
-    .style("width","335px")
-    .style("height","280px")
-    .style("right", "15px")
-    .style("top", bboxColours.top - 175 + "px")
     .style("border-radius","6px")
     .style("border","2px solid rgba(73, 172, 82, 0)")
-  .transition().duration(375)
+    .style("bottom",function(){
+      if($(window).width() >= 768){
+        return "162px"
+      }else if($(window).width() >= 320){
+        return "100px"
+      }
+    }).transition().duration(375)
     .style("opacity",1)
     .style("background","white")
     .style("border","2px solid rgba(73, 172, 82, 1)") // fade in border
-    .style("top", bboxColours.top - 215 + "px")
+    .style("bottom",function(){
+      if($(window).width() >= 768){
+        return "232px"
+      }else if($(window).width() >= 320){
+        return "170px"
+      }
+    })
 
   d3.select("#btnColours").style("margin-right","18px")
 
@@ -1402,8 +1437,23 @@ function closeLegends() {
 
   var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
-  d3.select("#legendDiv1").transition().duration(300).style("opacity",0).remove()
-  d3.select("#legendDiv2").transition().duration(300).style("top",bboxSizes.top + 40 + "px" ).style("opacity",0).remove()
+  d3.select("#legendDiv1").transition().duration(300)
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return "162px"
+        }else if($(window).width() >= 320){
+          return "100px"
+        }
+      }).style("opacity",0).remove()
+
+  d3.select("#legendDiv2").transition().duration(300)
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return "162px"
+        }else if($(window).width() >= 320){
+          return "100px"
+        }
+      }).style("opacity",0).remove()
   d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
   d3.select("#sizeDropdownButton").transition().duration(300).style("opacity",0).remove()
   // legendTexts.selectAll("text").style("opacity",0).remove()
@@ -1518,21 +1568,22 @@ function expandSizesLegend() {
 
     sizesDiv = d3.select("#btnSizes")
     .append("div").attr("id","legendDiv2")
-    .style("width", btnSizesDims[0])
-    .style("height", btnSizesDims[1])
-    .style("position", "fixed")
-    .style("top",bboxSizes.top - 45 + "px" )
-    .style("right", window.innerWidth*0.1 + "px")
 
     // transition in fade from below
-
     d3.select("#legendDiv2")
     .style("border-radius", "6px")
     .style("opacity", 0).style("border","2px solid rgba(73, 172, 82, 0)")
+    .style("bottom","10vh")
     .transition().duration(350)
     .style("opacity", 1).style("border","2px solid rgba(73, 172, 82, 1)")
     .style("background","white")
-    .style("top",bboxSizes.top - 85 + "px" )
+    .style("bottom", function(){
+      if($(window).width() >= 768){
+        return "232px"
+      }else if($(window).width() >= 320){
+        return "170px"
+      }
+    })
     // .text("")
 
     svgLegend = d3.select("#legendDiv2")
@@ -1573,32 +1624,67 @@ function expandSizesLegend() {
     }
 
     // size buttons
-    sizesOptions = d3.select("#legendDiv2").append("div").attr("id","sizeOptionsDiv")
-      .style("position","fixed")
-      .style("top",bboxSizes.top - -25 + "px" )
-      .style("right", window.innerWidth*0.1 + "px")
+    sizesOptions = d3.select("#legendDiv2").append("div")
+      .attr("id","sizeOptionsDiv")
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return "162px"
+        }else if($(window).width() >= 320){
+          return "100px"
+        }
+      })
+      // .style("right", window.innerWidth*0.1 + "px")
       .style("width", btnSizesDims[0])
-      .style("padding","10px")
     
     sizesOptions.transition().duration(350)
-      .style("top",bboxSizes.top - 15 + "px" )
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return "232px"
+        }else if($(window).width() >= 320){
+          return "170px"
+        }
+      })
 
     sizesOptions.append("button").attr("id","workLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Number of jobs")
+      .style("color",function(){
+        if(currentSize == "Number of Jobs"){return "white"}else{return "#49AC52"}
+      })
+      .style("background",function(){
+        if(currentSize == "Number of Jobs"){return "#49AC52"}else{return "white"}
+      })
     sizesOptions.append("button").attr("id","yearLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Years of study")
+      .style("color",function(){
+        if(currentSize == "Years of Study"){return "white"}else{return "#49AC52"}
+      })
+      .style("background",function(){
+        if(currentSize == "Years of Study"){return "#49AC52"}else{return "white"}
+      })
     sizesOptions.append("button").attr("id","wageLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Salary ($K per yr)")
+      .style("color",function(){
+        if(currentSize == "Salary ($K per yr)"){return "white"}else{return "#49AC52"}
+      })
+      .style("background",function(){
+        if(currentSize == "Salary ($K per yr)"){return "#49AC52"}else{return "white"}
+      })
     sizesOptions.append("button").attr("id","equaLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Equal sizes")
+      .style("color",function(){
+        if(currentSize == "nothing"){return "white"}else{return "#49AC52"}
+      })
+      .style("background",function(){
+        if(currentSize == "nothing"){return "#49AC52"}else{return "white"}
+      })
 
     // click "Number of Jobs"
     d3.select("#workLink").on("click", function() {
@@ -3160,7 +3246,7 @@ var sliderSideTranslate = 9;
 if(window.innerWidth >= 1007) {
   sliderSideTranslate = window.innerWidth*0.01
   // d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
-  // d3.select(".search-div").style("right", window.innerWidth*0.0094 + "vw")
+  // d3.select("#search-btn-div").style("right", window.innerWidth*0.0094 + "vw")
 }
 var sliderHeightTranslate = 9;
 // d3.select("#titleBar").style("margin-left","14vw")
@@ -4192,7 +4278,7 @@ var searchExpanded = 0;
 
 
 d3.select("body").append("div")
-  .attr("class", "search-div")
+  .attr("id", "search-btn-div")
   .append("span")
     .append("button").attr("id","searchButtonPC").attr("class","search-btn")
       .append("img").attr("id","searchImg").attr("class","search-img")
@@ -4201,8 +4287,14 @@ d3.select("body").append("div")
         .attr("width","40")
         // .on("mouseenter", function(){expandSearch()})
         .on("click", function() {searchJobTitles()})
+        .on("mouseover", function() {
+          d3.select(this).attr("src","img/search2.png")
+        })
+        .on("mouseout", function() {
+          d3.select(this).attr("src","img/search.png")
+        })
         // .on("hover", function() {
-        //   d3.select(".search-div")
+        //   d3.select("#search-btn-div")
         //   .style("right","1.8%")
         //   .style("top","2%")
         // })
@@ -4211,47 +4303,21 @@ var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .style("width", function() {
-      if($(window).width() > 768) {
-        return $(window).width() - feedbackBbox.right - feedbackBbox.width + -10 + "px"
-      } else { return $(window).width() * 0.4 + "px" }
-     })
-    .style("height", "39px")
-    .style("position", "absolute")
-    .style("top", "24px")
-    .style("right", "7.5%")
-    // .style("background-color", "black")
-    // .style("border", "1px solid grey")
-    .style("border-radius", "7px")
-    .style("opacity", 1)
-    // .style("visibility", "visible")
     .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
            "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Submit</button>"
           )
+    .style("width", function(){
+      if($(window).width() >= 768){
+        var linksBbox = document.getElementById("links-top").getBoundingClientRect()
+        return $(window).width() - linksBbox.right - 110 + "px"
+      }else if($(window).width() >= 320){
+        var linksBbox = document.getElementById("tabletLinks").getBoundingClientRect()
+        return $(window).width() - linksBbox.right - 100 + "px"
+      }
+    })
 
-
-
-var searchExpanded = 0;
-
-expandSearch()
-function expandSearch() {
-
-  if(searchExpanded == 0){
-    // d3.select("#searchDiv").style("right",7.5+"%")
-      // .transition().duration(500).style("width", window.innerWidth - 650 + "px").style("opacity", 1)
-    d3.select("#jobTitle").transition().duration(500).style("opacity","1")
-    // d3.select("#searchSubmitBtn").style("opacity",0).transition().duration(3500).style("opacity","1")
-    searchExpanded = 1;
-
-  } else if(searchExpanded==1){
-    d3.select("#searchDiv")
-      .transition().duration(500).style("width", 0 + "px").style("opacity", 0)
-    d3.select("#jobTitle").transition().duration(500).style("opacity","1")
-    searchExpanded = 0;
-  }
-}
 
 function searchJobTitles() {
 

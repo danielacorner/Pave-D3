@@ -1,32 +1,26 @@
-ideas:
-- save filter states with mini screenshots? like collectibles in a "backpack" or inventory
-- "guild hall" where users post/upvote insightful views
-
-- base filter sliders presets on reported grades? to create a profile for students? like a "suggestions" button
-
-------------------------------------------
-
 /*PRIORITIES*/
 - mobile version
-(- tablet version)
 
 current:
-- create a slider carousel in the tooltip
-- style search results warning message in searchJobTitles()
+- minimally functional mobile layout
 
 next:
-- show favourites btn next to search btn?
+- show favourites on-hover btn on the side
 - store data & favourites in the cache
-- "legend: colours, sizes" compact legend section?
 - add a ? button to show explainer div again in graph mode
+- style search results warning message in searchJobTitles()
+- style the slider carousel in the tooltip
+- "legend: colours, sizes" compact legend section?
 - check google styleguide for shadows
 (add items to a css grid layout?)
-- append media queries to all styles to start defaults as mobile-up
 - tutorial5 answerDiv
 - about/help/feedback styles: increase contrast on hover, underline on that page
+- similar jobs button: limit skill levels to 60%
+- append media queries to all styles to start defaults as mobile-up
 
 
 later
+- position imgcircle based on tooltip height
 - bug: reset filters button disappears legend buttons!?
 - bug: colour filters click disappears legend buttons!?
 - join tut1 & tut2 together?
