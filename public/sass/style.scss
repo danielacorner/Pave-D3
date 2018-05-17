@@ -304,6 +304,7 @@ button.views-btn:hover {
   margin-bottom: 0px;
 }
 #grid-container-views {
+  opacity: 0;
   position: fixed;
   right: 20px;
   bottom: 36vh;
@@ -633,17 +634,17 @@ rect.legendBtn {
 #resetFilters{
   pointer-events: auto;
 }
-#legendDiv2{ /*sizes*/
+#legendDivSizes{ /*sizes*/
   position: fixed;
   width: 220px;
   height: 150px;
   right: 25px;
 }
-#legendDiv1{ /*colours*/
+#legendDivColours{ /*colours*/
     position: fixed;
     width: 335px;
     height: 280px;
-    right: 15px;
+    left: 15px;
   }
 #sizeOptionsDiv{
   position: fixed;
@@ -702,12 +703,22 @@ rect.legendBtn {
     right: 25px;
     bottom: 170px;
   }
-  #legendDiv2{
+  #legendDivSizes{
     right: 25px;
   }
-  #legendDiv1{ /*colours*/
+  #legendDivColours{ /*colours*/
+    position: fixed;
     left: 15px;
     float: none;
+    width: 335px;
+    height: 270px;
+  }
+  #svgLegend{
+    position: fixed;
+    left: 15px;
+    /*float: none;*/
+    width: 335px;
+    height: 270px;
   }
   #sizeOptionsDiv{
     right: 25px;
@@ -724,6 +735,16 @@ rect.legendBtn {
   #searchDiv{
     top: 13px;
     /*width: 40%;*/
+  }
+  #btnColours{
+    position: fixed;
+    right: 115px;
+    bottom: 235px;
+  }
+  #btnSizes{
+    position: fixed;
+    right: 15px;
+    bottom: 235px;
   }
   #search-btn-div{
     top: 11px;
@@ -778,6 +799,8 @@ rect.legendBtn {
   // {
     margin-left: 9vw;
   }*/
+  #btnColours{left: 14vw; bottom: 46vh; height: 8vh;} 
+  #btnSizes{right: 14vw; bottom: 46vh; height: 8vh;} 
   #viewButtons{
     margin-top: 10px;
   }

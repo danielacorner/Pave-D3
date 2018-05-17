@@ -194,7 +194,8 @@ function resize() {
     // .style("margin-left","20px")
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
-    d3.select("#legend") .style("margin-left","60px")
+    d3.select("#legend") .style("margin-right","25px")
+    // d3.select("#legend") .style("margin-left","60px")
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     d3.select("#sliderDiv_skillsComp").style("left", "0vw")
@@ -206,7 +207,6 @@ function resize() {
     // .style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
-    d3.select("#legend") .style("margin-left","40px") .style("float","right")
     d3.selectAll(".btn-legend").style("margin","5px")
     d3.select("#sliderDiv_skillsLang").style("left", "9vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
@@ -1306,15 +1306,17 @@ function expandColoursLegend() {
 
   d3.select("#btnColours").on("click","")
   // fade Size Legend button 
-  d3.select("#btnSizes").transition().duration(250).style("opacity",0)
+  // d3.select("#btnSizes").transition().duration(250).style("opacity",0)
 
   var bboxColours = document.getElementById("btnColours").getBoundingClientRect()
   // var bboxMath = document.getElementById("sliderDiv_skillsMath").getBoundingClientRect()
 
   // expand colour legend
   d3.select("#btnColours").style("opacity",0.9)
+  d3.select("body")
     .append("div")
-  .attr("id","legendDiv1")
+  .attr("id","legendDivColours")
+    .style("font-weight","bold")
     .style("opacity",0)
     .style("border-radius","6px")
     .style("border","2px solid rgba(73, 172, 82, 0)")
@@ -1325,6 +1327,13 @@ function expandColoursLegend() {
         return "100px"
       }
     }).transition().duration(375)
+    .style("left",function() {
+      if($(window).width() >= 768){
+        return "3vw"
+      }else if($(window).width() >= 320){
+        return "6vw"
+      }
+    })
     .style("opacity",1)
     .style("background","white")
     .style("border","2px solid rgba(73, 172, 82, 1)") // fade in border
@@ -1338,11 +1347,9 @@ function expandColoursLegend() {
 
   d3.select("#btnColours").style("margin-right","18px")
 
-  svgLegend = d3.select("#legendDiv1")
+  svgLegend = d3.select("#legendDivColours")
       .html("")
       .append("svg").attr("id","svgLegend")
-        .attr("width","335px")
-        .attr("height","270px")
         .style("margin-top","5px")
         .style("background","white")
     
@@ -1391,7 +1398,7 @@ function expandColoursLegend() {
 
 
   if (graphMode == 0){
-    d3.select("#legendDiv1").style("opacity",0.9)
+    d3.select("#legendDivColours").style("opacity",0.9)
     // d3.selectAll(".legendCirc").style("opacity",1)
   }
 
@@ -1437,22 +1444,24 @@ function closeLegends() {
 
   var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
-  d3.select("#legendDiv1").transition().duration(300)
+  d3.select("#legendDivColours").transition().duration(300)
       .style("bottom",function(){
         if($(window).width() >= 768){
-          return "162px"
+          return $(window).height()/2 - 275/2 + "px"
         }else if($(window).width() >= 320){
           return "100px"
         }
       }).style("opacity",0).remove()
-
-  d3.select("#legendDiv2").transition().duration(300)
+  d3.select("#legendDivSizes").transition().duration(300)
       .style("bottom",function(){
         if($(window).width() >= 768){
+          d3.select("#svgLegend").style("bottom", "162px")
           return "162px"
         }else if($(window).width() >= 320){
+          d3.select("#svgLegend").style("bottom", "100px")
           return "100px"
         }
+
       }).style("opacity",0).remove()
   d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
   d3.select("#sizeDropdownButton").transition().duration(300).style("opacity",0).remove()
@@ -1564,10 +1573,10 @@ function expandSizesLegend() {
     var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
     sizesDiv = d3.select("#btnSizes")
-    .append("div").attr("id","legendDiv2")
+    .append("div").attr("id","legendDivSizes")
 
     // transition in fade from below
-    d3.select("#legendDiv2")
+    d3.select("#legendDivSizes")
     .style("border-radius", "6px")
     .style("opacity", 0).style("border","2px solid rgba(73, 172, 82, 0)")
     .style("bottom","10vh")
@@ -1583,7 +1592,7 @@ function expandSizesLegend() {
     })
     // .text("")
 
-    svgLegend = d3.select("#legendDiv2")
+    svgLegend = d3.select("#legendDivSizes")
       .html("")
       .append("svg").attr("id","svgLegend")
         .attr("width",btnSizesDims[0])
@@ -1625,7 +1634,7 @@ function expandSizesLegend() {
     }
 
     // size buttons
-    sizesOptions = d3.select("#legendDiv2").append("div")
+    sizesOptions = d3.select("#legendDivSizes").append("div")
       .attr("id","sizeOptionsDiv")
       .style("bottom",function(){
         if($(window).width() >= 768){

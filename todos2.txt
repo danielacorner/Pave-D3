@@ -2,9 +2,10 @@
 - mobile version
 
 current:
-- minimally functional mobile layout
+- annotate colour legend
 
 next:
+- minimally functional mobile layout
 - show favourites on-hover btn on the side
 - store data & favourites in the cache
 - add a ? button to show explainer div again in graph mode
