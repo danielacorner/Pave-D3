@@ -188,26 +188,47 @@ function resize() {
 
   }
 
-  if(w < 992){
+  if(w < 1024){
+
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left","45px")
+    .style("bottom","255px")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right","45px")
+    .style("bottom","255px")
+
     // d3.select("#chart").style("margin-top","-20px")
     // d3.select("#titleBar").style("margin-top","-10px")
     // .style("margin-left","20px")
     d3.select("#viewButtons").style("margin-top","-20px")
     d3.select("#bottomButtons").style("bottom","7.5vh")
-    d3.select("#legend") .style("margin-right","25px")
+    // d3.select("#legend") .style("margin-right","25px")
     // d3.select("#legend") .style("margin-left","60px")
     d3.select("#sliderDiv_skillsLang").style("left", "0vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     d3.select("#sliderDiv_skillsComp").style("left", "0vw")
     d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
-    d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
+
+    // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
   }else{
+
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left","14vw")
+    .style("bottom","46.1vh")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right","14vw")
+    .style("bottom","46.1vh")
+
     // d3.select("#chart").style("margin-top","")
     // d3.select("#titleBar").style("margin-top","-0.35vh")
     // .style("margin-left","9vw")
     d3.select("#viewButtons") .style("margin-top","10px")
     d3.select("#bottomButtons") .style("bottom","8vh")
-    d3.selectAll(".btn-legend").style("margin","5px")
+    // d3.selectAll(".btn-legend").style("margin","5px")
     d3.select("#sliderDiv_skillsLang").style("left", "9vw")
     d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
     d3.select("#sliderDiv_skillsComp").style("left", "9vw")
@@ -1295,24 +1316,32 @@ d3.select("#btnColours").on("mouseout", function() {
 function expandColoursLegend() {
 
   if (graphMode == 0){
+    // split the circles horizontally by cluster
     simulation
     .force("x", forceXSeparate).alpha(0.4)
     .force("y", forceYSeparate).alpha(0.4)
-      .alphaTarget(0.001) // after click, cool down to minimal temperature
+      .alphaTarget(0.001) // cool down to minimal temperature
       .restart()
   };
 
   legendMode = 1;
 
-  d3.select("#btnColours").on("click","")
+  // d3.select("#btnColours").on("click","")
   // fade Size Legend button 
   // d3.select("#btnSizes").transition().duration(250).style("opacity",0)
 
-  var bboxColours = document.getElementById("btnColours").getBoundingClientRect()
+  // var bboxColours = document.getElementById("btnColours").getBoundingClientRect()
   // var bboxMath = document.getElementById("sliderDiv_skillsMath").getBoundingClientRect()
 
+  // move size legend button right
+  d3.select("#btnSizes").transition().duration(500)
+  .style("right",$(window).width()*0.03+"px")
+
+  d3.select("#btnColours").transition().duration(500)
+  .style("left",$(window).width()*0.07+"px")
+  .style("opacity",0.01)
+  
   // expand colour legend
-  d3.select("#btnColours").style("opacity",0.9)
   d3.select("body")
     .append("div")
   .attr("id","legendDivColours")
@@ -1322,24 +1351,34 @@ function expandColoursLegend() {
     .style("border","2px solid rgba(73, 172, 82, 0)")
     .style("bottom",function(){
       if($(window).width() >= 768){
-        return "162px"
+        return ($(window).height()*0.5 - 275/2) +"px"
       }else if($(window).width() >= 320){
         return "100px"
       }
-    }).transition().duration(375)
+    })
     .style("left",function() {
-      if($(window).width() >= 768){
-        return "3vw"
+      if($(window).width() >= 1024){
+        return $(window).width()*0.06+"px"
+      }else if($(window).width() >= 768){
+        return $(window).width()*0.01+"px"
       }else if($(window).width() >= 320){
-        return "6vw"
+        return $(window).width()*0.06+"px"
       }
     })
-    .style("opacity",1)
+    .transition().duration(375)
+    .style("left",function() {
+      if($(window).width() >= 768){
+        return $(window).width()*0.03+"px"
+      }else if($(window).width() >= 320){
+        return $(window).width()*0.06+"px"
+      }
+    })
+    .style("opacity",0.9)
     .style("background","white")
     .style("border","2px solid rgba(73, 172, 82, 1)") // fade in border
     .style("bottom",function(){
       if($(window).width() >= 768){
-        return "232px"
+        return ($(window).height()*0.5 - 275/2) +"px"
       }else if($(window).width() >= 320){
         return "170px"
       }
@@ -1347,13 +1386,14 @@ function expandColoursLegend() {
 
   d3.select("#btnColours").style("margin-right","18px")
 
-  svgLegend = d3.select("#legendDivColours")
+  svgColoursLegend = d3.select("#legendDivColours")
       .html("")
-      .append("svg").attr("id","svgLegend")
+      .append("svg").attr("id","svgColoursLegend")
         .style("margin-top","5px")
         .style("background","white")
+        .style("height", "270px")
     
-  legendCircles = d3.select("#svgLegend").selectAll("circle").data(industriesArray).enter().append("circle")
+  legendCircles = d3.select("#svgColoursLegend").selectAll("circle").data(industriesArray).enter().append("circle")
       .attr("r", 0) // start at 0 radius and transition in
       .attr("class","legendCirc")
       .transition().duration(450).attr("r", 10)
@@ -1367,14 +1407,14 @@ function expandColoursLegend() {
           return 1 }
       })
 
-  legendTexts = svgLegend.selectAll("text").data(industriesArray).enter().append("text")
+  legendTexts = svgColoursLegend.selectAll("text").data(industriesArray).enter().append("text")
       .attr("text-anchor","left")
       .attr("transform", function(d,i) { return "translate("+"32"+","+(17+i*27)+")" } )
       .text(function(d) { return d })
       .style("opacity",0).transition().duration(600).style("opacity",1)
   
       // append rect with on click event
-  legendFilterCircles = d3.select("#svgLegend").selectAll("rect").data(industriesArray).enter().append("rect")
+  legendFilterCircles = d3.select("#svgColoursLegend").selectAll("rect").data(industriesArray).enter().append("rect")
         .attr("id",function(d,i){ return i+"_filterColoursRect" })
         .attr("class","legendBtn")
         // .style("fill","black")
@@ -1383,18 +1423,6 @@ function expandColoursLegend() {
         .attr("height","20px")
         .attr("transform", function(d,i) { return "translate("+"4"+","+(1+i*27)+")" } )
 
-
-  // legendTitle = d3.select("#svgLegend").append("text")
-  //   .attr("transform","translate(36,17)")
-  //   .text("Industries")
-  //   .style("font-size","22px").style("fill","#49AC52")
-
-  //     .attr("r","20px").style("fill", function(d,i) { return color(i) })
-  //     .attr("cx", "80vw")
-  //     .attr("cy", function(d,i) { return i*20 + "px" })
-  // .transition().duration(500)
-  // .style("width", "300px")
-  // .style("height", "400px")
 
 
   if (graphMode == 0){
@@ -1412,9 +1440,18 @@ function closeLegends() {
 
   legendMode = 0;
   // reset Size Legend button
-  d3.select("#btnSizes").transition().duration(300).style("opacity",1)
-    .style("height",legendButtonHeight+"px")
-    .style("width",legendButtonWidth+"px").style("border-width","3px")
+  d3.select("#btnSizes").transition().duration(300)
+  .style("right",function(){
+    if($(window).width() >= 1024){
+      return $(window).width()*0.14+"px";
+    }else if($(window).width() >= 768){
+      return 45+"px";
+    }else if($(window).width() >= 320){
+      return "45px";
+    }
+  }).style("opacity",1)
+    // .style("height",legendButtonHeight+"px")
+  .style("width",legendButtonWidth+"px").style("border-width","3px")
     
     setTimeout(function() {
       d3.select("#btnSizes")
@@ -1422,9 +1459,18 @@ function closeLegends() {
       }, 300);
 
   // reset Colour Legend button
-  d3.select("#btnColours").style("margin-right","5px")
-  d3.select("#btnColours").transition().duration(300).style("opacity",1)
-  .style("width", legendButtonWidth+"px")
+  d3.select("#btnColours")
+  .transition().duration(300).style("opacity",1)
+  .style("left",function(){
+    if($(window).width() >= 1024){
+      return $(window).width()*0.14+"px";
+    }else if($(window).width() >= 768){
+      return 45+"px";
+    }else if($(window).width() >= 320){
+      return "45px";
+    }
+  })
+  // .style("width", legendButtonWidth+"px")
   .style("height", legendButtonHeight+"px").style("border-width","3px")
 
     setTimeout(function() {
@@ -1440,7 +1486,8 @@ function closeLegends() {
     expandSizesLegend()  
   })
 
-  d3.select("#svgLegend").selectAll("circle").transition().duration(400).attr("r", 0)
+  d3.select("#svgColoursLegend").selectAll("circle").transition().duration(400).attr("r", 0)
+  d3.select("#svgSizesLegend").selectAll("circle").transition().duration(400).attr("r", 0)
 
   var bboxSizes = document.getElementById("btnSizes").getBoundingClientRect()
 
@@ -1451,19 +1498,39 @@ function closeLegends() {
         }else if($(window).width() >= 320){
           return "100px"
         }
-      }).style("opacity",0).remove()
+      })
+      .style("left",function() {
+        if($(window).width() >= 1024){
+          return $(window).width()*0.06+"px"
+        }else if($(window).width() >= 768){
+          return $(window).width()*0.03+"px"
+        }else if($(window).width() >= 320){
+          return $(window).width()*0.06+"px"
+        }
+      })
+      .style("opacity",0).remove()
+
   d3.select("#legendDivSizes").transition().duration(300)
       .style("bottom",function(){
         if($(window).width() >= 768){
-          d3.select("#svgLegend").style("bottom", "162px")
-          return "162px"
+          return $(window).height()*0.39+"px"
         }else if($(window).width() >= 320){
-          d3.select("#svgLegend").style("bottom", "100px")
-          return "100px"
+          return "140px"
         }
-
       }).style("opacity",0).remove()
-  d3.select("#svgLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
+
+  d3.select("#sizeOptionsDiv")
+      .transition().duration(400)
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return $(window).height()*0.41+"px";
+        }else if($(window).width() >= 320){
+          return "140px";
+        }
+      })
+
+  d3.select("#svgSizesLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
+  d3.select("#svgColoursLegend").selectAll("text").transition().duration(300).style("opacity",0).remove()
   d3.select("#sizeDropdownButton").transition().duration(300).style("opacity",0).remove()
   // legendTexts.selectAll("text").style("opacity",0).remove()
 
@@ -1547,8 +1614,6 @@ function setSizes(mode){
 }
 
 var currentSize = "nothing"
-var btnSizesDims = ["220px","150px"] // width, height
-
 
 d3.select("#btnSizes").on("click", function() {
       expandSizesLegend()  
@@ -1579,29 +1644,32 @@ function expandSizesLegend() {
     d3.select("#legendDivSizes")
     .style("border-radius", "6px")
     .style("opacity", 0).style("border","2px solid rgba(73, 172, 82, 0)")
-    .style("bottom","10vh")
+    .style("bottom",function(){
+      if($(window).width() >= 768){
+        return $(window).height()*0.41 +"px";
+      }else if($(window).width() >= 320){
+        return "140px";
+      }
+    })
     .transition().duration(350)
     .style("opacity", 1).style("border","2px solid rgba(73, 172, 82, 1)")
     .style("background","white")
     .style("bottom", function(){
       if($(window).width() >= 768){
-        return "232px"
+        return $(window).height()*0.5-75 +"px";
       }else if($(window).width() >= 320){
         return "170px"
       }
     })
     // .text("")
 
-    svgLegend = d3.select("#legendDivSizes")
+    svgSizesLegend = d3.select("#legendDivSizes")
       .html("")
-      .append("svg").attr("id","svgLegend")
-        .attr("width",btnSizesDims[0])
-        .attr("height",btnSizesDims[1])
-        .style("margin-top","5px")
+      .append("svg").attr("id","svgSizesLegend")
 
     if(currentSize!="nothing"){
 
-      sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+      sizeCircles = svgSizesLegend.selectAll("circle").data(sizesArray).enter().append("circle")
           .attr("class","legendCircle")
           .attr("r", 0) // start at 0 radius and transition in
           .transition().duration(400).attr("r",  function(d,i) { 
@@ -1613,7 +1681,7 @@ function expandSizesLegend() {
           ","+"25"+")" } ) 
           .style("fill", "#B5ADAD")
 
-      legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+      legendTexts = d3.select("#svgSizesLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
           .attr("class","legendText")
           .attr("text-anchor","left")
           .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
@@ -1625,7 +1693,7 @@ function expandSizesLegend() {
     }
     
     if(currentSize=="nothing"){
-      d3.select("#svgLegend").append("text")
+      d3.select("#svgSizesLegend").append("text")
       .attr("class","legendText")
       .attr("text-anchor","left")
       .attr("transform","translate(73,45)")
@@ -1636,24 +1704,33 @@ function expandSizesLegend() {
     // size buttons
     sizesOptions = d3.select("#legendDivSizes").append("div")
       .attr("id","sizeOptionsDiv")
+      .style("width", "220px")
       .style("bottom",function(){
         if($(window).width() >= 768){
-          return "162px"
+          return $(window).height()*0.41+"px"
         }else if($(window).width() >= 320){
-          return "100px"
+          return "140px"
         }
       })
-      // .style("right", window.innerWidth*0.1 + "px")
-      .style("width", btnSizesDims[0])
+      
+      sizesOptions
+      .transition().duration(400)
+      .style("bottom",function(){
+        if($(window).width() >= 768){
+          return $(window).height()*0.5-75+"px";
+        }else if($(window).width() >= 320){
+          return "170px";
+        }
+      })
     
-    sizesOptions.transition().duration(350)
-      .style("bottom",function(){
-        if($(window).width() >= 768){
-          return "232px"
-        }else if($(window).width() >= 320){
-          return "170px"
-        }
-      })
+    // sizesOptions.transition().duration(350)
+    //   .style("bottom",function(){
+    //     if($(window).width() >= 768){
+    //       return $(window).width()*0.5-75+"px"
+    //     }else if($(window).width() >= 320){
+    //       return "170px"
+    //     }
+    //   })
 
     sizesOptions.append("button").attr("id","workLink")
       .style("float","left")
@@ -1823,7 +1900,7 @@ function redrawSizeLegend() {
     d3.selectAll(".legendCircle").remove()
     d3.selectAll(".legendText").remove()
 
-    sizeCircles = svgLegend.selectAll("circle").data(sizesArray).enter().append("circle")
+    sizeCircles = svgSizesLegend.selectAll("circle").data(sizesArray).enter().append("circle")
       .attr("r", 0) // start at 0 radius and transition in
       .attr("class","legendCircle")
       .transition().duration(400).attr("r",  function(d,i) { 
@@ -1835,7 +1912,7 @@ function redrawSizeLegend() {
       ","+"25"+")" } ) 
       .style("fill", "#B5ADAD")
 
-    legendTexts = d3.select("#svgLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
+    legendTexts = d3.select("#svgSizesLegend").selectAll("text").data(sizesValuesArray).enter().append("text")
         .attr("class","legendText")
         .attr("text-anchor","left")
         .attr("transform", function(d,i) { return "translate("+(40 + i*95) + 
@@ -1845,7 +1922,7 @@ function redrawSizeLegend() {
         .style("opacity",0).transition().duration(600).style("opacity",1)
 
     if(currentSize=="nothing"){
-      d3.select("#svgLegend").append("text")
+      d3.select("#svgSizesLegend").append("text")
       .attr("class","legendText")
       .attr("text-anchor","left")
       .attr("transform","translate(73,45)")
@@ -3068,7 +3145,7 @@ resetFilters = function(mode) {
   d3.selectAll(".legendCircle").remove()
   d3.selectAll(".legendText").remove()
   currentSize = "nothing"
-  d3.select("#svgLegend").append("text")
+  d3.select("#svgSizesLegend").append("text")
   .attr("class","legendText")
   .attr("text-anchor","left")
   .attr("transform","translate(73,45)")

@@ -770,7 +770,7 @@ rect.legendBtn {
     width: 335px;
     height: 270px; }
 
-  #svgLegend {
+  #svgColoursLegend {
     position: fixed;
     left: 15px;
     /*float: none;*/
@@ -779,7 +779,7 @@ rect.legendBtn {
 
   #sizeOptionsDiv {
     right: 25px;
-    bottom: 170px; } }
+    /*bottom: 170px;*/ } }
 /*Tablet*/
 @media only screen and (min-width: 768px) {
   #resetFilters, #graph {
@@ -795,13 +795,13 @@ rect.legendBtn {
 
   #btnColours {
     position: fixed;
-    right: 115px;
-    bottom: 235px; }
+    left: 45px;
+    bottom: 255px; }
 
   #btnSizes {
     position: fixed;
-    right: 15px;
-    bottom: 235px; }
+    right: 45px;
+    bottom: 255px; }
 
   #search-btn-div {
     top: 11px; }
@@ -855,13 +855,13 @@ rect.legendBtn {
   }*/
   #btnColours {
     left: 14vw;
-    bottom: 46vh;
-    height: 8vh; }
+    bottom: 46.1vh;
+    height: 6.7vh; }
 
   #btnSizes {
     right: 14vw;
-    bottom: 46vh;
-    height: 8vh; }
+    bottom: 46.1vh;
+    height: 6.7vh; }
 
   #viewButtons {
     margin-top: 10px; }
