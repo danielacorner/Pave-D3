@@ -2283,6 +2283,9 @@ d3.select("#btnView2").on('click', function() { // Wage vs Workers
 
 function graphModeOn(mode) {
 
+  // d3.selectAll(".views-btn").transition().duration(500).style("opacity",1)
+  d3.select("#grid-container-views").transition().duration(500).style("opacity",1)
+
   width=$(window).width()*0.75;
   height=$(window).height()*0.75;
   // move legend group right
@@ -3043,6 +3046,8 @@ function showLeftButtons() {
 function graphModeOff() {
   // move legend div back
   d3.select("#legend").transition().duration(500).style("bottom","230px")
+  d3.select("#grid-container-views").transition().duration(500).style("opacity",0)
+  setTimeout(function(){$("#grid-container-views").hide();},500)
 
   // clear annotations
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
@@ -3058,7 +3063,6 @@ function graphModeOff() {
   
 
   // hide graph modes options
-  $("#grid-container-views").hide();
   
   // remove axes
   axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
