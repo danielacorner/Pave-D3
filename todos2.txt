@@ -2,8 +2,13 @@
 - mobile version
 
 current:
-- annotate colour legend
-- annotate each graph view
+- annotate colour legend:
+	- create function to return the remaining center of mass position of each cluster
+	
+- fix graph positions: move #svgCanvas and .annotation-group
+bug: circle 494 in management? check csv
+bug: circle 485 in business? check csv
+bug: circle 157 in sciences? check csv
 
 next:
 - minimally functional mobile layout
@@ -22,6 +27,8 @@ next:
 
 
 later
+- bug: tooltip in graph mode covers right-side circles
+	- switch pointer-events from none to auto on tooltiplarge()
 - position imgcircle based on tooltip height
 - bug: reset filters button disappears legend buttons!?
 - bug: colour filters click disappears legend buttons!?

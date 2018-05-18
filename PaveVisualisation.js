@@ -479,7 +479,7 @@ var nodes = datapoints.map(function(el) {
 
 };
   // if there's no cluster i OR if biggest radius yet, set cluster
-  if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
+  if (!clusters[i] || (d.workers > clusters[i].workers)) clusters[i] = d;
   return d;
 });
 
@@ -843,7 +843,7 @@ var graphMode;
       .style("height", "auto")
       .style("position", "absolute")
       .style("z-index", 999)
-      // .style("pointer-events","none")
+      .style("pointer-events","none")
 
       var divLeft, divTop;
       
@@ -1064,7 +1064,7 @@ var graphMode;
 
   function tooltipLarge(d) {
 
-  div2 = div.append("div")
+  div2 = div.style("pointer-events","auto").append("div")
   .attr("id","tooltipBottomDiv").style("background",colorTooltip2(d.cluster))
   .style("height","0px").style("width","360px")
   .style("z-index",-1)
@@ -1394,6 +1394,21 @@ function expandColoursLegend() {
     .force("y", forceYSeparate).alpha(0.4)
       .alphaTarget(0.001) // cool down to minimal temperature
       .restart()
+
+    setTimeout(function(){
+      createAnnotations("colours")
+
+      d3.selectAll(".annotation-note-bg")
+        .style("fill","white")
+        .style("fill-opacity",0.7)
+
+      d3.selectAll(".annotation-group")
+        // .style("font-size","20px")
+        .style("font-weight","bold")
+        .style("fill","black")
+      d3.selectAll(".annotation-note-label")
+        .style("background","white").style("opacity",1)
+    }, 3000)
   };
 
   legendMode = 1;
@@ -1505,7 +1520,9 @@ function expandColoursLegend() {
 } // end expandColoursLegend()
 
 function closeLegends() {
-    
+
+  d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
+
     if (graphMode == 0) {
     smashTogether(0.4, 0.25);
     }
@@ -3084,6 +3101,96 @@ var makeAnnotations;
           y: hzLineAuto.y,
           dy: 0,
           dx: $(window).width()*0.6,
+      }]
+
+      break;
+
+    case "colours":
+      labels = [
+      {
+        note: {
+          label: "Natural resources and agriculture",
+        },
+          x: getPointCoords(414).x,
+          y: getPointCoords(414).y,
+          // dy: 50,
+          // dx: 40,
+      },{
+        note: {
+          label: "Management",
+        },
+          x: getPointCoords(31).x,
+          y: getPointCoords(31).y,
+          // dy: -130,
+          // dx: -15,
+      },{
+        note: {
+          label: "Art, culture, recreation and sport",
+        },
+          x: getPointCoords(254).x,
+          y: getPointCoords(254).y,
+          // dy: -240,
+          // dx: 15,
+      },{
+        note: {
+          label: "Trades, transport and equipment ops",
+        },
+          x: getPointCoords(376).x,
+          y: getPointCoords(376).y,
+          // dy: 100,
+          // dx: -15,
+      },{
+        note: {
+          label: "Business, finance and administration",
+        },
+          x: getPointCoords(77).x,
+          y: getPointCoords(77).y,
+          // dy: 60,
+          // dx: -10,
+      },{
+        note: {
+          label: "Education, law, social, community, government",
+        },
+          x: getPointCoords(218).x,
+          y: getPointCoords(218).y,
+          // dy: function(){
+          //   if(getPointCoords(204).y > $(window).height()/2 ){
+          //     return -50
+          //   }else{return 50}
+          // },
+          // dx: -10,
+      },{
+        note: {
+          label: "Natural and applied sciences",
+        },
+          x: getPointCoords(129).x,
+          y: getPointCoords(129).y,
+          // dy: -150,
+          // dx: 5,
+      },{
+        note: {
+          label: "Manufacturing and utilities",
+        },
+          x: getPointCoords(459).x,
+          y: getPointCoords(459).y,
+          // dy: 60,
+          // dx: 10,
+      },{
+        note: {
+          label: "Health",
+        },
+          x: getPointCoords(179).x,
+          y: getPointCoords(179).y,
+          // dy: 70,
+          // dx: 10,
+      },{
+        note: {
+          label: "Sales and services",
+        },
+          x: getPointCoords(288).x,
+          y: getPointCoords(288).y,
+          // dy: -50,
+          // dx: 50,
       }]
 
       break;
