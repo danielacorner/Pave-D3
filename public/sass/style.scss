@@ -341,11 +341,11 @@ button.views-btn:hover {
   stroke-width: 2px;
   stroke-dasharray: 5,5;
 }
-/*.trendLabel{
+/*.trendLabel{*/
   text.annotation-note-label{
-    width: 150px;
+    pointer-events: none;
   }
-}*/
+/*}*/
 button.search-btn {
   border: none;
   background: none;

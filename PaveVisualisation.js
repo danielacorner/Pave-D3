@@ -3106,53 +3106,85 @@ var makeAnnotations;
       break;
 
     case "colours":
+
+      // get average cluster centers of mass
+      var thisCluster = 1
+      var divisor = 0
+
+      var centerX = new Array(industries.length)
+      var centerY = new Array(industries.length)
+
+      industries.forEach(function(){
+        centerX[thisCluster] = 0
+        centerY[thisCluster] = 0
+        // get each industry center of mass
+        graph.forEach(function(d){
+          if(d.cluster == thisCluster){
+            thisCircleQuery = document.getElementById("circle_"+d.id)
+            var point = document.getElementById('chart').createSVGPoint();
+                point.x = d3.select("#circle_"+d.id).attr("cx");//get the circle cx 
+                point.y = d3.select("#circle_"+d.id).attr("cy");//get the circle cy
+            var newPoint = point.matrixTransform(thisCircleQuery.getCTM());//new point after the transform
+            centerX[thisCluster] = centerX[thisCluster] + newPoint.x
+            centerY[thisCluster] = centerY[thisCluster] + newPoint.y
+            // centerY[thisCluster] += --circleY
+            divisor++}
+        })
+        centerX[thisCluster] = centerX[thisCluster] / divisor // average x
+        centerY[thisCluster] = centerY[thisCluster] / divisor // average x
+        // centerY[thisCluster] = centerY[thisCluster] / divisor // average x
+        divisor = 0 // reset for next industry
+        thisCluster++
+      })
+
       labels = [
       {
         note: {
           label: "Natural resources and agriculture",
         },
-          x: getPointCoords(414).x,
-          y: getPointCoords(414).y,
-          // dy: 50,
-          // dx: 40,
+          x: centerX[10],
+          y: centerY[10],
+          // x: getPointCoords(414).x,
+          // y: getPointCoords(414).y,
+
       },{
         note: {
           label: "Management",
         },
-          x: getPointCoords(31).x,
-          y: getPointCoords(31).y,
+          x: centerX[1],
+          y: centerY[1],
           // dy: -130,
           // dx: -15,
       },{
         note: {
           label: "Art, culture, recreation and sport",
         },
-          x: getPointCoords(254).x,
-          y: getPointCoords(254).y,
+          x: centerX[2],
+          y: centerY[2],
           // dy: -240,
           // dx: 15,
       },{
         note: {
           label: "Trades, transport and equipment ops",
         },
-          x: getPointCoords(376).x,
-          y: getPointCoords(376).y,
+          x: centerX[3],
+          y: centerY[3],
           // dy: 100,
           // dx: -15,
       },{
         note: {
           label: "Business, finance and administration",
         },
-          x: getPointCoords(77).x,
-          y: getPointCoords(77).y,
+          x: centerX[4],
+          y: centerY[4],
           // dy: 60,
           // dx: -10,
       },{
         note: {
           label: "Education, law, social, community, government",
         },
-          x: getPointCoords(218).x,
-          y: getPointCoords(218).y,
+          x: centerX[5],
+          y: centerY[5],
           // dy: function(){
           //   if(getPointCoords(204).y > $(window).height()/2 ){
           //     return -50
@@ -3163,32 +3195,32 @@ var makeAnnotations;
         note: {
           label: "Natural and applied sciences",
         },
-          x: getPointCoords(129).x,
-          y: getPointCoords(129).y,
+          x: centerX[6],
+          y: centerY[6],
           // dy: -150,
           // dx: 5,
       },{
         note: {
           label: "Manufacturing and utilities",
         },
-          x: getPointCoords(459).x,
-          y: getPointCoords(459).y,
+          x: centerX[7],
+          y: centerY[7],
           // dy: 60,
           // dx: 10,
       },{
         note: {
           label: "Health",
         },
-          x: getPointCoords(179).x,
-          y: getPointCoords(179).y,
+          x: centerX[8],
+          y: centerY[8],
           // dy: 70,
           // dx: 10,
       },{
         note: {
           label: "Sales and services",
         },
-          x: getPointCoords(288).x,
-          y: getPointCoords(288).y,
+          x: centerX[9],
+          y: centerY[9],
           // dy: -50,
           // dx: 50,
       }]
