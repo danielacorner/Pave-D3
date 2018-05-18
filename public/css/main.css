@@ -333,7 +333,7 @@ button.views-btn:hover {
   stroke-dasharray: 5,5; }
 
 /*.trendLabel{*/
-text.annotation-note-label {
+text.annotation-note-label, rect.annotation-note-bg {
   pointer-events: none; }
 
 /*}*/
