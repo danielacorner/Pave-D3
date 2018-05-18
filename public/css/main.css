@@ -278,7 +278,6 @@ button.views-btn {
   height: 95px;
   width: 95px;
   background: white;
-  opacity: 1;
   border-width: 3px;
   border-color: #49AC52;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
@@ -325,6 +324,14 @@ button.views-btn:hover {
   border: none;
   font-size: 20px; }
 
+.trendLine {
+  stroke-width: 3px; }
+
+/*.trendLabel{
+  text.annotation-note-label{
+    width: 150px;
+  }
+}*/
 button.search-btn {
   border: none;
   background: none; }

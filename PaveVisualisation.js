@@ -1,7 +1,7 @@
 var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, graphXtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
-hoverTimeout, currentMode;
+hoverTimeout, currentMode, graphExplain, axisXtranslate, axisYtranslate;
 
 maxSalary = 132.922; //busted
 graphXtranslate = 0;
@@ -143,7 +143,10 @@ d3.select(window).on("resize", function() {
   forceCollide = d3.forceCollide($(window).height()*0.009)
   forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
   simulation.force("collide", forceCollide).force("gravity", forceGravity)
-    .alpha(0.25).alphaTarget(0.001).restart();
+  
+  if(graphMode==0){
+    simulation.alpha(0.25).alphaTarget(0.001).restart();
+  }
 
 });
 
@@ -188,54 +191,17 @@ function resize() {
 
   }
 
-  if(w < 1024){
-
-    d3.select("#btnColours")
-    .style("position","fixed")
-    .style("left","45px")
-    .style("bottom","255px")
-    d3.select("#btnSizes")
-    .style("position","fixed")
-    .style("right","45px")
-    .style("bottom","255px")
-
-    // d3.select("#chart").style("margin-top","-20px")
-    // d3.select("#titleBar").style("margin-top","-10px")
-    // .style("margin-left","20px")
-    d3.select("#viewButtons").style("margin-top","-20px")
-    d3.select("#bottomButtons").style("bottom","7.5vh")
-    // d3.select("#legend") .style("margin-right","25px")
-    // d3.select("#legend") .style("margin-left","60px")
-    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
-    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
-    d3.select("#sliderDiv_skillsComp").style("left", "0vw")
-    d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
-
-    // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
-  }else{
-
-    d3.select("#btnColours")
-    .style("position","fixed")
-    .style("left","14vw")
-    .style("bottom","46.1vh")
-    d3.select("#btnSizes")
-    .style("position","fixed")
-    .style("right","14vw")
-    .style("bottom","46.1vh")
-
-    // d3.select("#chart").style("margin-top","")
-    // d3.select("#titleBar").style("margin-top","-0.35vh")
-    // .style("margin-left","9vw")
-    d3.select("#viewButtons") .style("margin-top","10px")
-    d3.select("#bottomButtons") .style("bottom","8vh")
-    // d3.selectAll(".btn-legend").style("margin","5px")
-    d3.select("#sliderDiv_skillsLang").style("left", "9vw")
-    d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
-    d3.select("#sliderDiv_skillsComp").style("left", "9vw")
-    d3.select("#sliderDiv_skillsMath").style("right", "9vw")
-  }
-
   if(w < 768){ // bookmarklet todo: style tablet navbar, decide on 3 breakpoints
+
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left","32px")
+    .style("bottom","180px")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right","32px")
+    .style("bottom","180px")
+
 
     d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
     d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
@@ -250,17 +216,92 @@ function resize() {
     $("#titleBar").hide()
   }else{ // if w > 768 (desktop)
 
-    $("#titleBar").show()
-    d3.select("#sliderDiv_skillsComp").style("bottom", "9vh")
-    d3.select("#sliderDiv_skillsMath").style("bottom", "9vh")
-    d3.select("#sliderDiv_skillsLang").style("top", "9vh")
-    d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
+    if(graphMode == 0){
+      d3.select("#btnColours")
+      .style("position","fixed")
+      .style("left","45px")
+      .style("bottom","255px")
+      d3.select("#btnSizes")
+      .style("position","fixed")
+      .style("right","45px")
+      .style("bottom","255px")
 
+      d3.select("#sliderDiv_skillsComp").style("bottom", "9vh")
+      d3.select("#sliderDiv_skillsMath").style("bottom", "9vh")
+      d3.select("#sliderDiv_skillsLang").style("top", "9vh")
+      d3.select("#sliderDiv_skillsLogi").style("top", "9vh")
+
+    } else if(graphMode == 1){
+      d3.select("#btnColours")
+      .style("position","fixed")
+      .style("left","5px")
+      .style("bottom","180px")
+      d3.select("#btnSizes")
+      .style("position","fixed")
+      .style("right","5px")
+      .style("bottom","180px")
+    
+      d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
+      d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
+      d3.select("#sliderDiv_skillsLang").style("top", "5vh")
+      d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
+
+    }
+
+    $("#titleBar").show()
     d3.select("#resetFilters").html("<span style='padding-right: 6px;'>" +
       "Reset Filters</span> <i class='fa fa-undo-alt'></i>")
-       .style("width","185px") .style("margin-bottom","0px")
+       .style("width","185px") .style("margin-bottom","25px")
     d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
       ).style("width","185px") .style("margin-bottom","-15px")
+  }
+
+  if(w < 1024){
+
+    // d3.select("#chart").style("margin-top","-20px")
+    // d3.select("#titleBar").style("margin-top","-10px")
+    // .style("margin-left","20px")
+    d3.select("#viewButtons").style("margin-top","-20px")
+    d3.select("#bottomButtons").style("bottom","7.5vh")
+    // d3.select("#legend") .style("margin-right","25px")
+    // d3.select("#legend") .style("margin-left","60px")
+    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
+    d3.select("#sliderDiv_skillsComp").style("left", "0vw")
+    d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
+    // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
+  }else{
+
+   if(graphMode == 0){
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left",$(window).width()*0.14+"px")
+    .style("bottom",$(window).height()*0.461+"px")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right",$(window).width()*0.14+"px")
+    .style("bottom",$(window).height()*0.461+"px")
+  }else if(graphMode == 1){
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left","25px")
+    .style("bottom","180px")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right","25px")
+    .style("bottom","180px")
+  }
+
+    // d3.select("#chart").style("margin-top","")
+    // d3.select("#titleBar").style("margin-top","-0.35vh")
+    // .style("margin-left","9vw")
+    d3.select("#viewButtons") .style("margin-top","10px")
+    d3.select("#bottomButtons") .style("bottom","8vh")
+    // d3.selectAll(".btn-legend").style("margin","5px")
+    d3.select("#sliderDiv_skillsLang").style("left", "9vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
+    d3.select("#sliderDiv_skillsComp").style("left", "9vw")
+    d3.select("#sliderDiv_skillsMath").style("right", "9vw")
   }
 
   if(typeof circles != "undefined"){
@@ -1445,9 +1486,17 @@ function closeLegends() {
     if($(window).width() >= 1024){
       return $(window).width()*0.14+"px";
     }else if($(window).width() >= 768){
-      return 45+"px";
+      if(graphMode == 1){
+        return "5px"
+      }else{
+        return 45+"px";
+      }
     }else if($(window).width() >= 320){
-      return "45px";
+      if(graphMode == 1){
+        return "5px"
+      }else{
+        return "32px";
+      }
     }
   }).style("opacity",1)
     // .style("height",legendButtonHeight+"px")
@@ -1465,9 +1514,17 @@ function closeLegends() {
     if($(window).width() >= 1024){
       return $(window).width()*0.14+"px";
     }else if($(window).width() >= 768){
-      return 45+"px";
+      if(graphMode == 1){
+        return "5px"
+      }else{
+        return 45+"px";
+      }
     }else if($(window).width() >= 320){
-      return "45px";
+      if(graphMode == 1){
+        return "5px"
+      }else{
+        return "32px";
+      }
     }
   })
   // .style("width", legendButtonWidth+"px")
@@ -1627,7 +1684,7 @@ d3.select("#btnSizes").on("mouseout", function() {
 
 function expandSizesLegend() {
 
-  d3.select("#sizeDropdownDiv").remove()
+  // d3.select("#sizeDropdownDiv").remove()
 
   if(typeof sizesDiv != "undefined") {
     sizesDiv.remove()
@@ -2185,6 +2242,18 @@ d3.select("#graph").on('click', function(d){
     graphFirstTime = false;
     createGraphExplainerDiv()
   }
+
+  d3.select("body").append("img")
+  .attr("class","imgGraphExplain")
+  .attr("src","img/question.png").attr("alt","Graph View explanation")
+  .attr("height","29").attr("width","29").style("border-radius","20px")
+  .style("position","fixed")
+  .style("top","250px")
+  .style("right","20px").style("cursor","pointer")
+  .on("click",function(){createGraphExplainerDiv()})
+  .style("opacity",0).transition().duration(500).style("opacity",1)
+
+
   // Toggle mode on or off
   graphMode = 1-graphMode;
   //cool to 0 degrees
@@ -2199,7 +2268,8 @@ d3.select("#graph").on('click', function(d){
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
     if(typeof graphExplainerDiv != "undefined"){
-      d3.select("#graphExplainer").transition().duration(500).style("opacity",0).remove()
+      graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
+      // graphFirstTime = true;
     }
     graphModeOff();
   }; // transition back to clusters
@@ -2209,12 +2279,12 @@ d3.select("#graph").on('click', function(d){
 function moveBottomDown() {
   // Move top up
   d3.select("#viewButtons").transition().duration(500).style("margin-top", "-20px");
-  d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "7vh");
-  d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "7vh");
+  d3.select("#sliderDiv_skillsLang").transition().duration(500).style("top", "5vh");
+  d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "5vh");
   
   d3.select("#bottomButtons").transition().duration(500).style("bottom", "5vh");
-  d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "3vh");
-  d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "3vh");
+  d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "1vh");
+  d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "1vh");
 }
 function moveBottomUp() {
   // Move top up
@@ -2223,8 +2293,13 @@ function moveBottomUp() {
   d3.select("#sliderDiv_skillsLogi").transition().duration(500).style("top", "9vh");
 
   d3.select("#bottomButtons").transition().duration(500).style("bottom", "7.5vh");
-  d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "9vh");
-  d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "9vh");
+  if($(window).width() <= 768){
+    d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "1vh");
+    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "1vh");
+  }else{
+    d3.select("#sliderDiv_skillsMath").transition().duration(500).style("bottom", "9vh");
+    d3.select("#sliderDiv_skillsComp").transition().duration(500).style("bottom", "9vh");
+  }
 }
 
 /////////////////////////////// Suggested Views buttons /////////////////////////
@@ -2283,8 +2358,39 @@ d3.select("#btnView2").on('click', function() { // Wage vs Workers
 
 function graphModeOn(mode) {
 
+  if($(window).width() <= 320){
+
+  }else if($(window).width() <= 768){
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left","5px")
+      .style("bottom","180px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right","5px")
+      .style("bottom","180px")
+  } else if($(window).width() <= 1024){
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left","5px")
+      .style("bottom","180px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right","5px")
+      .style("bottom","180px")
+  } else {
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left","25px")
+      .style("bottom","180px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right","25px")
+      .style("bottom","180px")
+  }
   // d3.selectAll(".views-btn").transition().duration(500).style("opacity",1)
   d3.select("#grid-container-views").transition().duration(500).style("opacity",1)
+  // resize()
 
   width=$(window).width()*0.75;
   height=$(window).height()*0.75;
@@ -2469,64 +2575,15 @@ compressY = 0.65;
   // Add an axis-holder group
   axisG = svg.append("g")
 
-  var axisYtranslate = window.innerHeight*-0.105;
-  var axisXtranslate = window.innerWidth*-0.35+15;
-
-  // automation risk horizontal reference bar annotation
-  if(mode==3){
-          // append dashed horizontal line at risk = 0.5
-
-          var axisHzAuto = axisG.append("g")
-          .attr("class", "hz")
-          .attr("transform", circleHeight((axisXtranslate),(axisYtranslate*-1.15)) ) // bookmark
-          .call(d3.axisBottom(x).tickSize(0))
-            .attr("id","axisHzAuto")
-            .attr("transform",circleHeight((axisXtranslate),(window.innerHeight*-0.09)))
-            .style("opacity", 0).transition().duration(500).style("opacity",1);
-
-          // text label for the x axis
-          var axisLabelHzAuto = axisG.append("text")
-          .attr("id","axisLabelHzAuto")
-          .style("text-anchor", "middle")
-          .attr("transform",circleHeight(axisXtranslate,axisYtranslate))
-          .style("opacity", 0).transition().duration(500).style("opacity",1)
-          .text("50% Risk").style("font-size", "16px").style("font-color","#5F5F5F");
-
-  } else {
-    d3.select("#axisHzAuto").transition().duration(500).style("opacity",0).remove()
-    d3.select("#axisLabelHzAuto").transition().duration(500).style("opacity",0).remove()
-  }
-
-  //         // append dashed horizontal line at risk = 0.5
-  // if(mode==0 || mode==1 || mode==2){
-
-  //         var axisHzWage = axisG.append("g")
-  //         .attr("class", "hz")
-  //         .attr("transform", circleHeight((axisXtranslate),(axisYtranslate*-1.15)) ) // bookmark
-  //         .call(d3.axisBottom(x).tickSize(0))
-  //           .attr("id","axisHzWage")
-  //           .attr("transform",circleHeight((axisXtranslate),(window.innerHeight*-0.003)))
-  //           .style("opacity", 0).transition().duration(500).style("opacity",1);
-
-  //         // text label for the x axis
-  //         var axisLabelHzWage = axisG.append("text")
-  //         .attr("id","axisLabelHzWage")
-  //         .style("text-anchor", "middle")
-  //         .attr("transform",circleHeight((window.innerWidth*0.25+15),(window.innerHeight*-0.00)))
-  //         .style("opacity", 0).transition().duration(500).style("opacity",1)
-  //         .text("$ 40K per yr").style("font-size", "16px").style("font-color","#5F5F5F");
-
-  // } else {
-  //   d3.select("#axisHzWage").transition().duration(500).style("opacity",0).remove()
-  //   d3.select("#axisLabelHzWage").transition().duration(500).style("opacity",0).remove()
-  // }
+  axisYtranslate = $(window).height()*-0.110;
+  axisXtranslate = $(window).width()*-0.35+15;
 
   d3.select("xaxis").remove();
 
   // Add the X Axis
   axisX = axisG.append("g")
   .attr("class", "axis")
-  .attr("transform", circleHeight((axisXtranslate),(axisYtranslate*-1.945)) )
+  .attr("transform", circleHeight((axisXtranslate+2),(axisYtranslate*-1.945)) )
   .call(d3.axisBottom(x).ticks(5)).attr("id","axisX")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
   // text label for the x axis
@@ -2540,7 +2597,7 @@ compressY = 0.65;
   // Add the Y Axis
   axisY = axisG.append("g")
  .attr("class", "axis")
- .attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*2.70)) )
+ .attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*2.52)) )
  .call(d3.axisLeft(y).ticks(4)).attr("id","axisY")
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
@@ -2835,6 +2892,16 @@ var makeAnnotations;
       titleNurses = "Registered nurses",
       labelNurses = "$ 40K per yr";
 
+  var hzLineAuto = getPointCoords(229),
+      titleLineAuto = "50% risk"
+      labelLineAuto = "of automation"
+
+  // Salary vs Years of Study trendline
+  // y = 7.6737x + 8.1584
+  var trendLineSalaryYears = getPointCoords(458)
+
+  var labelLineSalaryYears = getPointCoords(79)
+      labelLSY = "As expected the more a person has studied the greater salary they tend to earn."
 
   switch (mode) {
 
@@ -2871,6 +2938,26 @@ var makeAnnotations;
           y: pointOptometrists.y,
           dy: -15,
           dx: -150,
+      },{
+        // trend line
+          color: "#4EA699",
+          "className": "trendLine",
+          x: trendLineSalaryYears.x,
+          y: trendLineSalaryYears.y,
+          dy: getPointCoords(23).y-trendLineSalaryYears.y,
+          dx: getPointCoords(23).x-trendLineSalaryYears.x,
+      },{
+          "className": "trendLabel",
+        note: {
+          // label the trend line
+          label: labelLSY,
+          wrap: 200,
+          },
+          x: labelLineSalaryYears.x,
+          y: labelLineSalaryYears.y,
+          dy: -110,
+          dx: -80,
+          connector: { end: "arrow" }
       }]
       break;
 
@@ -2936,6 +3023,15 @@ var makeAnnotations;
           y: pointNurses.y,
           dy: 50,
           dx: -40,
+      },{
+        note: {
+          title: titleLineAuto,
+          label: labelLineAuto,
+        },
+          x: $(window).width()*0.17,
+          y: hzLineAuto.y,
+          dy: 0,
+          dx: $(window).width()*0.6,
       }]
 
       break;
@@ -3045,25 +3141,51 @@ function showLeftButtons() {
 
 function graphModeOff() {
   // move legend div back
+  d3.selectAll(".imgGraphExplain").transition().duration(500).style("opacity",0).remove()
   d3.select("#legend").transition().duration(500).style("bottom","230px")
   d3.select("#grid-container-views").transition().duration(500).style("opacity",0)
   setTimeout(function(){$("#grid-container-views").hide();},500)
+  if($(window).width() <= 320){
 
+  }else if($(window).width() <= 768){
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left","32px")
+      .style("bottom","180px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right","32px")
+      .style("bottom","180px")
+  } else if($(window).width() <= 1024){
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left","45px")
+      .style("bottom","255px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right","45px")
+      .style("bottom","255px")
+  } else {
+      d3.select("#btnColours").transition().duration(500)
+      .style("position","fixed")
+      .style("left",$(window).width()*0.14+"px")
+      .style("bottom",$(window).height()*0.461+"px")
+      d3.select("#btnSizes").transition().duration(500)
+      .style("position","fixed")
+      .style("right",$(window).width()*0.14+"px")
+      .style("bottom",$(window).height()*0.461+"px")
+  }
+
+  // resize()
   // clear annotations
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
 
-  // change available buttons
-  d3.select("#btnColours").transition().duration(500).style("opacity",1).style("pointer-events","auto")
-  d3.select("#btnSizes").transition().duration(500).style("opacity",1).style("pointer-events","auto")
-
-  // d3.select("#splitShuffle").transition().duration(500).style("opacity", 1);
   d3.select("#graphToggle").attr("src","img/toggle-off.png")
 
     showLeftButtons();
   
-
   // hide graph modes options
-  
+
   // remove axes
   axisG.style("opacity", 1).transition().duration(500).style("opacity",0)
   .remove();
@@ -4407,7 +4529,7 @@ var searchDiv = d3.select("body")
     .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
            "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
           "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
-          "onclick='searchJobTitles()'>Submit</button>"
+          "onclick='searchJobTitles()'>Search</button>"
           )
     .style("width", function(){
       if($(window).width() >= 768){

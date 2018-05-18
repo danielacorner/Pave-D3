@@ -3,6 +3,7 @@
 
 current:
 - annotate colour legend
+- annotate each graph view
 
 next:
 - minimally functional mobile layout
