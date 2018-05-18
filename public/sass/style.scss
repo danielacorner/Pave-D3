@@ -669,6 +669,9 @@ rect.legendBtn {
 
 /*Mobile*/
 @media only screen and (min-width: 320px) {
+  #grid-container-views, .imgGraphExplain {
+    right: 20px;
+  }
   #titleBar{
     position: fixed;
     height: 10vh;
@@ -740,6 +743,9 @@ rect.legendBtn {
 }
 /*Tablet*/
 @media only screen and (min-width: 768px) {
+  #grid-container-views {
+    right: 20px;
+  }
   #resetFilters, #graph{
     width: 185px;
   }
@@ -803,7 +809,9 @@ rect.legendBtn {
 
 /*Laptop & Desktop*/
 @media only screen and (min-width: 1024px) {
-  /*// #chart{
+  #grid-container-views {
+    right: 100px;
+  }/*// #chart{
     margin-top: ;
   }
   // #titleBar{

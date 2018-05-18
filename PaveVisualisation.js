@@ -159,7 +159,11 @@ function resize() {
   // console.log("width: "+w+"px")
   var h = $(window).height();
   // console.log(w+" x "+h)
-  
+
+  // reposition #svgCanvas and .annotation-group
+  // 1. recalculate 
+  // 2. reposition
+
   // mobile
   if(w >= 320){
     d3.select("#searchDiv")
@@ -269,6 +273,10 @@ function resize() {
     d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
     d3.select("#sliderDiv_skillsComp").style("left", "0vw")
     d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
+
+    if(graphMode==1){
+      d3.selectAll(".imgGraphExplain").style("right","20px")
+    }
     // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
   }else{
 
@@ -290,6 +298,9 @@ function resize() {
     .style("position","fixed")
     .style("right","25px")
     .style("bottom","180px")
+
+    d3.select(".imgGraphExplain").style("right","100px")
+
   }
 
     // d3.select("#chart").style("margin-top","")
@@ -569,7 +580,7 @@ var miniTooltip;
 
 // Append a group element to the svg & move to center
 var svg = d3.select("#chart")
-  .append('svg').style("position","absolute").style("z-index", "-1")
+  .append('svg').attr("id","svgCanvas").style("position","absolute").style("z-index", "-1")
 
 var stretch_y = 1.7;
 var compress_y = 0.7;
@@ -2277,7 +2288,18 @@ d3.select("#graph").on('click', function(d){
   .attr("height","29").attr("width","29").style("border-radius","20px")
   .style("position","fixed")
   .style("top","250px")
-  .style("right","20px").style("cursor","pointer")
+  .style("right",
+    function(){
+      if($(window).width() >= 1024){
+        return "100px";
+      }else if($(window).width() >= 768){
+        return "20px";
+      }else if($(window).width() >= 320){
+        return "20px";
+      }
+    }
+    )
+  .style("cursor","pointer")
   .on("click",function(){createGraphExplainerDiv()})
   .style("opacity",0).transition().duration(500).style("opacity",1)
 

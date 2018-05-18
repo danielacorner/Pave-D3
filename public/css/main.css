@@ -713,6 +713,9 @@ rect.legendBtn {
 /*Media queries*/
 /*Mobile*/
 @media only screen and (min-width: 320px) {
+  #grid-container-views, .imgGraphExplain {
+    right: 20px; }
+
   #titleBar {
     position: fixed;
     height: 10vh;
@@ -795,6 +798,9 @@ rect.legendBtn {
     /*bottom: 170px;*/ } }
 /*Tablet*/
 @media only screen and (min-width: 768px) {
+  #grid-container-views {
+    right: 20px; }
+
   #resetFilters, #graph {
     width: 185px; }
 
@@ -857,15 +863,18 @@ rect.legendBtn {
     float: right; } }
 /*Laptop & Desktop*/
 @media only screen and (min-width: 1024px) {
-  /*// #chart{
-    margin-top: ;
-  }
-  // #titleBar{
-    margin-top: -0.35vh;
-  }
-  // {
-    margin-left: 9vw;
-  }*/
+  #grid-container-views {
+    right: 100px; }
+
+ /*// #chart{
+  margin-top: ;
+}
+// #titleBar{
+  margin-top: -0.35vh;
+}
+// {
+  margin-left: 9vw;
+}*/
   #btnColours {
     left: 14vw;
     bottom: 46.1vh;
