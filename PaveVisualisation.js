@@ -308,9 +308,29 @@ function resize() {
     circles.attr("transform", circleHeight(0, -100+$(window).height()*0.080 )) //flag! need to make equation for width/height ratio
   }
 
-  // Add an axis-holder group
+  // move the axes
   if(typeof axisG != "undefined") {
-    axisG.attr("transform", "translate(" + graphXtranslate + "," + graphYtranslate + ")");
+
+    axisYtranslate = $(window).height()*-0.110;
+    axisXtranslate = $(window).width()*-0.35+15;
+
+    // axisG.attr("transform",c)
+    // Add the X Axis
+    axisX
+    .attr("transform", circleHeight((axisXtranslate+2),(axisYtranslate*-1.945)) )
+
+    // text label for the x axis
+    axisLabelX
+    .attr("transform", circleHeight((axisXtranslate*0.16),(axisYtranslate*-2.45)))
+
+    // Add the Y Axis
+    axisY
+   .attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*2.52)) )
+     // text label for the y axis
+    axisLabelY
+    .attr("y", "10vw")
+    .attr("x", "-28vh")
+
   }
 
 
@@ -1484,7 +1504,11 @@ function closeLegends() {
   d3.select("#btnSizes").transition().duration(300)
   .style("right",function(){
     if($(window).width() >= 1024){
-      return $(window).width()*0.14+"px";
+      if(graphMode == 1){
+        return "25px";
+      }else{
+        return $(window).width()*0.14+"px";
+      }
     }else if($(window).width() >= 768){
       if(graphMode == 1){
         return "5px"
@@ -1512,7 +1536,11 @@ function closeLegends() {
   .transition().duration(300).style("opacity",1)
   .style("left",function(){
     if($(window).width() >= 1024){
-      return $(window).width()*0.14+"px";
+      if(graphMode == 1){
+        return "25px";
+      }else{
+        return $(window).width()*0.14+"px";
+      }
     }else if($(window).width() >= 768){
       if(graphMode == 1){
         return "5px"
@@ -2970,8 +2998,8 @@ var makeAnnotations;
         },
           x: pointLawyers.x,
           y: pointLawyers.y,
-          dy: -20,
-          dx: 60,
+          dy: -10,
+          dx: 80,
       },{
         note: {
           title: titleElementTeachers,
@@ -3024,6 +3052,8 @@ var makeAnnotations;
           dy: 50,
           dx: -40,
       },{
+        color: "#E3655B",
+        "className": "riskLine",
         note: {
           title: titleLineAuto,
           label: labelLineAuto,

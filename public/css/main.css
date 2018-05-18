@@ -325,7 +325,12 @@ button.views-btn:hover {
   font-size: 20px; }
 
 .trendLine {
-  stroke-width: 3px; }
+  stroke-width: 3px;
+  stroke-dasharray: 5,5; }
+
+.riskLine {
+  stroke-width: 2px;
+  stroke-dasharray: 5,5; }
 
 /*.trendLabel{
   text.annotation-note-label{
