@@ -529,9 +529,16 @@ rect.legendBtn {
   font-family: Helvetica;
 }*/
 #favesDiv {
+  z-index: 99;
   opacity: 0;
   pointer-events: none;
   right: 3%; }
+
+path {
+  pointer-events: none; }
+
+#fa-star-icon {
+  z-index: -1; }
 
 #favesSvg {
   position: fixed;

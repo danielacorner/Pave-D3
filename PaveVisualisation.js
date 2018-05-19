@@ -4814,7 +4814,7 @@ for (var i = 0; i < explainerDivs.length; i++) {
 
 
 
-/////// Favourites star ////////
+/////// Favourites section ////////
 
 d3.select("body").append("div").attr("id","favesDiv")
   .style("position","fixed")
@@ -4823,12 +4823,17 @@ d3.select("body").append("div").attr("id","favesDiv")
   // .style("height","50px")
   // .style("width","50px")
   .style("color","#ff9600")
-  .html("<i class='fa fa-star fa-2x'></i>")
+  .html("<i id='fa-star-icon' class='fa fa-star fa-2x'></i>")
   .on("mouseover",function(){
-    // show text label
+    d3.select("#favesDiv").append("div")
+    .attr("id","favouriteText").attr("class","legendText")
+      .style("margin-left", "-20px")
+      .style("margin-right", "-20px")
+    .html("Favourites")
   })
   .on("mouseout",function(){
     // hide text label
+    d3.select("#favouriteText").remove()
   })
   .on("click",function(){
     if(favesMode==0){
