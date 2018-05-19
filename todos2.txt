@@ -2,9 +2,9 @@
 - mobile version
 
 current:
-- annotate colour legend:
-	- create function to return the remaining center of mass position of each cluster
-	
+- favourites sidebar
+	- update favourites when favourites clicked
+
 - fix graph positions: move #svgCanvas and .annotation-group
 bug: circle 494 in management? check csv
 bug: circle 485 in business? check csv

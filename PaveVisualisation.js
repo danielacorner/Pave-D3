@@ -4900,6 +4900,9 @@ function expandFavourites(){
         .style("fill", function(d) { return color(d.cluster); })
         // Tooltips
         .on("mouseenter", function(d) {
+          d3.selectAll(".jobCircle").style("opacity",0.1) //todo: exclude colour legend filters?
+          d3.select(this).style("opacity",1)
+          d3.select("#circle_"+d.id).style("opacity",1)
           if (clicked == 1) return;
           // highlight the current circle
           d3.selectAll("circle").attr("stroke", "none");
@@ -4916,7 +4919,7 @@ function expandFavourites(){
             }, 1750)
           })
         .on("mouseout", function(d) {
-
+          d3.selectAll(".jobCircle").style("opacity",1) //todo: exclude colour legend filters?
           if(!circleExpanded[d.id] == 1){
             // //if not stuck
             // if(!sticky[d.id] == 1) {
