@@ -2,8 +2,9 @@
 - mobile version
 
 current:
-- favourites sidebar
-	- update favourites when favourites clicked
+- retain colourlegend opacities on favourite hover
+- reduce opacity to 0.05
+- bug: favourites colour not correct on append
 
 - fix graph positions: move #svgCanvas and .annotation-group
 bug: circle 494 in management? check csv

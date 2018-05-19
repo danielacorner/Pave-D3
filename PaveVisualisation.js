@@ -4919,9 +4919,11 @@ function appendFavourites(){
         .style("fill", function(d) { return color(d.cluster); })
         // Tooltips
         .on("mouseenter", function(d) {
-          d3.selectAll(".jobCircle").style("opacity",0.1) //todo: exclude colour legend filters?
+          // make all other circles translucent
+          d3.selectAll(".jobCircle").style("opacity",0.07) //todo: exclude colour legend filters?
+          // callout this one
           d3.select(this).style("opacity",1)
-          d3.select("#circle_"+d.id).style("opacity",1)
+          d3.select("#circle_"+d.id).style("opacity",1).style("stroke","black")
           if (clicked == 1) return;
           // highlight the current circle
           d3.selectAll("circle").attr("stroke", "none");
@@ -4930,15 +4932,17 @@ function appendFavourites(){
             // .attr("stroke", "black")
             .style("stroke-width", 2)
             .attr("stroke", color(d.cluster));
-            showToolTip(0);
-            tooltipMouseover(d);
-            hoverTimeout = setTimeout(function(){
+          showToolTip(0);
+          tooltipMouseover(d);
+
+          hoverTimeout = setTimeout(function(){
               tooltipLarge(d)
               clicked = 1
             }, 1750)
           })
         .on("mouseout", function(d) {
           d3.selectAll(".jobCircle").style("opacity",1) //todo: exclude colour legend filters?
+          d3.select("#circle_"+d.id).style("stroke","none")
           if(!circleExpanded[d.id] == 1){
             // //if not stuck
             // if(!sticky[d.id] == 1) {
