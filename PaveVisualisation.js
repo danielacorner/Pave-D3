@@ -4862,8 +4862,8 @@ function expandFavourites(){
     .transition().duration(500).style("opacity",0.5)
 
   // append the favourites container
-  d3.select("#favesDiv").append("svg")
-    .attr("id","favesSvg")
+  d3.select("body").append("svg")
+    .attr("id","favesSvg") // bug: svg onclick closes faves
     .style("height", $(window).height()*0.45+"px")
     .style("opacity",0)
     .transition().duration(500)
@@ -4983,9 +4983,10 @@ function appendFavourites(){
           // tooltipSmall(d);}
         })
 
+        // enter new circles & exit old circles
         d3.selectAll(".faveCircle").transition().duration(500).attr("r",10)
         d3.select("#favesSvg").selectAll("circle")
-      .data(faveNodes).exit().transition().duration(300).attr("r", 0 ).remove();
+        .data(faveNodes).exit().transition().duration(300).attr("r", 0 ).remove();
 
 
 }
