@@ -1,4 +1,4 @@
-var circles, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
+var circles, faveCircles, faveNodes, drag_handler, enterUpdateCircles, graphMode, futureMode, simulation, listToDeleteMulti,
 forceCollide, forceXCombine, forceYCombine, forceGravity, forceXSeparate, forceYSeparate, 
 forceXSeparateRandom, forceYSeparateRandom, forceCluster, tick, legend, graphYtranslate, graphXtranslate, currentMode, resetFilters, compressY, width, height, maxWorkers, maxSalary,
 hoverTimeout, currentMode, graphExplain, axisXtranslate, axisYtranslate;
@@ -14,15 +14,32 @@ function resetFilters(){} // global function holder to resolve scope issue
 // function resetSimulation(){} // global function holder to resolve scope issue
 // function restartSimulation(){} // global function holder to resolve scope issue
 
-var favourites = []; // whether or not the current circle is favourited
+
+function fillArray(value, len) {
+  if (len == 0) return [];
+  var a = [value];
+  while (a.length * 2 <= len) a = a.concat(a);
+  if (a.length < len) a = a.concat(a.slice(0, len - a.length));
+  return a;
+}
+
+var favourites = fillArray(0,494); // list of favourited circles, 494 * 0 to start
+
+
 var circleExpanded = []; // whether or not the current circle is expanded
 var circlesExpanded = 0;
 var legendCreated = 0;
 var graphFirstTime = true;
+var favesMode = 0;
 var legendMode = 0;
 var equalRadius = 9;
 var nodePadding = 1;
 var imgRadius = 125;
+
+function getSum(total, num) {
+  return total + num;
+}
+
 // sliders to create
 // var sliderArray = [
 // // "skillsLang", "skillsLogi", "skillsMath", "skillsComp",
@@ -97,7 +114,7 @@ listToDeleteMulti = []; // filtered IDs
 
 var filteredIndustries = [];
 
-
+var colourLegendMode = 0;
 
 
 // Log Clicked Node & ID using jQuery
@@ -950,12 +967,27 @@ var graphMode;
         }
 
         d3.select("#btnFavourite").on("click", function() {
-          d.favourited = 1-d.favourited
+          d.favourited = 1-d.favourited // toggle status
+
+
           if(d.favourited==1){
+            favourites[d.id]=1; // add to list of favourites
+
+          // show sidebar if one or more favourites
+            if(d3.select("#favesDiv").style("opacity")==0){
+              d3.select("#favesDiv").transition().duration(500).style("opacity",1).style("pointer-events","auto")
+            }
+
             d3.select("#btnFavourite")
             .html("<i class='fa fa-star'></i>Favourited")
             .style("color","#ff9600")
           } else {
+
+            favourites[d.id]=0; // remove from list of favourites
+            // if no favourites, hide the sidebar
+            if(favourites.reduce(getSum)==0){
+              d3.select("#favesDiv").transition().duration(500).style("opacity",0).style("pointer-events","none")}
+
             d3.select("#btnFavourite")
             .html("<i class='fa fa-star'></i>Favourite")
             .style("color",color(d.cluster))
@@ -1136,9 +1168,9 @@ var graphMode;
   .attr("id","carousel")
   .html(
     "<div class='carouselTooltip'>"+
-    "<div style='background: lavender'>Check out this sweet content</div>"+
-    "<div style='background: limegreen'>Oh wow some more content</div>"+
-    "<div style='background: yellow'>No way, even more content?</div>"+
+    "<div style='background: lavender'>Check out this sweet content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
+    "<div style='background: limegreen'>Oh wow some more content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
+    "<div style='background: yellow'>No way, even more content? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
     "</div>"
     )
 
@@ -1386,7 +1418,7 @@ d3.select("#btnColours").on("mouseout", function() {
 })
 
 function expandColoursLegend() {
-
+  colourLegendMode = 1
   if (graphMode == 0){
     // split the circles horizontally by cluster
     simulation
@@ -1520,7 +1552,7 @@ function expandColoursLegend() {
 } // end expandColoursLegend()
 
 function closeLegends() {
-
+  colourLegendMode = 0
   d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
 
     if (graphMode == 0) {
@@ -1893,7 +1925,7 @@ function expandSizesLegend() {
       d3.select(this).style("color","white").style("background","#49AC52")
       // transition radii to selected values
       circles.transition().duration(100)
-        .delay(function(d, i) { return i * 1})
+        .delay(function(d, i) { return i * 0.8})
         .attrTween("r", function(d) {
           var i = d3.interpolate(d.radius, radiusScale(d.workers));
           return function(t) { return d.radius = i(t); };
@@ -1901,14 +1933,42 @@ function expandSizesLegend() {
       // reset forces
       forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
       forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
-      simulation
+      // if simulation active, reset simulation with new radius-appropriate forces
+      if(graphMode == 0 && colourLegendMode == 0) {
+        simulation
         .force("collide", forceCollide)
         .force("gravity", forceGravity)
-      // if simulation active, reset simulation with new radius-appropriate forces
-      if(graphMode == 0) {
         setTimeout(function() { resetSimulation() }, 700);
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      } else if(graphMode == 0 && colourLegendMode == 1){
+        simulation
+        .force("collide", forceCollide)
+        setTimeout(function() {   
+          forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+          forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+          simulation.force("collide", forceCollide)
+          .force("gravity", forceGravity)
+          .on("tick", tick).alpha(0.1).alphaTarget(0.001).restart(); 
+        }, 450);
+        setTimeout(function(){
+          d3.selectAll(".annotation-group").transition().duration(250).style("opacity",0).remove()
+          // wait for transform before applying transformed annotations
+          setTimeout(function() {
+            createAnnotations("colours");
+            d3.selectAll(".annotation-note-bg")
+            .style("fill","white")
+            .style("fill-opacity",0.7)
+
+            d3.selectAll(".annotation-group")
+            // .style("font-size","20px")
+            .style("font-weight","bold")
+            .style("fill","black")
+            d3.selectAll(".annotation-note-label")
+            .style("background","white").style("opacity",1)
+          }, 300)
+        }, 1000)
+
       }
       currentSize = "Number of Jobs"
       // document.getElementById("sizeDropdownButton").innerHTML = "Size by<br>"+currentSize;
@@ -1923,7 +1983,7 @@ function expandSizesLegend() {
       d3.select(this).style("color","white").style("background","#49AC52")
       // transition radii to selected values
       circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
+      .delay(function(d, i) { return i * 0.8})
       .attrTween("r", function(d) {
         var i = d3.interpolate(d.radius, wageRadiusScale(d.salaryMed)/1.2);
         return function(t) { return d.radius = i(t); };
@@ -1931,14 +1991,42 @@ function expandSizesLegend() {
       // reset forces
       forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
       forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
-      simulation
+      // if simulation active, reset simulation with new radius-appropriate forces
+      if(graphMode == 0 && colourLegendMode == 0) {
+        simulation
         .force("collide", forceCollide)
         .force("gravity", forceGravity)
-      // if simulation active, reset simulation with new radius-appropriate forces
-      if(graphMode == 0) {
         setTimeout(function() { resetSimulation() }, 700);
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      } else if(graphMode == 0 && colourLegendMode == 1){
+        simulation
+        .force("collide", forceCollide)
+        setTimeout(function() {   
+          forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+          forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+          simulation.force("collide", forceCollide)
+          .force("gravity", forceGravity)
+          .on("tick", tick).alpha(0.1).alphaTarget(0.001).restart(); 
+        }, 450);
+        setTimeout(function(){
+          d3.selectAll(".annotation-group").transition().duration(250).style("opacity",0).remove()
+          // wait for transform before applying transformed annotations
+          setTimeout(function() {
+            createAnnotations("colours");
+            d3.selectAll(".annotation-note-bg")
+            .style("fill","white")
+            .style("fill-opacity",0.7)
+
+            d3.selectAll(".annotation-group")
+            // .style("font-size","20px")
+            .style("font-weight","bold")
+            .style("fill","black")
+            d3.selectAll(".annotation-note-label")
+            .style("background","white").style("opacity",1)
+          }, 300)
+        }, 1000)
+
       }
       currentSize = "Salary ($K per yr)"
       setSizes("salary")
@@ -1952,7 +2040,7 @@ function expandSizesLegend() {
       d3.select(this).style("color","white").style("background","#49AC52")
       // transition radii to selected values
       circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
+      .delay(function(d, i) { return i * 0.8})
       .attrTween("r", function(d) {
         var i = d3.interpolate(d.radius, yearRadiusScale(d.yearsStudy));
         return function(t) { return d.radius = i(t); };
@@ -1960,14 +2048,42 @@ function expandSizesLegend() {
       // reset forces
       forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
       forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
-      simulation
+      // if simulation active, reset simulation with new radius-appropriate forces
+      if(graphMode == 0 && colourLegendMode == 0) {
+        simulation
         .force("collide", forceCollide)
         .force("gravity", forceGravity)
-      // if simulation active, reset simulation with new radius-appropriate forces
-      if(graphMode == 0) {
         setTimeout(function() { resetSimulation() }, 700);
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      } else if(graphMode == 0 && colourLegendMode == 1){
+        simulation
+        .force("collide", forceCollide)
+        setTimeout(function() {   
+          forceGravity = d3.forceManyBody().strength(function(d){return d.radius*-11})
+          forceCollide = d3.forceCollide(function(d){return d.radius + nodePadding})
+          simulation.force("collide", forceCollide)
+          .force("gravity", forceGravity)
+          .on("tick", tick).alpha(0.1).alphaTarget(0.001).restart(); 
+        }, 450);
+        setTimeout(function(){
+          d3.selectAll(".annotation-group").transition().duration(500).style("opacity",0).remove()
+          // wait for transform before applying transformed annotations
+          setTimeout(function() {
+            createAnnotations("colours");
+            d3.selectAll(".annotation-note-bg")
+            .style("fill","white")
+            .style("fill-opacity",0.7)
+
+            d3.selectAll(".annotation-group")
+            // .style("font-size","20px")
+            .style("font-weight","bold")
+            .style("fill","black")
+            d3.selectAll(".annotation-note-label")
+            .style("background","white").style("opacity",1)
+          }, 300)
+        }, 450)
+
       }
       currentSize = "Years of Study"
       setSizes("yearsStudy")
@@ -1986,7 +2102,7 @@ function resetSizes() {
         // reset all buttons & colour this button green      
       // transition radii to selected values
       circles.transition().duration(100)
-      .delay(function(d, i) { return i * 1})
+      .delay(function(d, i) { return i * 0.8})
       .attrTween("r", function(d) {
         var i = d3.interpolate(d.radius, collapsedRadius);
         return function(t) { return d.radius = i(t); };
@@ -1994,14 +2110,42 @@ function resetSizes() {
       // reset forces
       forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
       forceCollide = d3.forceCollide($(window).height()*0.009)
-      simulation
+      // if simulation active, reset simulation with new radius-appropriate forces
+      if(graphMode == 0 && colourLegendMode == 0) {
+        simulation
         .force("collide", forceCollide)
         .force("gravity", forceGravity)
-      // if simulation active, reset simulation with new radius-appropriate forces
-      if(graphMode == 0) {
         setTimeout(function() { resetSimulation() }, 700);
         setTimeout(function() { enterUpdateCircles();
           simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);
+      } else if(graphMode == 0 && colourLegendMode == 1){
+        simulation
+        .force("collide", forceCollide)
+        setTimeout(function() {   
+          forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
+          forceCollide = d3.forceCollide($(window).height()*0.009)
+          simulation.force("collide", forceCollide)
+          .force("gravity", forceGravity)
+          .on("tick", tick).alpha(0.1).alphaTarget(0.001).restart(); 
+        }, 450);
+        setTimeout(function(){
+          d3.selectAll(".annotation-group").transition().duration(250).style("opacity",0).remove()
+          // wait for transform before applying transformed annotations
+          setTimeout(function() {
+            createAnnotations("colours");
+            d3.selectAll(".annotation-note-bg")
+            .style("fill","white")
+            .style("fill-opacity",0.7)
+
+            d3.selectAll(".annotation-group")
+            // .style("font-size","20px")
+            .style("font-weight","bold")
+            .style("fill","black")
+            d3.selectAll(".annotation-note-label")
+            .style("background","white").style("opacity",1)
+          }, 300)
+        }, 1000)
+
       }
       currentSize = "nothing"
       setSizes("none")
@@ -4663,7 +4807,148 @@ for (var i = 0; i < explainerDivs.length; i++) {
 
 }
 
-// }, 2000)
+
+
+/////// Favourites star ////////
+
+d3.select("body").append("div").attr("id","favesDiv")
+  .style("position","fixed")
+  .style("top","48.3%")
+  .style("right","5%")
+  // .style("height","50px")
+  // .style("width","50px")
+  .style("color","#ff9600")
+  .html("<i class='fa fa-star fa-2x'></i>")
+  .on("mouseover",function(){
+    // show text label
+  })
+  .on("mouseout",function(){
+    // hide text label
+  })
+  .on("click",function(){
+    if(favesMode==0){
+      favesMode=1
+      expandFavourites()
+    }else{
+      favesMode=0
+      collapseFavourites()
+    }
+  })
+
+function expandFavourites(){
+  // append the favourites container
+  d3.select("#favesDiv").append("svg")
+    .attr("id","favesSvg")
+    .style("height", $(window).height()*0.45+"px")
+    .style("opacity",0)
+    .transition().duration(500)
+    .style("opacity",1).style("right","3%")
+  // move in from the right
+  d3.select("#favesDiv").transition().duration(500).style("right","8%")
+  // append all favourites
+  // d3.select("#favesSvg").append("")
+
+  faveNodes = [] // reset
+  nodes.forEach(function(d){ // check for favourites
+    if(d.favourited==1){
+      faveNodes.push(d)
+    }
+  })
+
+  var faveArrayX = fillArray(0,494)
+  var faveArrayY = fillArray(0,494)
+  faveNodes.forEach(function(d, i){
+    if(i<10){ // first column height = 10 circles
+      faveArrayX[i] = 12 //x
+    }else{ // second column
+      faveArrayX[i] = 36
+    } 
+    
+    faveArrayY[i] = i*24 + 12 //y
+  })
+
+  faveCircles = d3.select("#favesSvg").selectAll("circle")
+      .data(faveNodes)
+      .enter().append("circle")
+        .attr("r", 10)
+        .attr("transform", function(d,i){
+          // return different values for each new id
+          return "translate("+faveArrayX[i]+","+faveArrayY[i]+")"
+        })
+        .attr("id",function(d) { return "faveCircle_"+d.id })
+        .attr("class","jobCircle")
+        .attr("class","faveCircle")
+        .style("z-index", -1)
+        .style("fill", function(d) { return color(d.cluster); })
+        // Tooltips
+        .on("mouseenter", function(d) {
+          if (clicked == 1) return;
+          // highlight the current circle
+          d3.selectAll("circle").attr("stroke", "none");
+          d3.select(this)
+          .style("fill", "url(#pattern_"+d.id+")" )
+            // .attr("stroke", "black")
+            .style("stroke-width", 2)
+            .attr("stroke", color(d.cluster));
+            showToolTip(0);
+            tooltipMouseover(d);
+            hoverTimeout = setTimeout(function(){
+              tooltipLarge(d)
+              clicked = 1
+            }, 1750)
+          })
+        .on("mouseout", function(d) {
+
+          if(!circleExpanded[d.id] == 1){
+            // //if not stuck
+            // if(!sticky[d.id] == 1) {
+              d3.select(this)
+              .style("fill", color(d.cluster) )
+                // .attr("stroke", "black")
+                .style("stroke-width", 2)
+                .attr("stroke", color(d.cluster));
+            // } else { // if stuck
+            //   d3.select(this)
+            //     .style("fill", "url(#pattern_"+d.id+")")
+            //     .attr("r","30px")
+
+            // }
+          }
+
+          clearTimeout(hoverTimeout)
+          if (clicked == 1) return;
+          clicked = 0;
+          hideToolTip(500)
+          d3.select(this).attr("stroke", "none");
+          // div.transition().duration(500).style("opacity", 0)
+
+        })
+        .on("click", function(d) {
+          clearTimeout(hoverTimeout)
+          // click-off
+          if (clicked == 1) { 
+            clicked = 0
+            hideToolTip(500)
+          // click-on
+        } else if (clicked == 0) {
+          clicked = 1;
+          tooltipLarge(d);
+        }
+          // hideToolTip(0);
+          // if(typeof div2 != "undefined") div2.transition().duration(250).style("height","0px").remove();
+          // tooltipSmall(d);}
+        })
+
+  console.log(faveCircles)
+
+}
+
+function collapseFavourites(){
+  // remove the favourites container
+  d3.select("#favesSvg").transition().duration(500).style("right","-10%").remove()
+  d3.select("#favesDiv").transition().duration(500).style("right","3%")
+
+}
 
 
 })
@@ -5471,7 +5756,4 @@ function hideAll() {
 
 
 
-
-
-
-
+1005

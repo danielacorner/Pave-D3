@@ -22,11 +22,17 @@
 #carousel {
   padding: 20px;
   width: 290px;
-  height: 100px;
+  height: 120px;
   background: white;
   position: absolute;
   margin-top: -55px;
-  margin-left: 30px; }
+  margin-left: 35px; }
+
+.slick-next {
+  margin-right: -20px; }
+
+.slick-prev {
+  margin-left: -20px; }
 
 #navBar {
   height: 40px;
@@ -522,6 +528,19 @@ rect.legendBtn {
 /*.annotation-note-content {
   font-family: Helvetica;
 }*/
+#favesDiv {
+  opacity: 0;
+  pointer-events: none;
+  right: 3%; }
+
+#favesSvg {
+  position: fixed;
+  right: -10%;
+  /*height: 1000px;*/
+  width: 50px;
+  border: 1px dashed black;
+  top: 260px; }
+
 .answerDiv {
   height: auto;
   width: 350px;
