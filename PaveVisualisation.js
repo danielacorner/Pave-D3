@@ -996,6 +996,8 @@ var graphMode;
             .style("color",color(d.cluster))
           }
 
+          appendFavourites()
+
         })
 
           // set filter levels to this job group's levels
@@ -4865,6 +4867,18 @@ function expandFavourites(){
   d3.select("#favesDiv").transition().duration(500).style("right","8%")
   // append all favourites
   // d3.select("#favesSvg").append("")
+  appendFavourites()
+}
+
+function collapseFavourites(){
+  // remove the favourites container
+  d3.select("#favesSvg").transition().duration(500).style("right","-10%").remove()
+  d3.select("#favesDiv").transition().duration(500).style("right","3%")
+  d3.select("#curlytop").transition().duration(500).style("opacity",0).remove()
+  d3.select("#curlybtm").transition().duration(500).style("opacity",0).remove()
+}
+
+function appendFavourites(){
 
   faveNodes = [] // reset
   nodes.forEach(function(d){ // check for favourites
@@ -4888,7 +4902,7 @@ function expandFavourites(){
   faveCircles = d3.select("#favesSvg").selectAll("circle")
       .data(faveNodes)
       .enter().append("circle")
-        .attr("r", 10)
+        .attr("r", 0)
         .attr("transform", function(d,i){
           // return different values for each new id
           return "translate("+faveArrayX[i]+","+faveArrayY[i]+")"
@@ -4960,18 +4974,12 @@ function expandFavourites(){
           // tooltipSmall(d);}
         })
 
-  console.log(faveCircles)
+        d3.selectAll(".faveCircle").transition().duration(500).attr("r",10)
+        d3.select("#favesSvg").selectAll("circle")
+      .data(faveNodes).exit().transition().duration(300).attr("r", 0 ).remove();
+
 
 }
-
-function collapseFavourites(){
-  // remove the favourites container
-  d3.select("#favesSvg").transition().duration(500).style("right","-10%").remove()
-  d3.select("#favesDiv").transition().duration(500).style("right","3%")
-  d3.select("#curlytop").transition().duration(500).style("opacity",0).remove()
-  d3.select("#curlybtm").transition().duration(500).style("opacity",0).remove()
-}
-
 
 })
 } // end of d3.csv
