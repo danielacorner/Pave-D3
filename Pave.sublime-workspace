@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"fave",
+				"faveCircles"
+			],
+			[
+				"pointer",
+				"pointer-events"
+			],
+			[
+				"labelLine",
+				"labelLineSalaryYears"
+			],
+			[
+				"labelLin",
+				"labelLineSalaryYears"
+			],
+			[
 				"feed",
 				"feedbackBbox〔variable〕"
 			],
@@ -498,22 +514,6 @@
 			[
 				"headers",
 				"headersString"
-			],
-			[
-				"pop",
-				"popTrans"
-			],
-			[
-				"dra",
-				"drag_handler"
-			],
-			[
-				"wor",
-				"workers"
-			],
-			[
-				"lis",
-				"listToDelete"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "public/sass/style.scss",
 			"settings":
 			{
-				"buffer_size": 14696,
+				"buffer_size": 15867,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,16 +532,8 @@
 			"file": "PaveVisualisation.js",
 			"settings":
 			{
-				"buffer_size": 193671,
+				"buffer_size": 216829,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/window-height.sublime-snippet",
-			"settings":
-			{
-				"buffer_size": 294,
 				"line_ending": "Windows"
 			}
 		},
@@ -555,10 +547,13 @@
 			}
 		},
 		{
+			"contents": "/*PRIORITIES*/\n- mobile version\n\ncurrent:\n- retain colourlegend opacities on favourite hover\n- reduce opacity to 0.05\n\n- fix graph positions: move #svgCanvas and .annotation-group\nbug: circle 494 in management? check csv\nbug: circle 485 in business? check csv\nbug: circle 157 in sciences? check csv\n\nnext:\n- minimally functional mobile layout\n- show favourites on-hover btn on the side\n- store data & favourites in the cache\n- add a ? button to show explainer div again in graph mode\n- style search results warning message in searchJobTitles()\n- style the slider carousel in the tooltip\n- \"legend: colours, sizes\" compact legend section?\n- check google styleguide for shadows\n(add items to a css grid layout?)\n- tutorial5 answerDiv\n- about/help/feedback styles: increase contrast on hover, underline on that page\n- similar jobs button: limit skill levels to 60%\n- append media queries to all styles to start defaults as mobile-up\n\n\nlater\n- bug: tooltip in graph mode covers right-side circles\n\t- switch pointer-events from none to auto on tooltiplarge()\n- position imgcircle based on tooltip height\n- bug: reset filters button disappears legend buttons!?\n- bug: colour filters click disappears legend buttons!?\n- join tut1 & tut2 together?\n\t(should hover and click be two instructions or one?)\n- move all style to css\n- move btnView btnSuggest styles to css:hover and classes\n- button for \"set the skills to this job's skill levels\"\n- resize circles with page width then detect radius\n\nabout, help, feedback pages\n\nbug: picture z-index\n\ntodos\n- turn on pattern permanently when stuck\n- add 'unstick' function\n- add \"x\" to graph intro div\n- only fade out changing axes\n- subtle dropdown axes?\n- ask users \"what information do you care about in making a career decision?\" to determine views\n- fix 'movebottomdown'\n***********************************\n\n- create data viz lesson 1 2 3\n\n- responsive design\n- drag images out of sticky zone\n\n- add \"drag to sides to favourite -->\" text on drag\n\n- mouseover text?\n\n\nTHURSDAY call :\nfunding opportunities:\n- must incorporate as not-for-profit or social enterprise (for tax reasons)\n- PWC foundation - skills training and careers for youth\n- Civic action - \n\n\nnothing from Fed Gov until next election 11/2019\nsocial foundations only\n\nMcConnell foundation (skills training workshops for entrepreneurs)\n\nIntegrate RBC opportunities for funding?\n\nRed Academy - UX / Web code bootcamp, free student labour\n\n-------------------\nBusiness plan - impact, value, measure? Future vision? Key principles, essentials, how much funding needed, revenue expected?\n-------------------\n\nChris: needs to be self-sustaining, possibly revenue\n\nCompanies are looking for reskilling sources -- \n\nEddie: can use youth as \"community, goodwill\" and charge companies for extras\n\ntighten loop between discovering careers and training for those careers\n\t- link to / team up with online courses\n\n\t- use to explore internal opportunities\n\n\t- collect student interest data for sale...\n\t- identify skills gaps, \n\n\t- RBC: if building a pitch, could mock-up \"enhanced\" version with RBC job postings (could scrape)\n\n-----------------\nbig-ticket items:\n-----------------\n1 - view more: \"schools offering this program\"\n\t- manually create a relational table to connect NOCs to universities\t(between NOCs and Programs, Universities, Colleges)\n\t\tin data folder 4 - Admissions - Programs, Universities, Colleges\n\n2 - research 'landing page best practices' to improve tutorial/landing page\n\n3 - view more: NOC jobBank page data\n\t- convert NOC jobBank pages into a table to load into the 'more info' section of the tooltip\n\n4 - manually create or source kid-friendly job descriptions for tooltips\n\n\n-----------------\nlittle-ticket items:\n-----------------\n- tutorial suggestions? v3 is up, leave comments\n\t- iterate tutorial\n\n- get pics working in github page?\n\n- think about any important or interesting annotations? or let the user annotate?\n(-\"strategy and nuance\" in a sports viz)\n\n- second colour for non-interactive text? Language skills, logic skills...\n\n\n\n\n\n\n- mobile, responsive design [prototype]\n\n- drag to right side to favourite\n- keep patterns on permanently\n\nbug: industrial butchers, seafood processing, other labourers in Managers group (red cluster)\n(check cluster attribute in csv)\nbug: move right-side tooltip left a bit\n\ncurrent:\n\n- read 5 articles about ui\n\tgoodui\n\n-transition from last tutorial page?\n**- make all buttons the same colour\n\t\" clickable actions (links, buttons), selected elements (chosen items), and plain text should be clearly distinct\"\n\t- call to action, repeat if multiple pages \n\t- recommend, don't just show (graph annotations+)\n\t- be explicit about who exactly your product or service is intended for (high school students)\n\t- advanced first-time annotations that are dismissable\n\t- expose options, don't use a dropdown\n\t- \"benefit buttons\" instead of task buttons\n\t\t-- Compare jobs --\n\t\t\t  graph view\n\t- fewer borders\n\t- Selling Benefits instead of features (it will help you to xyz not it can do abc)\n\t- Design for zero-data state \"Hi John, why don't you do your first task over here\" dismissable messages not callouts\n\t- Try Loss Aversion instead of emphasizing gains. \"to simplify career decisions\" not \"to make an informed career decision\"\n\t- keyboard shortcuts?\n\t- Try smaller commitments instead of one big one\n\t- Softer prompts instead of modal windows (less annoying)\n\t- multifunctional controls instead of more parts\n\t- icon labels (filter button \"Filter [icon]\")\n\t- try natural language instead of dry text\n\t\" how much language-related skill would you like to have? \"\n\t- teasing information (job stats) : graph mode w/ annotations early in tutorial\n\t\t- vertical & horizontal mouseover bars \"crosshairs\" tickbox\n\t- try attention grabs instead of neglect\n\t- It's nice when people set expectations for each other. It doesn't take much effort for a person or interface to inform someone when the next task will be completed. You are on step 1 of X. Your choice will result in Y. You will receive something before Z. All those little promises not only inform but also build trust. Unhelpful interfaces on the other hand can come off a little cold as the user is kept in the dark.\n\t- Try Explaining instead of assuming the obvious.\n\t\"how many MATH SKILLS do you want to have?\"\n\n- ruby tutorial\n- before \"warning\" prompt \"filter here\" etc\n- post-filter enterupdate force simulation too tight\n\n- switch graph mode and reset button places?\n\n- add pretty force simulation for equal size circles\n- read 'getting real' & learn ruby & rails\n- sketch 2 tutorial designs for criticisms\n\n\n- wage -- > salary: include low, med, high\n\t- annotate salary: 40k\nbig:\n- sketch specific more/less/fewer decorateYAxis(mode)  per graph mode\n- map annotations over colour split or otherwise fix the legend/split overlap\n\nsmall\n- annotate split view\n- embiggen reset button\n- remove suggested views minimize button?\nbig\nsave button\n- save filter states with mini screenshots\ntutorial\n - sketch a mock-up before changing!\n- more hand-holding, third-person use-case\n\n\n***********************************\n- bug: circles move down slightly after graphmodeoff\n- fix circle graph x position\n- search button to filter button?\n\nnext steps:\n- note \"tutorial x/4\" on tutorial pages\n- filter button instead of search, separate search page\n\n- click color legend to filter industries\n\t- transparencies for on/off\n- move split button to color legend\n\n- filter from both sides\n- fix filter algorithm:\n\t- only language skills?\n\t- determine why some circles are filtering to invisible\n\ncontent list?\n\nscrape pictures for each job\n\npick one\n- bug: filters leaving holes\n\n- lengthen or explain graph views sentences\n- graph view tooltip positions\n- graph view first-time intro div\n- graph view\n add 1 more view for testing (dropdown?)\n add view sectioning\n\nnext:\n- same size initially?\n- transition sliders on reset\n- remove capitalization from axis titles\n- annotate views\n\t- vertical/horizontal dividers and x-y section names\n\t- highlighted areas?\n- hide pause button?\n\n- about, help, feedback pages\n\n- make graph view y axis responsive\n\n- add all tooltips to tutorial\n\t- page 2 & 3 circle tooltips\n\t- page 3 slider tooltips\n\n- switch sliders to dragstarted instead of on drag (to prevent mouseout from ending the drag -- interrupt?)\n\n-'about' page content\n\n- flash when slider under 10 jobs?\n\t- change the background colour of the screen?\n\n- create mobile layout (<=640px)\n  - reposition sliders below circles\n  - combine all buttons above circles\n\n- colour and size legend btnlegend btnsizes mouseover is twitchy, disable mouseover for .5 sec before reenabling pointer events?\n\n- check filter algorithm for possible speed improvements using \"continue\" (next loop) and \"break\" (end loop) -- should be able to run on a chromebook\n\n- bug: tooltips not disappearing on mouseout (when? after click-on, click-elsewhere e.g. button)\n- bug: reset filters not working (when?)\n- bug: subskill sliders cut off at medium resolution\n- tutorial3: remove \"prev\" buttons?\n\n- split button summary statistics for industries\n\n- create slider inset shadow\n- speed up all? transitions\n\n- enclosure diagram containing split view? like on http://charts.vismio.com/9lqjn/\n\n- move div instead of shrinking on tooltipclose (to avoid contents floating out)\n\n- improve \"job titles\" and link top titles to search results\n\n- turn mini skillbars into tooltiplarge skillbars\n\n- Mute Split/Shuffle/Combine features when Graph view is enabled\n\n- switch skill bars to relative scale?\n\n- slow down or emphasize \"pop\" animation\n\n- start tutorial with equal sizes & change size to Number of Jobs (how easy is it to get each job?)\n\n- dropup fix double-click to single-click\n\n- \"language skills\" is ambiguous\n\n- add pause hover explainer div\n- add suggested views explainer divs\n\n- Explain why “lots” of skill = fewer job suggestions in tutorial\n\n- \"job type\" instead of \"job group\"\n- enable minimal (title-only) tooltips on tutorial3\n\n- graph view suggested view walkthroughs, zones on graph\n\n- place tooltip touching circle:\n\t-position buttons on top,\n\t-allow mouseovers through tooltip divs\n\n- explainer divs glitchy switching between each other\n\n- mobile version\n\t-ontouch instead of onclick\n\t\t-buttons: on first touch, open explainer div\n\t\t\ton second touch, activate\n\t-stack filters below break point\n- graphmodeoff post-filtering reset simulation\n- tooltip off in graph mode (switch sides to further outside)\n- a more fun colour legend\n- save button\n- tooltip bottomdiv height too big\n- tooltip divs don't fade-out on mouseout\n- future mode axis & positions\n\nexplainer divs need to come in from the top right, transition their bottoms\n\nmouseenter / mouseleave vs mouveover mouseout\n\n-normalize skill bars & minibars\n\n- change minibar colours to visible (grey-green? for invisible ones only)\n-bug: clickspan not disappearing\n\n- resize future view? y/n\n\n- collapse navbar at the lg breakpoint\n- collapse search bar to search icon\n\n- search not working\n- buttons not on top\n\n-bug: tooltip doesn't re-furl after clicking in out-zone to remove it\n\n- reset filters on tutorial 3?\n\nmobile version = vh instead of vw\n\nTutorial on HOME PAGE and different tutorial pages WOW\n\ngraph mode = move all sliders out to sides\n\nbug: compress graph vertically and movebottomdown/up less\nbug: top right div not aligned?\nbug: colour legend not aligned?\n\t- use position: absolute\n\n- append skill bars inside tooltip div with position bottom\n - multiply tooltip padding x 1.5\n\n- hover div on question marks\n\n- mobile setup & other sizes\n\n- create github readme.md\n\n- think about slider-subslider interactions\n\n- tooltip div side always on-screen (based on mouse location)\n\n- colour legend button\n\n- dropdown x and y selectors\n\n- subslider divs expand from width&height = expand button dimensions\n\n- move notmuchlots\n\n- move industry split circles up a bit\n\n- maybe move the sliders in from the sides? start by putting them all together for mobile\n\nput language, buttons, logic into 3 4-inlines in a row 12-grid\n\n- colour current suggested view button background & disable click\n\n- pause-play in graph mode needs to stay in graph mode;\n\npause then reset needs to stay paused\n(simulation restart if play mode on)\n\n- filtering on graph view + future view needs to keep future colours on\n\n- future view circles don't un-highlight\n\n- hover info button tooltip\n\n- Pave title = refresh button\n\n- graph view off = back to industry split, legend needs to be reset to industry split legend\n\n- combine button disappeared when coming out of graph view (on industry split)\n\n- combine / split / shuffle in a box of four with views\n& combine Size & Colour buttons in a row\n\n- colour button which pops up the legend\n\n- Pause button says \"Pause\" onhover = (for slow connections)\"\n\t- switch to \"stop\" so the simulation never starts again\n\n- make combine buttons unclickable but translucent in graph/future view\n\n- filtered, then turned off graph view: force simulation needs reset\n\n- append subsliders to the div instead of the chart\n\n- set viewbox / circles height based on height/width ratio\n\n- bug: showlogic not hidelegend-ing\n\n- subskill dropdowns -- math & logic (switch position: absolute; right: some%)\n\n- mobile: stretch distance between sliders based on window width\n\n\n- smooth hide \"combine\" on graph and future modes\n\n- bug: mouse-off of sliders while dragging stops dragging -- potential fix: on dragstarted, keep id constant, let go on dragended\n\n- cleaning code to css\n\n- subskill slider function\n- subskill slider white background\n\n- mini-bars to display on hover tooltip\n\n- fix bars: append a 2nd div to click tooltip with bars\n(can get fancy w the design)\n\n- look up refactoring\n\n- joyride style\n\n- job titles search (within job groups)\n\n- bug: tiny empty job in right side under purple group\n\n- mobile compatibility\n- mobile sliders sizes\n\n- mobile tooltip on touch\n\n- favourite toggle\n\n- bug: skills bar chart height on longer tooltips\n\n- responsive design for the canvas:\n - resize works, but viz starts too big on small windows\nsliderSVGArray[i].append(\"g\") // switch to SVG with viewBox?\n\n- responsive design for the sliders\n\n- legend for future mode\n\n\nOther todos:\n\n- combine button fun physics atom-smasher???\n\n-some circles aren't on top\n\n-lang slider not on top\n\n-switch \"pause simulation\" to a toggle & disable other buttons\n-retain filter mode colours, sizes on graph filtering\n\n-tooltip div styling\n\n-dropdowns not working\n\n--on tablet drag, mouseover (disable dragging)\n\n--background color\n\n--cool to 0 after industry split\n\n--search filter & move button in top right\n\n--favourites section\n\n--style legend\n\n--skills expansion buttons\n\n\n--math skills bug\n\n\n--esxpand canvas and add top padding\n\n---modularize graph mode\n\n--enlarge canvas, lower x-axis\n\n--slider design\n\n--future-view legend & move down\n\n--filters positions and reset position\n\n--graph view on == hide buttons 1/3 of group\ntoggle indicator\n\n--mobile view zooming\n\n-filter flexibility\n\n-sliders position relative\n\n-filter positioning, disappearing reappearing\n\n--make canvas responsive\n\n--remove axis ticks\n\n--format auto risk ticks to %s\n\n--axis styles\n\n--graph mode dropdown -> preset buttons\n\nslider handles stuck\n\n--reduce btn sizes\n\n\ntop skills",
 			"file": "todos2.txt",
+			"file_size": 15815,
+			"file_write_time": 131712281562125646,
 			"settings":
 			{
-				"buffer_size": 14932,
+				"buffer_size": 15280,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -826,9 +821,12 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/transformtranslate.sublime-snippet",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/tablapphone.sublime-snippet",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/function.sublime-snippet",
+		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/window-width.sublime-snippet",
 		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/window-height.sublime-snippet",
 		"/C/Users/Daniel2/Documents/Pave-D3/css/main.css",
-		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/window-width.sublime-snippet",
 		"/C/Users/Daniel2/Documents/Pave-D3/Pave.html",
 		"/C/Users/Daniel2/Documents/Pave-D3/index.html",
 		"/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/mediaQuery.sublime-snippet",
@@ -950,10 +948,7 @@
 		"/C/Users/Daniel2/Dropbox/Pave_D3_Project/d3-book-master/d3-book-master/chapter_07/02_scaled_plot.html",
 		"/C/Users/Daniel2/Downloads/Endless.Space.2.Digital.Deluxe.Edition.v1.0.37.S5-ALI213/Endless Space 2/Public/Localization/spanish/ES2_Localization_Locales.xml",
 		"/C/Users/Daniel2/Downloads/Endless.Space.2.Digital.Deluxe.Edition.v1.0.37.S5-ALI213/Endless Space 2/ALI213.ini",
-		"/C/Users/Daniel2/Downloads/d3-book-master/d3-book-master/chapter_05/04_creating_paragraphs.html",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/todo.txt",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/drug discovery plotly",
-		"/C/Users/Daniel2/Dropbox/SPC Data - Backup/Python/014-JobDutiesBulletList.py"
+		"/C/Users/Daniel2/Downloads/d3-book-master/d3-book-master/chapter_05/04_creating_paragraphs.html"
 	],
 	"find":
 	{
@@ -971,134 +966,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"expandColoursLegend",
-			"px",
-			"resize",
-			"btnColours",
-			"btncolours",
-			"btnColours",
-			"btncolour",
-			"grid-conta",
-			"colour le",
-			"legendDiv1",
-			"legendCircle",
-			"currentSize",
-			"Number of Jobs",
-			"currentSize",
-			"Number of Jobs",
-			"currentSize",
-			"Number of Jobs",
-			"currentSize",
-			"legenddiv1",
-			"legendDiv1",
-			"legendDiv2",
-			"sizeOptionsDiv",
-			"sizeoptions",
-			"if($(window).width() ",
-			"legendDiv1",
-			".style(\"",
-			"legendDiv1",
-			"legendDiv",
-			"legenddiv",
-			".style(\"",
-			"btnsizesop",
-			"sizeOptionsDiv",
-			"legenddiv2",
-			"bottomButtons",
-			"bottom: ",
-			";",
-			"resetFilters",
-			"resetfilter",
-			"playpause",
-			";",
-			"graph",
-			"btn-reset",
-			"searchdiv",
-			"{",
-			" 90 + \"px\"",
-			"linksBbox",
-			"searchdiv",
-			";",
-			"; ",
-			"getbounding",
-			"searchdiv",
-			"jobtitle",
-			".search-div",
-			"search-div",
-			"search",
-			"jobtitle",
-			"searchimg",
-			"search",
-			"navbar",
-			"se",
-			"search",
-			"img",
-			"; ",
-			"navbar",
-			"title",
-			"link-",
-			"link-t",
-			"title",
-			"\"",
-			"\",",
-			".style(\"",
-			"{",
-			":\"",
-			": \"",
-			"\")",
-			"\",",
-			".style(\"",
-			"(\"",
-			"d3.select(\"",
-			"search",
-			"12",
-			"search",
+			"d(\"text\"",
+			"text",
+			"\"text\"",
+			"favesd",
+			"appendFavourites",
+			"btnfavour",
+			"\"opacity\",1)",
+			"+ 10)",
+			"+ 5",
+			"\"opacity\",1)",
+			"+ 5",
+			" + \"px\"",
+			"favesdiv",
+			"hide()",
+			"favesArray",
+			"collapseFavourites",
+			"favesDiv",
+			"height",
+			"favesmode",
+			"faveNodes",
+			"favecircle",
+			"nodes.",
+			"nodes",
+			"circles =",
+			"var circles",
+			"circles =",
+			"\"Favourites\"",
+			"favesdiv",
+			"getSum",
+			"favourites",
+			"favourited",
+			"favourites",
+			"fa-star",
+			"createannot",
+			"createAnnotations",
+			"          d3.selectAll(\".annotation-group\").transition().duration(500).style(\"opacity\",0).remove()\n",
+			"closelegends",
+			"          .on(\"tick\", tick).alpha(0.1).alphaTarget(0.001).restart(); }, 450);\n",
+			"          .on(\"tick\", tick).alpha(0.1).alphaTarget(0.001).restart(); }, 500);\n",
+			"elay(function(d, i) { return i * 1}",
+			"        .delay(function(d, i) { return i * 1})\n",
+			" circles.transition().duration(100)\n        .delay(function(d, i) { return i * 1})",
+			"          simulation.alpha(0.7).alphaTarget(0.001).restart(); }, 200);\n",
+			"forceYSeparate",
+			"        .force(\"collide\", forceCollide)\n        // .force(\"cluster\", forceCluster)\n        // .force(\"gravity\", forceGravity)\n        // .force(\"x\", forceXCombine)",
+			"      if(graphMode == 0 && colourLegendMode == 0) {\n        simulation\n        .force(\"collide\", forceCollide)\n        .force(\"gravity\", forceGravity)",
+			"resetSimulation",
+			"      simulation\n        .force(\"collide\", forceCollide)\n        .force(\"gravity\", forceGravity)",
+			"      } else if(graphMode == 0 && colourLegendMode == 1){\n        forceCollide = d3.forceCollide(function(d){return d.radius})\n        simulation\n        .force(\"collide\", forceCollide)\n        simulation.alpha(0.1)\n      }",
+			"graphMode == 0 && colourLegendMode == 1){\n        simulation.alpha(0.7)",
+			"expandcolours",
+			"10",
+			"31",
+			"ind",
+			"function(){return",
+			"thisCircleQuery",
+			"thisCircle",
+			"count",
+			"thisIndustry",
+			"new arr",
+			"foreach",
+			"clusters",
+			"centerX",
+			"graph.length",
+			"circles.",
+			"29",
+			"3",
+			"41",
+			"81",
+			"212",
+			"104",
+			"171",
+			"311",
+			"494",
+			"163",
+			"81",
+			"24",
+			"291",
+			"165",
+			"477",
+			"128",
+			"420",
+			"473",
+			"204",
+			"\"colours\"",
+			"209",
+			"414",
+			"14",
+			"116",
+			"133",
+			"181",
+			"200",
+			"cluster",
+			"285",
+			"sales and ser",
+			"pointer-e",
+			"tooltiplarge",
+			"487",
+			"202",
+			"214",
+			"\"colours\"",
+			"417",
+			"277",
+			"360",
+			"closelegends",
+			"graphmodeoff",
+			"14",
+			"376",
+			"dy: 300,",
+			"dy: 200,",
+			"natural re",
+			"expandcolours",
+			"createannotations",
 			"resize()",
-			"searchDiv",
-			"console",
-			"console.l",
-			"updatemulti",
-			"enterUpdateCircles",
-			"updateMulti",
-			"currentMode",
-			"graphModeOn",
-			"btnView3",
-			"currentMode",
-			"updateMulti",
-			"mode",
-			"currentmode",
-			"resetfilters(",
-			"currentMode",
-			"updateMulti",
-			"subskill",
-			"console.log",
-			"explainer",
-			"explainerWidth",
-			"explainer",
-			"searchDiv",
-			"\",",
-			"style",
-			";",
-			"1px 2px 1px grey",
-			"resetFilters",
-			"searchJobTitles",
-			"box-",
-			"button",
-			"filterColoursRect",
-			"filter",
-			";",
-			"intro-tour",
-			"tooltip",
-			"searchDiv",
-			"search",
-			"titlebar",
-			"homepage",
-			"h1",
-			"sliderSideTranslate",
-			"sliderdiv_",
-			"expandsize",
-			"\"Communication and <p class='sliderText'>Verbal skills</p>\"",
-			"sliderdiv"
+			"svg",
+			"imgGraphExplain",
+			"#imgGraphExplain",
+			"resize()",
+			"grid-container-views",
+			"grid-con",
+			"closeLegends",
+			"axisg",
+			"resize()",
+			"closeLegends",
+			"on(\"click",
+			"axisXtranslate",
+			"axisg",
+			"imgGraphExplain"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1131,15 +1126,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14696,
+						"buffer_size": 15867,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14267,
-								14269
+								9443,
+								9443
 							]
 						],
 						"settings":
@@ -1152,8 +1147,8 @@
 								{
 									"1":
 									[
-										14299,
-										14300
+										9397,
+										9398
 									]
 								},
 								"icon":
@@ -1168,8 +1163,8 @@
 								{
 									"1":
 									[
-										14273,
-										14274
+										9344,
+										9345
 									]
 								},
 								"unmatched":
@@ -1178,51 +1173,46 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -1232,7 +1222,12 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -1240,8 +1235,8 @@
 								{
 									"1":
 									[
-										14285,
-										14286
+										9444,
+										9445
 									]
 								},
 								"icon":
@@ -1256,8 +1251,8 @@
 								{
 									"1":
 									[
-										14246,
-										14247
+										9418,
+										9419
 									]
 								},
 								"unmatched":
@@ -1266,51 +1261,46 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -1320,14 +1310,19 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"syntax": "Packages/CSS/CSS.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 13235.0,
+						"translation.y": 7890.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -1339,15 +1334,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 193671,
+						"buffer_size": 216829,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								56729,
-								56729
+								183665,
+								183665
 							]
 						],
 						"settings":
@@ -1361,8 +1356,8 @@
 								{
 									"1":
 									[
-										56811,
-										56812
+										183664,
+										183665
 									]
 								},
 								"icon":
@@ -1377,8 +1372,8 @@
 								{
 									"1":
 									[
-										56810,
-										56811
+										183651,
+										183652
 									]
 								},
 								"unmatched":
@@ -1387,51 +1382,46 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -1441,7 +1431,12 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -1449,24 +1444,24 @@
 								{
 									"1":
 									[
-										56728,
-										56729
+										183664,
+										183665
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/double_quote.png",
-										"region.greenish"
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"region.yellowish"
 									]
 								},
 								"open":
 								{
 									"1":
 									[
-										56722,
-										56723
+										183651,
+										183652
 									]
 								},
 								"unmatched":
@@ -1475,51 +1470,46 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -1529,14 +1519,19 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 22173.0,
+						"translation.y": 72187.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1544,197 +1539,6 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/C/Users/Daniel2/AppData/Roaming/Sublime Text 3/Packages/User/window-height.sublime-snippet",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 294,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								30,
-								30
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.clone": -1,
-							"bracket_highlighter.clone_locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										285,
-										292
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/tag.png",
-										"region.orangish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										1,
-										8
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.clone_regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/XML/XML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "Pave.html",
 					"semi_transient": false,
 					"settings":
@@ -1746,8 +1550,8 @@
 						"selection":
 						[
 							[
-								263,
-								263
+								6862,
+								6864
 							]
 						],
 						"settings":
@@ -1832,12 +1636,27 @@
 							{
 								"close":
 								{
+									"1":
+									[
+										6881,
+										6882
+									]
 								},
 								"icon":
 								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
 								},
 								"open":
 								{
+									"1":
+									[
+										6860,
+										6861
+									]
 								},
 								"unmatched":
 								{
@@ -1845,70 +1664,70 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
 							],
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2167.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1918,20 +1737,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "todos2.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14932,
+						"buffer_size": 15280,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								66,
-								66
+								117,
+								117
 							]
 						],
 						"settings":
@@ -1955,51 +1774,46 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -2009,7 +1823,12 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -2028,51 +1847,46 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -2082,7 +1896,12 @@
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"history_list_is_closing": true,
 							"syntax": "Packages/Text/Plain text.tmLanguage",
@@ -2092,7 +1911,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -2100,7 +1919,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -2152,7 +1971,7 @@
 	"project": "Pave.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
