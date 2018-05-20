@@ -259,9 +259,9 @@ path { pointer-events: none; }
 #progTutLine4 { position: fixed; left: 59.8vw; top: 3.4vw; }
 
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
-.inactiveText { /*color: #5D6769;*/ color: #285E2D; stroke: #285E2D; fill: #285E2D; }
+.inactiveText { /*color: #5D6769;*/ color: #285E2D; fill: #285E2D; }
 
-.inactiveHeader { /*color: #5D6769;*/ color: #285E2D; }
+.inactiveHeader { /*color: #5D6769;*/ color: #074F57; }
 
 /*for variable screen sizes use media queries:*/
 /*@media (min-width: 600px) { .column { width: 100%; }

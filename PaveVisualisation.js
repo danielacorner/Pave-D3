@@ -2295,7 +2295,7 @@ function createGraphExplainerDiv() { //bookmarklet
     .attr("id","graphExplainerDiv").style("opacity",0)
     .style("left",($(window).width()-explainerWidth)/2 + "px")
     .html(
-      "<p style='margin: 2px 0px 20px 20px'>Graph View lets you compare job groups by what you care about most.</p>"+
+      "<p class='inactiveHeader' style='margin: 2px 0px 20px 20px'>Graph View lets you compare job groups by what you care about most.</p>"+
       "<button id='btnExit'>x</button>"+
       "<div class='grid-container'>"+
         "<div class='explainDiv'>"+
@@ -2304,8 +2304,8 @@ function createGraphExplainerDiv() { //bookmarklet
             "<p>vs.</p> "+
             "<p>Years of Study</p>"+
           "</button>"+
-          "<p class='p-graphModes' style='margin-bottom: -0.10em'>Usually, jobs that need more education have higher incomes.</p>"+
-          "<p class='p-graphModes'>Compare average income and years of study.</p>"+
+          "<p class='p-graphModes inactiveText' style='margin-bottom: -0.10em'>Usually, jobs that need more education have higher incomes.</p>"+
+          "<p class='p-graphModes inactiveText'>Compare average income and years of study.</p>"+
         "</div>"+
         "<div class='explainDiv'>"+
           "<button id='btnSuggest2' class='suggested-views-btn' href='#'>"+
@@ -2313,8 +2313,8 @@ function createGraphExplainerDiv() { //bookmarklet
             "<p>vs.</p> "+
             "<p>Number of Jobs</p>"+
           "</button>"+
-          "<p class='p-graphModes' style='margin-bottom: -0.10em'>The more jobs are available, the easier it might be to get hired.</p>"+
-          "<p class='p-graphModes'>Compare average income and how many jobs are available.</p>"+
+          "<p class='p-graphModes inactiveText' style='margin-bottom: -0.10em'>The more jobs are available, the easier it might be to get hired.</p>"+
+          "<p class='p-graphModes inactiveText'>Compare average income and how many jobs are available.</p>"+
         "</div>"+
         "<div class='explainDiv'>"+
           "<button id='btnSuggest3' class='suggested-views-btn' href='#'>"+
@@ -2322,8 +2322,8 @@ function createGraphExplainerDiv() { //bookmarklet
             "<p>vs.</p> "+
             "<p>Number of Jobs</p>"+
           "</button>"+
-          "<p class='p-graphModes' style='margin-bottom: -0.10em'>Machines are getting better at performing new tasks every day.</p>"+
-          "<p class='p-graphModes'>Compare risk that job tasks will be taken over by machines and how many jobs are available.</p>"+
+          "<p class='p-graphModes inactiveText' style='margin-bottom: -0.10em'>Machines are getting better at performing new tasks every day.</p>"+
+          "<p class='p-graphModes inactiveText'>Compare risk that job tasks will be taken over by machines and how many jobs are available.</p>"+
           "</p>"+
         "</div>"+
       "</div>"
