@@ -2448,12 +2448,27 @@ d3.select("#graph").on('click', function(d){
     createGraphExplainerDiv()
   }
 
+
+  // Toggle mode on or off
+  graphMode = 1-graphMode;
+  //cool to 0 degrees
+  simulation.alpha(0);
+
+  ////////////// GRAPH MODE ON! ////////////////
+  if (graphMode == 1) {
+      currentMode = 0;
+      graphModeOn(0);
+    }
+  
   d3.select("body").append("img")
   .attr("class","imgGraphExplain")
   .attr("src","img/question.png").attr("alt","Graph View explanation")
   .attr("height","29").attr("width","29").style("border-radius","20px")
   .style("position","fixed")
-  .style("top","250px")
+  .style("top",function(){
+    console.log(getBbox("btnView1").top)
+    return (getBbox("btnView1").top - 33) + "px"
+  })
   .style("right",
     function(){
       if($(window).width() >= 1024){
@@ -2469,18 +2484,6 @@ d3.select("#graph").on('click', function(d){
   .on("click",function(){createGraphExplainerDiv()})
   .style("opacity",0).transition().duration(500).style("opacity",1)
 
-
-  // Toggle mode on or off
-  graphMode = 1-graphMode;
-  //cool to 0 degrees
-  simulation.alpha(0);
-
-  ////////////// GRAPH MODE ON! ////////////////
-  if (graphMode == 1) {
-      currentMode = 0;
-      graphModeOn(0);
-    }
-  
   //////////////// Graph mode OFF. ///////////////////
   if (graphMode == 0) {
     if(typeof graphExplainerDiv != "undefined"){
@@ -2805,6 +2808,7 @@ compressY = 0.65;
   // text label for the x axis
   axisLabelX = axisG.append("text")
   .attr("transform", circleHeight((axisXtranslate*0.16),(axisYtranslate*-2.45)))
+  .style("class", "inactiveText")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
 
@@ -2818,6 +2822,7 @@ compressY = 0.65;
  .style("opacity", 0).transition().duration(500).style("opacity",1);
    // text label for the y axis
   axisLabelY = axisG.append("text")
+  .style("class", "inactiveText")
   .attr("transform", "rotate(-90)")
   .attr("y", "10vw")
   .attr("x", "-28vh")
@@ -2897,9 +2902,9 @@ compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Years of Study").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelX.text("Years of Study").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Salary ($K per yr)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.text("Salary ($K per yr)").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             // decorateYAxis();
@@ -3865,9 +3870,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .html(
       "<img id=question_"+i+" style='border-radius: 29px; display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
-      +"<div align='left' style='display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
+      +"<div class='inactiveHeader' align='left' style='display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
       +"font-size: 140%; font-weight: bold;"
-      +" color: #49AC52; font-family: Raleway'>"
+      +" font-family: Raleway'>"
       +sliderTitlesArray[i] // "Communication <p class='sliderText'>and Verbal skills</p>"
       +"</div>"
       )
@@ -3881,7 +3886,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("color", "#49AC52")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' style='margin-left: 5px; margin-top: -4px'>"
+    .html("<div id='notmuchlots_"+i+"' class='inactiveText' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px;'></span>"
       +"Lots</div>"+
@@ -4188,10 +4193,10 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("position", "relative")
         .style("margin-top", "19%")
         .style("margin-left", 13+"%")
-        .style("color", "#49AC52")
         .style("font-weight", "bold")
+        .attr("class","inactiveHeader")
         .style("font-family", "Raleway")
-        .html("<div id='notmuchlots_"+(i+j)+"' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+        .html("<div id='notmuchlots_"+(i+j)+"' class='inactiveText d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
           +"<span id='notmuchSpan_"+(i+j)+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
           +"Lots</div>")
         .select(function() {

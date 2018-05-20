@@ -654,6 +654,17 @@ path{
 #progTutLine4 {position: fixed; left: 59.8vw; top: 3.4vw;}
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
 
+.inactiveText{
+  /*color: #5D6769;*/
+  color: #285E2D;
+  stroke: #285E2D;
+  fill: #285E2D;
+}
+.inactiveHeader{
+  /*color: #5D6769;*/
+  color: #285E2D;
+}
+
 /*for variable screen sizes use media queries:*/
 /*@media (min-width: 600px) {
   .column {
@@ -690,11 +701,11 @@ path{
   right: 25px;
 }
 #legendDivColours{ /*colours*/
-    position: fixed;
-    width: 335px;
-    height: 280px;
-    left: 15px;
-  }
+  position: fixed;
+  width: 335px;
+  height: 280px;
+  left: 15px;
+}
 #sizeOptionsDiv{
   position: fixed;
   padding: 10px;
