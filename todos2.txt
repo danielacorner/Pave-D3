@@ -2,9 +2,10 @@
 - mobile version
 
 current:
+- responsivify favesDiv
 - retain colourlegend opacities on favourite hover
-- reduce opacity to 0.05
-- bug: favourites colour not correct on append
+- bug: favourites colour not correct on append (some but not all circles)
+ - not appending in order of favourites
 
 - fix graph positions: move #svgCanvas and .annotation-group
 bug: circle 494 in management? check csv

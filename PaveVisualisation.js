@@ -4819,9 +4819,15 @@ for (var i = 0; i < explainerDivs.length; i++) {
 d3.select("body").append("div").attr("id","favesDiv")
   .style("position","fixed")
   .style("top",$(window).height()*0.483+"px")
-  .style("right","5%")
-  // .style("height","50px")
-  // .style("width","50px")
+  .style("right",function(){
+      if($(window).width() >= 1024){
+        return "5%";
+      }else if($(window).width() >= 768){
+        return "10%";
+      }else if($(window).width() >= 320){
+        return "10%";
+      }
+  })
   .style("color","#ff9600")
   .html("<i id='fa-star-icon' class='fa fa-star fa-2x'></i>")
   .on("mouseover",function(){
@@ -4846,19 +4852,21 @@ d3.select("body").append("div").attr("id","favesDiv")
   })
 
 function expandFavourites(){
+  var curlyHeight = ((getBbox("favesDiv").top - getBbox("btnSubsliders_1").top - getBbox("favesDiv").height)*0.9) + "px"
+  console.log("curly height: " + curlyHeight)
   // attach curly braces
-  d3.select("#favesDiv").append("img")
+  d3.select("body").append("img")
   .attr("id","curlytop").attr("src","img/curlybracetop.png")
-    .style("right", getBbox("favesDiv").right + getBbox("favesDiv").width/2)
+    // .style("right", getBbox("favesDiv").right + getBbox("favesDiv").width/2)
     .style("bottom", getBbox("favesDiv").bottom + "px")
-    .style("height", getBbox("btnSubsliders_1").bottom - getBbox("favesDiv").bottom - getBbox("favesDiv").height + "px")
+    .style("height", curlyHeight)
     .transition().duration(500).style("opacity",0.5)
 
-  d3.select("#favesDiv").append("img")
+  d3.select("body").append("img")
   .attr("id","curlybtm").attr("src","img/curlybracebtm.png")
-    .style("right", getBbox("favesDiv").right + getBbox("favesDiv").width/2)
+    // .style("right", getBbox("favesDiv").right + getBbox("favesDiv").width/2)
     .style("top", getBbox("favesDiv").top + getBbox("favesDiv").height + 3 + "px")
-    .style("height", getBbox("btnSubsliders_1").bottom - getBbox("favesDiv").bottom - getBbox("favesDiv").height + "px")
+    .style("height", curlyHeight)
     .transition().duration(500).style("opacity",0.5)
 
   // append the favourites container
@@ -4869,7 +4877,36 @@ function expandFavourites(){
     .transition().duration(500)
     .style("opacity",1).style("right","0.5%")
   // move in from the right
-  d3.select("#favesDiv").transition().duration(500).style("right","8%")
+  d3.select("#favesDiv").transition().duration(500)
+  .style("right",function(){
+      if($(window).width() >= 1024){
+        return "8%";
+      }else if($(window).width() >= 768){
+        return "12%";
+      }else if($(window).width() >= 320){
+        return "12%";
+      }
+  })
+  d3.select("#curlytop").style("right","0%").transition().duration(500)
+  .style("right",function(){
+      if($(window).width() >= 1024){
+        return "5%";
+      }else if($(window).width() >= 768){
+        return "10%";
+      }else if($(window).width() >= 320){
+        return "10%";
+      }
+  }).style("opacity",0.5)
+  d3.select("#curlybtm").style("right","0%").transition().duration(500)
+  .style("right",function(){
+      if($(window).width() >= 1024){
+        return "5%";
+      }else if($(window).width() >= 768){
+        return "10%";
+      }else if($(window).width() >= 320){
+        return "10%";
+      }
+  }).style("opacity",0.5)
   // append all favourites
   // d3.select("#favesSvg").append("")
   appendFavourites()
@@ -4878,9 +4915,19 @@ function expandFavourites(){
 function collapseFavourites(){
   // remove the favourites container
   d3.select("#favesSvg").transition().duration(500).style("right","-10%").remove()
-  d3.select("#favesDiv").transition().duration(500).style("right","3%")
-  d3.select("#curlytop").transition().duration(500).style("opacity",0).remove()
-  d3.select("#curlybtm").transition().duration(500).style("opacity",0).remove()
+  d3.select("#favesDiv").transition().duration(500).style("right",function(){
+      if($(window).width() >= 1024){
+        return "3%";
+      }else if($(window).width() >= 768){
+        return "5%";
+      }else if($(window).width() >= 320){
+        return "5%";
+      }
+  })
+  d3.select("#curlytop").transition().duration(500)
+  .style("right","0%").style("opacity",0).remove()
+  d3.select("#curlybtm").transition().duration(500)
+  .style("right","0%").style("opacity",0).remove()
 }
 
 function appendFavourites(){
