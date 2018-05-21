@@ -6,11 +6,17 @@
 }*/
 .fa-star { margin: 0px 7px 0px -1px; }
 
-#carousel { padding: 20px; width: 290px; height: 120px; background: white; position: absolute; margin-top: -55px; margin-left: 35px; }
+.slick-dots { margin-top: -20px; }
+
+#carousel { /*padding: 20px;*/ height: 120px; width: 290px; background: white; position: absolute; margin-top: -55px; margin-left: 35px; }
 
 .slick-next { margin-right: -20px; }
 
 .slick-prev { margin-left: -20px; }
+
+.carouselDiv { height: 120px; width: 290px; padding: 20px; }
+
+#carousel1 { padding: 0px; /* background-image: url(../img/enrolment.jpg);*/ height: 120px; width: 290px; }
 
 #navBar { height: 40px; background: #F8F8F8; padding: 2px 0px 10px 0px; box-shadow: 0px 2px 3px 0 rgba(0, 0, 0, 0.2); }
 
