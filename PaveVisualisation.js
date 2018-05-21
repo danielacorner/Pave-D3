@@ -372,14 +372,20 @@ function resize() {
 
 
 function handleMouseover(){
+
+  var origWidth = 290,
+  origHeight = 120,
+  zoomWidth = 800,
+  zoomHeight = 547
+
   d3.select("body")
   .append("div")
   .attr("id","img-slide00Zoomed")
   .attr("class","imgZoomed")
   .style("pointer-events","none")
-  .style("width","290px")
-  .style("height","120px")
-  .style("background-size","580px 240px")
+  .style("width",origWidth+"px")
+  .style("height",origHeight+"px")
+  .style("background-size",origWidth+"px "+origHeight+"px")
   .style("background-image","url(img/enrolment.jpg)")
   .style("position","fixed")
   .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top) + "px" })
@@ -389,10 +395,11 @@ function handleMouseover(){
   .style("opacity",0)
   .transition().ease(d3.easeExp).duration(200)
   .style("opacity",1)
-  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().height/2) + "px" })
-  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().width/2) + "px" })
-  .style("width","580px")
-  .style("height","240px")
+  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top - ((zoomHeight/2)-(origHeight/2))) + "px" }) // move by (half bigger div - half smaller div)
+  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left - ((zoomWidth/2)-(origWidth/2))) + "px" })
+  .style("width",zoomWidth+"px")
+  .style("height",zoomHeight+"px")
+  .style("background-size",zoomWidth+"px "+zoomHeight+"px")
 }
 function handleMouseout(){
   d3.selectAll(".imgZoomed").transition().ease(d3.easeExp).duration(200)
