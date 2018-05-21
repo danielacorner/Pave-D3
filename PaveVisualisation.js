@@ -377,19 +377,31 @@ function handleMouseover(){
   .attr("id","img-slide00Zoomed")
   .attr("class","imgZoomed")
   .style("pointer-events","none")
-  .style("width","580px")
-  .style("height","240px")
+  .style("width","290px")
+  .style("height","120px")
   .style("background-size","580px 240px")
   .style("background-image","url(img/enrolment.jpg)")
   .style("position","fixed")
-  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top -  document.getElementsByClassName("slick-current")[0].getBoundingClientRect().height/2) + "px" })
-  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().width/2) + "px" })
+  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top) + "px" })
+  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left) + "px" })
   .style("z-index","999")
   .style("box-shadow","0px 2px 4px 0 rgba(0,0,0,0.4)")
-
+  .style("opacity",0)
+  .transition().ease(d3.easeExp).duration(200)
+  .style("opacity",1)
+  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().height/2) + "px" })
+  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().width/2) + "px" })
+  .style("width","580px")
+  .style("height","240px")
 }
 function handleMouseout(){
-  d3.selectAll(".imgZoomed").remove()
+  d3.selectAll(".imgZoomed").transition().ease(d3.easeExp).duration(200)
+    .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top) + "px" })
+    .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left) + "px" })
+    .style("width","290px")
+    .style("height","120px")
+    .style("opacity",0)
+    .remove()
 }
 // number of distinct clusters
 var industries = [];
