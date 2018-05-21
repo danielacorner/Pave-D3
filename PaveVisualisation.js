@@ -374,21 +374,22 @@ function resize() {
 function handleMouseover(){
   d3.select("body")
   .append("div")
-  .attr("id","img-slide00")
+  .attr("id","img-slide00Zoomed")
+  .attr("class","imgZoomed")
   .style("pointer-events","none")
   .style("width","580px")
   .style("height","240px")
   .style("background-size","580px 240px")
   .style("background-image","url(img/enrolment.jpg)")
   .style("position","fixed")
-  .style("top",function(){ return (getBbox("slick-slide00").top - getBbox("slick-slide00").height/2) + "px" })
-  .style("left",function(){ return (getBbox("slick-slide00").left - getBbox("slick-slide00").width/2) + "px" })
+  .style("top",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().top -  document.getElementsByClassName("slick-current")[0].getBoundingClientRect().height/2) + "px" })
+  .style("left",function(){ return (document.getElementsByClassName("slick-current")[0].getBoundingClientRect().left - document.getElementsByClassName("slick-current")[0].getBoundingClientRect().width/2) + "px" })
   .style("z-index","999")
   .style("box-shadow","0px 2px 4px 0 rgba(0,0,0,0.4)")
 
 }
 function handleMouseout(){
-  d3.select("#img-slide00").remove()
+  d3.selectAll(".imgZoomed").remove()
 }
 // number of distinct clusters
 var industries = [];
@@ -1209,7 +1210,7 @@ var graphMode;
     // });
     });
 
-d3.select("#slick-slide00")
+d3.select(".slick-current")
   .on("mouseover",handleMouseover) // image appends and removes itself on mouseout
   .on("mouseout",handleMouseout)
 
