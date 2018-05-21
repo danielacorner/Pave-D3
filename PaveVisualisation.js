@@ -815,6 +815,10 @@ var defs = svg.append("defs");
           return "../../img/NOC_images/"+d.noc+".jpg"
         })
 
+// svg.selectAll("use")
+//     .data(datapoints)
+//     .enter().append("use")
+//     .attr("xlink:href",function(d){ return "#pattern_"+d.id})
 
 
 function createHoverImg(d) {
@@ -843,8 +847,22 @@ function createHoverImg(d) {
     }
   }
 
-  var imgCircle = d3.select("#chart").append("circle")
+  var imgCircle = d3.select("body").append("svg")
+    .attr("class","circleSvg")
+    .style("padding-top","135px")
+    .style("margin-top","-135px")
+    // .style("padding-top","100px")
+    // .style("margin-top","-100px")
+    .style("z-index",999)
+    .style("pointer-events","none")
+    .attr("height",$(window).height())
+    .attr("width",$(window).width())
+    .style("position","fixed") //bookmark
+    .attr("left",0)
+    .attr("top",0)
+    .append("circle")
     .attr("class","circleImg")
+    .style("z-index",999)
     .attr("cx",circLeft)
     .attr("cy",circTop)
     .attr("fill", "url(#pattern_"+d.id+")")
@@ -856,12 +874,12 @@ function createHoverImg(d) {
     .style("stroke","black")
     .style("stroke-width","1")
     .style("position","fixed") //bookmark
-    .style("z-index","999")
     .style("pointer-events","none")
 
     // .attr("cx",)
 }
 function hideHoverImg() {
+  d3.selectAll(".circleSvg").transition().duration(200).style("opacity",0).remove()
   d3.selectAll(".circleImg").transition().duration(200).style("opacity",0).remove()
 }
 

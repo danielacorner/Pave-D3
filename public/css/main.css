@@ -214,6 +214,8 @@ path { pointer-events: none; }
 
 .answerDiv { height: auto; width: 350px; position: fixed; z-index: 99; padding: 10px; border: 1px solid #49AC52; border-radius: 8px; font-family: "Raleway"; font-size: 18px; background: white; line-height: 19px; color: #49AC52; box-shadow: 3px 3px 17px grey; }
 
+.circleSvg { pointer-events: none; }
+
 .circleImg { filter: url(Pave.html#f3); }
 
 .circleTutorial1 { filter: url(Tutorial1.html#f2); }

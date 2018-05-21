@@ -598,7 +598,8 @@ path{
     color: $grn;
     box-shadow: 3px 3px 17px grey;
 }
-.circleImg {filter: url(Pave.html#f3); }
+.circleSvg {pointer-events: none;}
+.circleImg {filter: url(Pave.html#f3);}
 .circleTutorial1 {filter: url(Tutorial1.html#f2);}
 .circleTutorial2 {filter: url(Tutorial2.html#f2);}
 .circleTutorial3 {filter: url(Tutorial3.html#f2);}

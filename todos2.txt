@@ -2,6 +2,11 @@
 - mobile version
 
 current:
+- image z-index
+- axis titles inactivetext 
+- graph explainer question position
+- navbar padding
+- different colours for active/inactive/different functions
 - responsivify favesDiv
 - retain colourlegend opacities on favourite hover
 - bug: favourites colour not correct on append (some but not all circles)
