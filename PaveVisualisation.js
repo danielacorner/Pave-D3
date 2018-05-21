@@ -812,7 +812,7 @@ var defs = svg.append("defs");
       .attr("preserveAspectRatio", "none")
       // .attr("xmlns:xlink:href","/img/NOC_images/"+d.noc+".jpg")
       .attr("xlink:href",function(d) {
-          return "/../Pave-D3/img/NOC_images/"+d.noc+".jpg"
+          return "../../img/NOC_images/"+d.noc+".jpg"
         })
 
 
