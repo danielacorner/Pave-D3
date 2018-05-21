@@ -58,7 +58,7 @@ a#skipTutorial { margin-top: 0.6vw; }
 
 .link-top2:hover { color: #3C8D44; }
 
-.link-top { font-size: 20px; padding-left: 30px; font-weight: bold; color: #49AC52; }
+.link-top { font-size: 20px; padding-left: 17px; font-weight: bold; color: #49AC52; }
 
 .link-top2 { font-size: 18px; padding-left: 3%; font-weight: bold; color: #49AC52; }
 
@@ -291,7 +291,8 @@ path { pointer-events: none; }
 /*Media queries*/
 /*Mobile*/
 @media only screen and (min-width: 320px) { #grid-container-views, .imgGraphExplain { right: 20px; }
-  #titleBar { position: fixed; height: 10vh; margin-left: 20px; margin-top: -15px; }
+  #titleBar { position: fixed; height: 55px; width: 100%; box-shadow: 0px 2px 3px 0 rgba(0, 0, 0, 0.2); margin-top: -25px; }
+  .title { margin-top: 3px; margin-left: 12px; }
   .link-top2 { padding-left: 15px; }
   #searchDiv { top: 0.5px; box-shadow: none; }
   #search-btn-div { top: -1px; }
@@ -316,10 +317,10 @@ path { pointer-events: none; }
   #resetFilters, #graph { width: 185px; }
   #resetFilters { margin-bottom: 0px; }
   /*#graph{ margin-bottom: -15px; }*/
-  #searchDiv { top: 13px; /*width: 40%;*/ }
+  #searchDiv { top: 8px; right: 56px; /*width: 40%;*/ }
+  #search-btn-div { top: 6px; right: 13px; }
   #btnColours { position: fixed; left: 45px; bottom: 255px; }
   #btnSizes { position: fixed; right: 45px; bottom: 255px; }
-  #search-btn-div { top: 11px; }
   #sliderDiv_skillsComp { bottom: 9vh; }
   #sliderDiv_skillsMath { bottom: 9vh; }
   #sliderDiv_skillsLang { top: 9vh; }

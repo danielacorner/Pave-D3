@@ -145,7 +145,7 @@ a#skipTutorial {
 }
 .link-top {
  font-size: 20px;
- padding-left: 30px; 
+ padding-left: 17px; 
  font-weight: bold; 
  color: $grn;
 }
@@ -737,9 +737,14 @@ path{
   }
   #titleBar{
     position: fixed;
-    height: 10vh;
-    margin-left: 20px;
-    margin-top: -15px;
+    height: 55px;
+    width: 100%;
+    box-shadow: 0px 2px 3px 0 rgba(0,0,0,0.2);
+    margin-top: -25px;
+  }
+  .title{
+    margin-top: 3px; 
+    margin-left: 12px;
   }
   .link-top2{ padding-left: 15px; }
   #searchDiv{
@@ -815,8 +820,13 @@ path{
   #resetFilters{ margin-bottom: 0px; }
   /*#graph{ margin-bottom: -15px; }*/
   #searchDiv{
-    top: 13px;
+    top: 8px;
+    right: 56px;
     /*width: 40%;*/
+  }
+  #search-btn-div{
+    top: 6px;
+    right: 13px;
   }
   #btnColours{
     position: fixed;
@@ -827,9 +837,6 @@ path{
     position: fixed;
     right: 45px;
     bottom: 255px;
-  }
-  #search-btn-div{
-    top: 11px;
   }
   #sliderDiv_skillsComp{
     bottom: 9vh;
