@@ -371,6 +371,25 @@ function resize() {
 } // end of resize()
 
 
+function handleMouseover(){
+  d3.select("body")
+  .append("div")
+  .attr("id","img-slide00")
+  .style("pointer-events","none")
+  .style("width","580px")
+  .style("height","240px")
+  .style("background-size","580px 240px")
+  .style("background-image","url(img/enrolment.jpg)")
+  .style("position","fixed")
+  .style("top",function(){ return (getBbox("slick-slide00").top - getBbox("slick-slide00").height/2) + "px" })
+  .style("left",function(){ return (getBbox("slick-slide00").left - getBbox("slick-slide00").width/2) + "px" })
+  .style("z-index","999")
+  .style("box-shadow","0px 2px 4px 0 rgba(0,0,0,0.4)")
+
+}
+function handleMouseout(){
+  d3.select("#img-slide00").remove()
+}
 // number of distinct clusters
 var industries = [];
 datapoints.forEach(function(row){
@@ -686,6 +705,7 @@ circles = svg.selectAll("circle")
       // circles.transition().duration(2500).style("opacity",1)
         
       // }, 500)
+
 
 
 d3.select("#chart").on("click", function(d){
@@ -1170,21 +1190,29 @@ var graphMode;
 
         "</div>")
   d3.select("#tooltipBottomDiv").append("div")
-  .attr("id","carousel")
+  .attr("id","carousel").style("padding","0px")
   .html(
     "<div class='carouselTooltip'>"+
-    "<div style='background: lavender'>Check out this sweet content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
-    "<div style='background: limegreen'>Oh wow some more content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
-    "<div style='background: yellow'>No way, even more content? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
+    "<div id='carousel1' class='carouselDiv' style='background-image: url(img/enrolment.jpg); height: 120px; width: 290px; background-size: 290px 120px; background-repeat: no-repeat;'>"+
+    "</div>"+
+    "<div id='carousel2' class='carouselDiv'>Oh wow some more content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
+    "<div id='carousel3' class='carouselDiv'>No way, even more content? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>"+
     "</div>"
     )
 
   // $(document).ready(function(){
     $('.carouselTooltip').slick({
-      autoplay: true
+      autoplay: true,
+      centerPadding: "0px",
+      dots: true,
       // more settings at http://kenwheeler.github.io/slick/#settings
     // });
     });
+
+d3.select("#slick-slide00")
+  .on("mouseover",handleMouseover) // image appends and removes itself on mouseout
+  .on("mouseout",handleMouseout)
+
 
    }, 275);
 
