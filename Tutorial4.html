@@ -37,7 +37,7 @@
 	<div class="title" align="left">
 		<h1 style="font-size: 3vw; font-weight: bold; color: #49AC52; text-align: left;">
 			
-			<a id="homepage" href="index.html" style="">
+			<a class="homepage" href="index.html" style="">
 			Pave</a>
 
       <div id="progressTutorial0" class="progressTutorial">
@@ -129,7 +129,7 @@ height = window.innerHeight/1.5,
 d3.select(window).on("resize", function() {
   resize();
 
-  forceCollide = d3.forceCollide($(window).width()*-0.08)
+  forceCollide = d3.forceCollide($(window).width()*-0.00)
   forceGravity = d3.forceManyBody().strength($(window).width()*-0.05)
 
   simulation.force("collide", forceCollide).force("gravity", forceGravity)
@@ -207,7 +207,13 @@ function resize() {
 
 
   if(typeof circles != "undefined"){
+    if(w < 992){
+
     circles.attr("transform", circleHeight(0, -130+$(window).width()*0.080 )) //flag! need to make equation for width/height ratio
+    } else{
+    circles.attr("transform", circleHeight(0, -130+$(window).width()*0.080 + 60 )) //flag! need to make equation for width/height ratio
+      
+    }
   }
 
   // graphYtranslate = window.innerHeight*0.12 - 16;
@@ -371,7 +377,7 @@ store = nodes;
 
 // Simulation, forces, & tick function
     // Forces for the simulation
-var forceCollide = d3.forceCollide($(window).width()*-0.08)
+var forceCollide = d3.forceCollide($(window).width()*-0.00)
 var forceXCombine = d3.forceX().strength(.3)
 var forceYCombine = d3.forceY().strength(.3)
 // default strength = -30, negative strength = repel, positive = attract
@@ -473,7 +479,7 @@ circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", circleHeight(0,0) ) //flag! need to make equation for width/height ratio
+    .attr("transform", circleHeight(0, -130+$(window).width()*0.080 )) //flag! need to make equation for width/height ratio
     .attr("id",function(d) { return "circle_"+d.id })
     .attr("class","jobCircle")
     .style("z-index", -1)
@@ -624,7 +630,7 @@ var defs = svg.append("defs");
       .attr("preserveAspectRatio", "none")
       // .attr("xmlns:xlink:href","/img/NOC_images/"+d.noc+".jpg")
       .attr("xlink:href",function(d) {
-          return "/img/NOC_images/"+d.noc+".jpg"
+          return "../../Pave-D3/img/NOC_images/"+d.noc+".jpg"
         })
 
 
@@ -1047,18 +1053,14 @@ function tooltipSmall(d) {
 }
 
 // on start, transition in radii from 0
-circles.transition()
-.duration(2000)
+circles.style("opacity",0)
+.transition().duration(2000)
 .delay(function(d, i) { return i * 4})
 .attrTween("r", function(d) {
   var i = d3.interpolate(0, d.radius*0.07 + "vw");
   return function(t) { return d.radius = i(t); };
 })
-.styleTween("opacity", function() {
-  var i = d3.interpolate(0, 1);
-  return function(t) { return i(t) }
-});
-
+.style("opacity",1)
 
 // // Enable dragging
 // function dragstarted(d) { // no dragging in graph mode
