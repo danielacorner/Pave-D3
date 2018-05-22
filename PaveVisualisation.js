@@ -3932,7 +3932,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("position", "fixed")
     .style(leftOrRight, xtrans+"vw")
     .style(topOrBottom, ytrans+"vh")
-    // lg and xl
+    // slider title
     .html(
       "<img id=question_"+i+" style='border-radius: 29px; display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
@@ -3974,8 +3974,9 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("top", 56+"px") // y position
     // .style("margin-left", -sub_xtranslate+"%") // x position
     .attr("id", "slider_"+i)
-    .attr("width", 250)
-    .attr("height", 60);
+    .style("width", 260)
+    .attr("height", 60)
+    .style("padding-right","4px")
 
 $(document).ready(function(){resize()})
 
@@ -4780,15 +4781,20 @@ filterAll = function() {
       // find the minimum of each slider on the current graphed set
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       // move the slider handle
-      handleArray[i].attr("cx", thisMinimum);
+      // (transition slider handles but not insets)
+      handleArray[i].transition().duration(300).attr("cx", thisMinimum);
       // fill the left side green
       d3.select("#inset-left_"+i).attr("x2", thisMinimum )
     }else if(event.target.id == i) {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArrayMain[i]]) })
       // fill the left side green (using mouse position on current slider)
       d3.select("#inset-left_"+i).attr("x2", function() {
-        if (sliderScaleArray[i].invert(d3.event.x) <= 0) { return sliderScaleArray[i](sliderPositionsArray[i]) }
-        else { 
+        console.log(sliderScaleArray[i].invert(d3.event.x))
+        // block at left side
+        if (sliderScaleArray[i].invert(d3.event.x) <= 0) { return sliderScaleArray[i](sliderPositionsArray[i])
+        // block at right side
+        // }else if (sliderScaleArray[i].invert(d3.event.x) > 250){ return sliderScaleArray[i](sliderPositionsArray[i])
+        }else{ 
           return d3.event.x }
         } )
     }
