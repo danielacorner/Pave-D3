@@ -569,7 +569,14 @@ circles = svg.selectAll("circle")
 .data(nodes)
 .enter().append("circle")
     .attr("r", 0) // start at 0 radius and transition in
-    .attr("transform", circleHeight(0,0) ) //flag! need to make equation for width/height ratio
+
+    .attr("transform", function(){
+      if($(window).width() < 992){
+        return circleHeight(0, -130+$(window).width()*0.080 ) //flag! need to make equation for width/height ratio
+      } else{
+        return circleHeight(0, -130+$(window).width()*0.080 + 60 ) //flag! need to make equation for width/height ratio
+      }
+    })
     .attr("id",function(d) { return "circle_"+d.id })
     .attr("class","jobCircle")
     .style("z-index", -1)
@@ -1428,12 +1435,11 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("left", "11vw")
     .style("top", "36vw")
     // lg and xl
-    .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='margin-left: 2vw;"
+    .html("<div id='sliderMath' class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='margin-left: 2vw;"
       +"font-size: 150%; font-weight: bold;"
       +" color:  #49AC52; font-family: Raleway'>"
       +sliderTitlesArray[i] // "Language skills"
-      +"<img id=question_"+i+" class='img-question d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' src='img/question.png' "
-      +"alt='help' height='21' width = '24'>"
+
       +"</div>"
       )
 
@@ -1852,71 +1858,6 @@ resetFilters = function(mode) {
 
   }
 
-
-/////////////////////////// Skillset Explainer Divs /////////////////////////////////
-
-var explainerDivs = [
-
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Oral Communication</strong>: Verbally expressing ideas and information to others.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Reading</strong>: Understanding written materials.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Writing</strong>: Expressing ideas in writing.</p>",
-
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Decision Making</strong>: Making a choice from different options by using information.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Job Task Planning and Organizing</strong>: Planning and organizing one’s own work.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Problem Solving</strong>: Identifying and solving problems.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Critical Thinking</strong>: Making judgments by using standards to evaluate ideas and information and the related results.</p>",
-
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Measurement and Calculation</strong>: Measuring and calculating amounts, areas, volumes, distances.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Money Math</strong>: Using math skills to deal with money, such as handling cash, preparing bills, and making payments.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Number Estimation</strong>: Quickly guessing answers to arithmetic questions (addition, subtraction, multiplication, and division)</p>" +
-"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Scheduling, Budgeting, Accounting</strong>: Planning for the best use of time and money, and monitoring the use of time and money.</p>",
-
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Data Analysis</strong>: Gathering and analyzing numerical data.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Finding Information</strong>: Finding information from a variety of sources to complete a task.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Digital Technology</strong>: Using any type of digital technology.</p>" +
-"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Document Use</strong>: Using different types of material (labels, signs, lists, tables, graphs, forms, diagrams, blueprints, and other materials) to gather information.</p>",
-
-]
-
-// positions relative to question mark icons
-
-
-// setTimeout(function() {
-var offsetDown = 0
-var eTops = [] // comp
-
-    eTops.push(document.querySelector("#question_0").getBoundingClientRect().top + offsetDown) // lang
-    eTops.push(document.querySelector("#question_1").getBoundingClientRect().top + offsetDown) // logi
-    eTops.push(document.querySelector("#question_2").getBoundingClientRect().top - 140) // math
-    eTops.push(document.querySelector("#question_3").getBoundingClientRect().top - 105) // comp
-
-var offsetRight = 55
-var eLefts = []
-
-    eLefts.push(document.querySelector("#question_0").getBoundingClientRect().left + offsetRight) // lang
-    eLefts.push(document.querySelector("#question_1").getBoundingClientRect().left - 7*offsetRight) // logi
-    eLefts.push(document.querySelector("#question_2").getBoundingClientRect().left - 7*offsetRight) // math
-    eLefts.push(document.querySelector("#question_3").getBoundingClientRect().left + offsetRight) // comp
-
-// for (var i =  0; i < explainerDivs.length; i++) {
-  
-  d3.select("#question_"+2).on("mouseenter", function(){
-    // thisNum = _i
-    var thisNum = d3.select(this).attr("id").substring(9,10)
-
-    d3.select("body").append("div")
-    .style("top",eTops[thisNum]+"px")
-    .style("left",eLefts[thisNum]+"px")
-    .attr("id","answer_"+thisNum)
-    .attr("class","answerDiv")
-    .html(explainerDivs[thisNum])
-    .style("opacity",0).transition().duration(200).style("opacity",1)
-
-  })
-  .on("mouseout", function(){
-    d3.selectAll(".answerDiv").transition().duration(275).style("opacity",0).remove()
-  })
-
 // }
 ///////////// Reset Filters /////////////
 
@@ -2146,6 +2087,75 @@ function updateMulti(h, mode) {
 // } // end if graph length > 10
 };//end updateMulti
 
+
+
+/////////////////////////// Skillset Explainer Divs /////////////////////////////////
+
+var explainerDivs = [
+
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Oral Communication</strong>: Verbally expressing ideas and information to others.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Reading</strong>: Understanding written materials.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Writing</strong>: Expressing ideas in writing.</p>",
+
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Decision Making</strong>: Making a choice from different options by using information.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Job Task Planning and Organizing</strong>: Planning and organizing one’s own work.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Problem Solving</strong>: Identifying and solving problems.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Critical Thinking</strong>: Making judgments by using standards to evaluate ideas and information and the related results.</p>",
+
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Measurement and Calculation</strong>: Measuring and calculating amounts, areas, volumes, distances.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Money Math</strong>: Using math skills to deal with money, such as handling cash, preparing bills, and making payments.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Number Estimation</strong>: Quickly guessing answers to arithmetic questions (addition, subtraction, multiplication, and division)</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Scheduling, Budgeting, Accounting</strong>: Planning for the best use of time and money, and monitoring the use of time and money.</p>",
+
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Data Analysis</strong>: Gathering and analyzing numerical data.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Finding Information</strong>: Finding information from a variety of sources to complete a task.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 10px;'><strong>Digital Technology</strong>: Using any type of digital technology.</p>" +
+"<p style='margin-top: 0px; margin-bottom: 0px;'><strong>Document Use</strong>: Using different types of material (labels, signs, lists, tables, graphs, forms, diagrams, blueprints, and other materials) to gather information.</p>",
+
+]
+
+// positions relative to question mark icons
+d3.select("body").append("div")
+  .html("<img id=question_"+2+" class='img-question' src='img/question.png' "
+      +"alt='help' height='21' width = '24'>")
+  .style("position","fixed").style("pointer-events","auto")
+  .style("right",(document.querySelector("#sliderMath").getBoundingClientRect().right+102) + "px")
+  .style("top",(document.querySelector("#sliderMath").getBoundingClientRect().top+2) + "px")
+
+// setTimeout(function() {
+// var offsetDown = 0
+// var eTops = [] // comp
+
+//     eTops.push(document.querySelector("#question_2").getBoundingClientRect().top - 140) // math
+
+
+// var offsetRight = 55
+// var eLefts = []
+
+//     eLefts.push(document.querySelector("#question_2").getBoundingClientRect().left - 7*offsetRight) // math
+
+
+// for (var i =  0; i < explainerDivs.length; i++) {
+  
+  d3.select("#question_"+2).on("mouseenter", function(){
+    // thisNum = _i
+    var thisNum = d3.select(this).attr("id").substring(9,10)
+
+    d3.select("body").append("div")
+    .style("top","200px")
+    .style("left",
+      (document.querySelector("#sliderMath").getBoundingClientRect().left+
+      document.querySelector("#sliderMath").getBoundingClientRect().width+30)+
+        "px")
+    .attr("id","answer_"+thisNum)
+    .attr("class","answerDiv")
+    .html(explainerDivs[thisNum])
+    .style("opacity",0).transition().duration(200).style("opacity",1)
+
+  })
+  .on("mouseout", function(){
+    d3.selectAll(".answerDiv").transition().duration(275).style("opacity",0).remove()
+  })
 
 //////////////// Filter Functions 3: filter on all variables at once //////////////////////
 
