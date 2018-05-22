@@ -1284,7 +1284,13 @@ resetFilters = function(mode) {
 enterUpdateCircles = function() {
     var newCircles = circles.enter().append("circle")
     .attr("r", function(d) { return d.radius }) // start at full radius
-    .attr("transform", "translate("+window.innerWidth*0.5+","+ (120 + window.innerHeight*0.2) +")") //flag! need to make equation for width/height ratio
+    .attr("transform", , function(){
+      if($(window).width() < 992){
+        return circleHeight(0, -130+$(window).width()*0.080 ) //flag! need to make equation for width/height ratio
+      } else{
+        return circleHeight(0, -130+$(window).width()*0.080 + 60 ) //flag! need to make equation for width/height ratio
+      }
+    })
     .style("fill", function(d) { 
       if(circleExpanded[d.id] != 1){
         return color(d.cluster); 
