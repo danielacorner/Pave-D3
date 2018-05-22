@@ -179,7 +179,7 @@ rect.legendBtn { stroke: #fff; fill: #fff; fill-opacity: 0; stroke-opacity: 0; }
 
 .track { stroke: #49AC52; stroke-width: 5px; }
 
-.track-inset { stroke: #49AC52; stroke-width: 5px; stroke-opacity: 0.3; filter: url(../Pave.html#f2); }
+.track-inset { stroke: #49AC52; stroke-width: 5px; stroke-opacity: 0.3; filter: url(../../Pave-D3/Pave.html#f2); }
 
 .track-inset-left { stroke: #CBCBCB; stroke-width: 5px; }
 
@@ -187,7 +187,7 @@ rect.legendBtn { stroke: #fff; fill: #fff; fill-opacity: 0; stroke-opacity: 0; }
 
 .handle { fill: white; stroke: #379392; stroke-opacity: 0.9; stroke-width: 3px; filter: url(Pave.html#f1); }
 
-.handleTutorial { fill: white; stroke: #379392; stroke-opacity: 0.9; stroke-width: 3px; filter: url(../Tutorial5.html#f1); }
+.handleTutorial { fill: white; stroke: #379392; stroke-opacity: 0.9; stroke-width: 3px; filter: url(../../Pave-D3/Tutorial5.html#f1); }
 
 .sliderText { font-size: 100%; }
 
