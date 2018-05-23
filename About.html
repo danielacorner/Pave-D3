@@ -78,146 +78,32 @@
 		</div>
 	</div> <!-- end of title -->
 
-	<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; padding-top: 20vh" class="chart">	</svg>
-	<!-- end of headers -->
-
-	<!-- One column, visualisation & buttons in the middle, filters on top -->
-	<!-- Change to filters on sides (negative margins) on bigger screens -->
-
-	<!-- Column 1: slider 1 & 2 (Logic, Math) -->
-
-
-
-	<!-- removed: slider with dropdown selection -->
-	<!-- <div style="visibility: hidden; position: relative; bottom: 600px; left: 270px" align="left" id="dropdownSliderDiv"> -->
-
-		<!-- removed: slider title based on dropdown value -->
-		<!-- <div id="dropdown1Title" style="font-weight: bold; font-family: Raleway"> -->
-			<!-- </div> -->
-			<!-- <select class="col-8" id="dropdown1" style="font-weight: bold; font-family: Raleway"></select>  -->
-			<!-- removed: Slider attached to Dropdown -->
-			<!-- <div type="text" class="slider" id="slider2"> -->
-				<!-- </div> -->
-				<!-- slider array 1: Filter by Stats-->
-				<!-- Buttons -->
-				<div id="topButtons" class="col-4" align="center">
-					<button id="graph" data-toggle="button" type="button" class="btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
-						<span >
-						Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
-					</button>
-
-					<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
-						Click here to compare these jobs.
-						<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
-						</div>
-					</div>
-				</div> <!-- end of topButtons -->
-
-							<!-- suggested views buttons -->
-
-				      <div id='grid-container-views'>
-				        <div class='viewDiv'>
-				          <button id='btnView1' class='views-btn' href='#'>
-				            <p class='p-view'>Income</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Years of Study</p>
-				          </button>
+				      <div id='grid-container-about'>
+				        <div class='about-grid-item'>
 				        </div>
-				        <div class='viewDiv'>
-				          <button id='btnView2' class='views-btn' href='#'>
-				            <p class='p-view'>Income</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Number of Jobs</p>
-				          </button>
+				        <div class='about-grid-item'>
 				        </div>
-				        <div class='viewDiv'>
-				          <button id='btnView3' class='views-btn' href='#'>
-				            <p class='p-view'>Machines</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Number of Jobs</p>
-				          </button>
+				        <div class='about-grid-item'>
 				        </div>
 				      </div>
 
-							<script type="text/javascript">
-  $("#grid-container-views").hide();
-
-								
-											var viewsMinimized = 0;
-											function minimizeViews() {
-												viewsMinimized = 1-viewsMinimized;
-												if(viewsMinimized == 1){
-	// transition opacity and height
-	d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","0")
-	d3.select("#suggested-views-btn").transition().duration(500).style("opacity","0")
-	setTimeout(function(){
-		d3.selectAll(".suggested-views-btn").style("display", "none")
-		d3.selectAll(".list-graphModes").style("height", "0px")
-	}, 500);
-	d3.select("#suggestedViewsDiv").transition().duration(500).style("height", "0px")
-	// switch icon from - to +
-	d3.select("#minimizeIcon").attr("class", "fas fa-plus").style("padding-bottom", "2px").style("padding-right","6px")
-}
-else if(viewsMinimized == 0){
-	d3.select("#suggestedViewsDiv").transition().duration(500).style("height", "250px")
-	d3.selectAll(".suggested-views-btn").style("display", "inline")
-	d3.selectAll(".list-graphModes").style("height", "67px")
-	d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","1")	
-	d3.select("#minimizeIcon").attr("class", "fas fa-window-minimize").style("padding-bottom", "4px").style("padding-right","6px")
-}
-}
-</script>
-
 <!-- This is D3, our graphing library -->
-<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-<!-- d3 svg legend -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-
-<!-- legend container -->
-<g class="legend" id="legend" style="bottom: 230px; margin-left: 60px;">
-
-						<!-- legend buttons -->
-					<button id="btnColours" class="btn btn-legend" style="float: right; margin: 5px; margin-right: 6px">
-						Colour<br>Legend</button>						<!-- legend button -->
-					<button id="btnSizes" class="btn btn-legend" style="float: right; margin: 5px;">
-						Size<br>Legend</button>
-
-</g>		
+<!-- <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script> -->
 
 <!-- slick carousel plugin -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
 
 <!-- The data visualization -->
-<script src="PaveVisualisation.js"></script>
+<!-- <script src="PaveVisualisation.js"></script> -->
 
-<!-- slick carousel experiment -->
-<!-- <script src="slickExperiment.js"></script> -->
 
-<div id="bottomButtons" class="col-4" align="center">
-	<!-- Reset, pause, play buttons -->
-	<div id="playPauseDiv" align="center" style="z-index: -1">
 
-		<button id="resetFilters" type="button" class="btn btn-reset">
-			<span style="padding-right: 6px;">
-			Reset Filters </span> <i class="fa fa-undo-alt"></i>
-		</button> 
-	</div>
 
-	<!-- low filter level warning callout -->
-<!-- 	<div id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea; pointer-events: none;">
-		<span style="color: #FE2E2E">Warning:</span> not many job groups remain!
-	</div> -->
 
-</div>
-<!-- end of centerDiv -->
 
-				<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
 
-				<div id="bottomDiv" class="col-1">
 
-					<div id="sliderArray3" style="margin-left: -15px; margin-top: 20px;" type="text" class="slider"></div>
 
-				</div>	<!-- end of bottomDiv -->	
 
 
 <svg>

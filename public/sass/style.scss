@@ -741,6 +741,7 @@ path{
     width: 100%;
     box-shadow: 0px 2px 3px 0 rgba(0,0,0,0.2);
     margin-top: -25px;
+    /*display: none;*/
   }
   .title{
     margin-top: 3px; 
@@ -811,6 +812,9 @@ path{
 }
 /*Tablet*/
 @media only screen and (min-width: 768px) {
+/*  #titleBar{
+    display: block;
+  }*/
   #grid-container-views {
     right: 20px;
   }
