@@ -729,12 +729,88 @@ path{
   position: fixed;
   padding: 10px;
 }
+.btn-mobile{
+  cursor: pointer;
+  font-size: 20px; 
+  height: 45px; 
+  box-shadow: none;
+  border-style: solid;
+  background: white;
+  color: $grn;
+  border-color: $grn;
+  border-width: 3px;
+  font-weight: bold;
+  font-family: $ff;
+  border-radius: 7px;
+  line-height: 1.2;
+  display: inline;
+}
+.btn-mobile:hover{
+  background: #eaeaea;
+}
+#mobile-buttons-top{
+  position: fixed;
+  width: 90%;
+  left: 5%;
+  top: 15%;
+}
+#graphMobile{
+  width: 38%;
+  margin: 0 1% 0 0;
+}
+#resetMobile{
+  width: 35%;
+  margin: 0 1% 0 0;
+}
+#legendMobile{
+  width: 21%;
+
+}
+#expandSlidersMobile{
+  position: fixed;
+  bottom: 3%;
+  left: 6.5%;
+  width: 87%;
+  border: 3px solid $grn; 
+  border-radius: 23px;
+  pointer-events: auto;
+  box-shadow: 0px 3px 7px 0 rgba(0,0,0,0.4);
+}
+/*button.expand-sliders-btn-expanded{
+  margin: 5px 0px 0px 10px; 
+  background: white; 
+  border: 2px solid $grn; 
+  border-radius: 16px;
+  box-shadow: 0px 2px 7px 0 rgba(0,0,0,0.3);
+  pointer-events: auto;
+}
+button.close-sliders-btn{
+  margin: 5px 0px 0px 10px; 
+  background: none; 
+  border: 2px solid $grn; 
+  border-radius: 16px;
+}*/
+#homepage-mobile{
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+
+
+
+
+
 
 /*Media queries*/
 
 
 /*Mobile*/
 @media only screen and (min-width: 320px) {
+  /*Hide non-mobile elements*/
+  
   #grid-container-views, .imgGraphExplain {
     right: 20px;
   }
@@ -815,6 +891,9 @@ path{
 }
 /*Tablet*/
 @media only screen and (min-width: 768px) {
+  #homepage-mobile{
+    display: none;
+  }
 /*  #titleBar{
     display: block;
   }*/

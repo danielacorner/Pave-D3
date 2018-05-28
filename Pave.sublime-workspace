@@ -523,7 +523,7 @@
 			"file": "public/sass/style.scss",
 			"settings":
 			{
-				"buffer_size": 16353,
+				"buffer_size": 16396,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,7 +532,7 @@
 			"file": "PaveVisualisation.js",
 			"settings":
 			{
-				"buffer_size": 221890,
+				"buffer_size": 221900,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -562,7 +562,6 @@
 			"settings":
 			{
 				"buffer_size": 15500,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -974,6 +973,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"activetext",
+			"inactivetext",
 			"axis",
 			"title",
 			"legendDivSizes",
@@ -1099,9 +1100,7 @@
 			"473",
 			"204",
 			"\"colours\"",
-			"209",
-			"414",
-			"14"
+			"209"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1125,7 +1124,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1134,15 +1133,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16353,
+						"buffer_size": 16396,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12277,
-								12277
+								12262,
+								12262
 							]
 						],
 						"settings":
@@ -1153,27 +1152,12 @@
 							{
 								"close":
 								{
-									"1":
-									[
-										12295,
-										12296
-									]
 								},
 								"icon":
 								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
-									]
 								},
 								"open":
 								{
-									"1":
-									[
-										12236,
-										12237
-									]
 								},
 								"unmatched":
 								{
@@ -1243,8 +1227,8 @@
 								{
 									"1":
 									[
-										12295,
-										12296
+										12264,
+										12265
 									]
 								},
 								"icon":
@@ -1259,8 +1243,8 @@
 								{
 									"1":
 									[
-										12236,
-										12237
+										12233,
+										12234
 									]
 								},
 								"unmatched":
@@ -1330,10 +1314,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 9410.0,
+						"translation.y": 9757.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1342,15 +1326,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 221890,
+						"buffer_size": 221900,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								115299,
-								115299
+								150395,
+								150395
 							]
 						],
 						"settings":
@@ -1364,24 +1348,24 @@
 								{
 									"1":
 									[
-										115298,
-										115299
+										151067,
+										151068
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
 									]
 								},
 								"open":
 								{
 									"1":
 									[
-										115294,
-										115295
+										151002,
+										151003
 									]
 								},
 								"unmatched":
@@ -1452,24 +1436,24 @@
 								{
 									"1":
 									[
-										115298,
-										115299
+										150472,
+										150473
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
 									]
 								},
 								"open":
 								{
 									"1":
 									[
-										115294,
-										115295
+										150334,
+										150335
 									]
 								},
 								"unmatched":
@@ -1539,10 +1523,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 42845.0,
+						"translation.y": 58867.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1566,15 +1550,15 @@
 						{
 							"auto_complete": false,
 							"bracket_highlighter.busy": false,
-							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone": 79,
 							"bracket_highlighter.clone_locations":
 							{
 								"close":
 								{
 									"1":
 									[
-										3962,
-										3965
+										3178,
+										3180
 									]
 								},
 								"icon":
@@ -1589,8 +1573,8 @@
 								{
 									"1":
 									[
-										3919,
-										3922
+										2706,
+										2708
 									]
 								},
 								"unmatched":
@@ -1659,27 +1643,12 @@
 							{
 								"close":
 								{
-									"1":
-									[
-										3178,
-										3180
-									]
 								},
 								"icon":
 								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/tag.png",
-										"region.orangish"
-									]
 								},
 								"open":
 								{
-									"1":
-									[
-										2706,
-										2708
-									]
 								},
 								"unmatched":
 								{
@@ -1750,7 +1719,7 @@
 						"translation.y": 664.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -2038,7 +2007,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]

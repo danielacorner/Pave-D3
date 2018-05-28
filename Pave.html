@@ -41,112 +41,117 @@
 <body scrolling="no">
 
 	<!-- mobile size -->
-	<div id="navBar" class="d-block d-md-none d-lg-none d-xl-none"> 
-			<h1 id="tabletLinks" style="display: inline; font-weight: bold; margin: 0px 15px; font-size: 30px; color: #49AC52; text-align: left;">
-				<a class="homepage" href="index.html">
-				Pave</a>
-				<!-- <span > -->
-					<a class="link-top2" href="about.html" target="_blank"> 
-					About</a>
-					<a class="link-top2" href="help.html" target="_blank"> 
-					Help</a>
-					<a class="link-top2" href="feedback.html" target="_blank"> 
-					Feedback</a>
+	<div id="navBar" class="d-none d-xs-none d-sm-block d-md-none d-lg-none d-xl-none"> 
+		<h1 id="tabletLinks" style="display: inline; font-weight: bold; margin: 0px 15px; font-size: 30px; color: #49AC52; text-align: left;">
+			<a class="homepage" href="index.html">
+			Pave</a>
+			<!-- <span > -->
+				<a class="link-top2" href="about.html" target="_blank"> 
+				About</a>
+				<a class="link-top2" href="resources.html" target="_blank"> 
+				Resources</a>
+				<a class="link-top2" href="feedback.html" target="_blank"> 
+				Feedback</a>
 				<!-- </span> -->
 			</h1>
-	</div>
-
-	<br/>
-	<!-- title bar (tablet & desktop) -->
-	<div id="titleBar" class="d-none d-md-block d-lg-block d-xl-block">
-		<div  class="title" align="left">
-			<h1 style="font-weight: bold; color: #49AC52; text-align: left;">
-
-				<a class="homepage" href="index.html">
-				Pave</a>
-				<span id="links-top">
-					<a class="link-top" href="about.html" target="_blank"> 
-					About</a>
-					<a class="link-top" href="help.html" target="_blank"> 
-					Help</a>
-					<a id="feedback" class="link-top" href="feedback.html" target="_blank"> 
-					Feedback</a>
-
-
-				</span>
-			</h1>
 		</div>
-	</div> <!-- end of title -->
 
-	<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; padding-top: 20vh" class="chart">	</svg>
-	<!-- end of headers -->
+		<br/>
+		<!-- title bar (tablet & desktop) -->
+		<div id="titleBar" class="d-none d-md-block d-lg-block d-xl-block">
+			<div  class="title" align="left">
+				<h1 style="font-weight: bold; color: #49AC52; text-align: left;">
 
-	<!-- One column, visualisation & buttons in the middle, filters on top -->
-	<!-- Change to filters on sides (negative margins) on bigger screens -->
+					<a class="homepage" href="index.html">
+					Pave</a>
+					<span id="links-top">
+						<a class="link-top" href="about.html" target="_blank"> 
+						About</a>
+						<a class="link-top" href="help.html" target="_blank"> 
+						Help</a>
+						<a id="feedback" class="link-top" href="feedback.html" target="_blank"> 
+						Feedback</a>
 
-	<!-- Column 1: slider 1 & 2 (Logic, Math) -->
+
+					</span>
+				</h1>
+			</div>
+		</div> <!-- end of title -->
+
+		<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; padding-top: 20vh" class="chart">	</svg>
+		<!-- end of headers -->
+
+		<!-- Mobile navbar -->
+		<div id="mobile-navbar" class="d-block d-xs-block d-sm-none d-md-none d-lg-none d-xl-none">
+			<a id="homepage-mobile" class="homepage" href="index.html">
+			Pave</a>
+		</div>
+
+		<!-- Mobile buttons -->
+		<div id="mobile-buttons-top">
+			<button id="graphMobile" class="graph-button btn-mobile">
+				<span>Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" class="graph-toggle" src="img/toggle-off.png"></img>
+			</button>
+			<button id="resetMobile" class="btn-mobile">
+				<span style="padding-right: 6px;">
+					Reset Filters </span> <i class="fa fa-undo-alt"></i>
+				</button>
+			<button id="legendMobile" class="btn-mobile">Legend</button>
+		</div>
+		<div id="mobile-buttons-bottom">
+			<button id="expandSlidersMobile" class="btn-mobile"><span style="font-size: 24px">&#9650</span> <span style="padding: 0 28%">Modify a skill filter</span> <span style="font-size: 24px">&#9650</span></button>
+		</div>
 
 
 
-	<!-- removed: slider with dropdown selection -->
-	<!-- <div style="visibility: hidden; position: relative; bottom: 600px; left: 270px" align="left" id="dropdownSliderDiv"> -->
+		<!-- Buttons -->
+		<div id="topButtons" class="col-4" align="center">
+			<button id="graph" data-toggle="button" type="button" class="graph-button btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
+				<span >
+				Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
+			</button>
 
-		<!-- removed: slider title based on dropdown value -->
-		<!-- <div id="dropdown1Title" style="font-weight: bold; font-family: Raleway"> -->
-			<!-- </div> -->
-			<!-- <select class="col-8" id="dropdown1" style="font-weight: bold; font-family: Raleway"></select>  -->
-			<!-- removed: Slider attached to Dropdown -->
-			<!-- <div type="text" class="slider" id="slider2"> -->
-				<!-- </div> -->
-				<!-- slider array 1: Filter by Stats-->
-				<!-- Buttons -->
-				<div id="topButtons" class="col-4" align="center">
-					<button id="graph" data-toggle="button" type="button" class="btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
-						<span >
-						Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
-					</button>
+			<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
+				Click here to compare these jobs.
+				<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
+				</div>
+			</div>
+		</div> <!-- end of topButtons -->
 
-					<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
-						Click here to compare these jobs.
-						<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
-						</div>
-					</div>
-				</div> <!-- end of topButtons -->
+		<!-- suggested views buttons -->
 
-							<!-- suggested views buttons -->
+		<div id='grid-container-views'>
+			<div class='viewDiv'>
+				<button id='btnView1' class='views-btn' href='#'>
+					<p class='p-view'>Income</p> 
+					<p class='p-view'>vs.</p> 
+					<p class='p-view'>Years of Study</p>
+				</button>
+			</div>
+			<div class='viewDiv'>
+				<button id='btnView2' class='views-btn' href='#'>
+					<p class='p-view'>Income</p> 
+					<p class='p-view'>vs.</p> 
+					<p class='p-view'>Number of Jobs</p>
+				</button>
+			</div>
+			<div class='viewDiv'>
+				<button id='btnView3' class='views-btn' href='#'>
+					<p class='p-view'>Machines</p> 
+					<p class='p-view'>vs.</p> 
+					<p class='p-view'>Number of Jobs</p>
+				</button>
+			</div>
+		</div>
 
-				      <div id='grid-container-views'>
-				        <div class='viewDiv'>
-				          <button id='btnView1' class='views-btn' href='#'>
-				            <p class='p-view'>Income</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Years of Study</p>
-				          </button>
-				        </div>
-				        <div class='viewDiv'>
-				          <button id='btnView2' class='views-btn' href='#'>
-				            <p class='p-view'>Income</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Number of Jobs</p>
-				          </button>
-				        </div>
-				        <div class='viewDiv'>
-				          <button id='btnView3' class='views-btn' href='#'>
-				            <p class='p-view'>Machines</p> 
-				            <p class='p-view'>vs.</p> 
-				            <p class='p-view'>Number of Jobs</p>
-				          </button>
-				        </div>
-				      </div>
+		<script type="text/javascript">
+			$("#grid-container-views").hide();
 
-							<script type="text/javascript">
-  $("#grid-container-views").hide();
 
-								
-											var viewsMinimized = 0;
-											function minimizeViews() {
-												viewsMinimized = 1-viewsMinimized;
-												if(viewsMinimized == 1){
+			var viewsMinimized = 0;
+			function minimizeViews() {
+				viewsMinimized = 1-viewsMinimized;
+				if(viewsMinimized == 1){
 	// transition opacity and height
 	d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","0")
 	d3.select("#suggested-views-btn").transition().duration(500).style("opacity","0")
@@ -176,34 +181,34 @@ else if(viewsMinimized == 0){
 <!-- legend container -->
 <g class="legend" id="legend" style="bottom: 230px; margin-left: 60px;">
 
-						<!-- legend buttons -->
-					<button id="btnColours" class="btn btn-legend" style="float: right; margin: 5px; margin-right: 6px">
-						Colour<br>Legend</button>						<!-- legend button -->
-					<button id="btnSizes" class="btn btn-legend" style="float: right; margin: 5px;">
-						Size<br>Legend</button>
+	<!-- legend buttons -->
+	<button id="btnColours" class="btn btn-legend" style="float: right; margin: 5px; margin-right: 6px">
+		Colour<br>Legend</button>						<!-- legend button -->
+		<button id="btnSizes" class="btn btn-legend" style="float: right; margin: 5px;">
+			Size<br>Legend</button>
 
-</g>		
+		</g>		
 
-<!-- slick carousel plugin -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<!-- slick carousel plugin -->
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-<!-- The data visualization -->
-<script src="PaveVisualisation.js"></script>
+		<!-- The data visualization -->
+		<script src="PaveVisualisation.js"></script>
 
-<!-- slick carousel experiment -->
-<!-- <script src="slickExperiment.js"></script> -->
+		<!-- slick carousel experiment -->
+		<!-- <script src="slickExperiment.js"></script> -->
 
-<div id="bottomButtons" class="col-4" align="center">
-	<!-- Reset, pause, play buttons -->
-	<div id="playPauseDiv" align="center" style="z-index: -1">
+		<div id="bottomButtons" class="col-4" align="center">
+			<!-- Reset, pause, play buttons -->
+			<div id="playPauseDiv" align="center" style="z-index: -1">
 
-		<button id="resetFilters" type="button" class="btn btn-reset">
-			<span style="padding-right: 6px;">
-			Reset Filters </span> <i class="fa fa-undo-alt"></i>
-		</button> 
-	</div>
+				<button id="resetFilters" type="button" class="btn btn-reset">
+					<span style="padding-right: 6px;">
+					Reset Filters </span> <i class="fa fa-undo-alt"></i>
+				</button> 
+			</div>
 
-	<!-- low filter level warning callout -->
+			<!-- low filter level warning callout -->
 <!-- 	<div id="graphCallout2" style="z-index: -1; font-size: 18px; padding: 10px 0px 0px 0px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: -25vh; height: 50px; width: 360px; background: #eaeaea; pointer-events: none;">
 		<span style="color: #FE2E2E">Warning:</span> not many job groups remain!
 	</div> -->
@@ -211,13 +216,13 @@ else if(viewsMinimized == 0){
 </div>
 <!-- end of centerDiv -->
 
-				<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
+<!-- Column 3: slider 3 & 4 (Language, Computer) and graph modes suggested views buttons -->
 
-				<div id="bottomDiv" class="col-1">
+<div id="bottomDiv" class="col-1">
 
-					<div id="sliderArray3" style="margin-left: -15px; margin-top: 20px;" type="text" class="slider"></div>
+	<div id="sliderArray3" style="margin-left: -15px; margin-top: 20px;" type="text" class="slider"></div>
 
-				</div>	<!-- end of bottomDiv -->	
+</div>	<!-- end of bottomDiv -->	
 
 
 <svg>
@@ -236,8 +241,8 @@ else if(viewsMinimized == 0){
 		</filter>
 
 		<filter id="f1" width="150%" height="150%">
-      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
-      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+			<feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
+			<feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
 			<feComponentTransfer>
 				<feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
 			</feComponentTransfer>
@@ -245,11 +250,11 @@ else if(viewsMinimized == 0){
 				<feMergeNode/> <!-- this contains the offset blurred image -->
 				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
 			</feMerge>
-    </filter>
+		</filter>
 
 		<filter id="f2" width="150%" height="150%">
-      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
-      <feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
+			<feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="1.5" />
+			<feOffset result="offsetBlur" in="blurOut" dx="1.25" dy="2" />
 			<feComponentTransfer>
 				<feFuncA type="linear" slope="0.4"/> <!-- slope is the opacity of the shadow -->
 			</feComponentTransfer>
@@ -257,19 +262,19 @@ else if(viewsMinimized == 0){
 				<feMergeNode/> <!-- this contains the offset blurred image -->
 				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
 			</feMerge>
-    </filter>
+		</filter>
 
-    <filter id="f3" width="150%" height="150%">
-      <feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="5.5" />
-      <feOffset result="offsetBlur" in="blurOut" dx="2" dy="5" />
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.6"/> <!-- slope is the opacity of the shadow -->
-      </feComponentTransfer>
-      <feMerge> 
-        <feMergeNode/> <!-- this contains the offset blurred image -->
-        <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
-      </feMerge>
-    </filter>
+		<filter id="f3" width="150%" height="150%">
+			<feGaussianBlur result="blurOut" in="SourceAlpha" stdDeviation="5.5" />
+			<feOffset result="offsetBlur" in="blurOut" dx="2" dy="5" />
+			<feComponentTransfer>
+				<feFuncA type="linear" slope="0.6"/> <!-- slope is the opacity of the shadow -->
+			</feComponentTransfer>
+			<feMerge> 
+				<feMergeNode/> <!-- this contains the offset blurred image -->
+				<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+			</feMerge>
+		</filter>
 
 	</defs>
 </svg>

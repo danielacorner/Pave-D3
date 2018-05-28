@@ -191,8 +191,17 @@ function resize() {
       var linksBbox = document.getElementById("tabletLinks").getBoundingClientRect()
       return w - linksBbox.right - 100 + "px"
     }) 
-  }else{
-
+    d3.selectAll(".sliderDiv-container").style("display","none")
+    d3.selectAll(".btn-reset").style("display","none")
+    d3.selectAll(".btn-legend").style("display","none")
+    d3.selectAll(".btn-mobile").style("display","inline")
+    if(w < 520){ // hide icons if < 520px
+      d3.selectAll(".fa-undo-alt").style("display","none")
+      d3.selectAll(".graph-toggle").style("display","none")
+    }else{
+      d3.selectAll(".fa-undo-alt").style("display","inline")
+      d3.selectAll(".graph-toggle").style("display","inline")
+    }
   }
   // tablet
   if(w >= 768) {
@@ -201,7 +210,13 @@ function resize() {
       var linksBbox = document.getElementById("links-top").getBoundingClientRect()
       return w - linksBbox.right - 110 + "px"
     })
+    d3.selectAll(".sliderDiv-container").style("display","block")
+    d3.selectAll(".btn-reset").style("display","block")
+    d3.selectAll(".btn-legend").style("display","block")
+    d3.selectAll(".btn-mobile").style("display","none")
+    // $("#navBar").show()
   }else{
+    // $("#navBar").hide()
 
   }
   // laptop & desktop
@@ -211,34 +226,6 @@ function resize() {
       var linksBbox = document.getElementById("links-top").getBoundingClientRect()
       return w - linksBbox.right - 110 + "px"
     })
-  }else{
-
-  }
-
-  if(w < 768){ // bookmarklet todo: style tablet navbar, decide on 3 breakpoints
-
-    d3.select("#btnColours")
-    .style("position","fixed")
-    .style("left","32px")
-    .style("bottom","180px")
-    d3.select("#btnSizes")
-    .style("position","fixed")
-    .style("right","32px")
-    .style("bottom","180px")
-
-
-    d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
-    d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
-    d3.select("#sliderDiv_skillsLang").style("top", "5vh")
-    d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
-
-    d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
-       .style("width","85px") .style("margin-bottom","-15px")
-    d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
-       .style("width","85px") .style("margin-bottom","-15px")
-
-    $("#titleBar").hide()
-  }else{ // if w > 768 (desktop)
 
     if(graphMode == 0){
       d3.select("#btnColours")
@@ -278,27 +265,34 @@ function resize() {
        .style("width","185px") .style("margin-bottom","25px")
     d3.select("#graph").html("<span>Graph View&nbsp&nbsp</span><img width='30px' style='padding-bottom: 3px;' id='graphToggle' src='img/toggle-off.png'></img>"
       ).style("width","185px") .style("margin-bottom","-15px")
+
+  }else{
+
+    d3.select("#btnColours")
+    .style("position","fixed")
+    .style("left","32px")
+    .style("bottom","180px")
+    d3.select("#btnSizes")
+    .style("position","fixed")
+    .style("right","32px")
+    .style("bottom","180px")
+
+
+    d3.select("#sliderDiv_skillsComp").style("bottom", "1vh")
+    d3.select("#sliderDiv_skillsMath").style("bottom", "1vh")
+    d3.select("#sliderDiv_skillsLang").style("top", "5vh")
+    d3.select("#sliderDiv_skillsLogi").style("top", "5vh")
+
+    d3.select("#resetFilters").html("<i class='fa fa-undo-alt'></i>")
+       .style("width","85px") .style("margin-bottom","-15px")
+    d3.select("#graph").html("<i class='fa fa-chart-bar'></i>")
+       .style("width","85px") .style("margin-bottom","-15px")
+
+    $("#titleBar").hide()
   }
 
-  if(w < 1024){
-
-    // d3.select("#chart").style("margin-top","-20px")
-    // d3.select("#titleBar").style("margin-top","-10px")
-    // .style("margin-left","20px")
-    d3.select("#viewButtons").style("margin-top","-20px")
-    d3.select("#bottomButtons").style("bottom","7.5vh")
-    // d3.select("#legend") .style("margin-right","25px")
-    // d3.select("#legend") .style("margin-left","60px")
-    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
-    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
-    d3.select("#sliderDiv_skillsComp").style("left", "0vw")
-    d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
-
-    if(graphMode==1){
-      d3.selectAll(".imgGraphExplain").style("right","20px")
-    }
-    // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
-  }else{
+  // desktop
+  if(w >= 1024){
 
    if(graphMode == 0){
     d3.select("#btnColours")
@@ -321,7 +315,7 @@ function resize() {
 
     d3.select(".imgGraphExplain").style("right","100px")
 
-  }
+   }
 
     // d3.select("#chart").style("margin-top","")
     // d3.select("#titleBar").style("margin-top","-0.35vh")
@@ -333,6 +327,25 @@ function resize() {
     d3.select("#sliderDiv_skillsLogi").style("right", "9vw")
     d3.select("#sliderDiv_skillsComp").style("left", "9vw")
     d3.select("#sliderDiv_skillsMath").style("right", "9vw")
+
+  }else{
+
+    // d3.select("#chart").style("margin-top","-20px")
+    // d3.select("#titleBar").style("margin-top","-10px")
+    // .style("margin-left","20px")
+    d3.select("#viewButtons").style("margin-top","-20px")
+    d3.select("#bottomButtons").style("bottom","7.5vh")
+    // d3.select("#legend") .style("margin-right","25px")
+    // d3.select("#legend") .style("margin-left","60px")
+    d3.select("#sliderDiv_skillsLang").style("left", "0vw")
+    d3.select("#sliderDiv_skillsLogi").style("right", "1.5vw")
+    d3.select("#sliderDiv_skillsComp").style("left", "0vw")
+    d3.select("#sliderDiv_skillsMath").style("right", "1.5vw")
+
+    if(graphMode==1){
+      d3.selectAll(".imgGraphExplain").style("right","20px")
+    }
+    // d3.selectAll(".btn-legend").style("margin","5px").style("float","right")
   }
 
   if(typeof circles != "undefined"){
@@ -2519,7 +2532,7 @@ d3.select("#btnSuggest2").on('click', function() { // Wage vs Workers
 
 }
 
-d3.select("#graph").on('click', function(d){
+d3.selectAll(".graph-button").on('click', function(d){
   // first time?
   if(graphFirstTime == true){
     graphFirstTime = false;
@@ -3940,15 +3953,16 @@ function createSliders(createSliderArray, sliderTitlesArray){
 
   sliderSVGArray[i] = d3.select("body")
   .append("div")
+    .attr("class","sliderDiv-container")
     .attr("id", "sliderDiv_"+sliderArrayMain[i]) // sliderDiv_skillsLang
     .style("position", "fixed")
     .style(leftOrRight, xtrans+"vw")
     .style(topOrBottom, ytrans+"vh")
     // slider title
     .html(
-      "<img id=question_"+i+" style='border-radius: 29px; display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
+      "<img id=question_"+i+" style='border-radius: 29px; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
-      +"<div class='activeText' align='left' style='color: #49AC52; display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
+      +"<div class='activeText' align='left' style='color: #49AC52; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
       +"font-size: 140%; font-weight: bold;"
       +" font-family: Raleway'>"
       +sliderTitlesArray[i] // "Communication <p class='sliderText'>and Verbal skills</p>"
@@ -4239,14 +4253,14 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
 
     // Title & SVG
     sliderSVGArray[(i+j)] = d3.select("#btnSubsliders_"+appendToDiv)
-      .append("div").style("display","inline")
+      .append("div").attr("class","subSliderDiv-container")
         .attr("id", "sliderDiv_"+subSliderArray[i]) // sliderDiv_skillsLang
         .style("position", "absolute")
         .style("left", xtranslate+"%")
         .style("top", ytranslate+220+"px")
         .style("width","400px")
         // lg and xl
-        .html("<div class='d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' align='left' style='"+
+        .html("<div align='left' style='"+
           "position: absolute; left: "+(xtranslate+3)+"%; width: 400px;"
           +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
           +" color:  #49AC52; font-family: Raleway'>"
@@ -4706,7 +4720,7 @@ function updateMulti(h, mode) {
 // show
 graphViewCallout = function() {
   // d3.select("#graphCallout").transition().duration(400).style("width","300px")
-  d3.select("#graph").style("box-shadow","0px 0px 17px 7px #E6E447")  
+  d3.selectAll(".graph-button").style("box-shadow","0px 0px 17px 7px #E6E447")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",1)
   // d3.select("#graphCallout2").transition().duration(400).style("opacity",1)
   d3.select("#resetFilters").style("box-shadow","0px 0px 17px 7px #E6E447")  
@@ -4714,7 +4728,7 @@ graphViewCallout = function() {
 
 // hide
 hideGraphViewCallout = function() {
-  d3.select("#graph").style("box-shadow","0px 2px 7px 0 rgba(0,0,0,0.3)")
+  d3.selectAll(".graph-button").style("box-shadow","0px 2px 7px 0 rgba(0,0,0,0.3)")
   d3.select("#resetFilters").style("box-shadow","0px 2px 7px 0 rgba(0,0,0,0.3)")  
   d3.select("#graphCallout").transition().duration(400).style("opacity",0).style("pointer-events","none")
   // d3.select("#graphCallout2").transition().duration(400).style("opacity",0).style("pointer-events","none")
@@ -5178,9 +5192,9 @@ var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .html("<input id='jobTitle' placeholder='Search job titles' align='right' class='d-inline form-control' "+
+    .html("<input id='jobTitle' class='form-control d-none d-xs-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' placeholder='Search job titles' align='right' "+
            "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-          "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='submit-btn btn btn-sm' "+
+          "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='d-none d-xs-none d-sm-inline d-md-inline d-lg-inline d-xl-inline submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Search</button>"
           )
     .style("width", function(){
