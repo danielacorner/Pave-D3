@@ -670,7 +670,10 @@ path{
 #progTutLine3 {position: fixed; left: 52.8vw; top: 3.4vw;}
 #progTutLine4 {position: fixed; left: 59.8vw; top: 3.4vw;}
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
-
+.activeText{
+  color: $grn;
+  fill: $grn;
+}
 .inactiveText{
   /*color: #5D6769;*/
   color: #285E2D;

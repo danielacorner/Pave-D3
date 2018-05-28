@@ -1620,6 +1620,12 @@ function expandColoursLegend() {
     // d3.selectAll(".legendCirc").style("opacity",1)
   }
 
+  //close the faves div if it's open
+  if(favesMode==1){
+    favesMode=0
+    collapseFavourites()
+  }
+
 } // end expandColoursLegend()
 
 function closeLegends() {
@@ -2168,6 +2174,12 @@ function expandSizesLegend() {
       resetSizes()
       redrawSizeLegend()
     })
+  //close the faves div if it's open
+  if(favesMode==1){
+    favesMode=0
+    collapseFavourites()
+  }
+    
 } // end expandSizesLegend()
 function resetSizes() {
         // reset all buttons & colour this button green      
@@ -3936,7 +3948,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .html(
       "<img id=question_"+i+" style='border-radius: 29px; display: inline-block; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
-      +"<div class='inactiveHeader' align='left' style='display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
+      +"<div class='activeText' align='left' style='color: #49AC52; display: inline-block; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
       +"font-size: 140%; font-weight: bold;"
       +" font-family: Raleway'>"
       +sliderTitlesArray[i] // "Communication <p class='sliderText'>and Verbal skills</p>"
@@ -3952,7 +3964,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("color", "#49AC52")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' class='inactiveText' style='margin-left: 5px; margin-top: -4px'>"
+    .html("<div id='notmuchlots_"+i+"' class='activeText' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px;'></span>"
       +"Lots</div>"+
