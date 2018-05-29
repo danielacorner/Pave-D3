@@ -41,7 +41,7 @@
 <body scrolling="no">
 
 	<!-- mobile size -->
-	<div id="navBar" class="d-none d-xs-none d-sm-block d-md-none d-lg-none d-xl-none"> 
+	<div id="navBar" class="d-none d-xs-none d-sm-none d-md-none d-lg-none d-xl-none"> 
 		<h1 id="tabletLinks" style="display: inline; font-weight: bold; margin: 0px 15px; font-size: 30px; color: #49AC52; text-align: left;">
 			<a class="homepage" href="index.html">
 			Pave</a>
@@ -81,77 +81,198 @@
 		<svg  id="chart" style="pointer-events: visiblePainted; position: fixed; z-index: -1; width: 100vw; height: 90vh; padding-top: 20vh" class="chart">	</svg>
 		<!-- end of headers -->
 
+
+
 		<!-- Mobile navbar -->
-		<div id="mobile-navbar" class="d-block d-xs-block d-sm-none d-md-none d-lg-none d-xl-none">
-			<a id="homepage-mobile" class="homepage" href="index.html">
+
+		<div id="mobile-navbar" class="d-block d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
+			<a id="homepage-mobile" class="homepage d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none" href="index.html">
 			Pave</a>
-		</div>
 
-		<!-- Mobile buttons -->
-		<div id="mobile-buttons-top">
-			<button id="graphMobile" class="graph-button btn-mobile">
-				<span>Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px;" id="graphToggle" class="graph-toggle" src="img/toggle-off.png"></img>
+			<img id="searchMobile" src="img/search.png" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">
+		</img>
+
+		<button id="menuMobile" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">
+			Menu
+		</button>
+	</div>
+
+	<!-- Mobile buttons -->
+
+	<div id="mobile-buttons-top">
+		<button id="graphMobile" class="graph-button btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">
+			<span>Graph View&nbsp&nbsp</span><img width="40px" style="" id="graphToggle" class="graph-toggle" src="img/toggle-off-mobile.png"></img>
+		</button>
+		<button id="resetMobile" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">
+			<span style="padding-right: 6px;">
+			Reset Filters </span> <i class="fa fa-undo-alt"></i>
+		</button>
+		<button id="legendMobile" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">Legend</button>
+	</div>
+	<div id="mobile-buttons-bottom">
+		<button id="expandSlidersMobile" class="btn-mobile"><span style="font-size: 24px; position: absolute; left: 26px; bottom: 6px;">&#9650</span> <span>Modify a skill filter</span> <span style="font-size: 24px; position: absolute; right: 26px; bottom: 6px;">&#9650</span></button>
+	</div>
+	
+	<!-- mobile sliders menu -->
+	<div id="mobile-sliders-menu">
+		<div id="mobile-sliders-header">
+			Choose a type of skill
+			<i id="mobile-btn-close" class="fas fa-times btnClose"></i>
+		</div>
+		<ul class="mobile-sliders-ul-primary">
+			<li id="liLanguage" class="mobile-li mobile-sliders-skill">
+
+				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Language">
+				<i class="far fa-circle mobile-radio-span-primary"></i>
+				Communication and Verbal skills
+
+				<ul class="mobile-sliders-ul-secondary">
+
+					<li id="liOral" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Oral">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Oral Communication</li>
+					<li id="liReading" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Reading">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Reading</li>
+					<li id="liWriting" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Writing">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Writing</li>
+				</ul>
+			</li>
+			<li id="liComputer" class="mobile-li mobile-sliders-skill">
+
+				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Computer">
+				<i class="far fa-circle mobile-radio-span-primary"></i>
+				Computer and Information skills
+
+				<ul class="mobile-sliders-ul-secondary">
+
+					<li id="liData" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Data">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Data Analysis</li>
+					<li id="liDigital" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Digital">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Digital Technology</li>
+					<li id="liDocument" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Document">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Document Use</li>
+					<li id="liFinding" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Finding">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Finding Information</li>
+				</ul>
+			</li>
+			<li id="liLogic" class="mobile-li mobile-sliders-skill">
+
+				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Logic">
+				<i class="far fa-circle mobile-radio-span-primary"></i>
+				Logic and Reasoning skills
+
+				<ul class="mobile-sliders-ul-secondary">
+
+					<li id="liCritical" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Critical">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Critical Thinking</li>
+					<li id="liDecision" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Decision">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Decision-Making</li>
+					<li id="liJob" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Job">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Job Task Planning and Organizing</li>
+					<li id="liProblem" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Problem">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Problem Solving</li>
+				</ul>
+			</li>
+			<li id="liMath" class="mobile-li mobile-sliders-skill">
+
+				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Math">
+				<i class="far fa-circle mobile-radio-span-primary"></i>
+				Math and Spatial skills
+
+				<ul class="mobile-sliders-ul-secondary">
+
+					<li id="liMeasurement" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Measurement">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Measurement and Calculation</li>
+					<li id="liMoney" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Money">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Money Math</li>
+					<li id="liNumerical" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Numerical">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Numerical Estimation</li>
+					<li id="liScheduling" class="mobile-sliders-subskill">
+					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Scheduling">
+					<i class="far fa-circle mobile-radio-span-secondary"></i>
+					Scheduling, Budgeting, Accounting</li>
+				</ul>
+			</li>
+		</ul>
+	</div><!--  end of mobile sliders menu -->
+
+
+
+	<!-- Buttons -->
+	<div id="topButtons" class="col-4" align="center">
+		<button id="graph" data-toggle="button" type="button" class="graph-button btn btn-reset d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style="pointer-events: auto;" aria-pre autocomplete="off">
+			<span >
+			Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
+		</button>
+
+		<div id="graphCallout" class="d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
+			Click here to compare these jobs.
+			<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
+			</div>
+		</div>
+	</div> <!-- end of topButtons -->
+
+	<!-- suggested views buttons -->
+
+	<div id='grid-container-views'>
+		<div class='viewDiv'>
+			<button id='btnView1' class='views-btn' href='#'>
+				<p class='p-view'>Income</p> 
+				<p class='p-view'>vs.</p> 
+				<p class='p-view'>Years of Study</p>
 			</button>
-			<button id="resetMobile" class="btn-mobile">
-				<span style="padding-right: 6px;">
-					Reset Filters </span> <i class="fa fa-undo-alt"></i>
-				</button>
-			<button id="legendMobile" class="btn-mobile">Legend</button>
 		</div>
-		<div id="mobile-buttons-bottom">
-			<button id="expandSlidersMobile" class="btn-mobile"><span style="font-size: 24px">&#9650</span> <span style="padding: 0 28%">Modify a skill filter</span> <span style="font-size: 24px">&#9650</span></button>
-		</div>
-
-
-
-		<!-- Buttons -->
-		<div id="topButtons" class="col-4" align="center">
-			<button id="graph" data-toggle="button" type="button" class="graph-button btn btn-reset" style="pointer-events: auto;" aria-pre autocomplete="off">
-				<span >
-				Graph View&nbsp&nbsp</span><img width="30px" style="padding-bottom: 3px; " id="graphToggle" src="img/toggle-off.png"></img>
+		<div class='viewDiv'>
+			<button id='btnView2' class='views-btn' href='#'>
+				<p class='p-view'>Income</p> 
+				<p class='p-view'>vs.</p> 
+				<p class='p-view'>Number of Jobs</p>
 			</button>
-
-			<div id="graphCallout" style="z-index: -1; font-size: 18px; padding: 10px 10px 0px 10px; opacity: 0; box-shadow: 3px 3px 3px #404040FF; position: relative; margin-top: 30px; height: 50px; width: 300px; background: #eaeaea; pointer-events: none;">
-				Click here to compare these jobs.
-				<div id="graphCalloutArrow" style="pointer-events: none; transform: rotate(45deg); position: relative; margin-top: -45px; height: 58px; width: 58px; border-radius: 500px 10000px 10000px 10000px; background: #eaeaea; z-index: -1">
-				</div>
-			</div>
-		</div> <!-- end of topButtons -->
-
-		<!-- suggested views buttons -->
-
-		<div id='grid-container-views'>
-			<div class='viewDiv'>
-				<button id='btnView1' class='views-btn' href='#'>
-					<p class='p-view'>Income</p> 
-					<p class='p-view'>vs.</p> 
-					<p class='p-view'>Years of Study</p>
-				</button>
-			</div>
-			<div class='viewDiv'>
-				<button id='btnView2' class='views-btn' href='#'>
-					<p class='p-view'>Income</p> 
-					<p class='p-view'>vs.</p> 
-					<p class='p-view'>Number of Jobs</p>
-				</button>
-			</div>
-			<div class='viewDiv'>
-				<button id='btnView3' class='views-btn' href='#'>
-					<p class='p-view'>Machines</p> 
-					<p class='p-view'>vs.</p> 
-					<p class='p-view'>Number of Jobs</p>
-				</button>
-			</div>
 		</div>
+		<div class='viewDiv'>
+			<button id='btnView3' class='views-btn' href='#'>
+				<p class='p-view'>Machines</p> 
+				<p class='p-view'>vs.</p> 
+				<p class='p-view'>Number of Jobs</p>
+			</button>
+		</div>
+	</div>
 
-		<script type="text/javascript">
-			$("#grid-container-views").hide();
+	<script type="text/javascript">
+		$("#grid-container-views").hide();
 
 
-			var viewsMinimized = 0;
-			function minimizeViews() {
-				viewsMinimized = 1-viewsMinimized;
-				if(viewsMinimized == 1){
+		var viewsMinimized = 0;
+		function minimizeViews() {
+			viewsMinimized = 1-viewsMinimized;
+			if(viewsMinimized == 1){
 	// transition opacity and height
 	d3.selectAll(".suggested-views-btn").transition().duration(500).style("opacity","0")
 	d3.select("#suggested-views-btn").transition().duration(500).style("opacity","0")
@@ -182,9 +303,9 @@ else if(viewsMinimized == 0){
 <g class="legend" id="legend" style="bottom: 230px; margin-left: 60px;">
 
 	<!-- legend buttons -->
-	<button id="btnColours" class="btn btn-legend" style="float: right; margin: 5px; margin-right: 6px">
+	<button id="btnColours" class="btn btn-legend d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style="float: right; margin: 5px; margin-right: 6px">
 		Colour<br>Legend</button>						<!-- legend button -->
-		<button id="btnSizes" class="btn btn-legend" style="float: right; margin: 5px;">
+		<button id="btnSizes" class="btn btn-legend d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style="float: right; margin: 5px;">
 			Size<br>Legend</button>
 
 		</g>		
@@ -202,7 +323,7 @@ else if(viewsMinimized == 0){
 			<!-- Reset, pause, play buttons -->
 			<div id="playPauseDiv" align="center" style="z-index: -1">
 
-				<button id="resetFilters" type="button" class="btn btn-reset">
+				<button id="resetFilters" type="button" class="btn btn-reset d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block">
 					<span style="padding-right: 6px;">
 					Reset Filters </span> <i class="fa fa-undo-alt"></i>
 				</button> 

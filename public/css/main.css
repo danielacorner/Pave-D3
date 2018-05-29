@@ -15,7 +15,7 @@
   #4B40DD
   #AA3DAA
   #8B564C
-}*/
+  }*/
 .fa-star {
   margin: 0px 7px 0px -1px; }
 
@@ -61,13 +61,13 @@ body {
   overflow: hidden; }
 
 .custom-toggler.navbar-toggler {
-  border-color: #49AC52; }
+  border-color: #27AE60; }
 
 button:hover {
   cursor: pointer; }
 
 a.nav-link {
-  color: #49AC52; }
+  color: #27AE60; }
 
 a:hover {
   color: inherit;
@@ -87,14 +87,14 @@ a.intro-start-button:hover {
   color: #3C8D44; }
 
 .homepage {
-  color: #49AC52; }
+  color: #27AE60; }
 
 a.intro-start-button {
   color: white; }
 
 .intro-tour-button {
   box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.6);
-  background: #49AC52;
+  background: #27AE60;
   color: white;
   text-align: center;
   line-height: 4vw;
@@ -108,7 +108,7 @@ a.intro-start-button {
 
 .intro-start-button {
   box-shadow: 0px 0px 3px 7px #E6E447;
-  background: #49AC52;
+  background: #27AE60;
   color: white;
   text-align: center;
   line-height: 5vw;
@@ -139,13 +139,13 @@ a#skipTutorial {
   font-size: 20px;
   padding-left: 17px;
   font-weight: bold;
-  color: #49AC52; }
+  color: #27AE60; }
 
 .link-top2 {
   font-size: 18px;
   padding-left: 3%;
   font-weight: bold;
-  color: #49AC52; }
+  color: #27AE60; }
 
 img.img-question {
   padding-left: 5px;
@@ -159,7 +159,7 @@ img.img-question {
 button.expand-sliders-btn {
   margin: 5px 0px 0px 10px;
   background: white;
-  border: 2px solid #49AC52;
+  border: 2px solid #27AE60;
   border-radius: 16px;
   pointer-events: auto;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3); }
@@ -167,14 +167,14 @@ button.expand-sliders-btn {
 button.expand-sliders-btn:hover {
   margin: 5px 0px 0px 10px;
   background: #eaeaea;
-  border: 2px solid #49AC52;
+  border: 2px solid #27AE60;
   border-radius: 16px;
   pointer-events: auto; }
 
 button.expand-sliders-btn-expanded {
   margin: 5px 0px 0px 10px;
   background: white;
-  border: 2px solid #49AC52;
+  border: 2px solid #27AE60;
   border-radius: 16px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   pointer-events: auto; }
@@ -182,14 +182,14 @@ button.expand-sliders-btn-expanded {
 button.close-sliders-btn {
   margin: 5px 0px 0px 10px;
   background: none;
-  border: 2px solid #49AC52;
+  border: 2px solid #27AE60;
   border-radius: 16px; }
 
 button.btn-grey {
   font-size: 14px;
   height: 32px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
-  background: #49AC52; }
+  background: #27AE60; }
 
 button.btn-graph:hover {
   background: #179E00; }
@@ -199,8 +199,8 @@ button.btn-graph {
   height: 45px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   background: white;
-  color: #49AC52;
-  border-color: #49AC52;
+  color: #27AE60;
+  border-color: #27AE60;
   border-width: 3px; }
 
 .legend {
@@ -214,12 +214,12 @@ button.btn-legend {
   line-height: 1.2;
   background: white;
   border-width: 3px;
-  border-color: #49AC52;
+  border-color: #27AE60;
   border-radius: 7px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   font-family: "Raleway";
-  color: #49AC52; }
+  color: #27AE60; }
 
 button.btn-reset {
   font-size: 20px;
@@ -228,17 +228,17 @@ button.btn-reset {
   line-height: 1.2;
   background: white;
   border-width: 3px;
-  border-color: #49AC52;
+  border-color: #27AE60;
   border-radius: 7px;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   font-family: "Raleway";
-  color: #49AC52; }
+  color: #27AE60; }
 
 button#minimizeViews {
   width: 20px;
   height: 20px;
-  background: #49AC52;
+  background: #27AE60;
   border-radius: 6px;
   border: none;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3); }
@@ -253,15 +253,16 @@ button.btn-group:hover {
   background: #179E00; }
 
 #graphExplainerDiv {
-  color: #49AC52;
+  color: #27AE60;
   position: fixed;
   font-size: 20px;
-  border: 3px solid #49AC52;
+  border: 3px solid #27AE60;
   border-radius: 13px;
   padding: 20px 10px 0px 5px;
   box-shadow: 2px 2px 80px #404040FF;
   width: 620px;
-  background: white; }
+  background: white;
+  z-index: 999999; }
 
 button.suggested-views-btn {
   padding: 0px;
@@ -270,12 +271,12 @@ button.suggested-views-btn {
   width: 175px;
   background: white;
   border-width: 3px;
-  border-color: #49AC52;
+  border-color: #27AE60;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   display: inline-block;
   font-family: "Raleway";
-  color: #49AC52;
+  color: #27AE60;
   font-size: 21px;
   border-radius: 7px; }
 
@@ -299,12 +300,12 @@ button.views-btn {
   width: 95px;
   background: white;
   border-width: 3px;
-  border-color: #49AC52;
+  border-color: #27AE60;
   box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   display: inline-block;
   font-family: "Raleway";
-  color: #49AC52;
+  color: #27AE60;
   font-size: 15px;
   border-radius: 7px; }
 
@@ -432,7 +433,7 @@ div.tooltip:hover {
 
 /*body {
   background-color: pink;
-}*/
+  }*/
 .track,
 .track-inset,
 .track-overlay,
@@ -457,8 +458,8 @@ rect.legendBtn {
   width: auto;
   border-radius: 15px;
   background: white;
-  border: 2px solid #49AC52;
-  color: #49AC52; }
+  border: 2px solid #27AE60;
+  color: #27AE60; }
 
 #yearLink {
   margin-left: 4px; }
@@ -471,11 +472,11 @@ rect.legendBtn {
   margin-top: 3px; }
 
 .track {
-  stroke: #49AC52;
+  stroke: #27AE60;
   stroke-width: 5px; }
 
 .track-inset {
-  stroke: #49AC52;
+  stroke: #27AE60;
   stroke-width: 5px;
   stroke-opacity: 0.3;
   filter: url(../../Pave-D3/Pave.html#f2); }
@@ -541,7 +542,7 @@ rect.legendBtn {
 
 /*.annotation-note-content {
   font-family: Helvetica;
-}*/
+  }*/
 #favesDiv {
   z-index: 99;
   opacity: 0;
@@ -578,13 +579,13 @@ path {
   position: fixed;
   z-index: 99;
   padding: 10px;
-  border: 1px solid #49AC52;
+  border: 1px solid #27AE60;
   border-radius: 8px;
   font-family: "Raleway";
   font-size: 18px;
   background: white;
   line-height: 19px;
-  color: #49AC52;
+  color: #27AE60;
   box-shadow: 3px 3px 17px grey; }
 
 .circleSvg {
@@ -632,7 +633,7 @@ path {
   cursor: pointer; }
 
 .progTutCircleActive {
-  background: #49AC52;
+  background: #27AE60;
   border: none; }
 
 .progTutLine {
@@ -645,7 +646,7 @@ path {
   /*width: 3px;*/ }
 
 .progTutLineActive {
-  background: #49AC52;
+  background: #27AE60;
   border: none; }
 
 .progTutLineInactive {
@@ -717,8 +718,8 @@ path {
 
 /*#progTutLine5 {position: fixed; left: 66.8vw; top: 3.4vw; }*/
 .activeText {
-  color: #49AC52;
-  fill: #49AC52; }
+  color: #27AE60;
+  fill: #27AE60; }
 
 .inactiveText {
   /*color: #5D6769;*/
@@ -734,7 +735,7 @@ path {
   .column {
     width: 100%;
   }
-} */
+  } */
 #searchDiv {
   right: 70px;
   border-radius: 7px;
@@ -783,8 +784,8 @@ path {
   box-shadow: none;
   border-style: solid;
   background: white;
-  color: #49AC52;
-  border-color: #49AC52;
+  color: #27AE60;
+  border-color: #27AE60;
   border-width: 3px;
   font-weight: bold;
   font-family: "Raleway";
@@ -810,14 +811,14 @@ path {
   margin: 0 1% 0 0; }
 
 #legendMobile {
-  width: 21%; }
+  width: 23%; }
 
 #expandSlidersMobile {
   position: fixed;
   bottom: 3%;
   left: 6.5%;
   width: 87%;
-  border: 3px solid #49AC52;
+  border: 3px solid #27AE60;
   border-radius: 23px;
   pointer-events: auto;
   box-shadow: 0px 3px 7px 0 rgba(0, 0, 0, 0.4); }
@@ -835,13 +836,118 @@ button.close-sliders-btn{
   background: none; 
   border: 2px solid $grn; 
   border-radius: 16px;
-}*/
+  }*/
 #homepage-mobile {
   position: fixed;
-  top: 2%;
-  left: 2%;
-  font-size: 32px;
+  top: 2.5%;
+  left: 5%;
+  font-size: 36px;
   font-weight: bold; }
+
+#menuMobile {
+  position: fixed;
+  top: 3%;
+  right: 5.25%;
+  width: 90px; }
+
+#searchMobile {
+  border: none;
+  position: fixed;
+  right: 6.5%;
+  margin-right: 90px;
+  top: 3%; }
+
+#searchDivMobile {
+  position: fixed;
+  top: 3%;
+  right: 6.5%;
+  margin-right: 150px;
+  width: 49%;
+  height: 40px;
+  /*box-shadow: none;*/
+  /*width: ;*/ }
+
+#jobTitleMobile {
+  height: 45px; }
+
+#searchSubmitBtnMobile {
+  position: fixed;
+  top: 3%;
+  margin-top: 7px;
+  right: 6.5%;
+  margin-right: 158px; }
+
+#mobile-sliders-menu {
+  position: fixed;
+  height: 87%;
+  bottom: -88%;
+  left: 5%;
+  width: 90%;
+  border: 3px solid #27AE60;
+  border-radius: 23px;
+  pointer-events: auto;
+  box-shadow: 0px 3px 7px 0 rgba(0, 0, 0, 0.4);
+  background: white;
+  pointer-events: none;
+  z-index: 999999; }
+
+#mobile-sliders-header {
+  font-size: 20px;
+  color: #27AE60;
+  font-weight: bold;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px; }
+
+#mobile-btn-close {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  color: #27AE60;
+  transform: scale(1.6); }
+
+.mobile-radio {
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.5);
+  margin-right: 1.5vh; }
+
+.mobile-radio-primary {
+  transform: scale(2); }
+
+.mobile-radio-span-primary {
+  margin-left: -3.5vh;
+  transform: scale(1.5);
+  margin-right: 1.2vh;
+  pointer-events: none; }
+
+.mobile-radio-span-secondary {
+  margin-left: -3.5vh;
+  margin-right: 1vh;
+  pointer-events: none; }
+
+.mobile-sliders-ul-primary {
+  font-size: 1.7vh;
+  color: #27AE60;
+  font-weight: bold;
+  margin-top: 6vh;
+  list-style-type: none; }
+
+.mobile-sliders-ul-secondary {
+  font-size: 1.7vh;
+  padding-left: 1vh;
+  list-style-type: none;
+  margin-bottom: 3.7vh;
+  z-index: 99999; }
+
+.mobile-sliders-skill {
+  cursor: pointer; }
+
+.mobile-sliders-subskill {
+  padding-top: 1.3vh; }
 
 /*Media queries*/
 /*Mobile*/
@@ -943,7 +1049,7 @@ button.close-sliders-btn{
 
   /*  #titleBar{
       display: block;
-    }*/
+      }*/
   #grid-container-views {
     right: 20px; }
 
@@ -1022,7 +1128,7 @@ button.close-sliders-btn{
 }
 // {
   margin-left: 9vw;
-}*/
+  }*/
   #btnColours {
     left: 14vw;
     bottom: 46.1vh;

@@ -195,6 +195,21 @@ function resize() {
     d3.selectAll(".btn-reset").style("display","none")
     d3.selectAll(".btn-legend").style("display","none")
     d3.selectAll(".btn-mobile").style("display","inline")
+    console.log(w)
+    if(w < 451){
+      d3.select("#legendMobile").style("width","28%")
+      d3.select("#resetMobile").style("width","32%")
+      d3.select("#graphMobile").style("width","35%")
+      d3.select("#resetMobile").html("Reset")
+      d3.select("#graphMobile").html("Graph")
+    }else{
+      d3.select("#legendMobile").style("width","23%")
+      d3.select("#resetMobile").style("width","35%")
+      d3.select("#graphMobile").style("width","38%")
+      d3.select("#resetMobile").html("<span style='padding-right: 6px;'>Reset Filters </span> <i class='fa fa-undo-alt'></i>")
+      d3.select("#graphMobile").html("<span>Graph View&nbsp&nbsp</span><img width='40px' style='' id='graphToggle' class='graph-toggle' src='img/toggle-off-mobile.png'></img>")
+    }
+
     if(w < 520){ // hide icons if < 520px
       d3.selectAll(".fa-undo-alt").style("display","none")
       d3.selectAll(".graph-toggle").style("display","none")
@@ -1972,47 +1987,47 @@ function expandSizesLegend() {
       .attr("class","btnSizesOption")
       .text("Number of jobs")
       .style("color",function(){
-        if(currentSize == "Number of Jobs"){return "white"}else{return "#49AC52"}
+        if(currentSize == "Number of Jobs"){return "white"}else{return "#27AE60"}
       })
       .style("background",function(){
-        if(currentSize == "Number of Jobs"){return "#49AC52"}else{return "white"}
+        if(currentSize == "Number of Jobs"){return "#27AE60"}else{return "white"}
       })
     sizesOptions.append("button").attr("id","yearLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Years of study")
       .style("color",function(){
-        if(currentSize == "Years of Study"){return "white"}else{return "#49AC52"}
+        if(currentSize == "Years of Study"){return "white"}else{return "#27AE60"}
       })
       .style("background",function(){
-        if(currentSize == "Years of Study"){return "#49AC52"}else{return "white"}
+        if(currentSize == "Years of Study"){return "#27AE60"}else{return "white"}
       })
     sizesOptions.append("button").attr("id","wageLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Salary ($K per yr)")
       .style("color",function(){
-        if(currentSize == "Salary ($K per yr)"){return "white"}else{return "#49AC52"}
+        if(currentSize == "Salary ($K per yr)"){return "white"}else{return "#27AE60"}
       })
       .style("background",function(){
-        if(currentSize == "Salary ($K per yr)"){return "#49AC52"}else{return "white"}
+        if(currentSize == "Salary ($K per yr)"){return "#27AE60"}else{return "white"}
       })
     sizesOptions.append("button").attr("id","equaLink")
       .style("float","left")
       .attr("class","btnSizesOption")
       .text("Equal sizes")
       .style("color",function(){
-        if(currentSize == "nothing"){return "white"}else{return "#49AC52"}
+        if(currentSize == "nothing"){return "white"}else{return "#27AE60"}
       })
       .style("background",function(){
-        if(currentSize == "nothing"){return "#49AC52"}else{return "white"}
+        if(currentSize == "nothing"){return "#27AE60"}else{return "white"}
       })
 
     // click "Number of Jobs"
     d3.select("#workLink").on("click", function() {
       // reset all buttons & colour this button green      
-      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select(this).style("color","white").style("background","#49AC52")
+      d3.selectAll(".btnSizesOption").style("color","#27AE60").style("background","white")
+      d3.select(this).style("color","white").style("background","#27AE60")
       // transition radii to selected values
       circles.transition().duration(100)
         .delay(function(d, i) { return i * 0.8})
@@ -2069,8 +2084,8 @@ function expandSizesLegend() {
     // click "Salary ($K per yr)"
     d3.select("#wageLink").on("click", function() {
       // reset all buttons & colour this button green      
-      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select(this).style("color","white").style("background","#49AC52")
+      d3.selectAll(".btnSizesOption").style("color","#27AE60").style("background","white")
+      d3.select(this).style("color","white").style("background","#27AE60")
       // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 0.8})
@@ -2126,8 +2141,8 @@ function expandSizesLegend() {
     // click "Years of study"
     d3.select("#yearLink").on("click", function() {
       // reset all buttons & colour this button green      
-      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select(this).style("color","white").style("background","#49AC52")
+      d3.selectAll(".btnSizesOption").style("color","#27AE60").style("background","white")
+      d3.select(this).style("color","white").style("background","#27AE60")
       // transition radii to selected values
       circles.transition().duration(100)
       .delay(function(d, i) { return i * 0.8})
@@ -2182,8 +2197,8 @@ function expandSizesLegend() {
 
     // click "Equal sizes"
     d3.select("#equaLink").on("click", function() {
-      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select("#equaLink").style("color","white").style("background","#49AC52")
+      d3.selectAll(".btnSizesOption").style("color","#27AE60").style("background","white")
+      d3.select("#equaLink").style("color","white").style("background","#27AE60")
       resetSizes()
       redrawSizeLegend()
     })
@@ -2439,27 +2454,27 @@ d3.select("#btnSuggest3").on('click', function() { // Automation vs Number of Jo
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#btnSuggest3").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  d3.select("#btnSuggest3").style("background", "#27AE60").style("color","white").on("mouseover","").on("mouseout", "")
   // d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#btnSuggest1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest1").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnSuggest2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest2").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView3").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#btnView1").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView1").style("background", "white").style("color","#27AE60").on("mouseover", "")
   d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView2").style("background", "white").style("color","#27AE60").on("mouseover", "")
   d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
@@ -2471,27 +2486,27 @@ d3.select("#btnSuggest1").on('click', function() { // Wage vs Years
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#btnSuggest3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest3").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnSuggest1").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  d3.select("#btnSuggest1").style("background", "#27AE60").style("color","white").on("mouseover","").on("mouseout", "")
   // d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#btnSuggest2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest2").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").style("background", "white").style("color","#27AE60")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView1").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView2").style("background", "white").style("color","#27AE60")
   d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
@@ -2503,27 +2518,27 @@ d3.select("#btnSuggest2").on('click', function() { // Wage vs Workers
 
   graphExplainerDiv.transition().duration(500).style("opacity",0).remove()
 
-  d3.select("#btnSuggest3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest3").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest3").on("mouseout", function() {d3.select(this).style("background", "white")})
   
-  d3.select("#btnSuggest1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnSuggest1").style("background", "white").style("color","#27AE60")
   d3.select("#btnSuggest1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnSuggest1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnSuggest2").style("background", "#49AC52").style("color","white").on("mouseover","").on("mouseout", "")
+  d3.select("#btnSuggest2").style("background", "#27AE60").style("color","white").on("mouseover","").on("mouseout", "")
   // d3.select("#btnSuggest2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnSuggest2").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").style("background", "white").style("color","#27AE60")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView1").style("background", "white").style("color","#27AE60")
   d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView2").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 
@@ -2618,15 +2633,15 @@ d3.select("#btnView3").on('click', function() { // Automation vs Number of Jobs
   currentMode = 3;
   graphModeOn(currentMode);
 
-  d3.select("#btnView3").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView3").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "#eaeaea")})
 
-  d3.select("#btnView1").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView1").style("background", "white").style("color","#27AE60").on("mouseover", "")
   d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "white").style("color","#49AC52").on("mouseover", "")
+  d3.select("#btnView2").style("background", "white").style("color","#27AE60").on("mouseover", "")
   d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
@@ -2635,15 +2650,15 @@ d3.select("#btnView1").on('click', function() { // Wage vs Years
   currentMode = 1;
   graphModeOn(currentMode);
 
-  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").style("background", "white").style("color","#27AE60")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView1").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView1").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView2").style("background", "white").style("color","#27AE60")
   d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
@@ -2652,15 +2667,15 @@ d3.select("#btnView2").on('click', function() { // Wage vs Workers
   currentMode = 2;
   graphModeOn(currentMode);
 
-  d3.select("#btnView3").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView3").style("background", "white").style("color","#27AE60")
   d3.select("#btnView3").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView3").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView1").style("background", "white").style("color","#49AC52")
+  d3.select("#btnView1").style("background", "white").style("color","#27AE60")
   d3.select("#btnView1").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   d3.select("#btnView1").on("mouseout", function() {d3.select(this).style("background", "white")})
 
-  d3.select("#btnView2").style("background", "#49AC52").style("color","white").on("mouseover", "").on("mouseout", "")
+  d3.select("#btnView2").style("background", "#27AE60").style("color","white").on("mouseover", "").on("mouseout", "")
   // d3.select("#btnView2").on("mouseover", function() {d3.select(this).style("background", "#eaeaea")})
   // d3.select("#btnView2").on("mouseout", function() {d3.select(this).style("background", "white")})
 });
@@ -2881,9 +2896,14 @@ compressY = 0.65;
 
     }
 
-  graphYtranslate = window.innerHeight*0.14 - 10; // y position of all nodes on graph
   // Add an axis-holder group
   axisG = svg.append("g")
+
+  if($(window).width()<=768){
+    graphYtranslate = window.innerHeight*0.14 + 90; // y position of all nodes on graph
+  }else{
+    graphYtranslate = window.innerHeight*0.14 - 10; // y position of all nodes on graph
+  }
 
   axisYtranslate = $(window).height()*-0.110;
   axisXtranslate = $(window).width()*-0.35+15;
@@ -2893,12 +2913,10 @@ compressY = 0.65;
   // Add the X Axis
   axisX = axisG.append("g")
   .attr("class", "axis")
-  .attr("transform", circleHeight((axisXtranslate+2),(axisYtranslate*-1.945)) )
   .call(d3.axisBottom(x).ticks(5)).attr("id","axisX")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
   // text label for the x axis
   axisLabelX = axisG.append("text")
-  .attr("transform", circleHeight((axisXtranslate*0.16),(axisYtranslate*-2.45)))
   .style("class", "inactiveText")
   .style("text-anchor", "middle")
   .style("opacity", 0).transition().duration(500).style("opacity",1);
@@ -2907,60 +2925,33 @@ compressY = 0.65;
 
   // Add the Y Axis
   axisY = axisG.append("g")
- .attr("class", "axis")
- .attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*2.52)) )
- .call(d3.axisLeft(y).ticks(4)).attr("id","axisY")
- .style("opacity", 0).transition().duration(500).style("opacity",1);
+   .attr("class", "axis")
+   .call(d3.axisLeft(y).ticks(4)).attr("id","axisY")
+   .style("opacity", 0).transition().duration(500).style("opacity",1);
+
    // text label for the y axis
   axisLabelY = axisG.append("text")
-  .style("class", "inactiveText")
   .attr("transform", "rotate(-90)")
-  .attr("y", "10vw")
-  .attr("x", "-28vh")
+  .style("class", "inactiveText")
   .attr("dy", "1em")
   .style("text-anchor", "middle")
 
-
-
-  // axisDecorationYTop = axisG
-  //   .append("polygon")
-  // .attr("points","20,15 0,15 10,0")
-  // .style("fill","lime")
-  // .style("stroke","black")
-  // .attr("transform", "translate("+window.innerWidth*0.1+","+( -15 )+")")
-  
-  // axisDecorationTextTop = axisG.append("text")
-  //   .style("fill","#49AC52")
-  //   .attr("y", "1vh")
-  //   .attr("x", "9.2vw")
-  //   .attr("dy", "1em")
-
-  // axisDecorationYBtm = axisG
-  //   .append("polygon")
-  // .attr("points","20,0 0,0 10,15")
-  // .style("fill","red")
-  // .style("stroke","black")
-  // .attr("transform", "translate("+window.innerWidth*0.1+","+( window.innerHeight*0.4 )+")")
-  
-  // axisDecorationTextBtm = axisG.append("text")
-  //   .style("fill","#C81B1B")
-  //   .attr("y", "36vh")
-  //   .attr("x", "9.2vw")
-  //   .attr("dy", "1em")
-  
-
-  // function decorateYAxis() { //mode
-  //   axisDecorationTextTop.html("More").style("font-size", "20px")
-  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
-
-  //   axisDecorationTextBtm.html("Less").style("font-size", "20px")
-  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
-
-  //   axisDecorationYTop.html("More").style("font-size", "20px")
-  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
-
-  //   axisDecorationYBtm.html("Less").style("font-size", "20px")
-  //   .style("opacity", 0).transition().duration(500).style("opacity",1);
+  // Position the axes (mobile)
+  if($(window).width()<=768){
+    graphYtranslate = window.innerHeight*0.14 + 90; // y position of all nodes on graph
+    axisX.attr("transform", circleHeight((axisXtranslate+2),(axisYtranslate*-2.81)) )
+    axisLabelX.attr("transform", circleHeight((axisXtranslate*0.10),(axisYtranslate*-3.3)))
+    axisY.attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*1.62)) )
+    axisLabelY.attr("y", "5vw")
+      .attr("x", "-33vh")
+  }else{ // (desktop)
+    graphYtranslate = window.innerHeight*0.14 - 10; // y position of all nodes on graph
+    axisX.attr("transform", circleHeight((axisXtranslate+2),(axisYtranslate*-1.945)) )
+    axisLabelX.attr("transform", circleHeight((axisXtranslate*0.16),(axisYtranslate*-2.45)))
+    axisY.attr("transform",  circleHeight((axisXtranslate), (axisYtranslate*2.52)) )
+    axisLabelY.attr("y", "9vw")
+      .attr("x", "-26vh")
+  }
 
   // 
   switch (mode) {
@@ -2975,9 +2966,9 @@ compressY = 0.65;
 
         //     d3.selectAll("text").text("");
 
-        //     axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
+        //     axisLabelX.text("Number of Jobs").style("fill","#27AE60").style("font-size", "20px")
         //     .style("opacity", 0).transition().duration(500).style("opacity",1);
-        //     axisLabelY.html("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
+        //     axisLabelY.html("Risk of tasks being replaced by machine work (%)").style("fill","#27AE60").style("font-size", "20px")
         //     .style("opacity", 0).transition().duration(500).style("opacity",1);
             
         //     // decorateYAxis();
@@ -3010,9 +3001,9 @@ compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#27AE60").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Salary ($K per yr)").style("fill","#49AC52").style("font-family", "Raleway").style("font-size", "20px")
+            axisLabelY.text("Salary ($K per yr)").style("fill","#27AE60").style("font-family", "Raleway").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             // decorateYAxis();
@@ -3026,9 +3017,9 @@ compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#27AE60").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.text("Risk of tasks being replaced by machine work (%)").style("fill","#27AE60").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             // decorateYAxis();
@@ -3042,9 +3033,9 @@ compressY = 0.65;
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             d3.selectAll("text").text("");
-            axisLabelX.text("Number of Jobs").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelX.text("Number of Jobs").style("fill","#27AE60").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
-            axisLabelY.text("Risk of job tasks being replaced by machine work (%)").style("fill","#49AC52").style("font-size", "20px")
+            axisLabelY.text("Risk of job tasks being replaced by machine work (%)").style("fill","#27AE60").style("font-size", "20px")
             .style("opacity", 0).transition().duration(500).style("opacity",1);
 
             // decorateYAxis();
@@ -3647,7 +3638,7 @@ function graphModeOff() {
 
     // start the simulation after the transition delay
     setTimeout(function() {
-      simulation.alphaTarget(0.001).restart();
+      simulation.alpha(0.1).alphaTarget(0.001).restart();
     }, 750);
 
   
@@ -3671,6 +3662,9 @@ function graphModeOff() {
 d3.select("#resetFilters").on('click', function(d) {
   resetFilters(currentMode);
 });
+d3.select("#resetMobile").on('click', function(d) {
+  resetFilters(currentMode);
+});
 
 resetFilters = function(mode) {
   // collapseCircleImages() if expanded 
@@ -3679,8 +3673,8 @@ resetFilters = function(mode) {
   }
   // reset sizes
       // reset all buttons & colour this button green      
-      d3.selectAll(".btnSizesOption").style("color","#49AC52").style("background","white")
-      d3.select("#equaLink").style("color","white").style("background","#49AC52")
+      d3.selectAll(".btnSizesOption").style("color","#27AE60").style("background","white")
+      d3.select("#equaLink").style("color","white").style("background","#27AE60")
       currentSize = "nothing"
       // transition radii to selected values
       d3.selectAll(".jobCircle").attr("r",collapsedRadius)
@@ -3904,8 +3898,6 @@ enterUpdateCircles = function() {
 var sliderSideTranslate = 9;
 if(window.innerWidth >= 1007) {
   sliderSideTranslate = window.innerWidth*0.01
-  // d3.select("#titleBar").style("margin-left", window.innerWidth*0.01 + "vw")
-  // d3.select("#search-btn-div").style("right", window.innerWidth*0.0094 + "vw")
 }
 var sliderHeightTranslate = 9;
 // d3.select("#titleBar").style("margin-left","14vw")
@@ -3962,7 +3954,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .html(
       "<img id=question_"+i+" style='border-radius: 29px; padding-left: 5px; padding-bottom: 2px; margin: 20px 20px 0px 0px; float: right' src='img/question.png' "
       +"alt='help' height='26' width = '29'>"
-      +"<div class='activeText' align='left' style='color: #49AC52; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
+      +"<div class='activeText' align='left' style='color: #27AE60; height: 66px; width: 180px; float: left; margin-left: "+(sub_xtranslate+2)+"%;"
       +"font-size: 140%; font-weight: bold;"
       +" font-family: Raleway'>"
       +sliderTitlesArray[i] // "Communication <p class='sliderText'>and Verbal skills</p>"
@@ -3975,7 +3967,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("position", "relative")
     .style("margin-top", "39%")
     .style("margin-left", (sub_xtranslate)+"%")
-    .style("color", "#49AC52")
+    .style("color", "#27AE60")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
     .html("<div id='notmuchlots_"+i+"' class='activeText' style='margin-left: 5px; margin-top: -4px'>"
@@ -3986,7 +3978,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
       "<span>"+
         "<button id='btnSubsliders_"+i+"' class='expand-sliders-btn' style='width: 250px; margin-top: 4px; margin-left: 1px; fill: white; z-index: 99;' "+
         "onclick='expandSliders("+i+")' type='button'>"+
-          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #49AC52;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMainCompact[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
+          "<span id='spanSubsliders_"+i+"' style='font-family: Raleway; font-size: 15; font-weight: bold; color: #27AE60;'>"+sliderButtonArrows[i]+" view "+sliderTitlesArrayMainCompact[i].toLowerCase()+" "+sliderButtonArrows[i]+"</span>"+
         "</button>"+
       "</span></div>")
     .select(function() {
@@ -4263,19 +4255,19 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .html("<div align='left' style='"+
           "position: absolute; left: "+(xtranslate+3)+"%; width: 400px;"
           +" font-size: "+fontSizeMap.get(subSliderTitlesArray[i])+"%; font-weight: bold;"
-          +" color:  #49AC52; font-family: Raleway'>"
+          +" color:  #27AE60; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
           +"</div>"
         // md sm and xs
       // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 115%; font-weight: bold;"
-      //     +" color:  #49AC52; font-family: Raleway'>"
+      //     +" color:  #27AE60; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Communication <p class='sliderText'>and Verbal skills</p>"
       //     +"</div>"
         // sm and xs
       // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
       //     +"font-size: 100%; font-weight: bold;"
-      //     +" color:  #49AC52; font-family: Raleway'>"
+      //     +" color:  #27AE60; font-family: Raleway'>"
       //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Communication <p class='sliderText'>and Verbal skills</p>"
 
       //     +"</div>"
@@ -5141,6 +5133,46 @@ function appendFavourites(){
 
 }
 
+//////////////////// Mobile skill filters ///////////////////////
+  d3.select("#expandSlidersMobile").on("click",function(){
+    expandMobileSlidersMenu()
+  })
+
+  d3.select("#mobile-btn-close").on("click",function(){
+    collapseMobileSlidersMenu()
+  })
+
+  function expandMobileSlidersMenu(){
+    d3.select("#mobile-sliders-menu").transition().duration(750)
+    .style("bottom","3%")
+    .style("pointer-events","auto")
+  }
+  function collapseMobileSlidersMenu(){
+    d3.select("#mobile-sliders-menu").transition().duration(650)
+    .style("bottom","-88%")
+    .style("pointer-events","none")
+  }
+
+  d3.selectAll(".mobile-li").on("click",function(){
+    console.log(event.target.id.substring(2,event.target.id.length))
+    expandSkillSlider(event.target.id.substring(2,event.target.id.length))
+  })
+
+  function expandSkillSlider(mode){ // e.g. mode = "Math"
+    switch (mode) {
+      case "Language":
+        d3.select("#sliderDiv_skillsLang")
+          .style("display","block")
+          .style("left","25vw")
+          .style("top","77vh")
+        d3.select("#subSliderDiv_0")
+          .style("pointer-events","none")
+          .style("opacity","0")
+      break;
+    }
+    collapseMobileSlidersMenu()
+  }
+
 })
 } // end of d3.csv
 
@@ -5165,12 +5197,46 @@ function appendFavourites(){
       ///////////////////// Search ///////////////////////
 var searchExpanded = 0;
 
+d3.select("#searchMobile").on("click",function(){
+  if(searchExpanded==0){
+    expandSearchMobile()
+    searchExpanded=1
+  }else{
+    collapseSearchMobile()
+    searchExpanded=0
+  }
+})
+  
+function expandSearchMobile(){
+  d3.select("body")
+  .append("div").attr("id","searchDivMobile")
+    .html("<input id='jobTitleMobile' class='form-control d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none' placeholder='Search job titles' align='right' "+
+           "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
+          "<button id='searchSubmitBtnMobile' style='opacity: 1;' class='d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none submit-btn btn btn-sm' "+
+          "onclick='searchJobTitles()'>Search</button>"
+          )
+    .style("width","0px").style("opacity",0)
+    .transition().ease(d3.easeExp).duration(1000)
+    .style("width","49%").style("opacity",1)
+}
+function collapseSearchMobile(){
+  d3.select("#searchDivMobile")
+    .transition().duration(500)
+    .style("width","0%").style("opacity",0).remove()
+  d3.select("#jobTitleMobile")
+    .transition().duration(500)
+    .style("opacity",0).remove()
+  d3.select("#searchSubmitBtnMobile")
+    .transition().duration(500)
+    .style("opacity",0).remove()
+}
+
 
 d3.select("body").append("div")
   .attr("id", "search-btn-div")
   .append("span")
-    .append("button").attr("id","searchButtonPC").attr("class","search-btn")
-      .append("img").attr("id","searchImg").attr("class","search-img")
+    .append("button").attr("id","searchButtonPC").attr("class","search-btn d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block")
+      .append("img").attr("id","searchImg").attr("class","search-img d-none d-xs-none d-sm-none d-md-block d-lg-block d-xl-block")
         .attr("src","img/search.png")
         .attr("height","40")
         .attr("width","40")
@@ -5192,9 +5258,9 @@ var feedbackBbox = document.getElementById("feedback").getBoundingClientRect()
 
 var searchDiv = d3.select("body")
   .append("div").attr("id","searchDiv")
-    .html("<input id='jobTitle' class='form-control d-none d-xs-none d-sm-inline d-md-inline d-lg-inline d-xl-inline' placeholder='Search job titles' align='right' "+
+    .html("<input id='jobTitle' class='form-control d-none d-xs-none d-sm-none d-md-inline d-lg-inline d-xl-inline' placeholder='Search job titles' align='right' "+
            "type='text' onkeydown='if (event.keyCode == 13) searchJobTitles()'>"+
-          "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='d-none d-xs-none d-sm-inline d-md-inline d-lg-inline d-xl-inline submit-btn btn btn-sm' "+
+          "<button id='searchSubmitBtn' style='opacity: 1; margin-top: -1px;' class='d-none d-xs-none d-sm-none d-md-inline d-lg-inline d-xl-inline submit-btn btn btn-sm' "+
           "onclick='searchJobTitles()'>Search</button>"
           )
     .style("width", function(){
@@ -5274,7 +5340,11 @@ function zeroJobsRemain() {
 
 function filterBySearch() {
 // get the search query
-var query = document.getElementById("jobTitle").value;
+if($(window).width()<768){
+  var query = document.getElementById("jobTitleMobile").value;
+}else{
+  var query = document.getElementById("jobTitle").value;
+}
   // START by filtering out nodes under the minimums
   store.forEach(function(d) {
     // INEFFICIENT -- TODO: fewer loops
@@ -5624,7 +5694,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
           .style("margin-left",-widthAll*0.017+"px")
           .html(
             "&#9650 hide language skills &#9650"
-            ).style("color", "#49AC52")
+            ).style("color", "#27AE60")
         // move "hide skills" button down
         d3.select("#btnSubsliders_0Close")
           .style("margin-top",0+"px").transition().duration(350)
@@ -5647,7 +5717,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       if(slidersExpanded[0] == 0){ // off
         hideLang()
       }
-      
+    break;
     case 1: // showLogic
 
       if(slidersExpanded[1] == 1){ // on
@@ -5681,7 +5751,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
                     .style("margin-left",-widthAll*0.017+"px")
                     .html(
                       "&#9650 hide logic skills &#9650"
-                      ).style("color", "#49AC52")
+                      ).style("color", "#27AE60")
                   // move "hide skills" button down
                   d3.select("#btnSubsliders_1Close")
                     .style("margin-top",0+"px").transition().duration(350)
@@ -5707,7 +5777,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         // if there is already a legend, unhide the legend
         // unhideLegend()
       }
-      
+    break;
     case 2: // showMath
 
       if(slidersExpanded[2] == 1){ // on
@@ -5744,7 +5814,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
                     .style("margin-left",-widthAll*0.017+"px")
                     .html(
                       "&#9660 hide math skills &#9660"
-                      ).style("color", "#49AC52")
+                      ).style("color", "#27AE60")
                     // .on("click",function(){hideMath()})
                   // move "hide skills" button down
                   d3.select("#btnSubsliders_2Close")
@@ -5771,7 +5841,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
         // if there is already a legend, unhide the legend
         // unhideLegend()
       }
-      
+    break;
     case 3: // showComputers
 
       if(slidersExpanded[3] == 1){ // on
@@ -5807,7 +5877,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
                     .style("margin-left",-widthAll*0.017+"px")
                     .html(
                       "&#9660 hide computer skills &#9660"
-                      ).style("color", "#49AC52")
+                      ).style("color", "#27AE60")
                     // .on("click",function(){hideComp()})
                   // move "hide skills" button down
                   d3.select("#btnSubsliders_3Close")
@@ -5835,7 +5905,7 @@ function expandSliders(sliderGroup) { // (1: Language 2: Logic 3: Math 4: Comput
       if(slidersExpanded[3] == 0){ // off
         hideComp()
       }
-      
+    break;
   }
 }
 
