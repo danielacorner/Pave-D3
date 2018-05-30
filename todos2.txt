@@ -1,23 +1,22 @@
 /*PRIORITIES*/
-- mobile version
+mobile version
+- hide all elements on media query
+- reposition sliders on mobile selection
+- add radio button indicator for current selection
 
-current:
-- image z-index
+
+next:
+- append favourites star responsively & shrink on open legend
+- bug: not appending in order of favourites
 - axis titles inactivetext 
-- graph explainer question position
-- navbar padding
-- different colours for active/inactive/different functions
-- responsivify favesDiv
+- navbar padding @ md * sm
 - retain colourlegend opacities on favourite hover
-- bug: favourites colour not correct on append (some but not all circles)
- - not appending in order of favourites
 
 - fix graph positions: move #svgCanvas and .annotation-group
 bug: circle 494 in management? check csv
 bug: circle 485 in business? check csv
 bug: circle 157 in sciences? check csv
 
-next:
 - minimally functional mobile layout
 - show favourites on-hover btn on the side
 - store data & favourites in the cache

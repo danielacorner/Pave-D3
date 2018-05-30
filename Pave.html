@@ -110,7 +110,7 @@
 		<button id="legendMobile" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none">Legend</button>
 	</div>
 	<div id="mobile-buttons-bottom">
-		<button id="expandSlidersMobile" class="btn-mobile"><span style="font-size: 24px; position: absolute; left: 26px; bottom: 6px;">&#9650</span> <span>Modify a skill filter</span> <span style="font-size: 24px; position: absolute; right: 26px; bottom: 6px;">&#9650</span></button>
+		<button id="expandSlidersMobile" class="btn-mobile d-inline d-xs-inline d-sm-inline d-md-none d-lg-none d-xl-none"><span style="font-size: 24px; position: absolute; left: 26px; bottom: 6px;">&#9650</span> <span>Modify a skill filter</span> <span style="font-size: 24px; position: absolute; right: 26px; bottom: 6px;">&#9650</span></button>
 	</div>
 	
 	<!-- mobile sliders menu -->
@@ -123,101 +123,116 @@
 			<li id="liLanguage" class="mobile-li mobile-sliders-skill">
 
 				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Language">
-				<i class="far fa-circle mobile-radio-span-primary"></i>
+				<i id="iLanguage" class="far fa-circle mobile-radio-span-primary"></i>
 				Communication and Verbal skills
 
 				<ul class="mobile-sliders-ul-secondary">
 
-					<li id="liOral" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Oral">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Oral Communication</li>
-					<li id="liReading" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Reading">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Reading</li>
-					<li id="liWriting" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Writing">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Writing</li>
+					<li id="liOral" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Oral">
+						<i id="iOral" class="far fa-circle mobile-radio-span-secondary"></i>
+						Oral Communication
+					</li>
+					<li id="liReading" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Reading">
+						<i id="iReading" class="far fa-circle mobile-radio-span-secondary"></i>
+						Reading
+					</li>
+					<li id="liWriting" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Writing">
+						<i id="iWriting" class="far fa-circle mobile-radio-span-secondary"></i>
+						Writing
+					</li>
 				</ul>
 			</li>
 			<li id="liComputer" class="mobile-li mobile-sliders-skill">
 
 				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Computer">
-				<i class="far fa-circle mobile-radio-span-primary"></i>
+				<i id="iComputer" class="far fa-circle mobile-radio-span-primary"></i>
 				Computer and Information skills
 
 				<ul class="mobile-sliders-ul-secondary">
 
-					<li id="liData" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Data">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Data Analysis</li>
-					<li id="liDigital" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Digital">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Digital Technology</li>
-					<li id="liDocument" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Document">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Document Use</li>
-					<li id="liFinding" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Finding">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Finding Information</li>
+					<li id="liData" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Data">
+						<i id="iData" class="far fa-circle mobile-radio-span-secondary"></i>
+						Data Analysis
+					</li>
+					<li id="liDigital" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Digital">
+						<i id="iDigital" class="far fa-circle mobile-radio-span-secondary"></i>
+						Digital Technology
+					</li>
+					<li id="liDocument" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Document">
+						<i id="iDocument" class="far fa-circle mobile-radio-span-secondary"></i>
+						Document Use
+					</li>
+					<li id="liFinding" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Finding">
+						<i id="iFinding" class="far fa-circle mobile-radio-span-secondary"></i>
+						Finding Information
+					</li>
 				</ul>
 			</li>
 			<li id="liLogic" class="mobile-li mobile-sliders-skill">
 
 				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Logic">
-				<i class="far fa-circle mobile-radio-span-primary"></i>
+				<i id="iLogic" class="far fa-circle mobile-radio-span-primary"></i>
 				Logic and Reasoning skills
 
 				<ul class="mobile-sliders-ul-secondary">
 
-					<li id="liCritical" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Critical">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Critical Thinking</li>
-					<li id="liDecision" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Decision">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Decision-Making</li>
-					<li id="liJob" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Job">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Job Task Planning and Organizing</li>
-					<li id="liProblem" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Problem">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Problem Solving</li>
+					<li id="liCritical" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Critical">
+						<i id="iCritical" class="far fa-circle mobile-radio-span-secondary"></i>
+						Critical Thinking
+					</li>
+					<li id="liDecision" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Decision">
+						<i id="iDecision" class="far fa-circle mobile-radio-span-secondary"></i>
+						Decision-Making
+					</li>
+					<li id="liJob" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Job">
+						<i id="iJob" class="far fa-circle mobile-radio-span-secondary"></i>
+						Job Task Planning and Organizing
+					</li>
+					<li id="liProblem" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Problem">
+						<i id="iProblem" class="far fa-circle mobile-radio-span-secondary"></i>
+						Problem Solving
+					</li>
 				</ul>
 			</li>
 			<li id="liMath" class="mobile-li mobile-sliders-skill">
 
 				<input class="mobile-radio mobile-radio-primary" type="radio" name="skill" value="Math">
-				<i class="far fa-circle mobile-radio-span-primary"></i>
+				<i id="iMath" class="far fa-circle mobile-radio-span-primary"></i>
 				Math and Spatial skills
 
 				<ul class="mobile-sliders-ul-secondary">
 
-					<li id="liMeasurement" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Measurement">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Measurement and Calculation</li>
-					<li id="liMoney" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Money">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Money Math</li>
-					<li id="liNumerical" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Numerical">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Numerical Estimation</li>
-					<li id="liScheduling" class="mobile-sliders-subskill">
-					<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Scheduling">
-					<i class="far fa-circle mobile-radio-span-secondary"></i>
-					Scheduling, Budgeting, Accounting</li>
+					<li id="liMeasurement" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Measurement">
+						<i id="iMeasurement" class="far fa-circle mobile-radio-span-secondary"></i>
+						Measurement and Calculation
+					</li>
+					<li id="liMoney" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Money">
+						<i id="iMoney" class="far fa-circle mobile-radio-span-secondary"></i>
+						Money Math
+					</li>
+					<li id="liNumerical" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Numerical">
+						<i id="iNumerical" class="far fa-circle mobile-radio-span-secondary"></i>
+						Numerical Estimation
+					</li>
+					<li id="liScheduling" class="mobile-li mobile-sliders-subskill">
+						<input class="mobile-radio mobile-radio-secondary" type="radio" name="skill" value="Scheduling">
+						<i id="iScheduling" class="far fa-circle mobile-radio-span-secondary"></i>
+						Scheduling, Budgeting, Accounting
+					</li>
 				</ul>
 			</li>
 		</ul>

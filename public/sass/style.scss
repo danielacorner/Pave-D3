@@ -894,13 +894,18 @@ button.close-sliders-btn{
   }
   .mobile-sliders-ul-secondary{
     font-size: 1.7vh;
-    padding-left: 1vh;
+    padding-left: 3.1vh;
     list-style-type: none;
     margin-bottom: 3.7vh;
     z-index: 99999;
   }
   .mobile-sliders-skill{
     cursor: pointer;
+    height: 26px;
+    margin-bottom: 18vh;
+  }
+  #liLanguage{
+    margin-bottom: 14vh;
   }
   .mobile-sliders-subskill{
     padding-top: 1.3vh;

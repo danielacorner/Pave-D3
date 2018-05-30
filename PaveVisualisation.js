@@ -6,7 +6,15 @@ hoverTimeout, currentMode, graphExplain, axisXtranslate, axisYtranslate;
 maxSalary = 132.922; //busted
 graphXtranslate = 0;
 currentMode = 0;
+var listPrimary = []
+var collapseCircleImages
+var updateMulti
+var updateMulti_mobile
+var expandCircleImages
+var imob
+var mobileSwitcher
 
+var circleExpanded = []
 expandedRadius = $(window).height()*0.045;
 collapsedRadius = $(window).height()*0.007;
 
@@ -28,8 +36,11 @@ function fillArray(value, len) {
 
 var favourites = fillArray(0,494); // list of favourited circles, 494 * 0 to start
 
-
-var circleExpanded = []; // whether or not the current circle is expanded
+var mobile_subskills = []
+var sliderSVGArray_mobile = []
+var sliderScaleArray_mobile = []
+var sliderMulti_mobile = []
+var handleArray_mobile = []
 var circlesExpanded = 0;
 var legendCreated = 0;
 var graphFirstTime = true;
@@ -183,6 +194,7 @@ function resize() {
   // reposition #svgCanvas and .annotation-group
   // 1. recalculate 
   // 2. reposition
+  d3.select("#notmuchlots_mobile").remove()
 
   // mobile
   if(w >= 320){
@@ -226,6 +238,10 @@ function resize() {
       return w - linksBbox.right - 110 + "px"
     })
     d3.selectAll(".sliderDiv-container").style("display","block")
+      .style("margin-left",0)
+    d3.selectAll(".divNotmuchlots").style("opacity",1)
+
+    d3.selectAll(".expand-sliders-btn").style("opacity",1).style("pointer-events","auto")
     d3.selectAll(".btn-reset").style("display","block")
     d3.selectAll(".btn-legend").style("display","block")
     d3.selectAll(".btn-mobile").style("display","none")
@@ -3970,7 +3986,7 @@ function createSliders(createSliderArray, sliderTitlesArray){
     .style("color", "#27AE60")
     .style("font-weight", "bold")
     .style("font-family", "Raleway")
-    .html("<div id='notmuchlots_"+i+"' class='activeText' style='margin-left: 5px; margin-top: -4px'>"
+    .html("<div id='notmuchlots_"+i+"' class='divNotmuchlots activeText' style='margin-left: 5px; margin-top: -4px'>"
       +"Not&nbspmuch"
       +"<span id='notmuchSpan_"+i+"' style='margin-left: "+137+"px;'></span>"
       +"Lots</div>"+
@@ -4258,21 +4274,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
           +" color:  #27AE60; font-family: Raleway'>"
           +subSliderTitlesArray[i] // Skill title
           +"</div>"
-        // md sm and xs
-      // +"<div class='d-inline d-sm-inline d-md-inline d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
-      //     +"font-size: 115%; font-weight: bold;"
-      //     +" color:  #27AE60; font-family: Raleway'>"
-      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7)+"..." // "Communication <p class='sliderText'>and Verbal skills</p>"
-      //     +"</div>"
-        // sm and xs
-      // +"<div class='d-inline d-sm-inline d-md-none d-lg-none d-xl-none' align='left' style='margin-left: "+(xtranslate)+"%;"
-      //     +"font-size: 100%; font-weight: bold;"
-      //     +" color:  #27AE60; font-family: Raleway'>"
-      //     +subSliderTitlesArray[i].substring(0,subSliderTitlesArray[i].length - 7) // "Communication <p class='sliderText'>and Verbal skills</p>"
-
-      //     +"</div>"
           )
-
       .append("div").attr("id", "sliderDiv2_"+subSliderArray[i])
         .attr("align", "left")
         .style("position", "relative")
@@ -4281,7 +4283,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
         .style("font-weight", "bold")
         .attr("class","inactiveHeader")
         .style("font-family", "Raleway")
-        .html("<div id='notmuchlots_"+(i+j)+"' class='inactiveText d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
+        .html("<div id='notmuchlots_"+(i+j)+"' class='divNotmuchlots inactiveText d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline' style='font-family: Raleway'>Not&nbspmuch"
           +"<span id='notmuchSpan_"+(i+j)+"' style='margin-left: "+window.innerWidth*0.135+"px'></span>"
           +"Lots</div>")
         .select(function() {
@@ -4512,7 +4514,7 @@ function createSubSliders(subSliderArray, subSliderTitlesArray, indexIn_sliderAr
   } //end for
 };//end createSubSliders
 
-function collapseCircleImages() {
+collapseCircleImages = function() {
 
   if(circlesExpanded == 1){
     circlesExpanded = 0;
@@ -4551,7 +4553,7 @@ function collapseCircleImages() {
   }
 }
 
-function expandCircleImages() {
+expandCircleImages = function() {
 
 expandedRadius = $(window).height()*0.045;
 collapsedRadius = $(window).height()*0.007;
@@ -4614,9 +4616,10 @@ collapsedRadius = $(window).height()*0.007;
 
 // Update function which detects current slider
 //  general update pattern for updating the graph
-function updateMulti(h, mode) {
+updateMulti = function(h, mode) {
   // using the slider handle
   var sliderID = event.target.id;
+  console.log(event.target.id)
   // jam sliders at n <= 10
     // jamSliders()
     handleArray[sliderID].attr("cx", sliderScaleArray[sliderID](h)); // move the slider handle
@@ -4627,6 +4630,96 @@ function updateMulti(h, mode) {
 
   
   var filteredNodes = filterAll()
+  //  UPDATE
+  circles = circles.data(filteredNodes, function(d) { return d.id });
+    
+  // EXIT
+  circles.exit().transition().duration(500)
+  // exit transition: "pop" radius * 1.5 + 5 & fade out
+  .attr("r", $(window).height()*0.03)
+  .styleTween("opacity", function(d) {
+    var i = d3.interpolate(1, 0);
+    return function(t) { return i(t); };
+  })
+  .remove();
+
+  // ENTER (create the circles with all attributes)
+  enterUpdateCircles();
+
+  //bookmarklet : resetSimulation()?
+
+  // reset simulation if graph mode = off
+  if (graphMode == 0) {
+    simulation.nodes(filteredNodes)
+    .force("collide", forceCollide)
+    .force("cluster", forceCluster)
+    .force("gravity", forceGravity)
+    .force("x", forceXCombine)
+    .force("y", forceYCombine)
+    .on("tick", tick);
+    restartSimulation();
+
+    } else if (graphMode == 1) { // else reposition nodes on graph
+  
+      switch (mode) {
+
+        case 0:
+        case 1:
+          circles
+            // x = Years of Study
+          .attr("cx", function(d){ return d.yearsStudy/maxYearsStudy*width*0.73 - width*0.4 + graphXtranslate})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
+          break;
+
+        case 2:
+          circles
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+            // y = Wage
+          .attr("cy", function(d){ return ((maxSalary-d.salaryMed)/maxSalary)*height*0.69 - height*0.5 + graphYtranslate});
+          break;
+          // x = Number of Jobs
+          // y = Automation Risk (same as initial, but using cx to glide into position from previous positions)
+        case 3:
+          circles
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+            // y = Automation Risk (same as initial, but using cx to transition into position from previous positions)
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          break;
+
+        case 4:
+          circles
+            // x = Number of Jobs
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.73 - width*0.4 + graphXtranslate})
+            // y = Automation Risk
+          .attr("cy", function(d){ return (d.automationRisk)*height*0.65 - height*0.5 + graphYtranslate});
+          break;
+
+        case 5: // graph mode off
+          circles
+          .attr("cx", function(d){ return d.workers/maxWorkers*width*0.9 - width/2 + margin.left  + graphXtranslate})
+          .attr("cy", function(d){ return (d.automationRisk)*height - height/2 + graphYtranslate})
+          break;
+        }
+
+  }
+// } // end if graph length > 10
+};//end updateMulti
+
+updateMulti_mobile = function(h, mode) {
+  // using the slider handle
+  var sliderID = event.target.id;
+  var sliderID_nonmobile = mobileSwitcher(sliderID)
+
+  handleArray_mobile[sliderID].attr("cx", sliderScaleArray_mobile[sliderID](h)); // move the slider handle
+
+  // Update the slider positions array
+  sliderPositionsArray[sliderID_nonmobile] = sliderScaleArray_mobile[event.target.id].invert(d3.event.x);
+
+  
+  var filteredNodes = filterAll_mobile()
   //  UPDATE
   circles = circles.data(filteredNodes, function(d) { return d.id });
     
@@ -4829,6 +4922,160 @@ filterAll = function() {
       var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[i](d[sliderArray[i]]) })
       // fill the left side green (using mouse position on current slider)
       d3.select("#inset-left_"+i).attr("x2", d3.event.x )
+    }
+  }
+  calloutCheck()
+  return graph;
+} // end filterAll
+
+
+
+
+
+
+
+mobileSwitcher = function(mode) {
+  switch (mode) {
+    case "Language": // top left
+      return 0
+      
+    case "Logic": // top right
+      return 1
+      
+    case "Math": // bottom right
+      return 2
+      
+    case "Computer": // bottom left
+      return 3
+      
+    case "Oral":
+      return 4
+      
+    case "Reading":
+      return 5
+      
+    case "Writing":
+      return 6
+      
+    case "Decision":
+      return 7
+      
+    case "Job":
+      return 8
+      
+    case "Problem":
+      return 9
+      
+    case "Critical":
+      return 10
+      
+    case "Measurement":
+      return 11
+      
+    case "Money":
+      return 12
+      
+    case "Numerical":
+      return 13
+      
+    case "Scheduling":
+      return 14
+      
+    case "Data":
+      return 15
+      
+    case "Finding":
+      return 16
+      
+    case "Digital":
+      return 17
+      
+    case "Document":
+      return 18
+      
+    }
+
+}
+
+
+filterAll_mobile = function() {
+  // first, clear the list
+  var listToDeleteMulti = [];
+  // reset the graph
+  graph = [];
+  // var currentSlider = sliderPositionsArray[event.target.id]
+  store.forEach(function(d){ // for each circle
+    // put you on the list if the slider position is above your value:
+    
+    // for current slider only
+    for(var s in sliderPositionsArray){        
+      // if the slider position is above your value  &  if you're not already on the list
+      if(d[sliderArray[s]] < sliderPositionsArray[s] && !listToDeleteMulti.includes(d[sliderArray[s]])) {
+        // put you on the list
+        listToDeleteMulti.push(d.id);
+      }
+    }
+  })
+  // update the graph based on the filter list
+  store.forEach(function(n) {
+    // if you're not on the filter list
+    if (!listToDeleteMulti.includes(n.id)) {
+      // put you on the graph         (start graph empty? or check)
+      graph.push(n);
+    // if you're on the list
+    } else if (listToDeleteMulti.includes(n.id)) {
+      // for each graph item
+      graph.forEach(function(d, p) { // p = position
+        if (n.id === d.id) {
+          graph.splice(p, 1); // get you off of there!
+        }
+      })
+    };
+  });
+  // Main sliders
+  for(var mode in listPrimary) {
+    imob = mobileSwitcher(listPrimary[mode])
+    if(event.target.id != imob) {
+      // find the minimum of each slider on the current graphed set
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[imob](d[sliderArrayMain[imob]]) })
+      // move the slider handle
+      // (transition slider handles but not insets)
+      handleArray[imob].transition().duration(300).attr("cx", thisMinimum);
+      // fill the left side green
+      d3.select("#inset-left_"+imob).attr("x2", thisMinimum )
+    }else if(event.target.id == imob) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[imob](d[sliderArrayMain[imob]]) })
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+imob).attr("x2", function() {
+        console.log(sliderScaleArray[imob].invert(d3.event.x))
+        // block at left side
+        if (sliderScaleArray[imob].invert(d3.event.x) <= 0) { return sliderScaleArray[imob](sliderPositionsArray[imob])
+        // block at right side
+        // }else if (sliderScaleArray[imob].invert(d3.event.x) > 250){ return sliderScaleArray[imob](sliderPositionsArray[imob])
+        }else{ 
+          return d3.event.x }
+        } )
+    }
+  };
+  // Subskill sliders
+
+  for(var mode in mobile_subskills) {
+    console.log(mode)
+    console.log(mobile_subskills.length)
+    console.log(mobile_subskills[mode])
+    imob = mobileSwitcher(mobile_subskills[mode])
+    console.log(imob)
+
+    if(event.target.id != mobile_subskills[mode]) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[imob](d[sliderArray[imob]]) })
+      handleArray_mobile[mobile_subskills[mode]].attr("cx", thisMinimum); // move the slider handle
+      // fill the left side green
+      d3.select("#inset-left_"+mobile_subskills[mode]).attr("x2", thisMinimum )
+
+    }else if(event.target.id == mobile_subskills[mode]) {
+      var thisMinimum = d3.min(graph, function(d){ return sliderScaleArray[imob](d[sliderArray[imob]]) })
+      // fill the left side green (using mouse position on current slider)
+      d3.select("#inset-left_"+mobile_subskills[mode]).attr("x2", d3.event.x )
     }
   }
   calloutCheck()
@@ -5153,21 +5400,299 @@ function appendFavourites(){
     .style("pointer-events","none")
   }
 
-  d3.selectAll(".mobile-li").on("click",function(){
+  d3.select("#liLanguage").on("click",function(){
     console.log(event.target.id.substring(2,event.target.id.length))
     expandSkillSlider(event.target.id.substring(2,event.target.id.length))
   })
 
+  d3.select("#liComputer").on("click",function(){
+    console.log(event.target.id.substring(2,event.target.id.length))
+    expandSkillSlider(event.target.id.substring(2,event.target.id.length))
+  })
+
+  d3.select("#liLogic").on("click",function(){
+    console.log(event.target.id.substring(2,event.target.id.length))
+    expandSkillSlider(event.target.id.substring(2,event.target.id.length))
+  })
+
+  d3.select("#liMath").on("click",function(){
+    console.log(event.target.id.substring(2,event.target.id.length))
+    expandSkillSlider(event.target.id.substring(2,event.target.id.length))
+  })
+
+
+
+  mobile_subskills = ["Oral","Reading","Writing","Decision","Job","Problem","Critical","Measurement","Money","Numerical","Scheduling","Data","Finding","Digital","Document"]
+  var sliderTop = "77vh"
+  var sliderBottom = "8vh"
+  var sliderLeft = $(window).width()*0.5+"px"
+  var subsliderTop = "80vh"
+  var subsliderLeft = $(window).width()*0.52+"px"
+  var sliderMgnLeft = "-125px"
+  // var sliderMgnRight = "-125px"
+  var nmlTop = $(window).height()*0.77+100+"px"
+  var nmlLeft = $(window).width()*0.52-1+"px"
+
+
+  // subskill scales mobile redo
+
+  var slidersWidth = 230;
+  var reductionFactorSubskills = 0.6; // reduce the subskill slider ranges to 60% to avoid over-filtering
+
+
+    // append custom not much lots div
+    // d3.select("#notmuchlots_mobile").remove()
+    d3.select("body").append("div").attr("id","notmuchlots_mobile")
+      .html("Not much<span style='margin-left: 137px'></span>Lots")
+      .attr("class","activeText").style("font-weight","bold")
+      .style("position","fixed")
+      .style("top",nmlTop)
+      .style("left",nmlLeft)
+      .style("margin-left",sliderMgnLeft)
+      .style("opacity",0).style("pointer-events","none")
+
+  var sliderRight = $(window).width()-getBbox("notmuchlots_mobile").left-239+"px"
+
+    createMobileSubSliders()
+
+
+  function createMobileSubSliders() {
+
+
+    sliderTop = "77vh"
+    sliderBottom = "8vh"
+    sliderLeft = $(window).width()*0.5+"px"
+    subsliderTop = "80vh"
+    subsliderLeft = $(window).width()*0.52+"px"
+    sliderMgnLeft = "-125px"
+    // sliderMgnRight = "-125px"
+    nmlTop = $(window).height()*0.77+100+"px"
+    nmlLeft = $(window).width()*0.52-1+"px"
+
+    sliderRight = $(window).width()-getBbox("notmuchlots_mobile").left-239+"px"
+
+    // subskill scales mobile redo
+
+    slidersWidth = 230;
+    reductionFactorSubskills = 0.6; // reduce the subskill slider ranges to 60% to avoid over-filtering
+
+
+    sliderScaleArray_mobile["Oral"] = sliderScaleArray[4]
+    sliderScaleArray_mobile["Reading"] = sliderScaleArray[5]
+    sliderScaleArray_mobile["Writing"] = sliderScaleArray[6]
+    sliderScaleArray_mobile["Decision"] = sliderScaleArray[7]
+    sliderScaleArray_mobile["Job"] = sliderScaleArray[8]
+    sliderScaleArray_mobile["Problem"] = sliderScaleArray[9]
+    sliderScaleArray_mobile["Critical"] = sliderScaleArray[10]
+    sliderScaleArray_mobile["Measurement"] = sliderScaleArray[11]
+    sliderScaleArray_mobile["Money"] = sliderScaleArray[12]
+    sliderScaleArray_mobile["Numerical"] = sliderScaleArray[13]
+    sliderScaleArray_mobile["Scheduling"] = sliderScaleArray[14]
+    sliderScaleArray_mobile["Data"] = sliderScaleArray[15]
+    sliderScaleArray_mobile["Finding"] = sliderScaleArray[16]
+    sliderScaleArray_mobile["Digital"] = sliderScaleArray[17]
+    sliderScaleArray_mobile["Document"] = sliderScaleArray[18]
+
+    for(var mode of mobile_subskills){
+        sliderSVGArray_mobile[mode] = d3.select("body").append("div").attr("class","subSliderDiv-container-mobile")
+            .attr("id", "sliderDiv_"+mode) // sliderDiv_Oral
+            .style("position", "fixed")
+            .style("margin-left",sliderMgnLeft)
+            .style("left", subsliderLeft).style("top", subsliderTop)
+            .style("width","400px")
+            .html("<div align='left' "+
+              "style='"+
+              // "position: absolute; left: "+(xtranslate+3)+"%; width: 400px; "+
+              "font-size: 120%; font-weight: bold;"
+              +" color:  #27AE60; font-family: Raleway'>"
+              +"Oral Communication" // Skill title
+              +"</div>"
+              )
+            .append("svg").attr("id", "sliderSvg_"+mode)
+            .style("z-index", 99)
+            .style("position", "fixed")
+            // .style("top", subsliderTop) // y position
+            .attr("id", "slider_"+mode)
+            .attr("width", 280)
+            .attr("height", 50);
+         // Slider
+         sliderMulti_mobile[mode] = sliderSVGArray_mobile[mode].append("g")
+         .attr("class", "slider")
+         .attr("transform", "translate(" + (10+0) + "," + 22 + ")");
+          // track
+          sliderMulti_mobile[mode].append("line")
+          .attr("class", "track")
+          .attr("x1", sliderScaleArray_mobile[mode].range()[0])
+          .attr("x2", sliderScaleArray_mobile[mode].range()[1])
+          .select(function() {
+            return this.parentNode;
+          }) // inset
+          .append("line")
+          .attr("x1", sliderScaleArray_mobile[mode].range()[0])
+          .attr("x2", sliderScaleArray_mobile[mode].range()[1])
+          .attr("class", "track-inset")
+          .select(function() {
+            return this.parentNode;
+          }) // inset-left (fills up green on drag)
+          .append("line")
+          .attr("x1", sliderScaleArray_mobile[mode].range()[0])
+          .attr("x2", sliderScaleArray_mobile[mode].range()[0])
+          .attr("class", "track-inset-left")
+          .attr("id","inset-left_"+mode)
+          .select(function() {
+            return this.parentNode;
+          }) // overlay
+          .append("line")
+          .attr("x1", sliderScaleArray_mobile[mode].range()[0])
+          .attr("x2", sliderScaleArray_mobile[mode].range()[1])
+          .attr("class", "track-overlay")
+          .attr("id", mode)
+          .on("mouseover", function() {
+            d3.select("#handle_"+this.id).style("fill","#eaeaea")
+          })
+          .on("mouseout", function() {
+            d3.select("#handle_"+this.id).style("fill","white")
+            if(typeof miniTooltip != "undefined"){
+              miniTooltip.transition().duration(500)
+              .style("opacity",0)
+            }
+          })
+          .call(d3.drag()
+            .on("start.interrupt", function() {
+              sliderMulti_mobile[event.target.id].interrupt();
+            }) // drag update function
+            .on("start drag", function() {
+              // remove old mini tooltip
+              if(typeof miniTooltip == "undefined"){
+                miniTooltip = d3.select("body").append("div")
+                .attr("class", "minitooltip")
+                .style("opacity", 0);
+              }
+              // show mini tooltip indicating how many job groups remain
+              miniTooltip.transition().duration(200)
+              .style("opacity",.9)
+              miniTooltip.html(graph.length + " job groups<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remain")
+              .style("left", (event.pageX - 64) + "px")
+              .style("top", (event.target.getBoundingClientRect().top - 88) + "px")
+
+              if(graph.length >= 10){ miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") }
+                graph.length <= 30 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
+              // if under 25 circles left, expand images
+              if(graph.length <= 25){ 
+                miniTooltip.style("color","#FE2E2E") 
+                expandCircleImages();
+              } else { // collapse images
+                collapseCircleImages();
+              }
+              if(graph.length >=175){
+                forceGravity = d3.forceManyBody().strength($(window).height()*-0.08)
+
+                simulation
+                .force("collide", forceCollide)
+                .force("cluster", forceCluster)
+                .force("gravity", forceGravity)
+                .force("x", forceXCombine)
+                .force("y", forceYCombine)
+                .on("tick", tick);
+
+                if(graphMode == 0){
+                  simulation.alpha(0.15).alphaTarget(0.001).restart();
+                }
+              }
+              console.log(sliderScaleArray_mobile[event.target.id].invert(d3.event.x))
+              updateMulti_mobile(sliderScaleArray_mobile[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+            }));
+
+          handleArray_mobile[mode] = sliderMulti_mobile[mode].insert("circle", ".track-overlay")
+          .attr("class", "handle")
+          .attr("id","handle_"+mode)
+          .attr("r", 9);
+
+          d3.selectAll(".subSliderDiv-container-mobile").style("opacity",0).style("pointer-events","none")  
+
+        }
+      }
+
+
+
   function expandSkillSlider(mode){ // e.g. mode = "Math"
+   
+    // untick all radio buttons
+    d3.selectAll(".fa-dot-circle")
+      .attr("class","far fa-circle mobile-radio-span-secondary")
+    listPrimary = ["Language","Logic","Math","Computer"]
+    listPrimary.forEach(function(primary){
+      d3.select("#i"+primary)
+        .attr("class","far fa-circle mobile-radio-span-primary")
+    })
+
+    // tick this radio button
+    if(listPrimary.includes(mode)){
+      d3.select("#i"+mode)
+        .attr("class","far fa-dot-circle mobile-radio-span-primary")
+    }else{
+      d3.select("#i"+mode)
+        .attr("class","far fa-dot-circle mobile-radio-span-secondary")
+    }
+
+    // hide all sliders
+    resize()
+    // hide all subslider buttons
+    d3.selectAll(".expand-sliders-btn")
+      .style("pointer-events","none")
+      .style("opacity","0")
+    // hide all subsliders
+    d3.selectAll(".subSliderDiv-container-mobile").style("opacity",0).style("pointer-events","none")
+    // hide all not much lots divs
+    d3.selectAll(".divNotmuchlots").style("opacity",0)
+    // show the mobile not much lots divs
+    console.log("unhiding the notmuchlots div")
+    d3.select("#notmuchlots_mobile")
+    .style("background","black")
+    .style("opacity",1)
+
+
+    // show the slider
     switch (mode) {
-      case "Language":
-        d3.select("#sliderDiv_skillsLang")
-          .style("display","block")
-          .style("left","25vw")
-          .style("top","77vh")
-        d3.select("#subSliderDiv_0")
-          .style("pointer-events","none")
-          .style("opacity","0")
+      case "Language": // top left
+        d3.select("#sliderDiv_skillsLang").style("display","block")
+          //left = 1/2 width - 1/2 sliderDiv width
+          .style("margin-left",sliderMgnLeft)
+          .style("left",sliderLeft).style("top",sliderTop)
+      break;
+      case "Logic": // top right
+        d3.select("#sliderDiv_skillsLogi").style("display","block")
+          .style("margin-left",sliderMgnLeft)
+          .style("right",sliderRight).style("top",sliderTop)
+      break;
+      case "Math": // bottom right
+        d3.select("#sliderDiv_skillsMath").style("display","block")
+          .style("margin-left",sliderMgnLeft)
+          .style("right",sliderRight).style("bottom",sliderBottom)
+      break;
+      case "Computer": // bottom left
+        d3.select("#sliderDiv_skillsComp").style("display","block")
+          .style("margin-left",sliderMgnLeft)
+          .style("left",sliderLeft).style("bottom",sliderBottom)
+      break;
+
+      // subskills
+      case "Oral":
+      case "Reading":
+      case "Writing":
+      case "Decision":
+      case "Job":
+      case "Problem":
+      case "Critical":
+      case "Measurement":
+      case "Money":
+      case "Numerical":
+      case "Scheduling":
+      case "Data":
+      case "Finding":
+      case "Digital":
+      case "Document":
+        d3.select("#sliderDiv_"+mode).style("opacity",1).style("pointer-events","auto")  
       break;
     }
     collapseMobileSlidersMenu()
@@ -5929,7 +6454,6 @@ function hideLang() {
     handleArray[i].style("display", "none");
     sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
-    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
 }
@@ -5953,7 +6477,6 @@ function hideLogi() {
     handleArray[i].style("display", "none");
     sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
-    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
 }
@@ -5976,7 +6499,6 @@ function hideMath() {
     handleArray[i].style("display", "none");
     sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
-    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
 }
@@ -5999,7 +6521,6 @@ function hideComp() {
     handleArray[i].style("display", "none");
     sliderMulti[i].style("display", "none");
     d3.select("#sliderDiv2_"+sliderArray[i]).style("visibility", "hidden");
-    // d3.select("#notmuchlots_"+i+4).style("visibility", "hidden");
     d3.select("#sliderDiv_"+sliderArray[i]).style("visibility", "hidden");
   }
 }
