@@ -246,6 +246,16 @@ function resize() {
     d3.selectAll(".btn-legend").style("display","block")
     d3.selectAll(".btn-mobile").style("display","none")
     // $("#navBar").show()
+
+    // turn off all tracks
+    d3.selectAll(".subSliderDiv-container-mobile").style("opacity",0).style("pointer-events","none")  
+    d3.selectAll(".track-overlay-mobile").style("opacity",0).style("pointer-events","none")
+    d3.selectAll(".subslider_mobile").style("opacity",0).style("pointer-events","none")
+  
+    // turn on all tracks
+    d3.selectAll(".track-overlay").style("opacity",1)
+    .attr("y1","0")
+    .attr("y2","0")
   }else{
     // $("#navBar").hide()
 
@@ -4074,12 +4084,12 @@ $(document).ready(function(){resize()})
   .attr("x1", sliderScaleArray[i].range()[0])
   .attr("x2", sliderScaleArray[i].range()[1])
   .attr("class", "track-overlay")
-  .attr("id", i)
+  .attr("id", "overlay_"+i)
   .on("mouseover", function() {
-    d3.select("#handle_"+this.id).style("fill","#eaeaea")
+    d3.select("#handle_"+this.id.substring(this.id.length-1,this.id.length)).style("fill","#eaeaea")
   })
   .on("mouseout", function() {
-    d3.select("#handle_"+this.id).style("fill","white")
+    d3.select("#handle_"+this.id.substring(this.id.length-1,this.id.length)).style("fill","white")
     if(typeof miniTooltip != "undefined"){
       miniTooltip.transition().duration(500)
       .style("opacity",0)
@@ -4087,7 +4097,7 @@ $(document).ready(function(){resize()})
   })
   .call(d3.drag()
     .on("start.interrupt", function() {
-      sliderMulti[event.target.id].interrupt();
+      sliderMulti[event.target.id.substring(event.target.id.length-1,event.target.id.length)].interrupt();
     }) // drag update function
     .on("start drag", function() {
       if(typeof miniTooltip == "undefined"){
@@ -4107,9 +4117,9 @@ $(document).ready(function(){resize()})
       if($(event.target).attr('class') == 'track-overlay'){
         miniTooltip.style("top", (event.target.getBoundingClientRect().top - 90) + "px")
       }
-                  // (d3.select("#handle_"+this.id)
+                  // (d3.select("#handle_"+this.id.substring(this.id.length-1,this.id.length))
       if(graph.length >= 10){ 
-        miniTooltip.style("left", (document.getElementById("handle_"+this.id).getBoundingClientRect().left - 55) + "px") 
+        miniTooltip.style("left", (document.getElementById("handle_"+this.id.substring(this.id.length-1,this.id.length)).getBoundingClientRect().left - 55) + "px") 
 
       }
       graph.length <= 50 ? miniTooltip.style("color","#FEB22E") : miniTooltip.style("color", "white")
@@ -4149,7 +4159,7 @@ $(document).ready(function(){resize()})
 
       }
 
-      updateMulti(sliderScaleArray[event.target.id].invert(d3.event.x), currentMode); // pass the current line id to update function
+      updateMulti(sliderScaleArray[event.target.id.substring(event.target.id.length-1,event.target.id.length)].invert(d3.event.x), currentMode); // pass the current line id to update function
       // }
     
     })
@@ -4627,7 +4637,7 @@ collapsedRadius = $(window).height()*0.007;
 //  general update pattern for updating the graph
 updateMulti = function(h, mode) {
   // using the slider handle
-  var sliderID = event.target.id;
+  var sliderID = event.target.id.substring(event.target.id.length-1,event.target.id.length);
   console.log(event.target.id)
   // jam sliders at n <= 10
     // jamSliders()
@@ -4635,7 +4645,7 @@ updateMulti = function(h, mode) {
   // }
 
   // Update the slider positions array
-  sliderPositionsArray[sliderID] = sliderScaleArray[event.target.id].invert(d3.event.x);
+  sliderPositionsArray[sliderID] = sliderScaleArray[sliderID].invert(d3.event.x);
 
   
   var filteredNodes = filterAll()
@@ -5475,6 +5485,7 @@ function appendFavourites(){
   // for the main skill sliders, simply reposition them when selected
   d3.select("#liLanguage").on("click",function(){
     // hide the mobile not much lots div
+    console.log(event.target.id.substring(2,event.target.id.length))
     expandSkillSlider(event.target.id.substring(2,event.target.id.length))
   })
 
@@ -5619,7 +5630,7 @@ function appendFavourites(){
           .append("line")
           .attr("x1", sliderScaleArray_mobile[mode].range()[0])
           .attr("x2", sliderScaleArray_mobile[mode].range()[1])
-          .attr("class", "track-overlay")
+          .attr("class", "track-overlay track-overlay-mobile")
           .attr("id", mode)
           .on("mouseover", function() {
             d3.select("#handle_"+this.id).style("fill","#eaeaea")
@@ -5686,11 +5697,17 @@ function appendFavourites(){
           d3.selectAll(".subSliderDiv-container-mobile").style("opacity",0).style("pointer-events","none")  
           // d3.selectAll(".track-overlay").style("opacity",0).style("pointer-events","none")
           d3.selectAll(".subslider_mobile").style("opacity",0).style("pointer-events","none")
+        
+          // turn off all tracks
+          d3.selectAll(".track-overlay").style("opacity",0)
+          .attr("y1","-1000")
+          .attr("y2","-1000")
 
         }
       }
 
 
+    resize()
 
   function expandSkillSlider(mode){ // e.g. mode = "Math"
     // untick all radio buttons
@@ -5724,6 +5741,11 @@ function appendFavourites(){
    
     // show the mobile not much lots div
     d3.select("#notmuchlots_mobile").style("opacity",1)
+        
+    // turn off all tracks
+    d3.selectAll(".track-overlay").style("opacity",0)
+    .attr("y1","-1000")
+    .attr("y2","-1000")
 
     // show the slider
     switch (mode) {
@@ -5733,24 +5755,40 @@ function appendFavourites(){
           //left = 1/2 width - 1/2 sliderDiv width
           .style("margin-left",sliderMgnLeft)
           .style("left",sliderLeft).style("top",sliderTop)
+          // main skills
+          d3.select("#overlay_"+mobileSwitcher(mode)).style("opacity",1)
+          .attr("y1","0")
+          .attr("y2","0")
       break;
       case "Logic": // top right
         d3.select("#notmuchlots_mobile").style("opacity",0)
         d3.select("#sliderDiv_skillsLogi").style("display","block")
           .style("margin-left",sliderMgnLeft)
           .style("right",sliderRight).style("top",sliderTop)
+          // main skills
+          d3.select("#overlay_"+mobileSwitcher(mode)).style("opacity",1)
+          .attr("y1","0")
+          .attr("y2","0")
       break;
       case "Math": // bottom right
         d3.select("#notmuchlots_mobile").style("opacity",0)
         d3.select("#sliderDiv_skillsMath").style("display","block")
           .style("margin-left",sliderMgnLeft)
           .style("right",sliderRight).style("bottom",sliderBottom)
+          // main skills
+          d3.select("#overlay_"+mobileSwitcher(mode)).style("opacity",1)
+          .attr("y1","0")
+          .attr("y2","0")
       break;
       case "Computer": // bottom left
         d3.select("#notmuchlots_mobile").style("opacity",0)
         d3.select("#sliderDiv_skillsComp").style("display","block")
           .style("margin-left",sliderMgnLeft)
           .style("left",sliderLeft).style("bottom",sliderBottom)
+          // main skills
+          d3.select("#overlay_"+mobileSwitcher(mode)).style("opacity",1)
+          .attr("y1","0")
+          .attr("y2","0")
       break;
 
       // subskills
@@ -5781,12 +5819,13 @@ function appendFavourites(){
         // .style("pointer-events","auto")
         // the draggable track overlay
         // d3.selectAll(".track-overlay")
-        d3.selectAll(".track-overlay").style("opacity",0)
-        .attr("y1","-1000")
-        .attr("y2","-1000")
+
+        // turn on the current track
+        // subskills
         d3.select("#"+mode).style("opacity",1)
         .attr("y1","0")
         .attr("y2","0")
+
 
       break;
     }

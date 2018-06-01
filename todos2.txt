@@ -1,5 +1,7 @@
 /*PRIORITIES*/
 mobile version
+- fix start interrupt for main sliders > tablet
+- turn on all sliders on resize > tablet
 - unhide the notmuchlots mobile div
 - modify pointer events so only the current slider works
 - modify line 5508 "Oral Communication" using a mobile mode skill title switcher
