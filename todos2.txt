@@ -1,5 +1,11 @@
 /*PRIORITIES*/
 mobile version
+- unhide the notmuchlots mobile div
+- modify pointer events so only the current slider works
+- modify line 5508 "Oral Communication" using a mobile mode skill title switcher
+- reposition math, logic mobile main skill sliders
+
+- 800 x 600 view
 - hide all elements on media query
 - reposition sliders on mobile selection
 - add radio button indicator for current selection
